@@ -1,0 +1,192 @@
+% rewrite emitCLrwr {
+
+Main [ TopLevel+] = ‛«TopLevel»’
+
+TopLevel_defvar [ Defvar] =‛«Defvar»’
+TopLevel_defconst [ Defconst] =‛«Defconst»’
+TopLevel_defn [ Defn] =‛«Defn»’
+TopLevel_defobj [ Defobj] =‛«Defobj»’
+TopLevel_import [ Import] =‛«Import»’
+TopLevel_comment [s line?] =‛«s»«line»’
+TopLevel_line [line] =‛«line»’
+
+kw [ s] = ‛«s»’
+Defvar [ __ lval _eq e line?] = ‛\n(defparameter «lval» «e»)«line»’
+Defconst [ __ lval _eq e line?] = ‛\n(defparameter «lval» «e»)’
+Defn [ _4 ident Formals StatementBlock line?] =
+  ⎡ functionName=‛«ident»’
+    ‛\n(defun «ident» (&optional «Formals»)«StatementBlock»)’
+  ⎦
+Defobj [ _defobj ident Formals line1? lb line2? init+ rb line3?] = ‛\n(defun «ident» (&optional «Formals»)«line1»⤷«line2»\n(list⤷«init»⤶⤶)«line3»)\n’
+Import [ _10 ident line?] = ‛’
+StatementBlock [ line1? lb line2? Statement     line3? rb  line4?] = ‛«line1»«line2»⤷«Statement»«line3»«line4»⤶\n’
+
+Rec_Statement [line1? R_Statement line2?] = ‛«line1»⤷«R_Statement»⤶«line2»’
+R_Statement_globals [ _24 ident1  cidents* scope?] =‛\nglobal «ident1»«cidents»«scope»’
+R_Statement_comment [s rec?] =‛\n«s»«rec»’
+R_Statement_macro [m] = ‛«m»’
+R_Statement_if [ IfStatement] =‛«IfStatement»’
+R_Statement_pass [ _27 scope?] =‛\n#| pass |#«scope»’
+R_Statement_return [ _29 ReturnExp] =‛\n(return-from ⟪functionName⟫ ⤷«ReturnExp»⤶)’
+R_Statement_for [ ForStatement] =‛«ForStatement»’
+R_Statement_while [ WhileStatement] =‛«WhileStatement»’
+R_Statement_assignment [ Assignment] =‛«Assignment»’
+R_Statement_call [ Lval scope?] =‛\n«Lval»«scope»’
+R_Statement_line [line rec?] = ‛«line»«rec»’
+CommaIdent [_comma ident] = ‛, «ident»’
+
+Macro_read [_octothorpe _read lp eh _comma1 msg _comma2 fname _comma3 ok _comma4 err rp] = ‛
+;; read text from a named file «fname», send the text out on port «ok» else send error info on port «err»
+;; given «eh» and «msg» if needed
+(handler-bind ((error #'(lambda (condition) (send_string «eh» «err» (format nil "~&~A~&" condition)))))⤷
+  (with-open-file (stream «fname»)⤷
+    (let ((contents (make-string (file-length stream))))⤷
+      (read-sequence contents stream)
+      (send_string «eh» «ok» contents))))⤶⤶⤶
+’
+
+Macro_racjf [_octothorpe _racjf lp fname rp] = ‛
+  ;; read json from a named file and convert it into internal form (a tree of routings)
+  ;; return the routings from the function or print an error message and return nil
+(handler-bind ((error #'(lambda (condition) nil)))⤷
+  (with-open-file (json-stream "~/projects/rtlarson/eyeballs.json" :direction :input)⤷
+    (json:decode-json json-stream)))⤶⤶
+’
+
+Deftemp [_deftemp lval _mutate e rec?] = ‛\n(let ((«lval» «e»))⤷«rec»⤶)’
+Defsynonym_illegal [ lval err _eqv e rec?] = ‛\n«lval» «err» = «e»«rec»’
+Defsynonym_legal [id _eqv e rec?] = ‛\n(let ((«lval» «e»))⤷«rec»⤶)’
+
+
+InitStatement [ _mark ident _33 Exp fluff*] = ‛\n(cons '«ident» «Exp») «fluff»’
+IfStatement [ _35 Exp StatementBlock ElifStatement* ElseStatement? rec?] = ‛\n(cond ⤷\n(«Exp»⤷«StatementBlock»⤶)«ElifStatement»«ElseStatement»⤶)«rec»’
+ElifStatement [ _37 Exp StatementBlock] = ‛(«Exp»⤷«StatementBlock»⤶)’
+ElseStatement [ _39 StatementBlock] = ‛(t⤷«StatementBlock»⤶)’
+ForStatement [ _41 ident _43 Exp StatementBlock rec?] = ‛\n(loop for «ident» in «Exp»⤷\ndo«StatementBlock»⤶«rec»’
+WhileStatement [ _45 Exp StatementBlock rec?] = ‛\n(loop while «Exp»⤷\ndo«StatementBlock»⤶)«rec»’
+
+Assignment_multiple [ _55 Lvals+ _57 _58 Exp rec?] =‛\n(loop while «Exp»⤷\ndo«StatementBlock»⤶)«rec»’
+Assignment_single [ Lval _59 Exp rec?] =‛\n(setf «Lval» «Exp»«rec»’
+LvalComma [Lval Comma?] = ‛«Lval»«Comma»’
+
+ReturnExp_multiple [ _60 Exps+ _62 rec?] =‛(values «Exp1» «Exp2»)«rec»’
+ReturnExp_single [ Exp rec?] =‛«Exp»«rec»’
+ExpComma [Exp Comma?] = ‛«Exp»«Comma»’
+Exp [e] = ‛«e»’
+BooleanAndOrIn_andOrIn [e1 op e2] = ‛(«op» «e1» «e2»)’
+BooleanAndOrIn_default [e] = ‛«e»’
+
+BooleanExp_boolopneq [ BooleanExp boolOp BooleanNot] =‛(not («boolOp» «BooleanExp» «BooleanNot»)’
+BooleanExp_boolop [ BooleanExp boolOp BooleanNot] =‛(«boolOp» «BooleanExp» «BooleanNot»)’
+BooleanExp_basic [ BooleanNot] =‛«BooleanNot»’
+
+BooleanNot_not [ _64 BooleanExp] =‛(not «BooleanExp»)’
+BooleanNot_basic [ AddExp] =‛«AddExp»’
+
+AddExp_plus [ AddExp _65 MulExp] =‛(+ «AddExp» «MulExp»)’
+AddExp_minus [ AddExp _66 MulExp] =‛(- «AddExp» «MulExp»)’
+AddExp_basic [ MulExp] =‛«MulExp»’
+
+MulExp_times [ MulExp _67 ExpExp] =‛(* «MulExp» «ExpExp»)’
+MulExp_divide [ MulExp _68 ExpExp] =‛(/ «MulExp» «ExpExp»)’
+MulExp_basic [ ExpExp] =‛«ExpExp»’
+
+ExpExp_power [ Primary _69 ExpExp] =‛(expt «Primary» «ExpExp»)’
+ExpExp_basic [ Primary] =‛«Primary»’
+
+Primary_lookupident [p _at key] = ‛(cdr (assoc '«key» «p»)’
+Primary_lookup [p _at key] = ‛(cdr (assoc «key» «p»))’
+Primary_field [p _dot key] = ‛(cdr (assoc '«key» «p»))’ 
+Primary_index [p lb e rb] = ‛(nth «e» «p»)’ 
+Primary_nthslice [p lb ds+ _colon rb] = ‛(nthcdr «ds» «p»)’
+Primary_pmacro [m] = ‛«m»’
+Primary_identcall [id actuals] = ‛(«id» «actuals»)’
+Primary_call [p actuals] = ‛(funcall «p» «actuals»)’
+Primary_atom [a] = ‛«a»’
+
+Pmacro_fresh [ _83 _84 ident _85] =‛ («ident»)’
+Pmacro_car [ _83 _84 e _85 ] =‛ (car «e»)’
+Pmacro_cdr [ _83 _84 e _85 ] =‛ (cdr «e»)’
+Pmacro_nthargvcdr [ _83 lb n rb ] =‛ (nthcdr «n» (argv))’
+Pmacro_nthargv [ _83 _84 n _85 ] =‛ (nth «n» argv)’
+Pmacro_stringcdr [ _83 _84 e _85 ] =‛ (subseq «e» 1)’
+Pmacro_strcons [ _strcons lp e1 _comma e2 rp] =‛ (concatenate 'string «e1» «e2»)’
+
+Atom_emptylistconst [ _72 _73] =‛ nil’
+Atom_emptydict [ _76 _77] =‛ nil’
+Atom_paren [ _70 Exp _71] =‛«Exp»’
+Atom_listconst [ _74 line1? PrimaryComma+ _75 line2] =‛(list «line1» «PrimaryComma»)«line2»’
+
+Atom_dict [ _78 line1? PairComma+ line2? _79] =
+⎡ freshdict=‛_dict’
+  ‛\n(let ((_dict (make-hash-table :test 'equal)))⤷«line1»«PairComma»«line2»\n_dict⤶)’
+⎦
+Atom_lambda [ _80 Formals? _81 Exp] =‛ #'(lambda (&optional «Formals»)⤷«Exp»⤶)’
+Atom_pos [ _86 Primary ] =‛ +«Primary»’
+Atom_neg [ _87 Primary ] =‛ -«Primary»’
+Atom_phi [ phi] =‛ nil’
+Atom_true [ _88] =‛ t’
+Atom_false [ _89] =‛ nil’
+Atom_range [ _91 _92 Exp _93] =‛(loop for n from 0 below «Exp» by 1 collect n)’
+Atom_string [ string] =‛ «string»’
+Atom_number [ number] =‛ «number»’
+Atom_ident [ ident ] =‛ «ident»’
+
+PrimaryComma [ Primary _94? line?] = ‛«Primary» «line»’
+PairComma [ Pair _95?] = ‛«Pair» ’
+Lval [ Exp ] = ‛«Exp»’
+keyword [ _144] = ‛«_144»’
+Formals_noformals [ _148 _149] =‛’
+Formals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+ObjFormals_noformals [ _148 _149] =‛’
+ObjFormals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+LambdaFormals_noformals [ _148 _149] =‛’
+LambdaFormals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+Formal_defaultvalue [ ident  _152 Exp] = ‛:«ident» «Exp»’
+Formal_plain [ ident] = ‛«ident»’
+FormalComma [Formal comma?] =‛ «Formal»«comma»’
+
+Actuals_noactuals [ _154 _155] =‛’
+Actuals_actuals [ _156 ActualComma* _157 line?] =‛ «ActualComma» «line»’
+Actual [ ParamName? Exp] = ‛«ParamName» «Exp»’
+ActualComma [Actual comma? line?] = ‛«Actual»«comma»«line»’
+ParamName [ ident _159] = ‛:«ident»’
+
+number_fract [ num* _160 den+] =‛«num».«den»’
+number_whole [ digit+] =‛«digit»’
+Pair [ string _161 Exp _162?] = ‛(setf (gethash «string» ⟪freshdict⟫) ⤷«Exp»⤶))’
+
+andOrIn [op] = ‛ «op» ’
+boolOp [ _191] = ‛ «_191» ’
+boolEq [op] = ‛equal ’
+boolNeq [op] = ‛equal ’
+phi [ _192] = ‛ nil’
+
+string [lb cs* rb] = ‛«lb»«cs»«rb»’
+stringchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+stringchar_other [c] = ‛«c»’
+
+
+kw [lb s rb] = ‛«lb»«s»«rb»’
+ident [lb cs* rb] = ‛«lb»«cs»«rb»’
+idchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+idchar_other [c] = ‛«c»’
+
+comment [lb cs* rb] = ‛«lb»«cs»«rb»’
+commentchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+commentchar_other [c] = ‛«c»’
+
+errorMessage [ _239 errorchar* _240] = ‛«_239»«errorchar»«_240»’
+errorchar_rec [ _241 errorchar* _242] =‛«_241»«errorchar»«_242»’
+errorchar_other [ any] =‛«any»’
+
+eh [id] = ‛«id»’
+fname [id] = ‛«id»’
+msg [id] = ‛«id»’
+ok [p] = ‛«p»’
+err [p] = ‛«p»’
+port [s] = ‛«s»’
+
+line [lb cs* rb] = ‛«lb»«cs»«rb»\n’
+Comma [line1? _comma line2?] = ‛«line1» «line2»’
+}

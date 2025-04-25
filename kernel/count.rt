@@ -1,0 +1,21 @@
+defvar count_counter ⇐ 0
+defvar count_direction ⇐ 1
+
+defn count_handler (eh, msg) {
+    global count_counter, count_direction
+    if msg.port = “adv” {
+        count_counter ⇐ count_counter + count_direction
+        send_int (eh, “”, count_counter, msg)
+    } elif msg.port = “rev” {
+        count_direction ⇐ #negate (count_direction)
+    }
+}
+
+defn count_instantiator (reg, owner, name, template_data) {
+    name_with_id ≡ gensymbol (“Count”)
+    return make_leaf (name_with_id, owner, ϕ, ↪︎count_handler)
+}
+
+defn count_install (reg) {
+    register_component (reg, mkTemplate (“Count”, ϕ, ↪︎count_instantiator))
+}

@@ -1,0 +1,1115 @@
+chruby: unknown Ruby: ruby-3.1.3
+$ make
+*** output flushed ***
+$ make >tmp.json
+make >tmp.json
+$ chmod a+x rw
+chmod a+x rw
+$ mv style.bash style
+mv style.bash style
+$ chmod a+x style
+chmod a+x style
+$ ./style
+*** output flushed ***
+$ ./style
+*** output flushed ***
+$ ./style
+*** output flushed ***
+$ ./style
+*** output flushed ***
+$ ls
+ls
+#ex-pipeline-flow.md#		drawio1.ohm~			styleexpand.rewrite~
+Makefile			drawio1.rewrite~		style~
+Makefile~			identity-das.rewrite		support.js
+Neva banner.rtf			identity-drawio.rewrite		t2t
+README.md			identity-drawio1.rewrite	temp.nanodsl.mjs
+README.md~			ndsl				temp.rewrite.mjs
+clean.ohm			ndsl~				test.ohm
+clean.ohm~			neva-echo.drawio		test.ohm~
+clean.rewrite			neva-echo.drawio.json		test.rewrite
+clean.rewrite~			neva-sample.drawio		test.rewrite~
+cull.ohm			original-echo.neva		test.txt
+cull.ohm~			rw				test.txt~
+das.ohm				rw~				tmp.c
+das.ohm~			sample.drawio			tmp.c~
+das.rewrite			sample2.drawio			tmp.json
+das.rewrite~			sample3.drawio			tmp.json~
+das2json.mjs			style				tmp.xml
+das2neva.drawio			style.bash			tmp.xml~
+drawio.ohm			style.bash~			tmp2.json
+drawio.ohm~			styleexpand.ohm			tmp2.json~
+drawio.rewrite			styleexpand.ohm~		tmp3.json
+drawio.rewrite~			styleexpand.rewrite		tmp3.json~
+$ ls *.bash
+ls *.bash
+style.bash
+$ rm style.bash
+rm style.bash
+$ ls
+ls
+#ex-pipeline-flow.md#		drawio.rewrite~			styleexpand.rewrite~
+Makefile			drawio1.ohm~			style~
+Makefile~			drawio1.rewrite~		support.js
+Neva banner.rtf			identity-das.rewrite		t2t
+README.md			identity-drawio.rewrite		temp.nanodsl.mjs
+README.md~			identity-drawio1.rewrite	temp.rewrite.mjs
+clean.ohm			ndsl				test.ohm
+clean.ohm~			ndsl~				test.ohm~
+clean.rewrite			neva-echo.drawio		test.rewrite
+clean.rewrite~			neva-echo.drawio.json		test.rewrite~
+cull.ohm			neva-sample.drawio		test.txt
+cull.ohm~			original-echo.neva		test.txt~
+das.ohm				rw				tmp.c
+das.ohm~			rw~				tmp.c~
+das.rewrite			sample.drawio			tmp.json
+das.rewrite~			sample2.drawio			tmp.json~
+das2json.mjs			sample3.drawio			tmp.xml
+das2neva.drawio			style				tmp.xml~
+dev				style.bash~			tmp2.json
+drawio.ohm			styleexpand.ohm			tmp2.json~
+drawio.ohm~			styleexpand.ohm~		tmp3.json
+drawio.rewrite			styleexpand.rewrite		tmp3.json~
+$ ./dev
+./dev
+zsh: permission denied: ./dev
+$ chmod a+x dev
+chmod a+x dev
+$ ./dev
+*** output flushed ***
+$ Make
+*** output flushed ***
+$mv rw rewrite
+mv rw rewrite
+$ chmod a+x rewrite
+chmod a+x rewrite
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./rewrite kill.ohm kill.rewrite <kill-file >tmp-kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file >tmp-kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file >tmp-kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ cp kill-file hold-kill-file
+cp kill-file hold-kill-file
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ ./rewrite kill.ohm kill.rewrite <kill-file
+*** output flushed ***
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./rewrite geometry.ohm geometry.rewrite <2.json
+*** output flushed ***
+$ ./rewrite geometry.ohm geometry.rewrite <2.json
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ ./dev
+*** output flushed ***
+$ `p
+`p
+bquote> `
+`
+zsh: command not found: p
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+Error: Found errors in the action dictionary of the 'rwr' operation:
+- Semantic action 'geometry' has the wrong arity: expected 14, got 16
+
+grammar = "geometry"
+$ ./dev
+./dev
+$ ./dev
+./dev
+Error: Found errors in the action dictionary of the 'rwr' operation:
+- Semantic action 'geometry' has the wrong arity: expected 16, got 14
+
+grammar = "geometry"
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ls
+ls
+#ex-pipeline-flow.md#		drawio.rewrite~			style
+1.json				drawio1.ohm~			style.bash~
+2.json				drawio1.rewrite~		styleexpand.ohm
+3.json				geometry.ohm			styleexpand.ohm~
+3.json~				geometry.ohm~			styleexpand.rewrite
+4.json				geometry.rewrite		styleexpand.rewrite~
+4.json~				geometry.rewrite~		style~
+Makefile			hold-kill-file			support.js
+Makefile~			identity-das.rewrite		t2t
+Neva banner.rtf			identity-drawio.rewrite		temp.nanodsl.mjs
+README.md			identity-drawio1.rewrite	temp.rewrite.mjs
+README.md~			identity-geometry.rewrite	test.ohm
+clean.ohm			identity-geometry.rewrite~	test.ohm~
+clean.ohm~			kill-file			test.rewrite
+clean.rewrite			kill-file~			test.rewrite~
+clean.rewrite~			kill.ohm			test.txt
+cull.drawio			kill.ohm~			test.txt~
+cull.ohm			kill.rewrite			tmp
+cull.ohm~			kill.rewrite~			tmp-kill-file
+das.ohm				ndsl				tmp.c
+das.ohm~			ndsl~				tmp.c~
+das.rewrite			neva-echo.drawio		tmp.json
+das.rewrite~			neva-echo.drawio.json		tmp.json~
+das2json.mjs			neva-sample.drawio		tmp.xml
+das2neva.drawio			original-echo.neva		tmp.xml~
+dev				rewrite				tmp2.json
+dev~				rw~				tmp2.json~
+drawio.ohm			sample.drawio			tmp3.json
+drawio.ohm~			sample2.drawio			tmp3.json~
+drawio.rewrite			sample3.drawio
+$ mv neva-ed  C-c C-c
+$ mkdir attic
+mkdir attic
+$ mv neva-ech* attic
+mv neva-ech* attic
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ls -l *.ohm
+ls -l *.ohm
+-rw-r--r--@ 1 paultarvydas  staff   386  3 Mar 05:18 clean.ohm
+-rw-r--r--@ 1 paultarvydas  staff   469  3 Mar 06:08 cull.ohm
+-rw-r--r--@ 1 paultarvydas  staff   838 11 Mar 08:50 culled.ohm
+-rw-r--r--@ 1 paultarvydas  staff  1302 28 Feb 17:52 das.ohm
+-rw-r--r--@ 1 paultarvydas  staff  1719 11 Mar 16:42 drawio.ohm
+-rw-r--r--@ 1 paultarvydas  staff   611 10 Mar 07:24 geometry.ohm
+-rw-r--r--@ 1 paultarvydas  staff   165  9 Mar 15:52 kill.ohm
+-rw-r--r--@ 1 paultarvydas  staff   430  3 Mar 05:49 styleexpand.ohm
+-rw-r--r--@ 1 paultarvydas  staff   253  1 Mar 17:35 test.ohm
+$ mv culled.ohm parts.ohm
+mv culled.ohm parts.ohm
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ cp parts.rewrite identity-parts.rewrite
+cp parts.rewrite identity-parts.rewrite
+$ pwd
+*** output flushed ***
+$ pwd
+pwd
+/Users/paultarvydas/projects/neva
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ 6.js
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+./dev
+$ ./dev
+
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+Error: Found errors in the action dictionary of the 'rwr' operation:
+- 'Name' is not a valid semantic action for 'gather'
+
+grammar = "gather"
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+GATHER (/[object Object]/, /-5bQla3dnRqBQKIm_dE6-1",/, /inputgate/)
+TypeError: Cannot create property '
+
+"id":"-5bQla3dnRqBQKIm_dE6-1",' on string '[object Object]'
+
+grammar = "gather"
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+./dev
+GATHER (/[object Object]/, /-5bQla3dnRqBQKIm_dE6-1,/, /inputgate/)
+TypeError: Cannot create property '-5bQla3dnRqBQKIm_dE6-1,' on string '[object Object]'
+
+grammar = "gather"
+$ node
+node
+Welcome to Node.js v23.5.0.
+Type ".help" for more information.
+> d = {};
+d = {};
+{}
+> d[ "A"] = "abc";
+d[ "A"] = "abc";
+'abc'
+> d
+d
+{ A: 'abc' }
+> d["1"]="def";
+d["1"]="def";
+'def'
+> d
+d
+{ '1': 'def', A: 'abc' }
+> d["-2"]="def";
+d["-2"]="def";
+'def'
+> d
+d
+{ '1': 'def', A: 'abc', '-2': 'def' }
+> d["-5bQla3dnRqBQKIm_dE6-1"] = "inputgate"
+d["-5bQla3dnRqBQKIm_dE6-1"] = "inputgate"
+'inputgate'
+> d
+d
+{
+  '1': 'def',
+  A: 'abc',
+  '-2': 'def',
+  '-5bQla3dnRqBQKIm_dE6-1': 'inputgate'
+}
+> 
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ ./dev
+*** output flushed ***
+$ node t2t/lib/t2t.mjs gather.ohm gather.mjs
+*** output flushed ***
+$ node t2t/lib/t2t.mjs gather.ohm gather.mjs gather.rewrite
+*** output flushed ***
+$ node t2t/lib/t2t.mjs gather.ohm gather.mjs
+*** output flushed ***
+$ node t2t/lib/t2t.mjs gather.ohm gather.rewrite
+*** output flushed ***
+$ node t2t/lib/t2t.mjs gather.rewrite
+node t2t/lib/t2t.mjs gather.rewrite
+let parameters = {};
+function pushParameter (name, v) {
+    if (!parameters [name]) {
+	parameters [name] = [];
+    }
+    parameters [name].push (v);
+}
+function popParameter (name) {
+    parameters [name].pop ();
+}
+function getParameter (name) {
+    return parameters [name];
+}
+
+parameters ["dict"] = [];
+
+let _rewrite = {
+
+Main : function (Item,) {
+enter_rule ("Main");
+    pushParameter ("dict", `${freshDict ()}`);
+    set_return (` OUTPUT:
+       "symbolTable" : { undefined }
+       ${Item.rwr ().join ('')}
+       `);
+popParameter ("dict");
+return exit_rule ("Main");
+},
+Item : function (x,) {
+enter_rule ("Item");
+    set_return (`${x.rwr ()}`);
+return exit_rule ("Item");
+},
+OutputGate : function (lb,_kind,_outputgate,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("OutputGate");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`outputgate`,)} { "kind": "outputgate",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("OutputGate");
+},
+InputGate : function (lb,_kind,_inputgate,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("InputGate");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`inputgate`,)} { "kind": "inputgate",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("InputGate");
+},
+OutputPort : function (lb,_kind,_outputport,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("OutputPort");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`outputport`,)} { "kind": "outputport",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("OutputPort");
+},
+InputPort : function (lb,_kind,_inputport,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("InputPort");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`inputport`,)} { "kind": "inputport",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("InputPort");
+},
+Part : function (lb,_kind,_part,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("Part");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`part`,)} { "kind": "part",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("Part");
+},
+ID : function (id,s,) {
+enter_rule ("ID");
+    set_return (`\n${id.rwr ()}${s.rwr ()},`);
+return exit_rule ("ID");
+},
+Label : function (v,s,) {
+enter_rule ("Label");
+    set_return (`\n"label":${s.rwr ()},`);
+return exit_rule ("Label");
+},
+Parent : function (_parent,s,) {
+enter_rule ("Parent");
+    set_return (`\n${_parent.rwr ()}${s.rwr ()},`);
+return exit_rule ("Parent");
+},
+BoundingBox : function (_boundingbox,lb,x,y,width,height,rb,) {
+enter_rule ("BoundingBox");
+    set_return (`${_boundingbox.rwr ()}${lb.rwr ()}${x.rwr ()},${y.rwr ()},${width.rwr ()},${height.rwr ()}${rb.rwr ()}`);
+return exit_rule ("BoundingBox");
+},
+Key : function (dq1,s,dq2,_colon,) {
+enter_rule ("Key");
+    set_return (`\n${dq1.rwr ()}${s.rwr ()}${dq2.rwr ()}${_colon.rwr ()}`);
+return exit_rule ("Key");
+},
+value : function (dq1,s,dq2,) {
+enter_rule ("value");
+    set_return (`${dq1.rwr ()}${s.rwr ()}${dq2.rwr ()}`);
+return exit_rule ("value");
+},
+notBrace_rec : function (lb,notBrace,rb,) {
+enter_rule ("notBrace_rec");
+    set_return (`${lb.rwr ()}${notBrace.rwr ().join ('')}${rb.rwr ()}`);
+return exit_rule ("notBrace_rec");
+},
+notBrace_default : function (c,) {
+enter_rule ("notBrace_default");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("notBrace_default");
+},
+x : function (number,) {
+enter_rule ("x");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("x");
+},
+y : function (number,) {
+enter_rule ("y");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("y");
+},
+width : function (number,) {
+enter_rule ("width");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("width");
+},
+height : function (number,) {
+enter_rule ("height");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("height");
+},
+number : function (sign,int,frac,) {
+enter_rule ("number");
+    set_return (`${sign.rwr ().join ('')}${int.rwr ()}${frac.rwr ().join ('')}`);
+return exit_rule ("number");
+},
+int : function (digit,) {
+enter_rule ("int");
+    set_return (`${digit.rwr ().join ('')}`);
+return exit_rule ("int");
+},
+sign : function (c,) {
+enter_rule ("sign");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("sign");
+},
+frac : function (_dot,digit,) {
+enter_rule ("frac");
+    set_return (`${_dot.rwr ()}${digit.rwr ().join ('')}`);
+return exit_rule ("frac");
+},
+string : function (dq1,cs,dq2,) {
+enter_rule ("string");
+    set_return (`${dq1.rwr ()}${cs.rwr ().join ('')}${dq2.rwr ()}`);
+return exit_rule ("string");
+},
+dq : function (c,) {
+enter_rule ("dq");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("dq");
+},
+space : function (c,) {
+enter_rule ("space");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("space");
+},
+spaces : function (cs,) {
+enter_rule ("spaces");
+    set_return (`${cs.rwr ().join ('')}`);
+return exit_rule ("spaces");
+},
+_terminal: function () { return this.sourceString; },
+_iter: function (...children) { return children.map(c => c.rwr ()); }
+}
+$ dirs
+dirs
+~/projects/neva
+$ pushd ~/t2t/doc
+pushd ~/t2t/doc
+pushd: no such file or directory: /Users/paultarvydas/t2t/doc
+$ pushd ~/projects/t2t/doc
+pushd ~/projects/t2t/doc
+~/projects/t2t/doc ~/projects/neva
+$ ls
+ls
+T2T.pages			t2t gen mode.excalidraw		t2t gen-2.png			t2t stand-alone.excalidraw	t2t-2.excalidraw
+T2T.pdf				t2t gen mode.png		t2t stand-alone-2.excalidraw	t2t stand-alone.png		t2t-2.png
+sketches.drawio			t2t gen-2.excalidraw		t2t stand-alone-2.png		t2t workflow.png
+$ open T2T.pages 
+open T2T.pages 
+$ pwd
+pwd
+/Users/paultarvydas/projects/t2t/doc
+$ dirs
+dirs
+~/projects/t2t/doc ~/projects/neva
+$ pushd
+pushd
+~/projects/neva ~/projects/t2t/doc
+$ chmod a+x gen
+chmod a+x gen
+chmod: gen: No such file or directory
+$ ls
+ls
+#ex-pipeline-flow.md#		cull.drawio			gather.rewrite~			original-echo.neva		test.ohm
+1.json				cull.ohm			geometry.ohm			parts.ohm			test.ohm~
+2.json				cull.ohm~			geometry.ohm~			parts.ohm~			test.rewrite
+3.json				culled.ohm~			geometry.rewrite		parts.rewrite			test.rewrite~
+3.json~				das.ohm				geometry.rewrite~		parts.rewrite~			test.txt
+4.json				das.ohm~			hold-kill-file			rewrite				test.txt~
+4.json~				das.rewrite			identity-das.rewrite		rw~				tmp
+5.json				das.rewrite~			identity-drawio.rewrite		sample.drawio			tmp-kill-file
+5.json~				das2json.mjs			identity-drawio1.rewrite	sample2.drawio			tmp.c
+6.json				das2neva.drawio			identity-geometry.rewrite	sample3.drawio			tmp.c~
+Makefile			dev				identity-geometry.rewrite~	style				tmp.json
+Makefile~			dev~				identity-parts.rewrite		style.bash~			tmp.json~
+Neva banner.rtf			drawio.ohm			kill-file			styleexpand.ohm			tmp.xml
+README.md			drawio.ohm~			kill-file~			styleexpand.ohm~		tmp.xml~
+README.md~			drawio.rewrite			kill.ohm			styleexpand.rewrite		tmp2.json
+attic				drawio.rewrite~			kill.ohm~			styleexpand.rewrite~		tmp2.json~
+clean.ohm			drawio1.ohm~			kill.rewrite			style~				tmp3.json
+clean.ohm~			drawio1.rewrite~		kill.rewrite~			support.js			tmp3.json~
+clean.rewrite			gather.ohm			ndsl				t2t
+clean.rewrite~			gather.ohm~			ndsl~				temp.nanodsl.mjs
+codegen				gather.rewrite			neva-sample.drawio		temp.rewrite.mjs
+$ mv codegen rwgen
+mv codegen rwgen
+$ chmod a+x rwgen
+chmod a+x rwgen
+$ ./rwgen gather.rewrite
+*** output flushed ***
+$ ./rwgen gather.rewrite
+./rwgen gather.rewrite
+TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string or an instance of Buffer or URL. Received undefined
+
+grammar = "t2t
+$ ls t2t/lib/
+ls t2t/lib/
+args.part.js	front.part.js	middle.part.js	t2t.mjs		tail.part.js	tail.part.js~
+$ ./codegen gather.rewrite
+./codegen gather.rewrite
+zsh: no such file or directory: ./codegen
+$ pwd
+pwd
+/Users/paultarvydas/projects/neva
+$ ./rwgen gather.rewrite
+*** output flushed ***
+$ node t2t/lib/t2t.mjs gather.rewrite  C-c C-c
+$ ./rwgen gather.rewrite
+./rwgen gather.rewrite
+T2T=./t2t
+REWRITE=$2
+node t2t/lib/t2t.mjs gather.rewrite
+let parameters = {};
+function pushParameter (name, v) {
+    if (!parameters [name]) {
+	parameters [name] = [];
+    }
+    parameters [name].push (v);
+}
+function popParameter (name) {
+    parameters [name].pop ();
+}
+function getParameter (name) {
+    return parameters [name];
+}
+
+parameters ["dict"] = [];
+
+let _rewrite = {
+
+Main : function (Item,) {
+enter_rule ("Main");
+    pushParameter ("dict", `${freshDict ()}`);
+    set_return (` OUTPUT:
+       "symbolTable" : { undefined }
+       ${Item.rwr ().join ('')}
+       `);
+popParameter ("dict");
+return exit_rule ("Main");
+},
+Item : function (x,) {
+enter_rule ("Item");
+    set_return (`${x.rwr ()}`);
+return exit_rule ("Item");
+},
+OutputGate : function (lb,_kind,_outputgate,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("OutputGate");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`outputgate`,)} { "kind": "outputgate",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("OutputGate");
+},
+InputGate : function (lb,_kind,_inputgate,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("InputGate");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`inputgate`,)} { "kind": "inputgate",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("InputGate");
+},
+OutputPort : function (lb,_kind,_outputport,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("OutputPort");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`outputport`,)} { "kind": "outputport",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("OutputPort");
+},
+InputPort : function (lb,_kind,_inputport,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("InputPort");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`inputport`,)} { "kind": "inputport",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("InputPort");
+},
+Part : function (lb,_kind,_part,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("Part");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`part`,)} { "kind": "part",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("Part");
+},
+ID : function (id,s,) {
+enter_rule ("ID");
+    set_return (`\n${id.rwr ()}${s.rwr ()},`);
+return exit_rule ("ID");
+},
+Label : function (v,s,) {
+enter_rule ("Label");
+    set_return (`\n"label":${s.rwr ()},`);
+return exit_rule ("Label");
+},
+Parent : function (_parent,s,) {
+enter_rule ("Parent");
+    set_return (`\n${_parent.rwr ()}${s.rwr ()},`);
+return exit_rule ("Parent");
+},
+BoundingBox : function (_boundingbox,lb,x,y,width,height,rb,) {
+enter_rule ("BoundingBox");
+    set_return (`${_boundingbox.rwr ()}${lb.rwr ()}${x.rwr ()},${y.rwr ()},${width.rwr ()},${height.rwr ()}${rb.rwr ()}`);
+return exit_rule ("BoundingBox");
+},
+Key : function (dq1,s,dq2,_colon,) {
+enter_rule ("Key");
+    set_return (`\n${dq1.rwr ()}${s.rwr ()}${dq2.rwr ()}${_colon.rwr ()}`);
+return exit_rule ("Key");
+},
+value : function (dq1,s,dq2,) {
+enter_rule ("value");
+    set_return (`${dq1.rwr ()}${s.rwr ()}${dq2.rwr ()}`);
+return exit_rule ("value");
+},
+notBrace_rec : function (lb,notBrace,rb,) {
+enter_rule ("notBrace_rec");
+    set_return (`${lb.rwr ()}${notBrace.rwr ().join ('')}${rb.rwr ()}`);
+return exit_rule ("notBrace_rec");
+},
+notBrace_default : function (c,) {
+enter_rule ("notBrace_default");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("notBrace_default");
+},
+x : function (number,) {
+enter_rule ("x");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("x");
+},
+y : function (number,) {
+enter_rule ("y");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("y");
+},
+width : function (number,) {
+enter_rule ("width");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("width");
+},
+height : function (number,) {
+enter_rule ("height");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("height");
+},
+number : function (sign,int,frac,) {
+enter_rule ("number");
+    set_return (`${sign.rwr ().join ('')}${int.rwr ()}${frac.rwr ().join ('')}`);
+return exit_rule ("number");
+},
+int : function (digit,) {
+enter_rule ("int");
+    set_return (`${digit.rwr ().join ('')}`);
+return exit_rule ("int");
+},
+sign : function (c,) {
+enter_rule ("sign");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("sign");
+},
+frac : function (_dot,digit,) {
+enter_rule ("frac");
+    set_return (`${_dot.rwr ()}${digit.rwr ().join ('')}`);
+return exit_rule ("frac");
+},
+string : function (dq1,cs,dq2,) {
+enter_rule ("string");
+    set_return (`${dq1.rwr ()}${cs.rwr ().join ('')}${dq2.rwr ()}`);
+return exit_rule ("string");
+},
+dq : function (c,) {
+enter_rule ("dq");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("dq");
+},
+space : function (c,) {
+enter_rule ("space");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("space");
+},
+spaces : function (cs,) {
+enter_rule ("spaces");
+    set_return (`${cs.rwr ().join ('')}`);
+return exit_rule ("spaces");
+},
+_terminal: function () { return this.sourceString; },
+_iter: function (...children) { return children.map(c => c.rwr ()); }
+}
+
+$ ./rwgen gather.rewrite
+*** output flushed ***
+$ ./rwgen gather.rewrite
+*** output flushed ***
+$ ./rwgen gather.rewrite
+*** output flushed ***
+$ ./rwgen gather.rewrite
+./rwgen gather.rewrite
+let parameters = {};
+function pushParameter (name, v) {
+    if (!parameters [name]) {
+	parameters [name] = [];
+    }
+    parameters [name].push (v);
+}
+function popParameter (name) {
+    parameters [name].pop ();
+}
+function getParameter (name) {
+    return parameters [name];
+}
+
+parameters ["dict"] = [];
+
+let _rewrite = {
+
+Main : function (Item,) {
+enter_rule ("Main");
+    pushParameter ("dict", `${freshDict ()}`);
+    set_return (` OUTPUT:
+       "symbolTable" : { undefined }
+       ${Item.rwr ().join ('')}
+       `);
+popParameter ("dict");
+return exit_rule ("Main");
+},
+Item : function (x,) {
+enter_rule ("Item");
+    set_return (`${x.rwr ()}`);
+return exit_rule ("Item");
+},
+OutputGate : function (lb,_kind,_outputgate,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("OutputGate");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`outputgate`,)} { "kind": "outputgate",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("OutputGate");
+},
+InputGate : function (lb,_kind,_inputgate,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("InputGate");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`inputgate`,)} { "kind": "inputgate",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("InputGate");
+},
+OutputPort : function (lb,_kind,_outputport,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("OutputPort");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`outputport`,)} { "kind": "outputport",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("OutputPort");
+},
+InputPort : function (lb,_kind,_inputport,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("InputPort");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`inputport`,)} { "kind": "inputport",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("InputPort");
+},
+Part : function (lb,_kind,_part,ID,Label,Parent,BoundingBox,rb,) {
+enter_rule ("Part");
+    set_return (`${gather (`${getParameter ("dict")}`,`${ID.rwr ()}`,`part`,)} { "kind": "part",${ID.rwr ()},${Label.rwr ()}${Parent.rwr ()}${BoundingBox.rwr ()}${rb.rwr ()}`);
+return exit_rule ("Part");
+},
+ID : function (id,s,) {
+enter_rule ("ID");
+    set_return (`\n${id.rwr ()}${s.rwr ()},`);
+return exit_rule ("ID");
+},
+Label : function (v,s,) {
+enter_rule ("Label");
+    set_return (`\n"label":${s.rwr ()},`);
+return exit_rule ("Label");
+},
+Parent : function (_parent,s,) {
+enter_rule ("Parent");
+    set_return (`\n${_parent.rwr ()}${s.rwr ()},`);
+return exit_rule ("Parent");
+},
+BoundingBox : function (_boundingbox,lb,x,y,width,height,rb,) {
+enter_rule ("BoundingBox");
+    set_return (`${_boundingbox.rwr ()}${lb.rwr ()}${x.rwr ()},${y.rwr ()},${width.rwr ()},${height.rwr ()}${rb.rwr ()}`);
+return exit_rule ("BoundingBox");
+},
+Key : function (dq1,s,dq2,_colon,) {
+enter_rule ("Key");
+    set_return (`\n${dq1.rwr ()}${s.rwr ()}${dq2.rwr ()}${_colon.rwr ()}`);
+return exit_rule ("Key");
+},
+value : function (dq1,s,dq2,) {
+enter_rule ("value");
+    set_return (`${dq1.rwr ()}${s.rwr ()}${dq2.rwr ()}`);
+return exit_rule ("value");
+},
+notBrace_rec : function (lb,notBrace,rb,) {
+enter_rule ("notBrace_rec");
+    set_return (`${lb.rwr ()}${notBrace.rwr ().join ('')}${rb.rwr ()}`);
+return exit_rule ("notBrace_rec");
+},
+notBrace_default : function (c,) {
+enter_rule ("notBrace_default");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("notBrace_default");
+},
+x : function (number,) {
+enter_rule ("x");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("x");
+},
+y : function (number,) {
+enter_rule ("y");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("y");
+},
+width : function (number,) {
+enter_rule ("width");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("width");
+},
+height : function (number,) {
+enter_rule ("height");
+    set_return (`${number.rwr ()}`);
+return exit_rule ("height");
+},
+number : function (sign,int,frac,) {
+enter_rule ("number");
+    set_return (`${sign.rwr ().join ('')}${int.rwr ()}${frac.rwr ().join ('')}`);
+return exit_rule ("number");
+},
+int : function (digit,) {
+enter_rule ("int");
+    set_return (`${digit.rwr ().join ('')}`);
+return exit_rule ("int");
+},
+sign : function (c,) {
+enter_rule ("sign");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("sign");
+},
+frac : function (_dot,digit,) {
+enter_rule ("frac");
+    set_return (`${_dot.rwr ()}${digit.rwr ().join ('')}`);
+return exit_rule ("frac");
+},
+string : function (dq1,cs,dq2,) {
+enter_rule ("string");
+    set_return (`${dq1.rwr ()}${cs.rwr ().join ('')}${dq2.rwr ()}`);
+return exit_rule ("string");
+},
+dq : function (c,) {
+enter_rule ("dq");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("dq");
+},
+space : function (c,) {
+enter_rule ("space");
+    set_return (`${c.rwr ()}`);
+return exit_rule ("space");
+},
+spaces : function (cs,) {
+enter_rule ("spaces");
+    set_return (`${cs.rwr ().join ('')}`);
+return exit_rule ("spaces");
+},
+_terminal: function () { return this.sourceString; },
+_iter: function (...children) { return children.map(c => c.rwr ()); }
+}
+$ pushd
+pushd
+~/projects/t2t/doc ~/projects/neva
+$ ls
+ls
+T2T.pages				sketches.drawio				t2t stand-alone-2.excalidraw		t2t-2.excalidraw
+T2T.pdf					t2t gen mode.excalidraw			t2t stand-alone-2.png			t2t-2.png
+sketches-Modern compiler.drawio.png	t2t gen mode.png			t2t stand-alone.excalidraw
+sketches-compiler.drawio.png		t2t gen-2.excalidraw			t2t stand-alone.png
+sketches-t2t overview.drawio.png	t2t gen-2.png				t2t workflow.png
+$ ls ..
+ls ..
+README.md	README.md~	doc		generate-mjs	lib		nanodsl		self-compile	tests
+$ ls ../tests/
+ls ../tests/
+Makefile	support.js	test1.rewrite	test2.grammar	test2.txt	test3.rewrite	test4.grammar	test4.txt
+null.js		test1.grammar	test1.txt	test2.rewrite	test3.grammar	test3.txt	test4.rewrite
+$ mkdir example
+mkdir example
+$ pwd
+pwd
+/Users/paultarvydas/projects/t2t/doc
+$ cd ex
+cd ex
+cd: no such file or directory: ex
+$ ls
+ls
+T2T.pages				sketches-t2t overview.drawio.png	t2t gen-2.png				t2t workflow.png
+T2T.pdf					sketches.drawio				t2t stand-alone-2.excalidraw		t2t-2.excalidraw
+example					t2t gen mode.excalidraw			t2t stand-alone-2.png			t2t-2.png
+sketches-Modern compiler.drawio.png	t2t gen mode.png			t2t stand-alone.excalidraw
+sketches-compiler.drawio.png		t2t gen-2.excalidraw			t2t stand-alone.png
+$ cd example/
+cd example/
+$ ls
+ls
+ex.ohm			ex.ohm~			ex.rewrite		ex.rewrite~		ex.vhll			identity-ex.rewrite
+$ ../nanodsl ex.ohm ex.rewrite ex.vhll
+../nanodsl ex.ohm ex.rewrite ex.vhll
+zsh: no such file or directory: ../nanodsl
+$ ls ..
+ls ..
+T2T.pages				sketches-t2t overview.drawio.png	t2t gen-2.png				t2t workflow.png
+T2T.pdf					sketches.drawio				t2t stand-alone-2.excalidraw		t2t-2.excalidraw
+example					t2t gen mode.excalidraw			t2t stand-alone-2.png			t2t-2.png
+sketches-Modern compiler.drawio.png	t2t gen mode.png			t2t stand-alone.excalidraw
+sketches-compiler.drawio.png		t2t gen-2.excalidraw			t2t stand-alone.png
+$ pwd
+pwd
+/Users/paultarvydas/projects/t2t/doc/example
+$ ../../nanodsl ex.ohm ex.rewrite ex.vhll
+*** output flushed ***
+$ pwd
+pwd
+/Users/paultarvydas/projects/t2t/doc/example
+$ chmod a+x rw 
+chmod a+x rw 
+$ chmod a+x rwgen
+chmod a+x rwgen
+$ ls
+ls
+ex.ohm			ex.rewrite		ex.vhll			rw			temp.rewrite.mjs
+ex.ohm~			ex.rewrite~		identity-ex.rewrite	rwgen
+$ ./rw ex.ohm ex.rewrite ex.vhll 
+./rw ex.ohm ex.rewrite ex.vhll 
+./rw: line 9: ../nanodsl: No such file or directory
+$ ls ../lib
+ls ../lib
+ls: ../lib: No such file or directory
+$ ./rw ex.ohm ex.rewrite ex.vhll 
+*** output flushed ***
+$ ./rw ex.ohm ex.rewrite ex.vhll 
+./rw ex.ohm ex.rewrite ex.vhll 
+asdf
+asdf
+ a b c
+ a b c
+Error: Line 2, col 2:
+  1 | asdf
+> 2 |  a b c
+       ^
+  3 | 
+Expected "<-"
+
+grammar = "ex"
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+*** output flushed ***
+$ make
+make
+./rw ex.ohm ex-cl.rewrite <ex.vhll
+node:internal/modules/cjs/loader:1413
+  throw err;
+  ^
+
+Error: Cannot find module '/Users/paultarvydas/projects/t2t/doc/example/indent.mjs'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1410:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1061:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1066:22)
+    at Function._load (node:internal/modules/cjs/loader:1215:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v23.5.0
+make: *** [normal] Error 1
+$ ls
+ls
+Makefile		ex-cl.rewrite~		ex.ohm~			ex.vhll			rw			rw~			temp.rewrite.mjs
+Makefile~		ex-py.rewrite		ex.rewrite		identity-ex.rewrite	rwgen			support.js
+ex-cl.rewrite		ex.ohm			ex.rewrite~		indent.js		rwgen~			temp.nanodsl.mjs
+$ mv indent.js indent.mjs
+mv indent.js indent.mjs
+$ make
+make
+./rw ex.ohm ex-cl.rewrite <ex.vhll
+
+(let ((b 2)) 
+    (let ((c 3)) 
+        (let ((a (+ b c))) 
+            )))
+
+$ 

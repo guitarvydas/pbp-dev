@@ -1,0 +1,239 @@
+emitPython {
+
+  Main = TopLevel+
+  TopLevel =
+    | Defvar -- defvar
+    | Defconst -- defconst
+    | Defn -- defn
+    | Defobj -- defobj
+    | Import -- import
+    | comment line? -- comment
+    | line -- line
+
+   Defvar = kw<"defvar"> Lval "⇐" Exp line?
+   Defconst = kw<"defconst"> Lval "≡" Exp line?
+   Defn = kw<"defn"> ident Formals StatementBlock line?
+   Defobj = kw<"defobj"> ident ObjFormals line? "{" line? InitStatement+ "}" line?
+   Import = kw<"import"> ident line?
+
+   StatementBlock = line? "{" line? Rec_Statement line? "}" line?
+
+   Rec_Statement = line? R_Statement line?
+   R_Statement =
+     | comment Rec_Statement? -- comment
+     | Macro -- macro
+     | Deftemp -- deftemp
+     | Defsynonym -- defsynonym     
+     | kw<"global"> ident CommaIdent* Rec_Statement? -- globals
+     | IfStatement  -- if
+     | kw<"pass"> Rec_Statement? -- pass
+     | kw<"return"> ReturnExp -- return
+     | ForStatement -- for
+     | WhileStatement  -- while
+     | Assignment -- assignment
+     | Lval Rec_Statement? -- call
+     | line Rec_Statement? -- line
+   CommaIdent = Comma ident
+
+   Macro =
+     | "#" "❲low_level_read_text_file_handler❳" "(" eh Comma msg Comma fname Comma ok Comma err ")" -- read
+     | "#" "❲read_and_convert_json_file❳" "(" fname ")" -- racjf
+
+   Deftemp = kw<"deftemp"> Lval "⇐" Exp Rec_Statement?
+   Defsynonym =
+     | Lval errorMessage "≡" Exp Rec_Statement? -- illegal
+     | ident "≡" Exp Rec_Statement? -- legal
+
+   InitStatement = "•" ident "⇐" Exp (comment | line)*
+
+   IfStatement = kw<"if"> Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?
+   ElifStatement = kw<"elif"> Exp StatementBlock
+   ElseStatement = kw<"else"> StatementBlock
+
+   ForStatement = kw<"for"> ident kw<"in"> Exp StatementBlock Rec_Statement?
+   WhileStatement = kw<"while"> Exp StatementBlock Rec_Statement?
+
+   Assignment = 
+     | "[" LvalComma+ "]" "⇐" Exp Rec_Statement? -- multiple
+     | Lval "⇐" Exp Rec_Statement? -- single
+
+   LvalComma = Lval Comma?
+
+    ReturnExp =
+      | "[" ExpComma+ "]" Rec_Statement? -- multiple
+      | Exp Rec_Statement? -- single
+
+    ExpComma = Exp Comma?
+    
+    Exp =  BooleanAndOrIn
+
+    BooleanAndOrIn =
+      | BooleanAndOrIn andOrIn BooleanExp -- andOrIn
+      | BooleanExp -- default
+      
+    BooleanExp =
+      | BooleanExp boolNeq BooleanNot -- boolopneq
+      | BooleanExp boolOp BooleanNot -- boolop
+      | BooleanNot -- basic
+
+    BooleanNot =
+      | kw<"not"> BooleanExp -- not
+      | AddExp -- basic
+
+    AddExp =
+      | AddExp "+" MulExp  -- plus
+      | AddExp "-" MulExp  -- minus
+      | MulExp -- basic
+
+    MulExp =
+      | MulExp "*" ExpExp  -- times
+      | MulExp "/" ExpExp  -- divide
+      | ExpExp -- basic
+
+    ExpExp =
+      | Primary "^" ExpExp  -- power
+      | Primary -- basic
+
+    Primary =
+      | Pmacro -- pmacro
+      | PrimaryIndexed Actuals -- call
+      | PrimaryIndexed -- plain
+
+    PrimaryIndexed =
+      | Primary "@" ident -- lookupident
+      | Primary "@" Primary -- lookup
+      | Primary "." Primary -- field
+      | Primary "[" Exp "]" -- index
+      | Primary "[" digit+ ":" "]" -- nthslice
+      | Atom -- atom
+
+    Pmacro =
+      | pkw<"fresh"> "(" ident ")" -- fresh
+      | pkw<"car"> "(" Exp ")" -- car
+      | pkw<"cdr"> "(" Exp ")" -- cdr
+      | pkw<"nthargv"> "(" Exp ")" -- nthargv
+      | pkw<"nthargvcdr"> "(" Exp ")" -- nthargvcdr
+      | pkw<"stringcdr"> "(" Exp ")" -- stringcdr
+      | pkw<"strcons"> "(" Exp Comma Exp ")" -- strcons
+
+    Atom =
+      | "[" "]" -- emptylistconst
+      | "{" "}" -- emptydict
+      | "(" Exp ")" -- paren
+      | "[" line? PrimaryComma+ line? "]" -- listconst
+      | "{" line? PairComma+ line? "}" -- dict
+      | lambda LambdaFormals? ":" Exp -- lambda
+      | "+" Primary -- pos
+      | "-" Primary -- neg
+      | phi -- phi
+      | "⊤" -- true
+      | "⊥" -- false
+      | kw<"range"> "(" Exp ")" -- range
+      | string -- string
+      | number -- number
+      | ident -- ident
+
+
+
+    PrimaryComma = Primary Comma? line?
+    PairComma = Pair Comma?
+    
+    Lval = Exp
+
+    Formals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+    ObjFormals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+    LambdaFormals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+
+    Formal = 
+       | ident "∷" Exp -- defaultvalue
+       | ident -- plain
+       
+    FormalComma = Formal Comma?
+    
+    Actuals = 
+      | "(" ")" -- noactuals
+      | "(" ActualComma* ")" line? -- actuals
+
+   Actual = ParamName? Exp
+   ActualComma = Actual Comma? line?
+
+   ParamName = ident "∷"
+
+    number =
+      | digit* "." digit+  -- fract
+      | digit+             -- whole
+
+    Pair = string ":" Exp Comma?
+  
+
+  andOrIn = (kw<"and"> | kw<"or"> | kw<"in">)
+  boolOp = (boolEq | boolNeq | "<=" | ">=" | ">" | "<")
+  boolEq = "="
+  boolNeq = "!="
+
+  string = "“" stringchar* "”"
+  stringchar = 
+    | "“" stringchar* "”" -- rec
+    | ~"“" ~"”" any -- other
+
+    keyword = (
+        kw<"defconst">
+      | kw<"deftemp">
+      | kw<"defobj">
+      | kw<"defvar">
+      | kw<"defn">
+      | kw<"useglobal">
+      | kw<"pass">
+      | kw<"return">
+      | kw<"if">
+      | kw<"elif">
+      | kw<"else">
+      | kw<"and">
+      | kw<"or">
+      | kw<"in">
+      | kw<"not">
+      | kw<"range">
+      | kw<"while">
+      | kw<"import">
+      | kw<"as">
+      | lambda
+      | phi
+      )
+      
+  lambda = ("λ" | kw<"%CE%BB">)
+  phi = ("ϕ" | kw<"%CF%95">)
+
+  kw<s> = "❲" s "❳"
+  pkw<s> = "❲" s "❳"
+  ident  = ~keyword "❲" idchar+ "❳"
+  idchar =
+    | "❲" idchar+ "❳" -- rec
+    | ~"❲" ~"❳" any -- other
+
+  comment = "⌈" commentchar* "⌉"
+  commentchar = 
+    | "⌈" commentchar* "⌉" -- rec
+    | ~"⌈" ~"⌉" any -- other
+
+  errorMessage = "⎝" errorchar* "⎠"
+  errorchar = 
+    | "⎝" errorchar* "⎠" -- rec
+    | ~"⎝" ~"⎠" any -- other
+
+  eh = ident
+  fname = ident
+  msg = ident
+  ok = port
+  err = port
+  port = string
+
+  line = "⎩" (~"⎩" ~"⎭" any)* "⎭"
+
+  Comma = line? "," line?
+}

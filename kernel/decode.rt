@@ -1,0 +1,18 @@
+defn decode_install (reg) {
+    register_component (reg, mkTemplate (“Decode”, ϕ, ↪︎decode_instantiator))
+}
+
+defn decode_handler (eh, msg) {
+    global decode_digits
+    s ≡ msg.datum.v
+    deftemp i ⇐ #asint (s)
+    if i >= 0 and i <= 9 {
+        send_string (eh, s, s, msg)
+    }
+    send_bang (eh, “done”, msg)
+}
+
+defn decode_instantiator (reg, owner, name, template_data) {
+    name_with_id ≡ gensymbol (“Decode”)
+    return make_leaf (name_with_id, owner, ϕ, ↪︎decode_handler)
+}

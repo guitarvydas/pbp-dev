@@ -1,0 +1,23 @@
+#	'ensure that formatted text option in draw.io is disabled everywhere'
+
+all:
+	cp rebuild-all.bash rebuild.bash
+	python3 choreographer.py
+
+## house-keeping
+
+clean:
+	rm -rf *.json
+	rm -rf junk*
+	rm -rf temp.*
+	rm -rf *~
+	rm -rf __pycache__
+	rm -f generated-*
+	rm -f rebuild.bash
+
+install-js-requires:
+	npm install yargs prompt-sync ohm-js @xmldom/xmldom
+pyenv:
+	python3 -m venv ./rt
+	# source rt/bin/activate
+	# pip3 install websockets

@@ -1,0 +1,219 @@
+syntax {
+
+  Main = ParaMark TopLevel+
+  TopLevel =
+    | Defvar -- defvar
+    | Defconst -- defconst
+    | Defn -- defn
+    | Defobj -- defobj
+    | Import -- import
+    | External -- external
+    | comment -- comment
+    | line -- line
+
+   Defvar = kw<"defvar"> Lval "⇐" Exp line?
+   Defconst = kw<"defconst"> Lval "≡" Exp line?
+   Defn = kw<"defn"> ident Formals StatementBlock line?
+   Defobj = kw<"defobj"> ident ObjFormals line? "{" line? InitStatement+ "}" line?
+   Import = kw<"import"> ident line?
+
+   StatementBlock = line? "{" line? Rec_Statement "}" line?
+
+   Rec_Statement = line? R_Statement line?
+   R_Statement =
+     | comment Rec_Statement? -- comment
+     | External Rec_Statement? -- external
+     | Deftemp -- deftemp
+     | Defsynonym -- defsynonym     
+     | kw<"global"> ident CommaIdent* Rec_Statement? -- globals
+     | IfStatement  -- if
+     | kw<"pass"> Rec_Statement? -- pass
+     | kw<"return"> ReturnExp -- return
+     | ForStatement -- for
+     | WhileStatement  -- while
+     | Assignment -- assignment
+     | Lval Rec_Statement? -- call
+     | line Rec_Statement? -- line
+   CommaIdent = Comma ident
+
+   External = "#" ident "(" ExpComma* ")" line?
+
+   Deftemp = kw<"deftemp"> Lval "⇐" Exp Rec_Statement?
+   Defsynonym = Lval "≡" Exp Rec_Statement?
+
+   InitStatement = "•" ident "⇐" Exp (comment | line)*
+
+   IfStatement = kw<"if"> Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?
+   ElifStatement = kw<"elif"> Exp StatementBlock
+   ElseStatement = kw<"else"> StatementBlock
+
+   ForStatement = kw<"for"> ident kw<"in"> Exp StatementBlock Rec_Statement?
+   WhileStatement = kw<"while"> Exp StatementBlock Rec_Statement?
+
+   Assignment = 
+     | "[" Lval CommaLval+ "]" "⇐" Exp Rec_Statement? -- multiple
+     | Lval "⇐" Exp Rec_Statement? -- single
+
+   CommaLval = Comma Lval
+
+    ReturnExp =
+      | "[" ExpComma+ "]" Rec_Statement? -- multiple
+      | Exp Rec_Statement? -- single
+
+    ExpComma = Exp Comma?
+    
+    Exp =  BooleanAndOrIn
+
+    BooleanAndOrIn =
+      | BooleanAndOrIn andOrIn BooleanExp -- andOrIn
+      | BooleanExp -- default
+      
+    BooleanExp =
+      | BooleanExp boolNeq BooleanNot -- boolopneq
+      | BooleanExp boolOp BooleanNot -- boolop
+      | BooleanNot -- basic
+
+    BooleanNot =
+      | kw<"not"> BooleanExp -- not
+      | AddExp -- basic
+
+    AddExp =
+      | AddExp "+" MulExp  -- plus
+      | AddExp "-" MulExp  -- minus
+      | MulExp -- basic
+
+    MulExp =
+      | MulExp "*" ExpExp  -- times
+      | MulExp "/" ExpExp  -- divide
+      | ExpExp -- basic
+
+    ExpExp =
+      | Primary "^" ExpExp  -- power
+      | Primary -- basic
+
+    Primary =
+      | Primary "@" ident -- lookupident
+      | Primary "@" Primary -- lookup
+      | Primary "." ident -- fieldident
+      | Primary "." Primary -- field
+      | Primary "[" Exp "]" -- index
+      | Primary "[" digit+ ":" "]" -- nthslice
+      | ident Actuals -- identcall
+      | Primary Actuals -- call
+      | Atom -- atom
+
+    Atom =
+      | "[" "]" -- emptylistconst
+      | "{" "}" -- emptydict
+      | "(" Exp ")" -- paren
+      | "[" line? PrimaryComma+ line? "]" -- listconst
+      | "{" line? PairComma+ line? "}" -- dict
+      | lambda LambdaFormals? ":" Exp -- lambda
+      | phi -- phi
+      | "⊤" -- true
+      | "⊥" -- false
+      | External -- external
+      | "↪︎" ident -- subr
+      | kw<"range"> "(" Exp ")" -- range
+      | string -- string
+      | number -- number
+      | ident -- ident
+
+
+
+    PrimaryComma = Primary Comma?
+    PairComma = Pair Comma?
+    
+    Lval = Exp
+
+    Formals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+    ObjFormals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+    LambdaFormals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+
+    Formal = ident
+
+    FormalComma = Formal Comma?
+    
+    Actuals = 
+      | "(" ")" -- noactuals
+      | "(" ActualComma* ")" line? -- actuals
+
+   Actual = ParamName? Exp
+   ActualComma = comment? Actual Comma? line?
+
+   ParamName = ident "∷"
+
+    number =
+      | digit* "." digit+  -- fract
+      | digit+             -- whole
+
+    Pair = string ":" Exp Comma?
+  
+
+  andOrIn = (kw<"and"> | kw<"or"> | kw<"in">)
+  boolOp = (boolEq | boolNeq | "<=" | ">=" | ">" | "<")
+  boolEq = "="
+  boolNeq = "!="
+
+  string = "“" stringchar* "”"
+  stringchar = 
+    | "“" stringchar* "”" -- rec
+    | ~"“" ~"”" any -- other
+
+    keyword = (
+        kw<"defconst">
+      | kw<"deftemp">
+      | kw<"defobj">
+      | kw<"defvar">
+      | kw<"defn">
+      | kw<"useglobal">
+      | kw<"pass">
+      | kw<"return">
+      | kw<"if">
+      | kw<"elif">
+      | kw<"else">
+      | kw<"and">
+      | kw<"or">
+      | kw<"in">
+      | kw<"not">
+      | kw<"range">
+      | kw<"while">
+      | kw<"import">
+      | kw<"as">
+      | lambda
+      | phi
+      )
+      
+  lambda = ("λ" | kw<"%CE%BB">)
+  phi = ("ϕ" | kw<"%CF%95">)
+
+  kw<s> = "❲" s "❳"
+  ident  = ~keyword "❲" idchar+ "❳"
+  idchar =
+    | "❲" idchar+ "❳" -- rec
+    | ~"❲" ~"❳" any -- other
+
+  comment = "⌈" commentchar* "⌉"
+  commentchar = 
+    | "⌈" commentchar* "⌉" -- rec
+    | ~"⌈" ~"⌉" any -- other
+
+  eh = ident
+  fname = ident
+  msg = ident
+  ok = port
+  err = port
+  port = string
+
+  line = "⎩" (~"⎩" ~"⎭" any)* "⎭"
+
+  Comma = line? "," line?
+
+  ParaMark = "¶"
+}

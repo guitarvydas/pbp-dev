@@ -1,0 +1,38 @@
+defn delay_install (reg) {
+    register_component (reg, mkTemplate (“Delay”, ϕ, ↪︎delay_instantiator))
+}
+                           
+defobj Delay_Info () {
+    • counter ⇐ 0
+    • saved_message ⇐ ϕ
+}
+   
+defn delay_instantiator (reg, owner, name, template_data) {
+    name_with_id ≡ gensymbol (“delay”)
+    info ≡ #fresh (Delay_Info)
+    return make_leaf (name_with_id, owner, info, ↪︎delay_handler)
+}
+
+defvar DELAYDELAY ⇐ 5000
+
+defn first_time (m) {
+    return not is_tick (m)
+}
+
+defn delay_handler (eh, msg) {
+    info ≡ eh.instance_data
+    if first_time (msg) {
+        info.saved_message ⇐ msg
+        set_active (eh) ⌈ tell engine to keep running this component with 'ticks' ⌉
+    }
+    
+    count ≡ info.counter
+    deftemp next ⇐ count + 1
+    if info.counter >= DELAYDELAY {
+        set_idle (eh) ⌈ tell engine that we're finally done ⌉
+        forward (eh, “”, info.saved_message)
+        next ⇐ 0
+    }
+    info.counter ⇐ next
+}
+

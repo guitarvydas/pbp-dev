@@ -1,0 +1,13 @@
+ex {
+  Main = Statement
+  Statement = 
+    | #atom "<-" Expression Statement? -- assignment
+    | "return" Expression              -- return
+  Expression = 
+    | #atom "+" Expression  -- plus
+    | #atom                 -- primary
+  atom = primary &(space | end)
+  primary =
+    | letter+ -- id
+    | digit+  -- int
+}

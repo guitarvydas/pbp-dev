@@ -1,0 +1,6 @@
+#!/bin/bash
+# usage: ./rwgen spec.rewrite >out.js
+set -e
+T2T=../..
+REWRITE=$1
+node ${T2T}/lib/t2t.mjs ${REWRITE}

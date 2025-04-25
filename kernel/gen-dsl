@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+T2T=~/projects/t2t
+GRAMMAR=$1
+REWRITE=$2
+SUPPORT=./support.js
+STDIN=-
+${T2T}/generate-mjs ${T2T}/lib ${GRAMMAR} ${REWRITE} ${SUPPORT} ${STDIN}

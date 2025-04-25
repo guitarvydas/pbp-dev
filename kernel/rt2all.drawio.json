@@ -1,0 +1,2698 @@
+[
+  {
+    "name": "main",
+    "children": [
+      {
+        "name": "List Filenames",
+        "id": 7
+      },
+      {
+        "name": "Generate",
+        "id": 12
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "List Filenames",
+          "id": 7
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "List Filenames",
+          "id": 7
+        },
+        "target": {
+          "name": "Generate",
+          "id": 12
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "fini",
+        "target_port": "fini",
+        "source": {
+          "name": "List Filenames",
+          "id": 7
+        },
+        "target": {
+          "name": "Generate",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "List Filenames",
+          "id": 7
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "Python",
+        "target_port": "Python",
+        "source": {
+          "name": "Generate",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Generate",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "Javascript",
+        "target_port": "Javascript",
+        "source": {
+          "name": "Generate",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "CL",
+        "target_port": "CommonLisp",
+        "source": {
+          "name": "Generate",
+          "id": 12
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "List Filenames",
+    "children": [
+      {
+        "name": "'DONE",
+        "id": 5
+      },
+      {
+        "name": "1then2",
+        "id": 8
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "1",
+        "target": {
+          "name": "1then2",
+          "id": 8
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "2",
+        "target": {
+          "name": "1then2",
+          "id": 8
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "2",
+        "target_port": "",
+        "source": {
+          "name": "1then2",
+          "id": 8
+        },
+        "target": {
+          "name": "'DONE",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "fini",
+        "source": {
+          "name": "'DONE",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "1",
+        "target_port": "",
+        "source": {
+          "name": "1then2",
+          "id": 8
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "ALL List Filenames",
+    "children": [
+      {
+        "name": "'count.rt",
+        "id": 5
+      },
+      {
+        "name": "'monitor.rt",
+        "id": 8
+      },
+      {
+        "name": "'decode.rt",
+        "id": 11
+      },
+      {
+        "name": "'reverser.rt",
+        "id": 14
+      },
+      {
+        "name": "'delay.rt",
+        "id": 17
+      },
+      {
+        "name": "'empty.rt",
+        "id": 20
+      },
+      {
+        "name": "'DONE",
+        "id": 23
+      },
+      {
+        "name": "'shellout.rt",
+        "id": 26
+      },
+      {
+        "name": "1then2",
+        "id": 29
+      },
+      {
+        "name": "'0d.rt",
+        "id": 34
+      },
+      {
+        "name": "'stock.rt",
+        "id": 38
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "'count.rt",
+          "id": 5
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "'shellout.rt",
+          "id": 26
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'count.rt",
+          "id": 5
+        },
+        "target": {
+          "name": "'monitor.rt",
+          "id": 8
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'delay.rt",
+          "id": 17
+        },
+        "target": {
+          "name": "'shellout.rt",
+          "id": 26
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'reverser.rt",
+          "id": 14
+        },
+        "target": {
+          "name": "'delay.rt",
+          "id": 17
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'decode.rt",
+          "id": 11
+        },
+        "target": {
+          "name": "'reverser.rt",
+          "id": 14
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'monitor.rt",
+          "id": 8
+        },
+        "target": {
+          "name": "'decode.rt",
+          "id": 11
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "1",
+        "source": {
+          "name": "'empty.rt",
+          "id": 20
+        },
+        "target": {
+          "name": "1then2",
+          "id": 29
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "2",
+        "source": {
+          "name": "'empty.rt",
+          "id": 20
+        },
+        "target": {
+          "name": "1then2",
+          "id": 29
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "2",
+        "target_port": "",
+        "source": {
+          "name": "1then2",
+          "id": 29
+        },
+        "target": {
+          "name": "'DONE",
+          "id": 23
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'0d.rt",
+          "id": 34
+        },
+        "target": {
+          "name": "'stock.rt",
+          "id": 38
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'shellout.rt",
+          "id": 26
+        },
+        "target": {
+          "name": "'0d.rt",
+          "id": 34
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'stock.rt",
+          "id": 38
+        },
+        "target": {
+          "name": "'empty.rt",
+          "id": 20
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "fini",
+        "source": {
+          "name": "'DONE",
+          "id": 23
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'count.rt",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'monitor.rt",
+          "id": 8
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'decode.rt",
+          "id": 11
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'reverser.rt",
+          "id": 14
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'delay.rt",
+          "id": 17
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'shellout.rt",
+          "id": 26
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "1",
+        "target_port": "",
+        "source": {
+          "name": "1then2",
+          "id": 29
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'0d.rt",
+          "id": 34
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "'stock.rt",
+          "id": 38
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Generate",
+    "children": [
+      {
+        "name": "Front End",
+        "id": 8
+      },
+      {
+        "name": "Back End",
+        "id": 12
+      },
+      {
+        "name": "?A",
+        "id": 19
+      },
+      {
+        "name": "?B",
+        "id": 21
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Front End",
+          "id": 8
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "fini",
+        "target": {
+          "name": "Back End",
+          "id": 12
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "",
+        "target": {
+          "name": "?B",
+          "id": 21
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "?A",
+          "id": 19
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Front End",
+          "id": 8
+        },
+        "target": {
+          "name": "Back End",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Front End",
+          "id": 8
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "Javascript",
+        "target_port": "Javascript",
+        "source": {
+          "name": "Back End",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Back End",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "Python",
+        "target_port": "Python",
+        "source": {
+          "name": "Back End",
+          "id": 12
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "CL",
+        "target_port": "CL",
+        "source": {
+          "name": "Back End",
+          "id": 12
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Front End",
+    "children": [
+      {
+        "name": "Inhale",
+        "id": 5
+      },
+      {
+        "name": "Syntax Check",
+        "id": 9
+      },
+      {
+        "name": "Semantics Check",
+        "id": 13
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Inhale",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Syntax Check",
+          "id": 9
+        },
+        "target": {
+          "name": "Semantics Check",
+          "id": 13
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Inhale",
+          "id": 5
+        },
+        "target": {
+          "name": "Syntax Check",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Semantics Check",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Semantics Check",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Syntax Check",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Inhale",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Back End",
+    "children": [
+      {
+        "name": "Generate Javascript",
+        "id": 8
+      },
+      {
+        "name": "Generate Python",
+        "id": 13
+      },
+      {
+        "name": "Generate Common Lisp",
+        "id": 18
+      },
+      {
+        "name": "Cleanup",
+        "id": 23
+      },
+      {
+        "name": "Cleanup",
+        "id": 27
+      },
+      {
+        "name": "Cleanup",
+        "id": 31
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Generate Common Lisp",
+          "id": 18
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "fini",
+        "target": {
+          "name": "Generate Common Lisp",
+          "id": 18
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Generate Javascript",
+          "id": 8
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Generate Python",
+          "id": 13
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "fini",
+        "target": {
+          "name": "Generate Python",
+          "id": 13
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "fini",
+        "target": {
+          "name": "Generate Javascript",
+          "id": 8
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Generate Javascript",
+          "id": 8
+        },
+        "target": {
+          "name": "Cleanup",
+          "id": 31
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Generate Python",
+          "id": 13
+        },
+        "target": {
+          "name": "Cleanup",
+          "id": 23
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Generate Common Lisp",
+          "id": 18
+        },
+        "target": {
+          "name": "Cleanup",
+          "id": 27
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Generate Javascript",
+          "id": 8
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Generate Python",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Generate Common Lisp",
+          "id": 18
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "Python",
+        "source": {
+          "name": "Cleanup",
+          "id": 23
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Cleanup",
+          "id": 23
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "Javascript",
+        "source": {
+          "name": "Cleanup",
+          "id": 31
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Cleanup",
+          "id": 31
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "CL",
+        "source": {
+          "name": "Cleanup",
+          "id": 27
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Cleanup",
+          "id": 27
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Generate Javascript",
+    "children": [
+      {
+        "name": "RT to Javascript",
+        "id": 6
+      },
+      {
+        "name": "Exhale Javascript",
+        "id": 10
+      },
+      {
+        "name": "$ python3 jsrelocate.py 55",
+        "id": 14
+      },
+      {
+        "name": "Grep for Errors",
+        "id": 18
+      },
+      {
+        "name": "String Concat *",
+        "id": 22
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "RT to Javascript",
+          "id": 6
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "fini",
+        "target": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Exhale Javascript",
+          "id": 10
+        },
+        "target": {
+          "name": "$ python3 jsrelocate.py 55",
+          "id": 14
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "RT to Javascript",
+          "id": 6
+        },
+        "target": {
+          "name": "Exhale Javascript",
+          "id": 10
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ python3 jsrelocate.py 55",
+          "id": 14
+        },
+        "target": {
+          "name": "Grep for Errors",
+          "id": 18
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Grep for Errors",
+          "id": 18
+        },
+        "target": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "RT to Javascript",
+          "id": 6
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Exhale Javascript",
+          "id": 10
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ python3 jsrelocate.py 55",
+          "id": 14
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Grep for Errors",
+          "id": 18
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Generate Python",
+    "children": [
+      {
+        "name": "RT to Python",
+        "id": 6
+      },
+      {
+        "name": "Exhale Python",
+        "id": 10
+      },
+      {
+        "name": "$ python3 pyrelocate.py 55",
+        "id": 14
+      },
+      {
+        "name": "Grep for Errors",
+        "id": 18
+      },
+      {
+        "name": "String Concat *",
+        "id": 22
+      },
+      {
+        "name": "?A",
+        "id": 27
+      },
+      {
+        "name": "'/tmp/xxx.xxx",
+        "id": 29
+      },
+      {
+        "name": "1then2",
+        "id": 32
+      },
+      {
+        "name": "syncfilewrite",
+        "id": 37
+      },
+      {
+        "name": "?B",
+        "id": 42
+      },
+      {
+        "name": "?C",
+        "id": 44
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "fini",
+        "target": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "RT to Python",
+          "id": 6
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "'/tmp/xxx.xxx",
+          "id": 29
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "2",
+        "target": {
+          "name": "1then2",
+          "id": 32
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Exhale Python",
+          "id": 10
+        },
+        "target": {
+          "name": "$ python3 pyrelocate.py 55",
+          "id": 14
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "RT to Python",
+          "id": 6
+        },
+        "target": {
+          "name": "Exhale Python",
+          "id": 10
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Grep for Errors",
+          "id": 18
+        },
+        "target": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ python3 pyrelocate.py 55",
+          "id": 14
+        },
+        "target": {
+          "name": "Grep for Errors",
+          "id": 18
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "done",
+        "target_port": "",
+        "source": {
+          "name": "syncfilewrite",
+          "id": 37
+        },
+        "target": {
+          "name": "?B",
+          "id": 42
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "✗",
+        "target_port": "",
+        "source": {
+          "name": "syncfilewrite",
+          "id": 37
+        },
+        "target": {
+          "name": "?C",
+          "id": 44
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "1",
+        "source": {
+          "name": "'/tmp/xxx.xxx",
+          "id": 29
+        },
+        "target": {
+          "name": "1then2",
+          "id": 32
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "1",
+        "target_port": "filename",
+        "source": {
+          "name": "1then2",
+          "id": 32
+        },
+        "target": {
+          "name": "syncfilewrite",
+          "id": 37
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "2",
+        "target_port": "input",
+        "source": {
+          "name": "1then2",
+          "id": 32
+        },
+        "target": {
+          "name": "syncfilewrite",
+          "id": 37
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "RT to Python",
+          "id": 6
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Exhale Python",
+          "id": 10
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Grep for Errors",
+          "id": 18
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ python3 pyrelocate.py 55",
+          "id": 14
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Generate Common Lisp",
+    "children": [
+      {
+        "name": "RT to Common Lisp",
+        "id": 6
+      },
+      {
+        "name": "Exhale Common Lisp",
+        "id": 10
+      },
+      {
+        "name": "$ python3 clrelocate.py 60",
+        "id": 14
+      },
+      {
+        "name": "Grep for Errors",
+        "id": 18
+      },
+      {
+        "name": "String Concat *",
+        "id": 22
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "fini",
+        "target_port": "fini",
+        "target": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "RT to Common Lisp",
+          "id": 6
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Exhale Common Lisp",
+          "id": 10
+        },
+        "target": {
+          "name": "$ python3 clrelocate.py 60",
+          "id": 14
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "RT to Common Lisp",
+          "id": 6
+        },
+        "target": {
+          "name": "Exhale Common Lisp",
+          "id": 10
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Grep for Errors",
+          "id": 18
+        },
+        "target": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ python3 clrelocate.py 60",
+          "id": 14
+        },
+        "target": {
+          "name": "Grep for Errors",
+          "id": 18
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "RT to Common Lisp",
+          "id": 6
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Exhale Common Lisp",
+          "id": 10
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Grep for Errors",
+          "id": 18
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ python3 clrelocate.py 60",
+          "id": 14
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Inhale",
+    "children": [
+      {
+        "name": "$ ./ndsl internalize.ohm internalize.rewrite ",
+        "id": 5
+      },
+      {
+        "name": "Read Text File",
+        "id": 9
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Read Text File",
+          "id": 9
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Read Text File",
+          "id": 9
+        },
+        "target": {
+          "name": "$ ./ndsl internalize.ohm internalize.rewrite ",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl internalize.ohm internalize.rewrite ",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl internalize.ohm internalize.rewrite ",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Read Text File",
+          "id": 9
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Syntax Check",
+    "children": [
+      {
+        "name": "$ ./ndsl syntax.ohm syntax.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl syntax.ohm syntax.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl syntax.ohm syntax.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl syntax.ohm syntax.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Semantics Check",
+    "children": [
+      {
+        "name": "$ ./ndsl semantics.ohm semantics.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl semantics.ohm semantics.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl semantics.ohm semantics.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl semantics.ohm semantics.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "RT to Javascript",
+    "children": [
+      {
+        "name": "$ ./ndsl emit.ohm emitjs.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl emit.ohm emitjs.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl emit.ohm emitjs.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl emit.ohm emitjs.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "RT to Python",
+    "children": [
+      {
+        "name": "$ ./ndsl emit.ohm emitPython.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl emit.ohm emitPython.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl emit.ohm emitPython.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl emit.ohm emitPython.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "RT to Common Lisp",
+    "children": [
+      {
+        "name": "$ ./ndsl emit.ohm emitcl.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl emit.ohm emitcl.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl emit.ohm emitcl.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl emit.ohm emitcl.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Uninternalize",
+    "children": [
+      {
+        "name": "$ node unencode.mjs",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ node unencode.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ node unencode.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ node unencode.mjs",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Decode For Javascript",
+    "children": [
+      {
+        "name": "$ ./ndsl jsdecode.ohm jsdecode.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl jsdecode.ohm jsdecode.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl jsdecode.ohm jsdecode.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl jsdecode.ohm jsdecode.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Javascript Indenter",
+    "children": [
+      {
+        "name": "$ node jsindenter.mjs",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ node jsindenter.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ node jsindenter.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ node jsindenter.mjs",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Exhale Javascript",
+    "children": [
+      {
+        "name": "Decode For Javascript",
+        "id": 5
+      },
+      {
+        "name": "Uninternalize",
+        "id": 9
+      },
+      {
+        "name": "Javascript Indenter",
+        "id": 13
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Decode For Javascript",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Decode For Javascript",
+          "id": 5
+        },
+        "target": {
+          "name": "Uninternalize",
+          "id": 9
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Uninternalize",
+          "id": 9
+        },
+        "target": {
+          "name": "Javascript Indenter",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Decode For Javascript",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Uninternalize",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Javascript Indenter",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Javascript Indenter",
+          "id": 13
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "seq12",
+    "children": [
+      {
+        "name": "1then2",
+        "id": 6
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "1",
+        "target_port": "1",
+        "target": {
+          "name": "1then2",
+          "id": 6
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "2",
+        "target_port": "2",
+        "target": {
+          "name": "1then2",
+          "id": 6
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "2",
+        "target_port": "2",
+        "source": {
+          "name": "1then2",
+          "id": 6
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "1",
+        "target_port": "1",
+        "source": {
+          "name": "1then2",
+          "id": 6
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "seq123",
+    "children": [
+      {
+        "name": "1then2",
+        "id": 8
+      },
+      {
+        "name": "1then2",
+        "id": 13
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "1",
+        "target_port": "1",
+        "target": {
+          "name": "1then2",
+          "id": 8
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "2",
+        "target_port": "2",
+        "target": {
+          "name": "1then2",
+          "id": 8
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "3",
+        "target_port": "2",
+        "target": {
+          "name": "1then2",
+          "id": 13
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "2",
+        "target_port": "1",
+        "source": {
+          "name": "1then2",
+          "id": 8
+        },
+        "target": {
+          "name": "1then2",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "1",
+        "target_port": "1",
+        "source": {
+          "name": "1then2",
+          "id": 8
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "1",
+        "target_port": "2",
+        "source": {
+          "name": "1then2",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "2",
+        "target_port": "3",
+        "source": {
+          "name": "1then2",
+          "id": 13
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Encode",
+    "children": [
+      {
+        "name": "$ node mencode.mjs",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ node mencode.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ node mencode.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ node mencode.mjs",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Exhale Python",
+    "children": [
+      {
+        "name": "Decode for Python",
+        "id": 5
+      },
+      {
+        "name": "Uninternalize",
+        "id": 9
+      },
+      {
+        "name": "Python Indenter",
+        "id": 13
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Decode for Python",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Decode for Python",
+          "id": 5
+        },
+        "target": {
+          "name": "Uninternalize",
+          "id": 9
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Uninternalize",
+          "id": 9
+        },
+        "target": {
+          "name": "Python Indenter",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Decode for Python",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Uninternalize",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Python Indenter",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Python Indenter",
+          "id": 13
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Decode for Python",
+    "children": [
+      {
+        "name": "$ ./ndsl pydecode.ohm pydecode.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl pydecode.ohm pydecode.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl pydecode.ohm pydecode.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl pydecode.ohm pydecode.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Python Indenter",
+    "children": [
+      {
+        "name": "$ node indenter.mjs",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ node indenter.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ node indenter.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ node indenter.mjs",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Grep for Errors",
+    "children": [
+      {
+        "name": "$ python3 errgrep.py",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ python3 errgrep.py",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ python3 errgrep.py",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ python3 errgrep.py",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "?inlineA",
+    "children": [
+      {
+        "name": "?A",
+        "id": 4
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "?A",
+          "id": 4
+        }
+      },
+      {
+        "dir": 3,
+        "source_port": "",
+        "target_port": ""
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "?inlineB",
+    "children": [
+      {
+        "name": "?B",
+        "id": 4
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "?B",
+          "id": 4
+        }
+      },
+      {
+        "dir": 3,
+        "source_port": "",
+        "target_port": ""
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "?inlineC",
+    "children": [
+      {
+        "name": "?C",
+        "id": 4
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "?C",
+          "id": 4
+        }
+      },
+      {
+        "dir": 3,
+        "source_port": "",
+        "target_port": ""
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "palette",
+    "children": [
+      {
+        "name": "?inlineC",
+        "id": 2
+      }
+    ],
+    "connections": [],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Exhale Common Lisp",
+    "children": [
+      {
+        "name": "Decode For Common Lisp",
+        "id": 5
+      },
+      {
+        "name": "Uninternalize",
+        "id": 9
+      },
+      {
+        "name": "Common Lisp Indenter",
+        "id": 13
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Decode For Common Lisp",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Decode For Common Lisp",
+          "id": 5
+        },
+        "target": {
+          "name": "Uninternalize",
+          "id": 9
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Uninternalize",
+          "id": 9
+        },
+        "target": {
+          "name": "Common Lisp Indenter",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Decode For Common Lisp",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Uninternalize",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Common Lisp Indenter",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Common Lisp Indenter",
+          "id": 13
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Decode For Common Lisp",
+    "children": [
+      {
+        "name": "$ ./ndsl cldecode.ohm cldecode.rewrite",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ ./ndsl cldecode.ohm cldecode.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ ./ndsl cldecode.ohm cldecode.rewrite",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ ./ndsl cldecode.ohm cldecode.rewrite",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Common Lisp Indenter",
+    "children": [
+      {
+        "name": "$ node clindenter.mjs",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ node clindenter.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ node clindenter.mjs",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ node clindenter.mjs",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Cleanup",
+    "children": [
+      {
+        "name": "$ python3 cleanup.py",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "$ python3 cleanup.py",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "$ python3 cleanup.py",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "$ python3 cleanup.py",
+          "id": 5
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  },
+  {
+    "name": "Write To Python File",
+    "children": [
+      {
+        "name": "'/tmp/xxx.xxx",
+        "id": 3
+      },
+      {
+        "name": "1then2",
+        "id": 6
+      },
+      {
+        "name": "syncfilewrite",
+        "id": 11
+      },
+      {
+        "name": "?B",
+        "id": 16
+      },
+      {
+        "name": "?C",
+        "id": 18
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "'/tmp/xxx.xxx",
+          "id": 3
+        }
+      },
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "2",
+        "target": {
+          "name": "1then2",
+          "id": 6
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "done",
+        "target_port": "",
+        "source": {
+          "name": "syncfilewrite",
+          "id": 11
+        },
+        "target": {
+          "name": "?B",
+          "id": 16
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "✗",
+        "target_port": "",
+        "source": {
+          "name": "syncfilewrite",
+          "id": 11
+        },
+        "target": {
+          "name": "?C",
+          "id": 18
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "1",
+        "source": {
+          "name": "'/tmp/xxx.xxx",
+          "id": 3
+        },
+        "target": {
+          "name": "1then2",
+          "id": 6
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "1",
+        "target_port": "filename",
+        "source": {
+          "name": "1then2",
+          "id": 6
+        },
+        "target": {
+          "name": "syncfilewrite",
+          "id": 11
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "2",
+        "target_port": "input",
+        "source": {
+          "name": "1then2",
+          "id": 6
+        },
+        "target": {
+          "name": "syncfilewrite",
+          "id": 11
+        }
+      }
+    ],
+    "file": "rt2all.drawio"
+  }
+]

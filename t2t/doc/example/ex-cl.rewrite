@@ -1,0 +1,10 @@
+% rewrite ex {
+  Main [Statement] = ‛«Statement»’
+  Statement_assignment [a _assign e rec?] = ‛(let ((«a» «e»)) ⤷\n«rec»⤶)’
+  Statement_return [_return e] = ‛«e»’
+  Expression_plus [a _op e] = ‛(«_op» «a» «e»)’
+  Expression_primary [a] = ‛«a»’
+  atom [a _lookahead] = ‛«a»’
+  primary_id [letters+] = ‛«letters»’
+  primary_int [digits+] = ‛«digits»’
+}

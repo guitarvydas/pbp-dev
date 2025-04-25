@@ -1,0 +1,8 @@
+(defun alist2hash (a)
+  (let ((ht (make-hash-table :test 'equal)))
+    (mapc #'(lambda (pair)
+              (let ((key (symbol-name (car pair)))
+                    (v (cdr pair)))
+                (setf (gethash key ht) v)))
+          a)
+    ht))

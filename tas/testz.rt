@@ -1,0 +1,4 @@
+defn probeZ_instantiate (reg, owner, name, template_data) {
+    name_with_id ≡ gensymbol (“?Z”)
+    return make_leaf (name_with_id, owner,  ϕ,  ↪︎probe_handler)
+}

@@ -1,0 +1,18 @@
+defn monitor_install (reg) {
+    register_component (reg, mkTemplate (“@”, ϕ, ↪︎monitor_instantiator))
+}
+
+defn monitor_instantiator (reg, owner, name, template_data) {      
+    name_with_id ≡ gensymbol (“@”)
+    return make_leaf (name_with_id, owner, ϕ, ↪︎monitor_handler)
+}
+
+defn monitor_handler (eh, msg) {
+    deftemp s ⇐ msg.datum.v
+    deftemp i ⇐ #asint (s)
+    while i > 0 {
+        s ⇐ #strcons (“ ”, s)
+        i ⇐ i - 1
+    }
+    #print_stdout (s)
+}

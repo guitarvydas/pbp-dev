@@ -1,0 +1,113 @@
+% version of 0D that uses strings only
+
+decl ticks
+  • a number, used for tracking time within the system - every atomic set of message routing (see Containers) advance 'ticks
+
+decl gensymbol (s) -> name
+  • returns a unique name based on the prefix 's' on every invocation, names are created by suffixing 's' by a unique unicode subscript number on each invocation
+
+decl template Datum  
+  • Datum is the payload of Messages 
+  • template that has at least 4 fields
+    • 's'      	   the string making up the payload data
+    • 𝜌 'clone'	   a method that returns a deep clone of the Datum
+    • 𝜌 'reclaim'	   a method that discards the Datum and all of its data (essentially not needed in a Garbage Collected environment)
+    • 'other'	   an object reserved for use by programmers on a per-project basis
+  • instantiated by the syntax "fresh (Datum, e)" where 'e' becomes the value of the 'v' field
+
+decl ❲fresh datum string❳ (s)
+  • convenience function that returns a fresh string Datum with parameter 's' in the vield 's'
+
+decl ❲fresh datum bang❳
+  • convenience function that returns a fresh bang Datum, with 'v' set to the string "!"
+  • bang is a dataless Datum that is used only to trigger events
+
+decl Port
+  • string used as an identifier for Message Ports
+  • 𝜌 ❲clone port❳ (p)
+    • a convenience function that returns a deep copy of the given port
+    • this returns a string-copy of p
+    • used only by Message for cloning - warn if used elsewhere
+
+decl template Message
+  • a 2-field object
+    • 'port'		a Port
+    • 'payload' 	a Datum
+  • instantiated by the syntax "fresh (Message, p, e)" where 'p' is a Port and 'e' is a Datum
+
+decl template Connector
+  • a 3-field object
+    • 'direction'		one of {"down" | "across" | "up" | "through"}
+    • 'sender'			pair { Component, Port }
+    • 'receiver'		pair { Component, Port }
+  • abstract, never instantiated directly
+
+  • decl subtemplate Down
+    • a 3-field object
+      • 'direction'		"down"
+      • 'sender'		pair { Component, Port }
+      • 'receiver'		pair { Component, Port }
+    • instantiated by "fresh (Down, { Component, Port }, { Component, Port })"
+
+  • decl subtemplate Across
+    • a 3-field object
+      • 'direction'		"across"
+      • 'sender'		pair { Component, Port }
+      • 'receiver'		pair { Component, Port }
+    • instantiated by "fresh (Across, { Component, Port }, { Component, Port })"
+
+  • decl subtemplate Up
+    • a 3-field object
+      • 'direction'		"up"
+      • 'sender'		pair { Component, Port }
+      • 'receiver'		pair { Component, Port }
+    • instantiated by "fresh (Up, { Component, Port }, { Component, Port })"
+
+  • decl subtemplate Through
+    • a 3-field object
+      • 'direction'		"through"
+      • 'sender'		pair { Component, Port }
+      • 'receiver'		pair { Component, Port }
+    • instantiated by "fresh (Through, { Component, Port }, { Component, Port })"
+
+decl template Eh
+  • Eh is a software component
+  • 'inq'		a queue of incoming Messages
+  • 'outq'		a queue of outgoing Messages
+
+  • template Eh is abstract, never instantiated directly
+  
+  •
+  
+
+  decl subtemplate Leaf
+    • 'handler'	   method,
+      • clears 'outq', hence, 'outq' becomes empty
+      • if 'inq' is not empty, this method pops the first message from the front of 'inq' and calls 'code' with three arguments, self, output, and the popped message
+      • if 'inq' is empty, this method does nothing more and returns, leaving 'outq' empty
+    • 'code'	   external method that takes 3 arguments self, output and a message to be processed
+    • Leaf is instantiated by "fresh (Leaf, lang, code-name)"
+      • where lang is a string containing the name of the underlying programming language which implements processing code for this Leaf
+      • where code-name is the name of an accessible function implemented in the underlying programming language
+        • where the named function takes 3 arguments - self, [output, ❲mark active❳, ❲mark idle❳, ❲fresh Port❳, ❲fresh Datum❳, ❲fresh ❲String Datum❳❳], message
+         • output is a method, callable from the underlying programming language, which appends an output message onto the back of 'outq'
+         • output takes 3 arguments, self, a Port, a Datum
+         • the second argument is a form of dependency injection which supplies a list of exactly three functions to the external method 'code'
+	 • ❲mark active❳ is a method that takes one argument - self - and marks the Leaf as needing more time (being active and requiring more ticks)
+	 • ❲mark idle❳ is a method that takes one argument - self - and marks the Leaf as being quiescent - the default - this method is used mostly to unmark a previously active Leaf
+	 • ❲fresh Port❳ is a method that takes two arguments - self and a string name of a Port - the method returns a handle to a newly-created Port
+	 • ❲fresh Datum❳ is a method that takes two arguments - self and an array of bytes - the method returns a handle to a newly-created Datum
+	 • ❲fresh ❲String Datum❳❳ is a method that takes two arguments - self and a string - the method returns a handle to a newly-created Datum
+
+  decl subtemplate Container
+    • 'handler'	   method,
+      • first, this method clears 'outq', hence, 'outq' becomes empty
+      • then, if 'inq' is not empty, this method pops the first message from the front of 'inq' and calls the private method ❲container handler❳ with two arguments, self, and the popped message
+      • else, if 'inq' is empty, this method does nothing more and returns, leaving 'outq' empty
+    • 'children'	a list of child components that belong to this given Container
+    • 'connections'	a list of connections between children (and self)
+    • 𝜌 '❲container handler❳'		private method that handles incoming messages by invoking "𝜌 route", takes 2 parameters self and the popped message
+    • 𝜌 'route'				private method that handles routes message internally using the 'connections' list, takes 2 parameters self and a message, first increments system variable "tick"
+    • λ '❲any child ready❳' -> bool	private function that returns true if any direct child is ready (i.e. contains a non-empty inq, or, is marked active)
+    • 𝜌 '❲step children❳'		private method that runs every child for one step (a "tick")
+    • 𝜌 '❲step child❳' -> [❲began long run❳, ❲continued long run❳, ❲ended long run❳]	private method, takes 3 parameters self, child, message

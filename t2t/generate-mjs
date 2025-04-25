@@ -1,0 +1,10 @@
+#!/bin/bash
+# usage: ./generate-mjs 'libdir' 'grammar' 'rewrite' 'support.js' > 'dsl.mjs'
+# (supply a library directory, a grammar file and a rewrite file, support code (if any), exhale a generated DSL written in Javascript)
+set -e
+LIB=$1
+GRAMMAR=$2
+REWRITE=$3
+SUPPORT=$4
+node ${LIB}/t2t.mjs ${REWRITE} >temp.rewrite.mjs
+cat ${LIB}/front.part.js ${GRAMMAR} ${LIB}/middle.part.js ${LIB}/args.part.js ${SUPPORT} temp.rewrite.mjs ${LIB}/tail.part.js

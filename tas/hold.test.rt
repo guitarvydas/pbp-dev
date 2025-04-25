@@ -1,0 +1,59 @@
+defn container_instantiator (reg, owner, container_name, desc) {
+    global enumDown, enumUp, enumAcross, enumThrough
+    container ≡ make_container (container_name, owner)
+    children ≡ []
+    children_by_id ≡ {} ⌈ not strictly necessary, but, we can remove 1 runtime lookup by “compiling it out“ here⌉
+    ⌈ collect children⌉
+    for child_desc in desc@children {
+        child_instance ≡ get_component_instance (reg, child_desc@name, container)
+        children.append (child_instance)
+        children_by_id [child_desc@id] ≡ child_instance }
+    container.children ⇐ children
+    me ≡ container
+    
+    connectors ≡ []
+    for proto_conn in desc@connections {
+        source_component ≡ ϕ
+        target_component ≡ ϕ
+        connector ≡ Connector ()
+        if proto_conn@dir = enumDown {
+            ⌈ JSON: {'dir': 0, 'source': {'name': '', 'id': 0}, 'source_port': '', 'target': {'name': 'Echo', 'id': 12}, 'target_port': ''},⌉
+            connector.direction ⇐ “down”
+            connector.sender ⇐ Sender (me.name, me, proto_conn@source_port)
+            target_component ≡ children_by_id [proto_conn@target@id]
+            if (target_component = ϕ) {
+                load_error (strcons (“internal error: .Down connection target internal error ”, proto_conn@target))}
+            else{
+                connector.receiver ⇐ Receiver (target_component.name, target_component.inq, proto_conn@target_port, target_component)
+                connectors.append (connector) }}
+        elif proto_conn@dir = enumAcross {
+            connector.direction ⇐ “across”
+            source_component ≡ children_by_id [proto_conn@source@id]
+            target_component ≡ children_by_id [proto_conn@target@id]
+            if source_component = ϕ {
+                load_error (strcons (“internal error: .Across connection source not ok ”, proto_conn@source)) }
+            else {
+                connector.sender ⇐ Sender (source_component.name, source_component, proto_conn@source_port)
+                if target_component = ϕ {
+                    load_error (strcons (“internal error: .Across connection target not ok ”, proto_conn.target)) }
+                else {
+                    connector.receiver ⇐ Receiver (target_component.name, target_component.inq, proto_conn@target_port, target_component)
+                    connectors.append (connector)}}}
+        elif proto_conn@dir = enumUp {
+            connector.direction ⇐ “up”
+            source_component ≡ children_by_id [proto_conn@source@id]
+            if source_component = ϕ {
+                print (strcons (“internal error: .Up connection source not ok ”, proto_conn@source)) }
+            else {
+                connector.sender ⇐ Sender (source_component.name, source_component, proto_conn@source_port)
+                connector.receiver ⇐ Receiver (me.name, container.outq, proto_conn@target_port, me)
+                connectors.append (connector) }}
+        elif proto_conn@dir = enumThrough {
+            connector.direction ⇐ “through”
+            connector.sender ⇐ Sender (me.name, me, proto_conn@source_port)
+            connector.receiver ⇐ Receiver (me.name, container.outq, proto_conn@target_port, me)
+            connectors.append (connector) }}
+            
+    container.connections ⇐ connectors
+    return container
+}

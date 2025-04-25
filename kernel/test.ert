@@ -1,0 +1,6 @@
+❲defn❳ ❲subscripted_digit❳ (❲n❳) {
+  ❲global❳ ❲digits❳
+  ❲if❳ (❲n❳ >=  0 ❲and❳ ❲n❳ <=  29) {
+    ❲return❳ ❲digits❳ [❲n❳]
+  }
+}

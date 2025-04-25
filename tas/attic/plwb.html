@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RT Transpiler</title>
+    <style>
+        .row {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .tagbox {
+            margin-bottom: 5px;
+            padding: 5px;
+            font-family: monospace;
+        }
+        
+        .kvbox {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .textarea {
+            width: 100%;
+            font-family: monospace;
+            overflow: scroll;
+            white-space: pre; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- First row with 4 kvboxes -->
+        <div class="row">
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Javascript">
+                <textarea class="textarea" rows="15" columns="70" readonly></textarea>
+            </div>
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Python">
+                <textarea class="textarea" rows="5" readonly></textarea>
+            </div>
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="CommonLisp">
+                <textarea id="cl" class="textarea" rows="5" readonly></textarea>
+            </div>
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="WASM">
+                <textarea class="textarea" rows="5" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- Second row with 2 kvboxes -->
+        <div class="row">
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Errors">
+                <textarea id="errors" class="textarea" rows="5" readonly></textarea>
+            </div>
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Info">
+                <textarea id="info" class="textarea" rows="5" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- Third row with 1 kvbox -->
+        <div class="row">
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Live">
+                <textarea class="textarea" rows="15" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize buffers for each kvbox
+        const buffers = new Map();
+        
+        // Initialize WebSocket connection
+        const ws = new WebSocket('ws://localhost:8965');
+
+        // Function to update textarea and scroll to bottom
+        function updateTextArea(textarea, content) {
+            textarea.value = content;
+            textarea.scrollTop = textarea.scrollHeight;
+        }
+
+        // Initialize buffers for each kvbox
+        document.querySelectorAll('.tagbox').forEach(tagbox => {
+            buffers.set(tagbox.value, '');
+        });
+
+        // WebSocket event handlers
+        ws.onopen = () => {
+            console.log('Connected to WebSocket server');
+            const status = '-- opened --\n';
+            buffers.set('CommonLisp', status);
+            buffers.set('Errors', status);
+            updateTextArea(document.getElementById('cl'), status);
+            updateTextArea(document.getElementById('errors'), status);
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            const status = '-- websocket error --\n';
+            buffers.set('CommonLisp', buffers.get('CommonLisp') + status);
+            buffers.set('Errors', buffers.get('Errors') + status);
+            updateTextArea(document.getElementById('cl'), buffers.get('CommonLisp'));
+            updateTextArea(document.getElementById('errors'), buffers.get('Errors'));
+        };
+
+        ws.onclose = () => {
+            console.log('Disconnected from WebSocket server');
+            const status = '-- disconnected --\n';
+            buffers.set('CommonLisp', buffers.get('CommonLisp') + status);
+            buffers.set('Errors', buffers.get('Errors') + status);
+            updateTextArea(document.getElementById('cl'), buffers.get('CommonLisp'));
+            updateTextArea(document.getElementById('errors'), buffers.get('Errors'));
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                
+                // Get all tagboxes
+                const tagboxes = document.querySelectorAll('.tagbox');
+                
+                // Handle both array and single object cases
+                const dataArray = Array.isArray(data) ? data : [data];
+                
+                // For each tagbox
+                tagboxes.forEach(tagbox => {
+                    const tagValue = tagbox.value;
+                    const textarea = tagbox.nextElementSibling;
+                    
+                    // Collect all values for this tag across the array
+                    const values = dataArray
+                        .map(item => item[tagValue])
+                        .filter(value => value !== undefined);
+                    
+                    if (values.length > 0) {
+                        // Append new values to buffer with separator
+                        const newContent = values.join('\n¶\n') + '\n';
+                        buffers.set(tagValue, buffers.get(tagValue) + newContent);
+                        
+                        // Update textarea with full buffer content
+                        updateTextArea(textarea, buffers.get(tagValue));
+                    }
+                });
+            } catch (error) {
+                console.error('Error processing message:', error);
+                const errorMessage = `Error processing message: ${error.message}\n`;
+                buffers.set('Errors', buffers.get('Errors') + errorMessage);
+                updateTextArea(document.getElementById('errors'), buffers.get('Errors'));
+            }
+        };
+    </script>
+</body>
+</html>

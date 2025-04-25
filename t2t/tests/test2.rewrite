@@ -1,0 +1,18 @@
+% parameter paramA
+% parameter paramB
+% parameter paramC
+
+% rewrite example {
+Main [a (_semi b)+ c d+]=
+  ⎡ ⎨print ‛pre down a=«a» _semi=«_semi» b=«b» c=«c» d=«d»’⎬
+    ⎡ paramA=‛«a»’
+      ⎡ paramB=‛«b»’
+        ⎡ paramC=‛«c»’
+          ⎡ ⎨print ‛hello’⎬
+            ‛... ⎨print2 ‛middle’ ‛2nd arg’⎬ «a»«_semi»⟪paramB⟫«c»«d»...’ 
+          ⎦
+        ⎦
+      ⎦
+    ⎦
+  ⎦
+}
