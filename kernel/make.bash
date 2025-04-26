@@ -6,7 +6,7 @@ node das2json.js rt2all.drawio
 ./rt 'stock'
 NOW=$(date)
 FRESHDIR="before-${NOW}"
-mkdir ../zd/"${FRESHDIR}"
-mv ../zd/kernel0d.py ../zd/"${FRESHDIR}"
+mkdir ./"${FRESHDIR}"
+mv ./kernel0d.py ./"${FRESHDIR}"
 cat 0d.py shellout.py stock.py >kernel0d.py
 

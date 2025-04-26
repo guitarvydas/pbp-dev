@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../zd')
+sys.path.insert(0, '../kernel')
 import kernel0d as zd
 
 try:

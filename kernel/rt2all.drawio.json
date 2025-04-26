@@ -477,10 +477,6 @@
       {
         "name": "?A",
         "id": 19
-      },
-      {
-        "name": "?B",
-        "id": 21
       }
     ],
     "connections": [
@@ -500,15 +496,6 @@
         "target": {
           "name": "Back End",
           "id": 12
-        }
-      },
-      {
-        "dir": 0,
-        "source_port": "fini",
-        "target_port": "",
-        "target": {
-          "name": "?B",
-          "id": 21
         }
       },
       {
@@ -1052,30 +1039,6 @@
       {
         "name": "String Concat *",
         "id": 22
-      },
-      {
-        "name": "?A",
-        "id": 27
-      },
-      {
-        "name": "'/tmp/xxx.xxx",
-        "id": 29
-      },
-      {
-        "name": "1then2",
-        "id": 32
-      },
-      {
-        "name": "syncfilewrite",
-        "id": 37
-      },
-      {
-        "name": "?B",
-        "id": 42
-      },
-      {
-        "name": "?C",
-        "id": 44
       }
     ],
     "connections": [
@@ -1098,24 +1061,6 @@
         }
       },
       {
-        "dir": 0,
-        "source_port": "",
-        "target_port": "",
-        "target": {
-          "name": "'/tmp/xxx.xxx",
-          "id": 29
-        }
-      },
-      {
-        "dir": 0,
-        "source_port": "",
-        "target_port": "2",
-        "target": {
-          "name": "1then2",
-          "id": 32
-        }
-      },
-      {
         "dir": 1,
         "source_port": "",
         "target_port": "",
@@ -1165,71 +1110,6 @@
         "target": {
           "name": "Grep for Errors",
           "id": 18
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "done",
-        "target_port": "",
-        "source": {
-          "name": "syncfilewrite",
-          "id": 37
-        },
-        "target": {
-          "name": "?B",
-          "id": 42
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "✗",
-        "target_port": "",
-        "source": {
-          "name": "syncfilewrite",
-          "id": 37
-        },
-        "target": {
-          "name": "?C",
-          "id": 44
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "1",
-        "source": {
-          "name": "'/tmp/xxx.xxx",
-          "id": 29
-        },
-        "target": {
-          "name": "1then2",
-          "id": 32
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "1",
-        "target_port": "filename",
-        "source": {
-          "name": "1then2",
-          "id": 32
-        },
-        "target": {
-          "name": "syncfilewrite",
-          "id": 37
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "2",
-        "target_port": "input",
-        "source": {
-          "name": "1then2",
-          "id": 32
-        },
-        "target": {
-          "name": "syncfilewrite",
-          "id": 37
         }
       },
       {
