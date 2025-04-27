@@ -70,7 +70,9 @@ emit {
      | "#" xkw<"live_update"> "(" Exp Comma Exp ")" -- liveUpdate
      | "#" xkw<"queue_as_json_to_stdout"> "(" Exp ")" -- queueAsJsonToStdout
      | "#" xkw<"dir"> "(" Exp ")" -- dir
-     
+     | "#" xkw<"external_name"> "(" Exp ")" -- external_name
+     | "#" xkw<"dispatch_lookup"> "(" Exp Comma Exp ")" -- dispatch_lookup
+     | "#" xkw<"dispatch"> "(" Exp Comma Exp Comma Exp")" -- dispatch
      
      | "#" ident "(" StuffInsideParentheses* ")" -- unrecognized
 

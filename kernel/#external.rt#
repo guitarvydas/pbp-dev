@@ -20,7 +20,7 @@ defn generate_external_components (reg, container_list) {
             ⌈ loop through every component in the diagram and look for names that start with “:“ ⌉
             for child_descriptor in diagram@“children” {
                 if first_char_is (child_descriptor@“name”, “:”) {
-                    name ≡ #external_name (child_descriptor@“name”)
+                    name ≡ gensymbol (#external_name (child_descriptor@“name”))
                     arg ≡ child_descriptor@“name”
                     generated_leaf ≡ mkTemplate (name,  child_descriptor, arg, ↪︎external_instantiate)
                     register_component (reg, generated_leaf)
