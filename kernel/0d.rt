@@ -401,14 +401,16 @@ defobj Component_Registry () {
 
 defobj Template () {
         • name ⇐ ϕ
-        • template_data ⇐ ϕ
+        • container ⇐ ϕ
+        • arg ⇐ ϕ
         • instantiator ⇐ ϕ
 }
 
-defn mkTemplate (name, template_data, instantiator) {
+defn mkTemplate (name, container, arg, instantiator) {
      deftemp templ ⇐ #fresh (Template)
      templ.name ⇐ name
-     templ.template_data ⇐ template_data
+     templ.container ⇐ container
+     templ.arg ⇐ arg
      templ.instantiator ⇐ instantiator
      return templ
 }
@@ -461,7 +463,7 @@ defn get_component_instance (reg, full_name, owner) {
             } else {
                 instance_name ⇐ template_name
 	    }
-            instance ≡ template.instantiator (reg, owner, instance_name, template.template_data)
+            instance ≡ template.instantiator (reg, owner, instance_name, template.container, template.arg)
             return instance
 	}
     } else {
@@ -479,7 +481,7 @@ defn mangle_name (s) {
 ⌈ Data for an asyncronous component _ effectively, a function with input⌉
 ⌈ and output queues of mevents.⌉
 ⌈⌉
-⌈ Components can either be a user_supplied function (“lea“), or a “container“⌉
+⌈ Components can either be a user_supplied function (“leaf“), or a “container“⌉
 ⌈ that routes mevents to child components according to a list of connections⌉
 ⌈ that serve as a mevent routing table.⌉
 ⌈⌉
@@ -503,7 +505,8 @@ defobj Eh () {
         • routings ⇐ #freshQueue ()
         • handler ⇐ ϕ
         • finject ⇐ ϕ
-        • instance_data ⇐ ϕ
+        • container ⇐ ϕ
+        • arg ⇐ “”
         • state ⇐ “idle”
         ⌈ bootstrap debugging⌉
         • kind ⇐ ϕ ⌈ enum { container, leaf, }⌉
@@ -525,7 +528,7 @@ defn make_container (name, owner) {
 ⌈ Creates a new leaf component out of a handler function, and a data parameter⌉
 ⌈ that will be passed back to your handler when called.⌉
 
-defn make_leaf (name, owner, instance_data, handler) {
+defn make_leaf (name, owner, container, arg, handler) {
     deftemp eh ⇐ #fresh (Eh)
     deftemp nm ⇐ “”
     if ϕ != owner {
@@ -535,7 +538,8 @@ defn make_leaf (name, owner, instance_data, handler) {
     eh.owner ⇐ owner
     eh.handler ⇐ handler
     eh.finject ⇐ ↪︎injector
-    eh.instance_data ⇐ instance_data
+    eh.container ⇐ container
+    eh.arg ⇐ arg
     eh.state ⇐ “idle”
     eh.kind ⇐ “leaf”
     return eh
@@ -592,9 +596,9 @@ defn initialize_component_palette_from_files (project_root, diagram_source_files
     deftemp reg ⇐ make_component_registry ()
     for diagram_source in diagram_source_files {
         all_containers_within_single_file ≡ lnet2internal_from_file (project_root, diagram_source)
-        reg ⇐ generate_shell_components (reg, all_containers_within_single_file)
+        reg ⇐ generate_unique_components (reg, all_containers_within_single_file)
         for container in all_containers_within_single_file {
-            register_component (reg, mkTemplate (container@“name” , ⌈ template_data=⌉ container, ⌈ instantiator=⌉ ↪︎container_instantiator))
+            register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
 	}
     }
     initialize_stock_components (reg)
@@ -607,7 +611,7 @@ defn initialize_component_palette_from_string (project_root) {
     all_containers ≡ lnet2internal_from_string ()
     reg ⇐ generate_shell_components (reg, all_containers)
     for container in all_containers {
-        register_component (reg, mkTemplate (container@“name” , ⌈ template_data=⌉ container, ⌈ instantiator=⌉ ↪︎container_instantiator))
+            register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
 	}
     initialize_stock_components (reg)
     return reg

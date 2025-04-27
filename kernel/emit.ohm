@@ -56,7 +56,6 @@ emit {
      | "#" xkw<"print_nl"> "(" ")" -- print_nl
      | "#" xkw<"print_nl_stderr"> "(" ")" -- print_nl_stderr
      | "#" xkw<"display_queue_as_json"> "(" Exp ")" -- display_queue_as_json
-     | "#" xkw<"split_string_for_shell"> "(" Exp ")" -- split_string_for_shell
      | "#" xkw<"substitute"> "(" Exp Comma Exp Comma Exp ")" -- substitute
      | "#" xkw<"run_command"> "(" Cmd Comma Args Comma ret Comma rc Comma stdout Comma stderr ")" -- run_command
      | "#" xkw<"abort"> "(" ")" -- abort

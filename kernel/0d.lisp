@@ -558,300 +558,304 @@ x))))
 (defclass Template ()                                       #|line 402|#
   (
     (name :accessor name :initarg :name :initform  nil)     #|line 403|#
-    (template_data :accessor template_data :initarg :template_data :initform  nil)  #|line 404|#
-    (instantiator :accessor instantiator :initarg :instantiator :initform  nil)  #|line 405|#)) #|line 406|#
+    (container :accessor container :initarg :container :initform  nil)  #|line 404|#
+    (arg :accessor arg :initarg :arg :initform  nil)        #|line 405|#
+    (instantiator :accessor instantiator :initarg :instantiator :initform  nil)  #|line 406|#)) #|line 407|#
 
-                                                            #|line 407|#
-(defun mkTemplate (&optional  name  template_data  instantiator)
-  (declare (ignorable  name  template_data  instantiator))  #|line 408|#
-  (let (( templ  (make-instance 'Template)                  #|line 409|#))
+                                                            #|line 408|#
+(defun mkTemplate (&optional  name  container  arg  instantiator)
+  (declare (ignorable  name  container  arg  instantiator)) #|line 409|#
+  (let (( templ  (make-instance 'Template)                  #|line 410|#))
     (declare (ignorable  templ))
-    (setf (slot-value  templ 'name)  name)                  #|line 410|#
-    (setf (slot-value  templ 'template_data)  template_data) #|line 411|#
-    (setf (slot-value  templ 'instantiator)  instantiator)  #|line 412|#
-    (return-from mkTemplate  templ)                         #|line 413|#) #|line 414|#
-  )                                                         #|line 416|#
+    (setf (slot-value  templ 'name)  name)                  #|line 411|#
+    (setf (slot-value  templ 'container)  container)        #|line 412|#
+    (setf (slot-value  templ 'arg)  arg)                    #|line 413|#
+    (setf (slot-value  templ 'instantiator)  instantiator)  #|line 414|#
+    (return-from mkTemplate  templ)                         #|line 415|#) #|line 416|#
+  )                                                         #|line 418|#
 (defun lnet2internal_from_file (&optional  pathname  container_xml)
-  (declare (ignorable  pathname  container_xml))            #|line 417|#
-  (let ((filename  container_xml                            #|line 418|#))
+  (declare (ignorable  pathname  container_xml))            #|line 419|#
+  (let ((filename  container_xml                            #|line 420|#))
     (declare (ignorable filename))
 
     ;; read json from a named file and convert it into internal form (a list of Container alists)
     (json2dict (merge-pathnames pathname filename))
-                                                            #|line 419|#) #|line 420|#
+                                                            #|line 421|#) #|line 422|#
   )
 (defun lnet2internal_from_string (&optional )
-  (declare (ignorable ))                                    #|line 422|#
+  (declare (ignorable ))                                    #|line 424|#
 
   (internalize-lnet-from-JSON *lnet*)
-                                                            #|line 423|# #|line 424|#
+                                                            #|line 425|# #|line 426|#
   )
 (defun delete_decls (&optional  d)
-  (declare (ignorable  d))                                  #|line 426|#
-  #| pass |#                                                #|line 427|# #|line 428|#
+  (declare (ignorable  d))                                  #|line 428|#
+  #| pass |#                                                #|line 429|# #|line 430|#
   )
 (defun make_component_registry (&optional )
-  (declare (ignorable ))                                    #|line 430|#
-  (return-from make_component_registry  (make-instance 'Component_Registry) #|line 431|#) #|line 432|#
+  (declare (ignorable ))                                    #|line 432|#
+  (return-from make_component_registry  (make-instance 'Component_Registry) #|line 433|#) #|line 434|#
   )
 (defun register_component (&optional  reg  template)
   (declare (ignorable  reg  template))
-  (return-from register_component (funcall (quote abstracted_register_component)   reg  template  nil )) #|line 434|#
+  (return-from register_component (funcall (quote abstracted_register_component)   reg  template  nil )) #|line 436|#
   )
 (defun register_component_allow_overwriting (&optional  reg  template)
   (declare (ignorable  reg  template))
-  (return-from register_component_allow_overwriting (funcall (quote abstracted_register_component)   reg  template  t )) #|line 435|#
+  (return-from register_component_allow_overwriting (funcall (quote abstracted_register_component)   reg  template  t )) #|line 437|#
   )
 (defun abstracted_register_component (&optional  reg  template  ok_to_overwrite)
-  (declare (ignorable  reg  template  ok_to_overwrite))     #|line 437|#
-  (let ((name (funcall (quote mangle_name)  (slot-value  template 'name)  #|line 438|#)))
+  (declare (ignorable  reg  template  ok_to_overwrite))     #|line 439|#
+  (let ((name (funcall (quote mangle_name)  (slot-value  template 'name)  #|line 440|#)))
     (declare (ignorable name))
     (cond
-      (( and  ( dict-in?  ( and  (not (equal   reg  nil))  name) (slot-value  reg 'templates)) (not  ok_to_overwrite)) #|line 439|#
-        (funcall (quote load_error)   (concatenate 'string  "Component /"  (concatenate 'string (slot-value  template 'name)  "/ already declared"))  #|line 440|#)
-        (return-from abstracted_register_component  reg)    #|line 441|#
+      (( and  ( dict-in?  ( and  (not (equal   reg  nil))  name) (slot-value  reg 'templates)) (not  ok_to_overwrite)) #|line 441|#
+        (funcall (quote load_error)   (concatenate 'string  "Component /"  (concatenate 'string (slot-value  template 'name)  "/ already declared"))  #|line 442|#)
+        (return-from abstracted_register_component  reg)    #|line 443|#
         )
-      (t                                                    #|line 442|#
-        (setf (gethash name (slot-value  reg 'templates))  template) #|line 443|#
-        (return-from abstracted_register_component  reg)    #|line 444|# #|line 445|#
-        )))                                                 #|line 446|#
+      (t                                                    #|line 444|#
+        (setf (gethash name (slot-value  reg 'templates))  template) #|line 445|#
+        (return-from abstracted_register_component  reg)    #|line 446|# #|line 447|#
+        )))                                                 #|line 448|#
   )
 (defun get_component_instance (&optional  reg  full_name  owner)
-  (declare (ignorable  reg  full_name  owner))              #|line 448|#
-  (let ((template_name (funcall (quote mangle_name)   full_name  #|line 449|#)))
+  (declare (ignorable  reg  full_name  owner))              #|line 450|#
+  (let ((template_name (funcall (quote mangle_name)   full_name  #|line 451|#)))
     (declare (ignorable template_name))
     (cond
-      (( dict-in?   template_name (slot-value  reg 'templates)) #|line 450|#
+      (( dict-in?   template_name (slot-value  reg 'templates)) #|line 452|#
         (let ((template (gethash template_name (slot-value  reg 'templates))))
-          (declare (ignorable template))                    #|line 451|#
+          (declare (ignorable template))                    #|line 453|#
           (cond
-            (( equal    template  nil)                      #|line 452|#
-              (funcall (quote load_error)   (concatenate 'string  "Registry Error (A): Can't find component /"  (concatenate 'string  template_name  "/"))  #|line 453|#)
-              (return-from get_component_instance  nil)     #|line 454|#
+            (( equal    template  nil)                      #|line 454|#
+              (funcall (quote load_error)   (concatenate 'string  "Registry Error (A): Can't find component /"  (concatenate 'string  template_name  "/"))  #|line 455|#)
+              (return-from get_component_instance  nil)     #|line 456|#
               )
-            (t                                              #|line 455|#
+            (t                                              #|line 457|#
               (let ((owner_name  ""))
-                (declare (ignorable owner_name))            #|line 456|#
+                (declare (ignorable owner_name))            #|line 458|#
                 (let ((instance_name  template_name))
-                  (declare (ignorable instance_name))       #|line 457|#
+                  (declare (ignorable instance_name))       #|line 459|#
                   (cond
-                    ((not (equal   nil  owner))             #|line 458|#
-                      (setf  owner_name (slot-value  owner 'name)) #|line 459|#
-                      (setf  instance_name  (concatenate 'string  owner_name  (concatenate 'string  "▹"  template_name)) #|line 460|#)
+                    ((not (equal   nil  owner))             #|line 460|#
+                      (setf  owner_name (slot-value  owner 'name)) #|line 461|#
+                      (setf  instance_name  (concatenate 'string  owner_name  (concatenate 'string  "▹"  template_name)) #|line 462|#)
                       )
-                    (t                                      #|line 461|#
-                      (setf  instance_name  template_name)  #|line 462|# #|line 463|#
+                    (t                                      #|line 463|#
+                      (setf  instance_name  template_name)  #|line 464|# #|line 465|#
                       ))
-                  (let ((instance (funcall (slot-value  template 'instantiator)   reg  owner  instance_name (slot-value  template 'template_data)  #|line 464|#)))
+                  (let ((instance (funcall (slot-value  template 'instantiator)   reg  owner  instance_name (slot-value  template 'container) (slot-value  template 'arg)  #|line 466|#)))
                     (declare (ignorable instance))
-                    (return-from get_component_instance  instance) #|line 465|#))) #|line 466|#
+                    (return-from get_component_instance  instance) #|line 467|#))) #|line 468|#
               )))
         )
-      (t                                                    #|line 467|#
-        (funcall (quote load_error)   (concatenate 'string  "Registry Error (B): Can't find component /"  (concatenate 'string  template_name  "/"))  #|line 468|#)
-        (return-from get_component_instance  nil)           #|line 469|# #|line 470|#
-        )))                                                 #|line 471|#
+      (t                                                    #|line 469|#
+        (funcall (quote load_error)   (concatenate 'string  "Registry Error (B): Can't find component /"  (concatenate 'string  template_name  "/"))  #|line 470|#)
+        (return-from get_component_instance  nil)           #|line 471|# #|line 472|#
+        )))                                                 #|line 473|#
   )
 (defun mangle_name (&optional  s)
-  (declare (ignorable  s))                                  #|line 473|#
-  #|  trim name to remove code from Container component names _ deferred until later (or never) |# #|line 474|#
-  (return-from mangle_name  s)                              #|line 475|# #|line 476|#
-  )                                                         #|line 478|# #|  Data for an asyncronous component _ effectively, a function with input |# #|line 479|# #|  and output queues of mevents. |# #|line 480|# #|  |# #|line 481|# #|  Components can either be a user_supplied function (“lea“), or a “container“ |# #|line 482|# #|  that routes mevents to child components according to a list of connections |# #|line 483|# #|  that serve as a mevent routing table. |# #|line 484|# #|  |# #|line 485|# #|  Child components themselves can be leaves or other containers. |# #|line 486|# #|  |# #|line 487|# #|  `handler` invokes the code that is attached to this component. |# #|line 488|# #|  |# #|line 489|# #|  `instance_data` is a pointer to instance data that the `leaf_handler` |# #|line 490|# #|  function may want whenever it is invoked again. |# #|line 491|# #|  |# #|line 492|# #|line 493|# #|  Eh_States :: enum { idle, active } |# #|line 494|#
-(defclass Eh ()                                             #|line 495|#
+  (declare (ignorable  s))                                  #|line 475|#
+  #|  trim name to remove code from Container component names _ deferred until later (or never) |# #|line 476|#
+  (return-from mangle_name  s)                              #|line 477|# #|line 478|#
+  )                                                         #|line 480|# #|  Data for an asyncronous component _ effectively, a function with input |# #|line 481|# #|  and output queues of mevents. |# #|line 482|# #|  |# #|line 483|# #|  Components can either be a user_supplied function (“leaf“), or a “container“ |# #|line 484|# #|  that routes mevents to child components according to a list of connections |# #|line 485|# #|  that serve as a mevent routing table. |# #|line 486|# #|  |# #|line 487|# #|  Child components themselves can be leaves or other containers. |# #|line 488|# #|  |# #|line 489|# #|  `handler` invokes the code that is attached to this component. |# #|line 490|# #|  |# #|line 491|# #|  `instance_data` is a pointer to instance data that the `leaf_handler` |# #|line 492|# #|  function may want whenever it is invoked again. |# #|line 493|# #|  |# #|line 494|# #|line 495|# #|  Eh_States :: enum { idle, active } |# #|line 496|#
+(defclass Eh ()                                             #|line 497|#
   (
-    (name :accessor name :initarg :name :initform  "")      #|line 496|#
-    (inq :accessor inq :initarg :inq :initform  (make-instance 'Queue) #|line 497|#)
-    (outq :accessor outq :initarg :outq :initform  (make-instance 'Queue) #|line 498|#)
-    (owner :accessor owner :initarg :owner :initform  nil)  #|line 499|#
-    (children :accessor children :initarg :children :initform  nil)  #|line 500|#
-    (visit_ordering :accessor visit_ordering :initarg :visit_ordering :initform  (make-instance 'Queue) #|line 501|#)
-    (connections :accessor connections :initarg :connections :initform  nil)  #|line 502|#
-    (routings :accessor routings :initarg :routings :initform  (make-instance 'Queue) #|line 503|#)
-    (handler :accessor handler :initarg :handler :initform  nil)  #|line 504|#
-    (finject :accessor finject :initarg :finject :initform  nil)  #|line 505|#
-    (instance_data :accessor instance_data :initarg :instance_data :initform  nil)  #|line 506|#
-    (state :accessor state :initarg :state :initform  "idle")  #|line 507|# #|  bootstrap debugging |# #|line 508|#
-    (kind :accessor kind :initarg :kind :initform  nil)  #|  enum { container, leaf, } |# #|line 509|#)) #|line 510|#
+    (name :accessor name :initarg :name :initform  "")      #|line 498|#
+    (inq :accessor inq :initarg :inq :initform  (make-instance 'Queue) #|line 499|#)
+    (outq :accessor outq :initarg :outq :initform  (make-instance 'Queue) #|line 500|#)
+    (owner :accessor owner :initarg :owner :initform  nil)  #|line 501|#
+    (children :accessor children :initarg :children :initform  nil)  #|line 502|#
+    (visit_ordering :accessor visit_ordering :initarg :visit_ordering :initform  (make-instance 'Queue) #|line 503|#)
+    (connections :accessor connections :initarg :connections :initform  nil)  #|line 504|#
+    (routings :accessor routings :initarg :routings :initform  (make-instance 'Queue) #|line 505|#)
+    (handler :accessor handler :initarg :handler :initform  nil)  #|line 506|#
+    (finject :accessor finject :initarg :finject :initform  nil)  #|line 507|#
+    (container :accessor container :initarg :container :initform  nil)  #|line 508|#
+    (arg :accessor arg :initarg :arg :initform  "")         #|line 509|#
+    (state :accessor state :initarg :state :initform  "idle")  #|line 510|# #|  bootstrap debugging |# #|line 511|#
+    (kind :accessor kind :initarg :kind :initform  nil)  #|  enum { container, leaf, } |# #|line 512|#)) #|line 513|#
 
-                                                            #|line 511|# #|  Creates a component that acts as a container. It is the same as a `Eh` instance |# #|line 512|# #|  whose handler function is `container_handler`. |# #|line 513|#
+                                                            #|line 514|# #|  Creates a component that acts as a container. It is the same as a `Eh` instance |# #|line 515|# #|  whose handler function is `container_handler`. |# #|line 516|#
 (defun make_container (&optional  name  owner)
-  (declare (ignorable  name  owner))                        #|line 514|#
-  (let (( eh  (make-instance 'Eh)                           #|line 515|#))
+  (declare (ignorable  name  owner))                        #|line 517|#
+  (let (( eh  (make-instance 'Eh)                           #|line 518|#))
     (declare (ignorable  eh))
-    (setf (slot-value  eh 'name)  name)                     #|line 516|#
-    (setf (slot-value  eh 'owner)  owner)                   #|line 517|#
-    (setf (slot-value  eh 'handler)  #'container_handler)   #|line 518|#
-    (setf (slot-value  eh 'finject)  #'injector)            #|line 519|#
-    (setf (slot-value  eh 'state)  "idle")                  #|line 520|#
-    (setf (slot-value  eh 'kind)  "container")              #|line 521|#
-    (return-from make_container  eh)                        #|line 522|#) #|line 523|#
-  ) #|  Creates a new leaf component out of a handler function, and a data parameter |# #|line 525|# #|  that will be passed back to your handler when called. |# #|line 526|# #|line 527|#
-(defun make_leaf (&optional  name  owner  instance_data  handler)
-  (declare (ignorable  name  owner  instance_data  handler)) #|line 528|#
-  (let (( eh  (make-instance 'Eh)                           #|line 529|#))
+    (setf (slot-value  eh 'name)  name)                     #|line 519|#
+    (setf (slot-value  eh 'owner)  owner)                   #|line 520|#
+    (setf (slot-value  eh 'handler)  #'container_handler)   #|line 521|#
+    (setf (slot-value  eh 'finject)  #'injector)            #|line 522|#
+    (setf (slot-value  eh 'state)  "idle")                  #|line 523|#
+    (setf (slot-value  eh 'kind)  "container")              #|line 524|#
+    (return-from make_container  eh)                        #|line 525|#) #|line 526|#
+  ) #|  Creates a new leaf component out of a handler function, and a data parameter |# #|line 528|# #|  that will be passed back to your handler when called. |# #|line 529|# #|line 530|#
+(defun make_leaf (&optional  name  owner  container  arg  handler)
+  (declare (ignorable  name  owner  container  arg  handler)) #|line 531|#
+  (let (( eh  (make-instance 'Eh)                           #|line 532|#))
     (declare (ignorable  eh))
     (let (( nm  ""))
-      (declare (ignorable  nm))                             #|line 530|#
+      (declare (ignorable  nm))                             #|line 533|#
       (cond
-        ((not (equal   nil  owner))                         #|line 531|#
-          (setf  nm (slot-value  owner 'name))              #|line 532|# #|line 533|#
+        ((not (equal   nil  owner))                         #|line 534|#
+          (setf  nm (slot-value  owner 'name))              #|line 535|# #|line 536|#
           ))
-      (setf (slot-value  eh 'name)  (concatenate 'string  nm  (concatenate 'string  "▹"  name)) #|line 534|#)
-      (setf (slot-value  eh 'owner)  owner)                 #|line 535|#
-      (setf (slot-value  eh 'handler)  handler)             #|line 536|#
-      (setf (slot-value  eh 'finject)  #'injector)          #|line 537|#
-      (setf (slot-value  eh 'instance_data)  instance_data) #|line 538|#
-      (setf (slot-value  eh 'state)  "idle")                #|line 539|#
-      (setf (slot-value  eh 'kind)  "leaf")                 #|line 540|#
-      (return-from make_leaf  eh)                           #|line 541|#)) #|line 542|#
-  ) #|  Sends a mevent on the given `port` with `data`, placing it on the output |# #|line 544|# #|  of the given component. |# #|line 545|# #|line 546|#
+      (setf (slot-value  eh 'name)  (concatenate 'string  nm  (concatenate 'string  "▹"  name)) #|line 537|#)
+      (setf (slot-value  eh 'owner)  owner)                 #|line 538|#
+      (setf (slot-value  eh 'handler)  handler)             #|line 539|#
+      (setf (slot-value  eh 'finject)  #'injector)          #|line 540|#
+      (setf (slot-value  eh 'container)  container)         #|line 541|#
+      (setf (slot-value  eh 'arg)  arg)                     #|line 542|#
+      (setf (slot-value  eh 'state)  "idle")                #|line 543|#
+      (setf (slot-value  eh 'kind)  "leaf")                 #|line 544|#
+      (return-from make_leaf  eh)                           #|line 545|#)) #|line 546|#
+  ) #|  Sends a mevent on the given `port` with `data`, placing it on the output |# #|line 548|# #|  of the given component. |# #|line 549|# #|line 550|#
 (defun send (&optional  eh  port  obj  causingMevent)
-  (declare (ignorable  eh  port  obj  causingMevent))       #|line 547|#
+  (declare (ignorable  eh  port  obj  causingMevent))       #|line 551|#
   (let (( d (funcall (quote Datum) )))
-    (declare (ignorable  d))                                #|line 548|#
-    (setf (slot-value  d 'v)  obj)                          #|line 549|#
-    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 550|#)))
-    (setf (slot-value  d 'reclaim)  None)                   #|line 551|#
-    (let ((mev (funcall (quote make_mevent)   port  d       #|line 552|#)))
+    (declare (ignorable  d))                                #|line 552|#
+    (setf (slot-value  d 'v)  obj)                          #|line 553|#
+    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 554|#)))
+    (setf (slot-value  d 'reclaim)  None)                   #|line 555|#
+    (let ((mev (funcall (quote make_mevent)   port  d       #|line 556|#)))
       (declare (ignorable mev))
-      (funcall (quote put_output)   eh  mev                 #|line 553|#))) #|line 554|#
+      (funcall (quote put_output)   eh  mev                 #|line 557|#))) #|line 558|#
   )
 (defun forward (&optional  eh  port  mev)
-  (declare (ignorable  eh  port  mev))                      #|line 556|#
-  (let ((fwdmev (funcall (quote make_mevent)   port (slot-value  mev 'datum)  #|line 557|#)))
+  (declare (ignorable  eh  port  mev))                      #|line 560|#
+  (let ((fwdmev (funcall (quote make_mevent)   port (slot-value  mev 'datum)  #|line 561|#)))
     (declare (ignorable fwdmev))
-    (funcall (quote put_output)   eh  fwdmev                #|line 558|#)) #|line 559|#
+    (funcall (quote put_output)   eh  fwdmev                #|line 562|#)) #|line 563|#
   )
 (defun inject (&optional  eh  mev)
-  (declare (ignorable  eh  mev))                            #|line 561|#
-  (funcall (slot-value  eh 'finject)   eh  mev              #|line 562|#) #|line 563|#
+  (declare (ignorable  eh  mev))                            #|line 565|#
+  (funcall (slot-value  eh 'finject)   eh  mev              #|line 566|#) #|line 567|#
   )
 (defun set_active (&optional  eh)
-  (declare (ignorable  eh))                                 #|line 565|#
-  (setf (slot-value  eh 'state)  "active")                  #|line 566|# #|line 567|#
+  (declare (ignorable  eh))                                 #|line 569|#
+  (setf (slot-value  eh 'state)  "active")                  #|line 570|# #|line 571|#
   )
 (defun set_idle (&optional  eh)
-  (declare (ignorable  eh))                                 #|line 569|#
-  (setf (slot-value  eh 'state)  "idle")                    #|line 570|# #|line 571|#
+  (declare (ignorable  eh))                                 #|line 573|#
+  (setf (slot-value  eh 'state)  "idle")                    #|line 574|# #|line 575|#
   )
 (defun put_output (&optional  eh  mev)
-  (declare (ignorable  eh  mev))                            #|line 573|#
-  (enqueue (slot-value  eh 'outq)  mev)                     #|line 574|# #|line 575|#
+  (declare (ignorable  eh  mev))                            #|line 577|#
+  (enqueue (slot-value  eh 'outq)  mev)                     #|line 578|# #|line 579|#
   )
-(defparameter  projectRoot  "")                             #|line 577|# #|line 578|#
+(defparameter  projectRoot  "")                             #|line 581|# #|line 582|#
 (defun set_environment (&optional  project_root)
-  (declare (ignorable  project_root))                       #|line 579|# #|line 580|#
-  (setf  projectRoot  project_root)                         #|line 581|# #|line 582|#
+  (declare (ignorable  project_root))                       #|line 583|# #|line 584|#
+  (setf  projectRoot  project_root)                         #|line 585|# #|line 586|#
   )
 (defun obj_clone (&optional  obj)
-  (declare (ignorable  obj))                                #|line 584|#
-  (return-from obj_clone  obj)                              #|line 585|# #|line 586|#
-  ) #|  usage: app ${_00_} diagram_filename1 diagram_filename2 ... |# #|line 588|# #|  where ${_00_} is the root directory for the project |# #|line 589|# #|line 590|#
+  (declare (ignorable  obj))                                #|line 588|#
+  (return-from obj_clone  obj)                              #|line 589|# #|line 590|#
+  ) #|  usage: app ${_00_} diagram_filename1 diagram_filename2 ... |# #|line 592|# #|  where ${_00_} is the root directory for the project |# #|line 593|# #|line 594|#
 (defun initialize_component_palette_from_files (&optional  project_root  diagram_source_files)
-  (declare (ignorable  project_root  diagram_source_files)) #|line 591|#
+  (declare (ignorable  project_root  diagram_source_files)) #|line 595|#
   (let (( reg (funcall (quote make_component_registry) )))
-    (declare (ignorable  reg))                              #|line 592|#
+    (declare (ignorable  reg))                              #|line 596|#
     (loop for diagram_source in  diagram_source_files
       do
         (progn
-          diagram_source                                    #|line 593|#
-          (let ((all_containers_within_single_file (funcall (quote lnet2internal_from_file)   project_root  diagram_source  #|line 594|#)))
+          diagram_source                                    #|line 597|#
+          (let ((all_containers_within_single_file (funcall (quote lnet2internal_from_file)   project_root  diagram_source  #|line 598|#)))
             (declare (ignorable all_containers_within_single_file))
-            (setf  reg (funcall (quote generate_shell_components)   reg  all_containers_within_single_file  #|line 595|#))
+            (setf  reg (funcall (quote generate_unique_components)   reg  all_containers_within_single_file  #|line 599|#))
             (loop for container in  all_containers_within_single_file
               do
                 (progn
-                  container                                 #|line 596|#
-                  (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #|  template_data= |# container  #|  instantiator= |# #'container_instantiator )  #|line 597|#) #|line 598|#
-                  )))                                       #|line 599|#
+                  container                                 #|line 600|#
+                  (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #| container= |# container  #| instantiator= |# #'container_instantiator )  #|line 601|#) #|line 602|#
+                  )))                                       #|line 603|#
           ))
-    (funcall (quote initialize_stock_components)   reg      #|line 600|#)
-    (return-from initialize_component_palette_from_files  reg) #|line 601|#) #|line 602|#
+    (funcall (quote initialize_stock_components)   reg      #|line 604|#)
+    (return-from initialize_component_palette_from_files  reg) #|line 605|#) #|line 606|#
   )
 (defun initialize_component_palette_from_string (&optional  project_root)
-  (declare (ignorable  project_root))                       #|line 604|#
-  #|  this version ignores project_root  |#                 #|line 605|#
+  (declare (ignorable  project_root))                       #|line 608|#
+  #|  this version ignores project_root  |#                 #|line 609|#
   (let (( reg (funcall (quote make_component_registry) )))
-    (declare (ignorable  reg))                              #|line 606|#
+    (declare (ignorable  reg))                              #|line 610|#
     (let ((all_containers (funcall (quote lnet2internal_from_string) )))
-      (declare (ignorable all_containers))                  #|line 607|#
-      (setf  reg (funcall (quote generate_shell_components)   reg  all_containers  #|line 608|#))
+      (declare (ignorable all_containers))                  #|line 611|#
+      (setf  reg (funcall (quote generate_shell_components)   reg  all_containers  #|line 612|#))
       (loop for container in  all_containers
         do
           (progn
-            container                                       #|line 609|#
-            (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #|  template_data= |# container  #|  instantiator= |# #'container_instantiator )  #|line 610|#) #|line 611|#
+            container                                       #|line 613|#
+            (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #| container= |# container  #| instantiator= |# #'container_instantiator )  #|line 614|#) #|line 615|#
             ))
-      (funcall (quote initialize_stock_components)   reg    #|line 612|#)
-      (return-from initialize_component_palette_from_string  reg) #|line 613|#)) #|line 614|#
-  )                                                         #|line 616|#
+      (funcall (quote initialize_stock_components)   reg    #|line 616|#)
+      (return-from initialize_component_palette_from_string  reg) #|line 617|#)) #|line 618|#
+  )                                                         #|line 620|#
 (defun clone_string (&optional  s)
-  (declare (ignorable  s))                                  #|line 617|#
-  (return-from clone_string  s                              #|line 618|# #|line 619|#) #|line 620|#
+  (declare (ignorable  s))                                  #|line 621|#
+  (return-from clone_string  s                              #|line 622|# #|line 623|#) #|line 624|#
   )
-(defparameter  load_errors  nil)                            #|line 621|#
-(defparameter  runtime_errors  nil)                         #|line 622|# #|line 623|#
+(defparameter  load_errors  nil)                            #|line 625|#
+(defparameter  runtime_errors  nil)                         #|line 626|# #|line 627|#
 (defun load_error (&optional  s)
-  (declare (ignorable  s))                                  #|line 624|# #|line 625|#
-  (format *error-output* "~a~%"  s)                         #|line 626|#
+  (declare (ignorable  s))                                  #|line 628|# #|line 629|#
+  (format *error-output* "~a~%"  s)                         #|line 630|#
   (format *error-output* "
-  ")                                                        #|line 627|#
-  (setf  load_errors  t)                                    #|line 628|# #|line 629|#
+  ")                                                        #|line 631|#
+  (setf  load_errors  t)                                    #|line 632|# #|line 633|#
   )
 (defun runtime_error (&optional  s)
-  (declare (ignorable  s))                                  #|line 631|# #|line 632|#
-  (format *error-output* "~a~%"  s)                         #|line 633|#
-  (setf  runtime_errors  t)                                 #|line 634|# #|line 635|#
-  )                                                         #|line 637|#
+  (declare (ignorable  s))                                  #|line 635|# #|line 636|#
+  (format *error-output* "~a~%"  s)                         #|line 637|#
+  (setf  runtime_errors  t)                                 #|line 638|# #|line 639|#
+  )                                                         #|line 641|#
 (defun initialize_from_files (&optional  project_root  diagram_names)
-  (declare (ignorable  project_root  diagram_names))        #|line 638|#
+  (declare (ignorable  project_root  diagram_names))        #|line 642|#
   (let ((arg  nil))
-    (declare (ignorable arg))                               #|line 639|#
-    (let ((palette (funcall (quote initialize_component_palette_from_files)   project_root  diagram_names  #|line 640|#)))
+    (declare (ignorable arg))                               #|line 643|#
+    (let ((palette (funcall (quote initialize_component_palette_from_files)   project_root  diagram_names  #|line 644|#)))
       (declare (ignorable palette))
-      (return-from initialize_from_files (values  palette (list   project_root  diagram_names  arg ))) #|line 641|#)) #|line 642|#
+      (return-from initialize_from_files (values  palette (list   project_root  diagram_names  arg ))) #|line 645|#)) #|line 646|#
   )
 (defun initialize_from_string (&optional  project_root)
-  (declare (ignorable  project_root))                       #|line 644|#
+  (declare (ignorable  project_root))                       #|line 648|#
   (let ((arg  nil))
-    (declare (ignorable arg))                               #|line 645|#
-    (let ((palette (funcall (quote initialize_component_palette_from_string)   project_root  #|line 646|#)))
+    (declare (ignorable arg))                               #|line 649|#
+    (let ((palette (funcall (quote initialize_component_palette_from_string)   project_root  #|line 650|#)))
       (declare (ignorable palette))
-      (return-from initialize_from_string (values  palette (list   project_root  nil  arg ))) #|line 647|#)) #|line 648|#
+      (return-from initialize_from_string (values  palette (list   project_root  nil  arg ))) #|line 651|#)) #|line 652|#
   )
 (defun start (&optional  arg  Part_name  palette  env)
-  (declare (ignorable  arg  Part_name  palette  env))       #|line 650|#
+  (declare (ignorable  arg  Part_name  palette  env))       #|line 654|#
   (let ((project_root (nth  0  env)))
-    (declare (ignorable project_root))                      #|line 651|#
+    (declare (ignorable project_root))                      #|line 655|#
     (let ((diagram_names (nth  1  env)))
-      (declare (ignorable diagram_names))                   #|line 652|#
-      (funcall (quote set_environment)   project_root       #|line 653|#)
-      #|  get entrypoint container |#                       #|line 654|#
-      (let (( Part (funcall (quote get_component_instance)   palette  Part_name  nil  #|line 655|#)))
+      (declare (ignorable diagram_names))                   #|line 656|#
+      (funcall (quote set_environment)   project_root       #|line 657|#)
+      #|  get entrypoint container |#                       #|line 658|#
+      (let (( Part (funcall (quote get_component_instance)   palette  Part_name  nil  #|line 659|#)))
         (declare (ignorable  Part))
         (cond
-          (( equal    nil  Part)                            #|line 656|#
-            (funcall (quote load_error)   (concatenate 'string  "Couldn't find container with page name /"  (concatenate 'string  Part_name  (concatenate 'string  "/ in files "  (concatenate 'string (format nil "~a"  diagram_names)  " (check tab names, or disable compression?)"))))  #|line 660|#) #|line 661|#
+          (( equal    nil  Part)                            #|line 660|#
+            (funcall (quote load_error)   (concatenate 'string  "Couldn't find container with page name /"  (concatenate 'string  Part_name  (concatenate 'string  "/ in files "  (concatenate 'string (format nil "~a"  diagram_names)  " (check tab names, or disable compression?)"))))  #|line 664|#) #|line 665|#
             ))
         (cond
-          ((not  load_errors)                               #|line 662|#
+          ((not  load_errors)                               #|line 666|#
             (let (( d (funcall (quote Datum) )))
-              (declare (ignorable  d))                      #|line 663|#
-              (setf (slot-value  d 'v)  arg)                #|line 664|#
-              (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 665|#)))
-              (setf (slot-value  d 'reclaim)  None)         #|line 666|#
-              (let (( mev (funcall (quote make_mevent)   ""  d  #|line 667|#)))
+              (declare (ignorable  d))                      #|line 667|#
+              (setf (slot-value  d 'v)  arg)                #|line 668|#
+              (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 669|#)))
+              (setf (slot-value  d 'reclaim)  None)         #|line 670|#
+              (let (( mev (funcall (quote make_mevent)   ""  d  #|line 671|#)))
                 (declare (ignorable  mev))
-                (funcall (quote inject)   Part  mev         #|line 668|#))) #|line 669|#
+                (funcall (quote inject)   Part  mev         #|line 672|#))) #|line 673|#
             ))
-        (queue-as-json-to-stdout (slot-value  Part 'outq))  #|line 670|#))) #|line 671|#
+        (queue-as-json-to-stdout (slot-value  Part 'outq))  #|line 674|#))) #|line 675|#
   )
 (defun new_datum_bang (&optional )
-  (declare (ignorable ))                                    #|line 673|#
+  (declare (ignorable ))                                    #|line 677|#
   (let (( d (funcall (quote Datum) )))
-    (declare (ignorable  d))                                #|line 674|#
-    (setf (slot-value  d 'v)  "!")                          #|line 675|#
-    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 676|#)))
-    (setf (slot-value  d 'reclaim)  None)                   #|line 677|#
-    (return-from new_datum_bang  d)                         #|line 678|#) #|line 679|#
+    (declare (ignorable  d))                                #|line 678|#
+    (setf (slot-value  d 'v)  "!")                          #|line 679|#
+    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 680|#)))
+    (setf (slot-value  d 'reclaim)  None)                   #|line 681|#
+    (return-from new_datum_bang  d)                         #|line 682|#) #|line 683|#
   )

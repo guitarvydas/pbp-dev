@@ -183,7 +183,6 @@ ExternalPhrase_print_stdout [_octothorpe _ lp e rp] = ‛(format *standard-outpu
 ExternalPhrase_print_stderr [_octothorpe _ lp e rp] = ‛(format *error-output* "~a~%25" «e»)’
 ExternalPhrase_print_nl [_octothorpe _ lp rp] = ‛(format *standard-output* "%0A")’
 ExternalPhrase_print_nl_stderr [_octothorpe _ lp rp] = ‛(format *error-output* "%0A")’
-ExternalPhrase_split_string_for_shell [_octothorpe _ lp s rp] = ‛(split-sequence '(#\\space) «s»)’
 ExternalPhrase_substitute [_octothorpe _ lp new_item _comma1 old_item _comma2 s rp] = ‛(substitute «new_item» «old_item» «s»)’
 
 ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma3 rc _comma4 out _comma5 errout rp] = ‛(multiple-value-setq («out» «errout» «rc») (uiop::run-program (concatenate 'string «cmd» " " «args») :output :string :error :string))’

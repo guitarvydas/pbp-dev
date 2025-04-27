@@ -1,4 +1,0 @@
-defn TEST () {
-     #live_update (“✗”, #strcons (“A”, #strcons (“B”, “C”)))
-
-}

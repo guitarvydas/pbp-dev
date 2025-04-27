@@ -354,18 +354,20 @@ class Component_Registry:
 class Template:
     def __init__ (self,):                              #line 402
         self.name =  None                              #line 403
-        self.template_data =  None                     #line 404
-        self.instantiator =  None                      #line 405#line 406
-                                                       #line 407
-def mkTemplate (name,template_data,instantiator):      #line 408
-    templ =  Template ()                               #line 409
-    templ.name =  name                                 #line 410
-    templ.template_data =  template_data               #line 411
-    templ.instantiator =  instantiator                 #line 412
-    return  templ                                      #line 413#line 414#line 415
-                                                       #line 416
-def lnet2internal_from_file (pathname,container_xml):  #line 417
-    filename =  os.path.basename ( container_xml)      #line 418
+        self.container =  None                         #line 404
+        self.arg =  None                               #line 405
+        self.instantiator =  None                      #line 406#line 407
+                                                       #line 408
+def mkTemplate (name,container,arg,instantiator):      #line 409
+    templ =  Template ()                               #line 410
+    templ.name =  name                                 #line 411
+    templ.container =  container                       #line 412
+    templ.arg =  arg                                   #line 413
+    templ.instantiator =  instantiator                 #line 414
+    return  templ                                      #line 415#line 416#line 417
+                                                       #line 418
+def lnet2internal_from_file (pathname,container_xml):  #line 419
+    filename =  os.path.basename ( container_xml)      #line 420
 
     try:
         fil = open(filename, "r")
@@ -379,9 +381,9 @@ def lnet2internal_from_file (pathname,container_xml):  #line 417
     except json.JSONDecodeError as e:
         print ("Error decoding JSON in file: '{e}'")
         return None
-                                                       #line 419#line 420#line 421
+                                                       #line 421#line 422#line 423
 
-def lnet2internal_from_string ():                      #line 422
+def lnet2internal_from_string ():                      #line 424
 
     try:
         routings = json.loads(lnet)
@@ -389,215 +391,217 @@ def lnet2internal_from_string ():                      #line 422
     except json.JSONDecodeError as e:
         print ("Error decoding JSON from string 'lnet': '{e}'")
         return None
-                                                       #line 423#line 424#line 425
+                                                       #line 425#line 426#line 427
 
-def delete_decls (d):                                  #line 426
-    pass                                               #line 427#line 428#line 429
+def delete_decls (d):                                  #line 428
+    pass                                               #line 429#line 430#line 431
 
-def make_component_registry ():                        #line 430
-    return  Component_Registry ()                      #line 431#line 432#line 433
+def make_component_registry ():                        #line 432
+    return  Component_Registry ()                      #line 433#line 434#line 435
 
 def register_component (reg,template):
-    return abstracted_register_component ( reg, template, False)#line 434
+    return abstracted_register_component ( reg, template, False)#line 436
 
 def register_component_allow_overwriting (reg,template):
-    return abstracted_register_component ( reg, template, True)#line 435#line 436
+    return abstracted_register_component ( reg, template, True)#line 437#line 438
 
-def abstracted_register_component (reg,template,ok_to_overwrite):#line 437
-    name = mangle_name ( template.name)                #line 438
-    if  reg!= None and  name in  reg.templates and not  ok_to_overwrite:#line 439
-        load_error ( str( "Component /") +  str( template.name) +  "/ already declared"  )#line 440
-        return  reg                                    #line 441
-    else:                                              #line 442
-        reg.templates [name] =  template               #line 443
-        return  reg                                    #line 444#line 445#line 446#line 447
+def abstracted_register_component (reg,template,ok_to_overwrite):#line 439
+    name = mangle_name ( template.name)                #line 440
+    if  reg!= None and  name in  reg.templates and not  ok_to_overwrite:#line 441
+        load_error ( str( "Component /") +  str( template.name) +  "/ already declared"  )#line 442
+        return  reg                                    #line 443
+    else:                                              #line 444
+        reg.templates [name] =  template               #line 445
+        return  reg                                    #line 446#line 447#line 448#line 449
 
-def get_component_instance (reg,full_name,owner):      #line 448
-    template_name = mangle_name ( full_name)           #line 449
-    if  template_name in  reg.templates:               #line 450
-        template =  reg.templates [template_name]      #line 451
-        if ( template ==  None):                       #line 452
-            load_error ( str( "Registry Error (A): Can't find component /") +  str( template_name) +  "/"  )#line 453
-            return  None                               #line 454
-        else:                                          #line 455
-            owner_name =  ""                           #line 456
-            instance_name =  template_name             #line 457
-            if  None!= owner:                          #line 458
-                owner_name =  owner.name               #line 459
-                instance_name =  str( owner_name) +  str( "▹") +  template_name  #line 460
-            else:                                      #line 461
-                instance_name =  template_name         #line 462#line 463
-            instance =  template.instantiator ( reg, owner, instance_name, template.template_data)#line 464
-            return  instance                           #line 465#line 466
-    else:                                              #line 467
-        load_error ( str( "Registry Error (B): Can't find component /") +  str( template_name) +  "/"  )#line 468
-        return  None                                   #line 469#line 470#line 471#line 472
+def get_component_instance (reg,full_name,owner):      #line 450
+    template_name = mangle_name ( full_name)           #line 451
+    if  template_name in  reg.templates:               #line 452
+        template =  reg.templates [template_name]      #line 453
+        if ( template ==  None):                       #line 454
+            load_error ( str( "Registry Error (A): Can't find component /") +  str( template_name) +  "/"  )#line 455
+            return  None                               #line 456
+        else:                                          #line 457
+            owner_name =  ""                           #line 458
+            instance_name =  template_name             #line 459
+            if  None!= owner:                          #line 460
+                owner_name =  owner.name               #line 461
+                instance_name =  str( owner_name) +  str( "▹") +  template_name  #line 462
+            else:                                      #line 463
+                instance_name =  template_name         #line 464#line 465
+            instance =  template.instantiator ( reg, owner, instance_name, template.container, template.arg)#line 466
+            return  instance                           #line 467#line 468
+    else:                                              #line 469
+        load_error ( str( "Registry Error (B): Can't find component /") +  str( template_name) +  "/"  )#line 470
+        return  None                                   #line 471#line 472#line 473#line 474
 
-def mangle_name (s):                                   #line 473
-    # trim name to remove code from Container component names _ deferred until later (or never)#line 474
-    return  s                                          #line 475#line 476#line 477
-                                                       #line 478
-# Data for an asyncronous component _ effectively, a function with input#line 479
-# and output queues of mevents.                        #line 480
-#                                                      #line 481
-# Components can either be a user_supplied function (“lea“), or a “container“#line 482
-# that routes mevents to child components according to a list of connections#line 483
-# that serve as a mevent routing table.                #line 484
-#                                                      #line 485
-# Child components themselves can be leaves or other containers.#line 486
+def mangle_name (s):                                   #line 475
+    # trim name to remove code from Container component names _ deferred until later (or never)#line 476
+    return  s                                          #line 477#line 478#line 479
+                                                       #line 480
+# Data for an asyncronous component _ effectively, a function with input#line 481
+# and output queues of mevents.                        #line 482
+#                                                      #line 483
+# Components can either be a user_supplied function (“leaf“), or a “container“#line 484
+# that routes mevents to child components according to a list of connections#line 485
+# that serve as a mevent routing table.                #line 486
 #                                                      #line 487
-# `handler` invokes the code that is attached to this component.#line 488
+# Child components themselves can be leaves or other containers.#line 488
 #                                                      #line 489
-# `instance_data` is a pointer to instance data that the `leaf_handler`#line 490
-# function may want whenever it is invoked again.      #line 491
-#                                                      #line 492#line 493
-# Eh_States :: enum { idle, active }                   #line 494
+# `handler` invokes the code that is attached to this component.#line 490
+#                                                      #line 491
+# `instance_data` is a pointer to instance data that the `leaf_handler`#line 492
+# function may want whenever it is invoked again.      #line 493
+#                                                      #line 494#line 495
+# Eh_States :: enum { idle, active }                   #line 496
 class Eh:
-    def __init__ (self,):                              #line 495
-        self.name =  ""                                #line 496
-        self.inq =  deque ([])                         #line 497
-        self.outq =  deque ([])                        #line 498
-        self.owner =  None                             #line 499
-        self.children = []                             #line 500
-        self.visit_ordering =  deque ([])              #line 501
-        self.connections = []                          #line 502
-        self.routings =  deque ([])                    #line 503
-        self.handler =  None                           #line 504
-        self.finject =  None                           #line 505
-        self.instance_data =  None                     #line 506
-        self.state =  "idle"                           #line 507# bootstrap debugging#line 508
-        self.kind =  None # enum { container, leaf, }  #line 509#line 510
-                                                       #line 511
-# Creates a component that acts as a container. It is the same as a `Eh` instance#line 512
-# whose handler function is `container_handler`.       #line 513
-def make_container (name,owner):                       #line 514
-    eh =  Eh ()                                        #line 515
-    eh.name =  name                                    #line 516
-    eh.owner =  owner                                  #line 517
-    eh.handler =  container_handler                    #line 518
-    eh.finject =  injector                             #line 519
-    eh.state =  "idle"                                 #line 520
-    eh.kind =  "container"                             #line 521
-    return  eh                                         #line 522#line 523#line 524
+    def __init__ (self,):                              #line 497
+        self.name =  ""                                #line 498
+        self.inq =  deque ([])                         #line 499
+        self.outq =  deque ([])                        #line 500
+        self.owner =  None                             #line 501
+        self.children = []                             #line 502
+        self.visit_ordering =  deque ([])              #line 503
+        self.connections = []                          #line 504
+        self.routings =  deque ([])                    #line 505
+        self.handler =  None                           #line 506
+        self.finject =  None                           #line 507
+        self.container =  None                         #line 508
+        self.arg =  ""                                 #line 509
+        self.state =  "idle"                           #line 510# bootstrap debugging#line 511
+        self.kind =  None # enum { container, leaf, }  #line 512#line 513
+                                                       #line 514
+# Creates a component that acts as a container. It is the same as a `Eh` instance#line 515
+# whose handler function is `container_handler`.       #line 516
+def make_container (name,owner):                       #line 517
+    eh =  Eh ()                                        #line 518
+    eh.name =  name                                    #line 519
+    eh.owner =  owner                                  #line 520
+    eh.handler =  container_handler                    #line 521
+    eh.finject =  injector                             #line 522
+    eh.state =  "idle"                                 #line 523
+    eh.kind =  "container"                             #line 524
+    return  eh                                         #line 525#line 526#line 527
 
-# Creates a new leaf component out of a handler function, and a data parameter#line 525
-# that will be passed back to your handler when called.#line 526#line 527
-def make_leaf (name,owner,instance_data,handler):      #line 528
-    eh =  Eh ()                                        #line 529
-    nm =  ""                                           #line 530
-    if  None!= owner:                                  #line 531
-        nm =  owner.name                               #line 532#line 533
-    eh.name =  str( nm) +  str( "▹") +  name           #line 534
-    eh.owner =  owner                                  #line 535
-    eh.handler =  handler                              #line 536
-    eh.finject =  injector                             #line 537
-    eh.instance_data =  instance_data                  #line 538
-    eh.state =  "idle"                                 #line 539
-    eh.kind =  "leaf"                                  #line 540
-    return  eh                                         #line 541#line 542#line 543
+# Creates a new leaf component out of a handler function, and a data parameter#line 528
+# that will be passed back to your handler when called.#line 529#line 530
+def make_leaf (name,owner,container,arg,handler):      #line 531
+    eh =  Eh ()                                        #line 532
+    nm =  ""                                           #line 533
+    if  None!= owner:                                  #line 534
+        nm =  owner.name                               #line 535#line 536
+    eh.name =  str( nm) +  str( "▹") +  name           #line 537
+    eh.owner =  owner                                  #line 538
+    eh.handler =  handler                              #line 539
+    eh.finject =  injector                             #line 540
+    eh.container =  container                          #line 541
+    eh.arg =  arg                                      #line 542
+    eh.state =  "idle"                                 #line 543
+    eh.kind =  "leaf"                                  #line 544
+    return  eh                                         #line 545#line 546#line 547
 
-# Sends a mevent on the given `port` with `data`, placing it on the output#line 544
-# of the given component.                              #line 545#line 546
-def send (eh,port,obj,causingMevent):                  #line 547
-    d = Datum ()                                       #line 548
-    d.v =  obj                                         #line 549
-    d.clone =  lambda : obj_clone ( d)                 #line 550
-    d.reclaim =  None                                  #line 551
-    mev = make_mevent ( port, d)                       #line 552
-    put_output ( eh, mev)                              #line 553#line 554#line 555
+# Sends a mevent on the given `port` with `data`, placing it on the output#line 548
+# of the given component.                              #line 549#line 550
+def send (eh,port,obj,causingMevent):                  #line 551
+    d = Datum ()                                       #line 552
+    d.v =  obj                                         #line 553
+    d.clone =  lambda : obj_clone ( d)                 #line 554
+    d.reclaim =  None                                  #line 555
+    mev = make_mevent ( port, d)                       #line 556
+    put_output ( eh, mev)                              #line 557#line 558#line 559
 
-def forward (eh,port,mev):                             #line 556
-    fwdmev = make_mevent ( port, mev.datum)            #line 557
-    put_output ( eh, fwdmev)                           #line 558#line 559#line 560
+def forward (eh,port,mev):                             #line 560
+    fwdmev = make_mevent ( port, mev.datum)            #line 561
+    put_output ( eh, fwdmev)                           #line 562#line 563#line 564
 
-def inject (eh,mev):                                   #line 561
-    eh.finject ( eh, mev)                              #line 562#line 563#line 564
+def inject (eh,mev):                                   #line 565
+    eh.finject ( eh, mev)                              #line 566#line 567#line 568
 
-def set_active (eh):                                   #line 565
-    eh.state =  "active"                               #line 566#line 567#line 568
+def set_active (eh):                                   #line 569
+    eh.state =  "active"                               #line 570#line 571#line 572
 
-def set_idle (eh):                                     #line 569
-    eh.state =  "idle"                                 #line 570#line 571#line 572
+def set_idle (eh):                                     #line 573
+    eh.state =  "idle"                                 #line 574#line 575#line 576
 
-def put_output (eh,mev):                               #line 573
-    eh.outq.append ( mev)                              #line 574#line 575#line 576
+def put_output (eh,mev):                               #line 577
+    eh.outq.append ( mev)                              #line 578#line 579#line 580
 
-projectRoot =  ""                                      #line 577#line 578
-def set_environment (project_root):                    #line 579
-    global projectRoot                                 #line 580
-    projectRoot =  project_root                        #line 581#line 582#line 583
+projectRoot =  ""                                      #line 581#line 582
+def set_environment (project_root):                    #line 583
+    global projectRoot                                 #line 584
+    projectRoot =  project_root                        #line 585#line 586#line 587
 
-def obj_clone (obj):                                   #line 584
-    return  obj                                        #line 585#line 586#line 587
+def obj_clone (obj):                                   #line 588
+    return  obj                                        #line 589#line 590#line 591
 
-# usage: app ${_00_} diagram_filename1 diagram_filename2 ...#line 588
-# where ${_00_} is the root directory for the project  #line 589#line 590
-def initialize_component_palette_from_files (project_root,diagram_source_files):#line 591
-    reg = make_component_registry ()                   #line 592
-    for diagram_source in  diagram_source_files:       #line 593
-        all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)#line 594
-        reg = generate_shell_components ( reg, all_containers_within_single_file)#line 595
-        for container in  all_containers_within_single_file:#line 596
-            register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 597#line 598#line 599
-    initialize_stock_components ( reg)                 #line 600
-    return  reg                                        #line 601#line 602#line 603
+# usage: app ${_00_} diagram_filename1 diagram_filename2 ...#line 592
+# where ${_00_} is the root directory for the project  #line 593#line 594
+def initialize_component_palette_from_files (project_root,diagram_source_files):#line 595
+    reg = make_component_registry ()                   #line 596
+    for diagram_source in  diagram_source_files:       #line 597
+        all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)#line 598
+        reg = generate_unique_components ( reg, all_containers_within_single_file)#line 599
+        for container in  all_containers_within_single_file:#line 600
+            register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 601#line 602#line 603
+    initialize_stock_components ( reg)                 #line 604
+    return  reg                                        #line 605#line 606#line 607
 
-def initialize_component_palette_from_string (project_root):#line 604
-    # this version ignores project_root                #line 605
-    reg = make_component_registry ()                   #line 606
-    all_containers = lnet2internal_from_string ()      #line 607
-    reg = generate_shell_components ( reg, all_containers)#line 608
-    for container in  all_containers:                  #line 609
-        register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 610#line 611
-    initialize_stock_components ( reg)                 #line 612
-    return  reg                                        #line 613#line 614#line 615
-                                                       #line 616
-def clone_string (s):                                  #line 617
-    return  s                                          #line 618#line 619#line 620
+def initialize_component_palette_from_string (project_root):#line 608
+    # this version ignores project_root                #line 609
+    reg = make_component_registry ()                   #line 610
+    all_containers = lnet2internal_from_string ()      #line 611
+    reg = generate_shell_components ( reg, all_containers)#line 612
+    for container in  all_containers:                  #line 613
+        register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 614#line 615
+    initialize_stock_components ( reg)                 #line 616
+    return  reg                                        #line 617#line 618#line 619
+                                                       #line 620
+def clone_string (s):                                  #line 621
+    return  s                                          #line 622#line 623#line 624
 
-load_errors =  False                                   #line 621
-runtime_errors =  False                                #line 622#line 623
-def load_error (s):                                    #line 624
-    global load_errors                                 #line 625
-    print ( s, file=sys.stderr)                        #line 626
-                                                       #line 627
-    load_errors =  True                                #line 628#line 629#line 630
+load_errors =  False                                   #line 625
+runtime_errors =  False                                #line 626#line 627
+def load_error (s):                                    #line 628
+    global load_errors                                 #line 629
+    print ( s, file=sys.stderr)                        #line 630
+                                                       #line 631
+    load_errors =  True                                #line 632#line 633#line 634
 
-def runtime_error (s):                                 #line 631
-    global runtime_errors                              #line 632
-    print ( s, file=sys.stderr)                        #line 633
-    runtime_errors =  True                             #line 634#line 635#line 636
-                                                       #line 637
-def initialize_from_files (project_root,diagram_names):#line 638
-    arg =  None                                        #line 639
-    palette = initialize_component_palette_from_files ( project_root, diagram_names)#line 640
-    return [ palette,[ project_root, diagram_names, arg]]#line 641#line 642#line 643
+def runtime_error (s):                                 #line 635
+    global runtime_errors                              #line 636
+    print ( s, file=sys.stderr)                        #line 637
+    runtime_errors =  True                             #line 638#line 639#line 640
+                                                       #line 641
+def initialize_from_files (project_root,diagram_names):#line 642
+    arg =  None                                        #line 643
+    palette = initialize_component_palette_from_files ( project_root, diagram_names)#line 644
+    return [ palette,[ project_root, diagram_names, arg]]#line 645#line 646#line 647
 
-def initialize_from_string (project_root):             #line 644
-    arg =  None                                        #line 645
-    palette = initialize_component_palette_from_string ( project_root)#line 646
-    return [ palette,[ project_root, None, arg]]       #line 647#line 648#line 649
+def initialize_from_string (project_root):             #line 648
+    arg =  None                                        #line 649
+    palette = initialize_component_palette_from_string ( project_root)#line 650
+    return [ palette,[ project_root, None, arg]]       #line 651#line 652#line 653
 
-def start (arg,Part_name,palette,env):                 #line 650
-    project_root =  env [ 0]                           #line 651
-    diagram_names =  env [ 1]                          #line 652
-    set_environment ( project_root)                    #line 653
-    # get entrypoint container                         #line 654
-    Part = get_component_instance ( palette, Part_name, None)#line 655
-    if  None ==  Part:                                 #line 656
-        load_error ( str( "Couldn't find container with page name /") +  str( Part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 660#line 661
-    if not  load_errors:                               #line 662
-        d = Datum ()                                   #line 663
-        d.v =  arg                                     #line 664
-        d.clone =  lambda : obj_clone ( d)             #line 665
-        d.reclaim =  None                              #line 666
-        mev = make_mevent ( "", d)                     #line 667
-        inject ( Part, mev)                            #line 668#line 669
-    print (deque_to_json ( Part.outq))                 #line 670#line 671#line 672
+def start (arg,Part_name,palette,env):                 #line 654
+    project_root =  env [ 0]                           #line 655
+    diagram_names =  env [ 1]                          #line 656
+    set_environment ( project_root)                    #line 657
+    # get entrypoint container                         #line 658
+    Part = get_component_instance ( palette, Part_name, None)#line 659
+    if  None ==  Part:                                 #line 660
+        load_error ( str( "Couldn't find container with page name /") +  str( Part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 664#line 665
+    if not  load_errors:                               #line 666
+        d = Datum ()                                   #line 667
+        d.v =  arg                                     #line 668
+        d.clone =  lambda : obj_clone ( d)             #line 669
+        d.reclaim =  None                              #line 670
+        mev = make_mevent ( "", d)                     #line 671
+        inject ( Part, mev)                            #line 672#line 673
+    print (deque_to_json ( Part.outq))                 #line 674#line 675#line 676
 
-def new_datum_bang ():                                 #line 673
-    d = Datum ()                                       #line 674
-    d.v =  "!"                                         #line 675
-    d.clone =  lambda : obj_clone ( d)                 #line 676
-    d.reclaim =  None                                  #line 677
-    return  d                                          #line 678#line 679
+def new_datum_bang ():                                 #line 677
+    d = Datum ()                                       #line 678
+    d.v =  "!"                                         #line 679
+    d.clone =  lambda : obj_clone ( d)                 #line 680
+    d.reclaim =  None                                  #line 681
+    return  d                                          #line 682#line 683

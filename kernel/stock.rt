@@ -1,15 +1,5 @@
-defn probeA_instantiate (reg, owner, name, template_data) {
+defn probe_instantiate (reg, owner, name, template_data) {
     name_with_id ≡ gensymbol (“?A”)
-    return make_leaf (name_with_id, owner,  ϕ,  ↪︎probe_handler)
-}
-
-defn probeB_instantiate (reg, owner, name, template_data) {
-    name_with_id ≡ gensymbol(“?B”)
-    return make_leaf (name_with_id, owner,  ϕ,  ↪︎probe_handler)
-}
-
-defn probeC_instantiate (reg, owner, name, template_data) {
-    name_with_id ≡ gensymbol(“?C”)
     return make_leaf (name_with_id, owner,  ϕ,  ↪︎probe_handler)
 }
 
@@ -21,7 +11,7 @@ defn probe_handler (eh, mev) {
                   #strcons (#asstr (ticktime),
 		            #strcons (“  ”,
 			              #strcons (“probe ”,
-                                               #strcons (eh.name,
+                                               #strcons (eh.arg,
 					                 #strcons (“: ”, #asstr (s))))))))
 }
 
@@ -278,9 +268,7 @@ defn strcatstar_handler (eh, mev) {
 
 defn initialize_stock_components (reg) {
     register_component (reg, mkTemplate ( “1then2”, ϕ, ↪︎deracer_instantiate))
-    register_component (reg, mkTemplate ( “?A”, ϕ, ↪︎probeA_instantiate))
-    register_component (reg, mkTemplate ( “?B”, ϕ, ↪︎probeB_instantiate))
-    register_component (reg, mkTemplate ( “?C”, ϕ, ↪︎probeC_instantiate))
+    register_component (reg, mkTemplate ( “?”, ϕ, ↪︎probe_instantiate))
     register_component (reg, mkTemplate ( “trash”, ϕ, ↪︎trash_instantiate))
 
 
@@ -290,7 +278,7 @@ defn initialize_stock_components (reg) {
     register_component (reg, mkTemplate ( “syncfilewrite”, ϕ, ↪︎syncfilewrite_instantiate))
     register_component (reg, mkTemplate ( “stringconcat”, ϕ, ↪︎stringconcat_instantiate))
     register_component (reg, mkTemplate ( “switch1*”, ϕ, ↪︎switch1star_instantiate))
-    register_component (reg, mkTemplate ( “String Concat *”, ϕ, ↪︎strcatstar_instantiate))
+    register_component (reg, mkTemplate ( “String Concat *”, ϕ ↪︎strcatstar_instantiate))
        ⌈ for fakepipe⌉
     register_component (reg, mkTemplate ( “fakepipename”, ϕ, ↪︎fakepipename_instantiate))
 }
