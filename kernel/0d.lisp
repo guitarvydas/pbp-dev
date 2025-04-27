@@ -620,10 +620,11 @@ x))))
   (declare (ignorable  reg  full_name  owner))              #|line 448|#
   (cond
     (( equal    ":"  (string (char  full_name 0)))          #|line 449|#
-      ( equal    instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 450|#))
-      (let ((instance (funcall (quote external_template_instantiator)   reg  owner  instance_name  full_name  #|line 451|#)))
-        (declare (ignorable instance))
-        (return-from get_component_instance  instance)      #|line 452|#)
+      (let ((instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 450|#)))
+        (declare (ignorable instance_name))
+        (let ((instance (funcall (quote external_instantiate)   reg  owner  instance_name  full_name  #|line 451|#)))
+          (declare (ignorable instance))
+          (return-from get_component_instance  instance)    #|line 452|#))
       )
     (t                                                      #|line 453|#
       (let ((template_name (funcall (quote mangle_name)   full_name  #|line 454|#)))
@@ -638,10 +639,11 @@ x))))
                   (return-from get_component_instance  nil) #|line 459|#
                   )
                 (t                                          #|line 460|#
-                  ( equal    instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 461|#))
-                  (let ((instance (funcall (slot-value  template 'instantiator)   reg  owner  instance_name (slot-value  template 'container) (slot-value  template 'arg)  #|line 462|#)))
-                    (declare (ignorable instance))
-                    (return-from get_component_instance  instance) #|line 463|#) #|line 464|#
+                  (let ((instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 461|#)))
+                    (declare (ignorable instance_name))
+                    (let ((instance (funcall (slot-value  template 'instantiator)   reg  owner  instance_name (slot-value  template 'container)  ""  #|line 462|#)))
+                      (declare (ignorable instance))
+                      (return-from get_component_instance  instance) #|line 463|#)) #|line 464|#
                   )))
             )
           (t                                                #|line 465|#

@@ -447,8 +447,8 @@ defn abstracted_register_component (reg, template, ok_to_overwrite) {
 
 defn get_component_instance (reg, full_name, owner) {
     if “:” = #stringcar (full_name) {
-	instance_name = generate_instance_name (owner, template_name)
-	instance ≡ external_template_instantiator (reg, owner, instance_name, full_name)
+	instance_name ≡ generate_instance_name (owner, template_name)
+	instance ≡ external_instantiate (reg, owner, instance_name, full_name)
 	return instance
     } else {
 	template_name ≡ mangle_name (full_name)
@@ -458,8 +458,8 @@ defn get_component_instance (reg, full_name, owner) {
 		load_error (#strcons (“Registry Error (A): Can't find component /”, #strcons (template_name, “/”)))
 		return ϕ
 	    } else {
-		instance_name = generate_instance_name (owner, template_name)
-		instance ≡ template.instantiator (reg, owner, instance_name, template.container, template.arg)
+		instance_name ≡ generate_instance_name (owner, template_name)
+		instance ≡ template.instantiator (reg, owner, instance_name, template.container, “”)
 		return instance
 	    }
 	} else {

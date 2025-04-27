@@ -472,8 +472,8 @@ function abstracted_register_component (reg,template,ok_to_overwrite) {/* line 4
 
 function get_component_instance (reg,full_name,owner) {/* line 448 */
     if ( ":" ==   full_name[0] ) {                     /* line 449 */
-      instance_name == generate_instance_name ( owner, template_name)/* line 450 */
-      let instance = external_template_instantiator ( reg, owner, instance_name, full_name)/* line 451 */;
+      let instance_name = generate_instance_name ( owner, template_name)/* line 450 */;
+      let instance = external_instantiate ( reg, owner, instance_name, full_name)/* line 451 */;
       return  instance;                                /* line 452 */
     }
     else {                                             /* line 453 */
@@ -485,8 +485,8 @@ function get_component_instance (reg,full_name,owner) {/* line 448 */
           return  null;                                /* line 459 */
         }
         else {                                         /* line 460 */
-          instance_name == generate_instance_name ( owner, template_name)/* line 461 */
-          let instance =  template.instantiator ( reg, owner, instance_name, template.container, template.arg)/* line 462 */;
+          let instance_name = generate_instance_name ( owner, template_name)/* line 461 */;
+          let instance =  template.instantiator ( reg, owner, instance_name, template.container, "")/* line 462 */;
           return  instance;                            /* line 463 *//* line 464 */
         }
       }

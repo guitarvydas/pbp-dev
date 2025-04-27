@@ -235,16 +235,15 @@ def strcatstar_handler (eh,mev):                       #line 239
 # future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project#line 251#line 252
 def initialize_stock_components (reg):                 #line 253
     register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 254
-    register_component ( reg,mkTemplate ( "?", None, probe_instantiate))#line 255
-    register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 256#line 257#line 258
-    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 259
-    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 260#line 261
-    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 262
-    register_component ( reg,mkTemplate ( "stringconcat", None, stringconcat_instantiate))#line 263
-    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 264
-    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 265
-    # for fakepipe                                     #line 266
-    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 267#line 268#line 269
+    register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 255#line 256#line 257
+    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 258
+    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 259#line 260
+    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 261
+    register_component ( reg,mkTemplate ( "stringconcat", None, stringconcat_instantiate))#line 262
+    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 263
+    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 264
+    # for fakepipe                                     #line 265
+    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 266#line 267#line 268
 def handle_external (s,eh,mev):                        #line 1
     firstc ==  s [ 1]                                  #line 2
     if  firstc ==  "$":                                #line 3
@@ -695,8 +694,8 @@ def abstracted_register_component (reg,template,ok_to_overwrite):#line 437
 
 def get_component_instance (reg,full_name,owner):      #line 448
     if  ":" ==   full_name[0] :                        #line 449
-        instance_name == generate_instance_name ( owner, template_name)#line 450
-        instance = external_template_instantiator ( reg, owner, instance_name, full_name)#line 451
+        instance_name = generate_instance_name ( owner, template_name)#line 450
+        instance = external_instantiate ( reg, owner, instance_name, full_name)#line 451
         return  instance                               #line 452
     else:                                              #line 453
         template_name = mangle_name ( full_name)       #line 454
@@ -706,8 +705,8 @@ def get_component_instance (reg,full_name,owner):      #line 448
                 load_error ( str( "Registry Error (A): Can't find component /") +  str( template_name) +  "/"  )#line 458
                 return  None                           #line 459
             else:                                      #line 460
-                instance_name == generate_instance_name ( owner, template_name)#line 461
-                instance =  template.instantiator ( reg, owner, instance_name, template.container, template.arg)#line 462
+                instance_name = generate_instance_name ( owner, template_name)#line 461
+                instance =  template.instantiator ( reg, owner, instance_name, template.container, "")#line 462
                 return  instance                       #line 463#line 464
         else:                                          #line 465
             load_error ( str( "Registry Error (B): Can't find component /") +  str( template_name) +  "/"  )#line 466
