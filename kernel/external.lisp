@@ -34,7 +34,7 @@
                   child_descriptor                          #|line 21|#
                   (cond
                     ((funcall (quote first_char_is)  (gethash  "name"  child_descriptor)  ":" ) #|line 22|#
-                      (let ((name (mangle_name (gethash  "name"  child_descriptor)) #|line 23|#))
+                      (let ((name (funcall (quote gensymbol)  (mangle_name (gethash  "name"  child_descriptor))  #|line 23|#)))
                         (declare (ignorable name))
                         (let ((arg (gethash  "name"  child_descriptor)))
                           (declare (ignorable arg))         #|line 24|#

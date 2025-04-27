@@ -22,7 +22,7 @@ function generate_external_components (reg,container_list) {/* line 17 */
         /*  loop through every component in the diagram and look for names that start with ":“  *//* line 20 */
         for (let child_descriptor of  diagram [ "children"]) {/* line 21 */
           if (first_char_is ( child_descriptor [ "name"], ":")) {/* line 22 */
-            let name = mangle_name ( child_descriptor [ "name"])/* line 23 */;
+            let name = gensymbol (mangle_name ( child_descriptor [ "name"]))/* line 23 */;
             let arg =  child_descriptor [ "name"];     /* line 24 */
             let generated_leaf = mkTemplate ( name, child_descriptor, arg, external_instantiate)/* line 25 */;
             register_component ( reg, generated_leaf)  /* line 26 *//* line 27 */

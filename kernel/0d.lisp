@@ -761,7 +761,7 @@ x))))
           diagram_source                                    #|line 597|#
           (let ((all_containers_within_single_file (funcall (quote lnet2internal_from_file)   project_root  diagram_source  #|line 598|#)))
             (declare (ignorable all_containers_within_single_file))
-            (setf  reg (funcall (quote generate_unique_components)   reg  all_containers_within_single_file  #|line 599|#))
+            (setf  reg (funcall (quote generate_external_components)   reg  all_containers_within_single_file  #|line 599|#))
             (loop for container in  all_containers_within_single_file
               do
                 (progn
@@ -779,7 +779,7 @@ x))))
     (declare (ignorable  reg))                              #|line 610|#
     (let ((all_containers (funcall (quote lnet2internal_from_string) )))
       (declare (ignorable all_containers))                  #|line 611|#
-      (setf  reg (funcall (quote generate_shell_components)   reg  all_containers  #|line 612|#))
+      (setf  reg (funcall (quote generate_external_components)   reg  all_containers  #|line 612|#))
       (loop for container in  all_containers
         do
           (progn

@@ -540,7 +540,7 @@ def initialize_component_palette_from_files (project_root,diagram_source_files):
     reg = make_component_registry ()                   #line 596
     for diagram_source in  diagram_source_files:       #line 597
         all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)#line 598
-        reg = generate_unique_components ( reg, all_containers_within_single_file)#line 599
+        reg = generate_external_components ( reg, all_containers_within_single_file)#line 599
         for container in  all_containers_within_single_file:#line 600
             register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 601#line 602#line 603
     initialize_stock_components ( reg)                 #line 604
@@ -550,7 +550,7 @@ def initialize_component_palette_from_string (project_root):#line 608
     # this version ignores project_root                #line 609
     reg = make_component_registry ()                   #line 610
     all_containers = lnet2internal_from_string ()      #line 611
-    reg = generate_shell_components ( reg, all_containers)#line 612
+    reg = generate_external_components ( reg, all_containers)#line 612
     for container in  all_containers:                  #line 613
         register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 614#line 615
     initialize_stock_components ( reg)                 #line 616

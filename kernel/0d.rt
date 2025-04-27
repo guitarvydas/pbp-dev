@@ -596,7 +596,7 @@ defn initialize_component_palette_from_files (project_root, diagram_source_files
     deftemp reg ⇐ make_component_registry ()
     for diagram_source in diagram_source_files {
         all_containers_within_single_file ≡ lnet2internal_from_file (project_root, diagram_source)
-        reg ⇐ generate_unique_components (reg, all_containers_within_single_file)
+        reg ⇐ generate_external_components (reg, all_containers_within_single_file)
         for container in all_containers_within_single_file {
             register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
 	}
@@ -609,7 +609,7 @@ defn initialize_component_palette_from_string (project_root) {
     ⌈ this version ignores project_root ⌉
     deftemp reg ⇐ make_component_registry ()
     all_containers ≡ lnet2internal_from_string ()
-    reg ⇐ generate_shell_components (reg, all_containers)
+    reg ⇐ generate_external_components (reg, all_containers)
     for container in all_containers {
             register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
 	}

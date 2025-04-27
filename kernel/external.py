@@ -18,7 +18,7 @@ def generate_external_components (reg,container_list): #line 17
             # loop through every component in the diagram and look for names that start with ":“ #line 20
             for child_descriptor in  diagram [ "children"]:#line 21
                 if first_char_is ( child_descriptor [ "name"], ":"):#line 22
-                    name = mangle_name ( child_descriptor [ "name"])#line 23
+                    name = gensymbol (mangle_name ( child_descriptor [ "name"]))#line 23
                     arg =  child_descriptor [ "name"]  #line 24
                     generated_leaf = mkTemplate ( name, child_descriptor, arg, external_instantiate)#line 25
                     register_component ( reg, generated_leaf)#line 26#line 27#line 28#line 29#line 30

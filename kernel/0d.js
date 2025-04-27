@@ -619,7 +619,7 @@ function initialize_component_palette_from_files (project_root,diagram_source_fi
     let  reg = make_component_registry ();             /* line 596 */
     for (let diagram_source of  diagram_source_files) {/* line 597 */
       let all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)/* line 598 */;
-      reg = generate_unique_components ( reg, all_containers_within_single_file)/* line 599 */;
+      reg = generate_external_components ( reg, all_containers_within_single_file)/* line 599 */;
       for (let container of  all_containers_within_single_file) {/* line 600 */
         register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 601 *//* line 602 */
       }                                                /* line 603 */
@@ -632,7 +632,7 @@ function initialize_component_palette_from_string (project_root) {/* line 608 */
     /*  this version ignores project_root  */          /* line 609 */
     let  reg = make_component_registry ();             /* line 610 */
     let all_containers = lnet2internal_from_string (); /* line 611 */
-    reg = generate_shell_components ( reg, all_containers)/* line 612 */;
+    reg = generate_external_components ( reg, all_containers)/* line 612 */;
     for (let container of  all_containers) {           /* line 613 */
       register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 614 *//* line 615 */
     }
