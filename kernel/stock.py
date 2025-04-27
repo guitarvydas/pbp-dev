@@ -227,14 +227,14 @@ def strcatstar_handler (eh,mev):                       #line 239
 # all of the the built_in leaves are listed here       #line 250
 # future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project#line 251#line 252
 def initialize_stock_components (reg):                 #line 253
-    register_component ( reg,mkTemplate ( "1then2", None, "", deracer_instantiate))#line 254
-    register_component ( reg,mkTemplate ( "?", None, "", probe_instantiate))#line 255
-    register_component ( reg,mkTemplate ( "trash", None, "", trash_instantiate))#line 256#line 257#line 258
-    register_component ( reg,mkTemplate ( "Read Text File", None, "", low_level_read_text_file_instantiate))#line 259
-    register_component ( reg,mkTemplate ( "Ensure String Datum", None, "", ensure_string_datum_instantiate))#line 260#line 261
-    register_component ( reg,mkTemplate ( "syncfilewrite", None, "", syncfilewrite_instantiate))#line 262
-    register_component ( reg,mkTemplate ( "stringconcat", None, "", stringconcat_instantiate))#line 263
-    register_component ( reg,mkTemplate ( "switch1*", None, "", switch1star_instantiate))#line 264
-    register_component ( reg,mkTemplate ( "String Concat *", None, "", strcatstar_instantiate))#line 265
+    register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 254
+    register_component ( reg,mkTemplate ( "?", None, probe_instantiate))#line 255
+    register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 256#line 257#line 258
+    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 259
+    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 260#line 261
+    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 262
+    register_component ( reg,mkTemplate ( "stringconcat", None, stringconcat_instantiate))#line 263
+    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 264
+    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 265
     # for fakepipe                                     #line 266
-    register_component ( reg,mkTemplate ( "fakepipename", None, "", fakepipename_instantiate))#line 267#line 268#line 269
+    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 267#line 268#line 269

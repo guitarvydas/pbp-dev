@@ -1,35 +1,10 @@
-defn external_instantiate (reg, owner, name, container, arg) {
-    name_with_id ≡ gensymbol (“external”)
-    return make_leaf (name_with_id, owner, container, arg, ↪︎external_handler)
-}
-
-defn external_handler (eh, msg) {
-    handle_external (eh.arg, eh, msg)
+defn external_instantiate (reg, owner, name, arg) {
+    name_with_id ≡ gensymbol (name)
+    return make_leaf (name_with_id, owner, ϕ, arg, ↪︎handle_external)
 }
 
 defn generate_external_components (reg, container_list) {
-    if ϕ != container_list {
-        for diagram in container_list {
-            ⌈ loop through every component in the diagram and look for names that start with “:“ ⌉
-            for child_descriptor in diagram@“children” {
-                if first_char_is (child_descriptor@“name”, “:”) {
-                    template_name ≡ ":"
-                    arg ≡ child_descriptor@“name”
-                    generated_leaf ≡ mkTemplate (template_name,  child_descriptor, arg, ↪︎external_instantiate)
-                    register_component (reg, generated_leaf)
-		}
-	    }
-	}
-    }
+    ⌈ nothing to do here, anymore - get_component_instance doesn't need a template for ":..." Parts ⌉
     return reg
 }
-
-defn first_char (s) {
-    return #stringcar (s)
-}
-
-defn first_char_is (s, c) {
-    return c = first_char (s)
-}
-
 

@@ -251,19 +251,19 @@ defn strcatstar_handler (eh, mev) {
 ⌈ future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project⌉
 
 defn initialize_stock_components (reg) {
-    register_component (reg, mkTemplate ( “1then2”, ϕ, “”, ↪︎deracer_instantiate))
-    register_component (reg, mkTemplate ( “?”, ϕ, “”, ↪︎probe_instantiate))
-    register_component (reg, mkTemplate ( “trash”, ϕ, “”, ↪︎trash_instantiate))
+    register_component (reg, mkTemplate ( “1then2”, ϕ, ↪︎deracer_instantiate))
+    register_component (reg, mkTemplate ( “?”, ϕ, ↪︎probe_instantiate))
+    register_component (reg, mkTemplate ( “trash”, ϕ, ↪︎trash_instantiate))
 
 
-    register_component (reg, mkTemplate ( “Read Text File”, ϕ, “”, ↪︎low_level_read_text_file_instantiate))
-    register_component (reg, mkTemplate ( “Ensure String Datum”, ϕ, “”, ↪︎ensure_string_datum_instantiate))
+    register_component (reg, mkTemplate ( “Read Text File”, ϕ, ↪︎low_level_read_text_file_instantiate))
+    register_component (reg, mkTemplate ( “Ensure String Datum”, ϕ, ↪︎ensure_string_datum_instantiate))
 
-    register_component (reg, mkTemplate ( “syncfilewrite”, ϕ, “”, ↪︎syncfilewrite_instantiate))
-    register_component (reg, mkTemplate ( “stringconcat”, ϕ, “”, ↪︎stringconcat_instantiate))
-    register_component (reg, mkTemplate ( “switch1*”, ϕ, “”, ↪︎switch1star_instantiate))
-    register_component (reg, mkTemplate ( “String Concat *”, ϕ, “”, ↪︎strcatstar_instantiate))
+    register_component (reg, mkTemplate ( “syncfilewrite”, ϕ, ↪︎syncfilewrite_instantiate))
+    register_component (reg, mkTemplate ( “stringconcat”, ϕ, ↪︎stringconcat_instantiate))
+    register_component (reg, mkTemplate ( “switch1*”, ϕ, ↪︎switch1star_instantiate))
+    register_component (reg, mkTemplate ( “String Concat *”, ϕ, ↪︎strcatstar_instantiate))
        ⌈ for fakepipe⌉
-    register_component (reg, mkTemplate ( “fakepipename”, ϕ, “”, ↪︎fakepipename_instantiate))
+    register_component (reg, mkTemplate ( “fakepipename”, ϕ, ↪︎fakepipename_instantiate))
 }
 

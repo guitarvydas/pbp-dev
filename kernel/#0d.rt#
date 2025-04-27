@@ -448,7 +448,7 @@ defn abstracted_register_component (reg, template, ok_to_overwrite) {
 defn get_component_instance (reg, full_name, owner) {
     if “:” = #stringcar (full_name) {
 	instance_name = generate_instance_name (owner, template_name)
-	instance ≡ external_template_instantiator (reg, owner, instance_name, full_name)
+	instance ≡ external_instantiate (reg, owner, instance_name, full_name)
 	return instance
     } else {
 	template_name ≡ mangle_name (full_name)
