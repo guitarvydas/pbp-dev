@@ -1,0 +1,42 @@
+defn handle_external (s, eh, mev) {
+    firstc = s [1]
+    if firstc == "$" {
+      shell_out_handler (eh, s [2:], mev)
+    } elif firstc == "?" {
+      probe_handler (eh, s [1:], mev)
+    } else {
+      # just a string, send it out
+      send (eh, “”, s [1:] , msg)
+    }
+}
+
+defn probe_handler (eh, s, mev) {
+    #live_update (“Info”,
+        #strcons (“  @”, 
+                  #strcons (#asstr (ticktime),
+		            #strcons (“  ”,
+			              #strcons (“probe ”,
+					        #strcons (“: ”, #asstr (s)))))))
+
+def shell_out_handler (eh, cmd, mev):
+    s =  mev.datum.v
+    ret =  None
+    rc =  None
+    stdout =  None
+    stderr =  None
+
+    try:
+        ret = subprocess.run ( cmd, input= s, text=True, capture_output=True)
+        rc = ret.returncode
+        stdout = ret.stdout.strip ()
+        stderr = ret.stderr.strip ()
+    except Exception as e:
+        ret = None
+        rc = 1
+        stdout = ''
+        stderr = str(e)
+
+    if  rc ==  0:
+        send ( eh, "", str( stdout) +  stderr , mev)
+    else:
+        send ( eh, "✗", str( stdout) +  stderr , mev)

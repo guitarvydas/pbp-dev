@@ -906,9 +906,9 @@ def strcatstar_handler (eh,mev):                       #line 265
 # future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project#line 277#line 278
 def initialize_stock_components (reg):                 #line 279
     register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 280
-    register_component ( reg,mkTemplate ( "?A", None, probeA_instantiate))#line 281
-    register_component ( reg,mkTemplate ( "?B", None, probeB_instantiate))#line 282
-    register_component ( reg,mkTemplate ( "?C", None, probeC_instantiate))#line 283
+    register_component ( reg,mkTemplate ( ":?A", None, probeA_instantiate))#line 281
+    register_component ( reg,mkTemplate ( ":?B", None, probeB_instantiate))#line 282
+    register_component ( reg,mkTemplate ( ":?C", None, probeC_instantiate))#line 283
     register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 284#line 285#line 286
     register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 287
     register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 288#line 289

@@ -152,7 +152,6 @@ ExternalPhrase_liveUpdate [_octothorpe _ lp s1 _comma s2 rp] = ‛live_update (�
 ExternalPhrase_queueAsJsonToStdout [_octothorpe _ lp x rp] = ‛print (deque_to_json («x»))’
 ExternalPhrase_dir [_octothorpe _ lp x rp] = ‛ «x» ’
 
-ExternalPhrase_external_name [_octothorpe _ lp s rp] = ‛mangle_name («s»)’
 ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛dispatch_lookup («arg», «eh»)’
 ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛«f» («eh», «msg»)’
 

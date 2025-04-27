@@ -4,14 +4,7 @@ defn external_instantiate (reg, owner, name, container, arg) {
 }
 
 defn external_handler (eh, msg) {
-    deftemp handler ⇐ #dispatch_lookup (eh.name, eh)
-    if ϕ = handler {
-        ⌈ just a string with no further meaning - send it out as a string ⌉
-        send (eh, “”, eh.arg , msg)
-    } else {
-        ⌈ handler implemented on a per-project basis ⌉
-        #dispatch (handler, eh, msg)
-    }
+    handle_external (eh.arg, eh, msg)
 }
 
 defn generate_external_components (reg, container_list) {
@@ -20,9 +13,9 @@ defn generate_external_components (reg, container_list) {
             ⌈ loop through every component in the diagram and look for names that start with “:“ ⌉
             for child_descriptor in diagram@“children” {
                 if first_char_is (child_descriptor@“name”, “:”) {
-                    name ≡ gensymbol (#external_name (child_descriptor@“name”))
+                    template_name ≡ ":"
                     arg ≡ child_descriptor@“name”
-                    generated_leaf ≡ mkTemplate (name,  child_descriptor, arg, ↪︎external_instantiate)
+                    generated_leaf ≡ mkTemplate (template_name,  child_descriptor, arg, ↪︎external_instantiate)
                     register_component (reg, generated_leaf)
 		}
 	    }

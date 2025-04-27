@@ -22,13 +22,10 @@ def modify_json_file(input_file_path, output_file_path):
         with open(input_file_path, 'r', encoding='utf-8') as file:
             file_content = file.read()
         
-        print(f"File '{input_file_path}' loaded successfully.")
         
         # Count original occurrences
         count_done = len(re.findall(r':DONE', file_content))
         count_dollar = len(re.findall(r':\$', file_content))
-        print(f"Found {count_done} occurrences of \":DONE\"")
-        print(f"Found {count_dollar} occurrences of \":$\"")
         
         # Replace ":DONE" with "'DONE"
         modified_content = re.sub(r':DONE', "'DONE", file_content)
@@ -45,10 +42,6 @@ def modify_json_file(input_file_path, output_file_path):
         count_done_new = len(re.findall(r"'DONE", modified_content))
         count_dollar_after = len(re.findall(r':\$', modified_content))
         
-        print(f"After replacement: {count_done_after} occurrences of \":DONE\" (should be 0)")
-        print(f"After replacement: {count_done_new} occurrences of \"'DONE\"")
-        print(f"After replacement: {count_dollar_after} occurrences of \":$\" (should be 0)")
-        
         # If there are still occurrences of ":$", log them for debugging
         if count_dollar_after > 0:
             print("\nWARNING: Some \":$\" instances were not replaced. Locations:")
@@ -61,7 +54,6 @@ def modify_json_file(input_file_path, output_file_path):
         with open(output_file_path, 'w', encoding='utf-8') as file:
             file.write(modified_content)
         
-        print(f"Replacements completed. Modified file saved as '{output_file_path}'")
         return True
         
     except Exception as e:
@@ -79,8 +71,6 @@ def main():
     if len(sys.argv) >= 3:
         output_file = sys.argv[2]
     
-    print('Starting file modification process...')
-    
     # Check if the input file exists
     if not os.path.exists(input_file):
         print(f"Error: The file '{input_file}' does not exist in the current directory.")
@@ -89,7 +79,7 @@ def main():
     result = modify_json_file(input_file, output_file)
     
     if result:
-        print('File processing completed successfully!')
+        pass
     else:
         print('Failed to process file. Please check the error messages above.')
 
