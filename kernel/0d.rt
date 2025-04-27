@@ -455,14 +455,7 @@ defn get_component_instance (reg, full_name, owner) {
             load_error (#strcons (“Registry Error (A): Can't find component /”, #strcons (template_name, “/”)))
             return ϕ
         } else {
-            owner_name ≡ “”
-            instance_name ≡ template_name
-            if ϕ != owner {
-                owner_name ⇐ owner.name
-                instance_name ⇐ #strcons (owner_name, #strcons (“▹”, template_name))
-            } else {
-                instance_name ⇐ template_name
-	    }
+            instance_name = generate_instance_name (owner, template_name)
             instance ≡ template.instantiator (reg, owner, instance_name, template.container, template.arg)
             return instance
 	}
@@ -470,6 +463,18 @@ defn get_component_instance (reg, full_name, owner) {
         load_error (#strcons (“Registry Error (B): Can't find component /”, #strcons (template_name, “/”)))
         return ϕ
     }
+}
+
+defn generate_instance_name (owner, template_name) {
+   owner_name ≡ “”
+   instance_name ≡ template_name
+   if ϕ != owner {
+       owner_name ⇐ owner.name
+       instance_name ⇐ #strcons (owner_name, #strcons (“▹”, template_name))
+   } else {
+       instance_name ⇐ template_name
+   }
+   return instance_name
 }
 
 defn mangle_name (s) {
