@@ -1,6 +1,6 @@
 
-(defun probe_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 1|#
+(defun probe_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 1|#
   (let ((name_with_id (funcall (quote gensymbol)   "?A"     #|line 2|#)))
     (declare (ignorable name_with_id))
     (return-from probe_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  #'probe_handler  #|line 3|#))) #|line 4|#
@@ -11,8 +11,8 @@
     (declare (ignorable s))                                 #|line 8|#
     (live_update  "Info"  (concatenate 'string  "  @"  (concatenate 'string (format nil "~a"  ticktime)  (concatenate 'string  "  "  (concatenate 'string  "probe "  (concatenate 'string (slot-value  eh 'arg)  (concatenate 'string  ": " (format nil "~a"  s)))))))) #|line 15|#) #|line 16|#
   )
-(defun trash_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 18|#
+(defun trash_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 18|#
   (let ((name_with_id (funcall (quote gensymbol)   "trash"  #|line 19|#)))
     (declare (ignorable name_with_id))
     (return-from trash_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  #'trash_handler  #|line 20|#))) #|line 21|#
@@ -38,8 +38,8 @@
   (declare (ignorable  inst))                               #|line 38|#
   #| pass |#                                                #|line 39|# #|line 40|#
   )
-(defun deracer_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 42|#
+(defun deracer_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 42|#
   (let ((name_with_id (funcall (quote gensymbol)   "deracer"  #|line 43|#)))
     (declare (ignorable name_with_id))
     (let (( inst  (make-instance 'Deracer_Instance_Data)    #|line 44|#))
@@ -101,8 +101,8 @@
         (funcall (quote runtime_error)   "bad state for deracer {eh.state}"  #|line 86|#) #|line 87|#
         )))                                                 #|line 88|#
   )
-(defun low_level_read_text_file_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 90|#
+(defun low_level_read_text_file_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 90|#
   (let ((name_with_id (funcall (quote gensymbol)   "Low Level Read Text File"  #|line 91|#)))
     (declare (ignorable name_with_id))
     (return-from low_level_read_text_file_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  #'low_level_read_text_file_handler  #|line 92|#))) #|line 93|#
@@ -121,8 +121,8 @@
           (send_string eh "" contents))))
                                                             #|line 97|#) #|line 98|#
   )
-(defun ensure_string_datum_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 100|#
+(defun ensure_string_datum_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 100|#
   (let ((name_with_id (funcall (quote gensymbol)   "Ensure String Datum"  #|line 101|#)))
     (declare (ignorable name_with_id))
     (return-from ensure_string_datum_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  #'ensure_string_datum_handler  #|line 102|#))) #|line 103|#
@@ -144,8 +144,8 @@
     (filename :accessor filename :initarg :filename :initform  "")  #|line 115|#)) #|line 116|#
 
                                                             #|line 117|# #|  temp copy for bootstrap, sends "done“ (error during bootstrap if not wired) |# #|line 118|#
-(defun syncfilewrite_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 119|#
+(defun syncfilewrite_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 119|#
   (let ((name_with_id (funcall (quote gensymbol)   "syncfilewrite"  #|line 120|#)))
     (declare (ignorable name_with_id))
     (let ((inst  (make-instance 'Syncfilewrite_Data)        #|line 121|#))
@@ -182,8 +182,8 @@
     (buffer2 :accessor buffer2 :initarg :buffer2 :initform  nil)  #|line 144|#)) #|line 145|#
 
                                                             #|line 146|#
-(defun stringconcat_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 147|#
+(defun stringconcat_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 147|#
   (let ((name_with_id (funcall (quote gensymbol)   "stringconcat"  #|line 148|#)))
     (declare (ignorable name_with_id))
     (let ((instp  (make-instance 'StringConcat_Instance_Data) #|line 149|#))
@@ -232,8 +232,8 @@
         (setf (slot-value  inst 'buffer2)  nil)             #|line 181|#) #|line 182|#
       ))                                                    #|line 183|#
   ) #|  |#                                                  #|line 185|# #|line 186|#
-(defun string_constant_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 187|# #|line 188|#
+(defun string_constant_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 187|# #|line 188|#
   (let ((name_with_id (funcall (quote gensymbol)   "strconst"  #|line 189|#)))
     (declare (ignorable name_with_id))
     (let (( s  template_data))
@@ -250,8 +250,8 @@
     (declare (ignorable s))                                 #|line 198|#
     (funcall (quote send)   eh  ""  s  mev                  #|line 199|#)) #|line 200|#
   )
-(defun fakepipename_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 202|#
+(defun fakepipename_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 202|#
   (let ((instance_name (funcall (quote gensymbol)   "fakepipe"  #|line 203|#)))
     (declare (ignorable instance_name))
     (return-from fakepipename_instantiate (funcall (quote make_leaf)   instance_name  owner  nil  #'fakepipename_handler  #|line 204|#))) #|line 205|#
@@ -268,8 +268,8 @@
     (state :accessor state :initarg :state :initform  "1")  #|line 217|#)) #|line 218|#
 
                                                             #|line 219|#
-(defun switch1star_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 220|#
+(defun switch1star_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 220|#
   (let ((name_with_id (funcall (quote gensymbol)   "switch1*"  #|line 221|#)))
     (declare (ignorable name_with_id))
     (let ((instp  (make-instance 'Switch1star_Instance_Data) #|line 222|#))
@@ -308,8 +308,8 @@
     (s :accessor s :initarg :s :initform  "")               #|line 246|#)) #|line 247|#
 
                                                             #|line 248|#
-(defun strcatstar_instantiate (&optional  reg  owner  name  template_data)
-  (declare (ignorable  reg  owner  name  template_data))    #|line 249|#
+(defun strcatstar_instantiate (&optional  reg  owner  name  template_data  arg)
+  (declare (ignorable  reg  owner  name  template_data  arg)) #|line 249|#
   (let ((name_with_id (funcall (quote gensymbol)   "String Concat *"  #|line 250|#)))
     (declare (ignorable name_with_id))
     (let ((instp  (make-instance 'StringAccumulator)        #|line 251|#))

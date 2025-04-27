@@ -1,5 +1,5 @@
 
-function probe_instantiate (reg,owner,name,template_data) {/* line 1 */
+function probe_instantiate (reg,owner,name,template_data,arg) {/* line 1 */
     let name_with_id = gensymbol ( "?A")               /* line 2 */;
     return make_leaf ( name_with_id, owner, null, probe_handler)/* line 3 */;/* line 4 *//* line 5 */
 }
@@ -9,7 +9,7 @@ function probe_handler (eh,mev) {                      /* line 6 *//* line 7 */
     live_update ( "Info",  ( "  @".toString ()+  (`${ ticktime}`.toString ()+  ( "  ".toString ()+  ( "probe ".toString ()+  ( eh.arg.toString ()+  ( ": ".toString ()+ `${ s}`.toString ()) .toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 15 *//* line 16 *//* line 17 */
 }
 
-function trash_instantiate (reg,owner,name,template_data) {/* line 18 */
+function trash_instantiate (reg,owner,name,template_data,arg) {/* line 18 */
     let name_with_id = gensymbol ( "trash")            /* line 19 */;
     return make_leaf ( name_with_id, owner, null, trash_handler)/* line 20 */;/* line 21 *//* line 22 */
 }
@@ -38,7 +38,7 @@ class Deracer_Instance_Data {
 function reclaim_Buffers_from_heap (inst) {            /* line 38 *//* line 39 *//* line 40 *//* line 41 */
 }
 
-function deracer_instantiate (reg,owner,name,template_data) {/* line 42 */
+function deracer_instantiate (reg,owner,name,template_data,arg) {/* line 42 */
     let name_with_id = gensymbol ( "deracer")          /* line 43 */;
     let  inst =  new Deracer_Instance_Data ();         /* line 44 */;
     inst.state =  "idle";                              /* line 45 */
@@ -93,7 +93,7 @@ function deracer_handler (eh,mev) {                    /* line 57 */
     }                                                  /* line 88 *//* line 89 */
 }
 
-function low_level_read_text_file_instantiate (reg,owner,name,template_data) {/* line 90 */
+function low_level_read_text_file_instantiate (reg,owner,name,template_data,arg) {/* line 90 */
     let name_with_id = gensymbol ( "Low Level Read Text File")/* line 91 */;
     return make_leaf ( name_with_id, owner, null, low_level_read_text_file_handler)/* line 92 */;/* line 93 *//* line 94 */
 }
@@ -114,7 +114,7 @@ function low_level_read_text_file_handler (eh,mev) {   /* line 95 */
                                                        /* line 97 *//* line 98 *//* line 99 */
 }
 
-function ensure_string_datum_instantiate (reg,owner,name,template_data) {/* line 100 */
+function ensure_string_datum_instantiate (reg,owner,name,template_data,arg) {/* line 100 */
     let name_with_id = gensymbol ( "Ensure String Datum")/* line 101 */;
     return make_leaf ( name_with_id, owner, null, ensure_string_datum_handler)/* line 102 */;/* line 103 *//* line 104 */
 }
@@ -137,7 +137,7 @@ class Syncfilewrite_Data {
 }
                                                        /* line 117 */
 /*  temp copy for bootstrap, sends "done“ (error during bootstrap if not wired) *//* line 118 */
-function syncfilewrite_instantiate (reg,owner,name,template_data) {/* line 119 */
+function syncfilewrite_instantiate (reg,owner,name,template_data,arg) {/* line 119 */
     let name_with_id = gensymbol ( "syncfilewrite")    /* line 120 */;
     let inst =  new Syncfilewrite_Data ();             /* line 121 */;
     return make_leaf ( name_with_id, owner, inst, syncfilewrite_handler)/* line 122 */;/* line 123 *//* line 124 */
@@ -170,7 +170,7 @@ class StringConcat_Instance_Data {
   }
 }
                                                        /* line 146 */
-function stringconcat_instantiate (reg,owner,name,template_data) {/* line 147 */
+function stringconcat_instantiate (reg,owner,name,template_data,arg) {/* line 147 */
     let name_with_id = gensymbol ( "stringconcat")     /* line 148 */;
     let instp =  new StringConcat_Instance_Data ();    /* line 149 */;
     return make_leaf ( name_with_id, owner, instp, stringconcat_handler)/* line 150 */;/* line 151 *//* line 152 */
@@ -214,7 +214,7 @@ function maybe_stringconcat (eh,inst,mev) {            /* line 169 */
 }
 
 /*  */                                                 /* line 185 *//* line 186 */
-function string_constant_instantiate (reg,owner,name,template_data) {/* line 187 *//* line 188 */
+function string_constant_instantiate (reg,owner,name,template_data,arg) {/* line 187 *//* line 188 */
     let name_with_id = gensymbol ( "strconst")         /* line 189 */;
     let  s =  template_data;                           /* line 190 */
     if ( projectRoot!= "") {                           /* line 191 */
@@ -228,7 +228,7 @@ function string_constant_handler (eh,mev) {            /* line 197 */
     send ( eh, "", s, mev)                             /* line 199 *//* line 200 *//* line 201 */
 }
 
-function fakepipename_instantiate (reg,owner,name,template_data) {/* line 202 */
+function fakepipename_instantiate (reg,owner,name,template_data,arg) {/* line 202 */
     let instance_name = gensymbol ( "fakepipe")        /* line 203 */;
     return make_leaf ( instance_name, owner, null, fakepipename_handler)/* line 204 */;/* line 205 *//* line 206 */
 }
@@ -247,7 +247,7 @@ class Switch1star_Instance_Data {
   }
 }
                                                        /* line 219 */
-function switch1star_instantiate (reg,owner,name,template_data) {/* line 220 */
+function switch1star_instantiate (reg,owner,name,template_data,arg) {/* line 220 */
     let name_with_id = gensymbol ( "switch1*")         /* line 221 */;
     let instp =  new Switch1star_Instance_Data ();     /* line 222 */;
     return make_leaf ( name_with_id, owner, instp, switch1star_handler)/* line 223 */;/* line 224 *//* line 225 */
@@ -283,7 +283,7 @@ class StringAccumulator {
   }
 }
                                                        /* line 248 */
-function strcatstar_instantiate (reg,owner,name,template_data) {/* line 249 */
+function strcatstar_instantiate (reg,owner,name,template_data,arg) {/* line 249 */
     let name_with_id = gensymbol ( "String Concat *")  /* line 250 */;
     let instp =  new StringAccumulator ();             /* line 251 */;
     return make_leaf ( name_with_id, owner, instp, strcatstar_handler)/* line 252 */;/* line 253 *//* line 254 */

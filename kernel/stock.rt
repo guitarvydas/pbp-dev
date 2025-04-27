@@ -1,4 +1,4 @@
-defn probe_instantiate (reg, owner, name, template_data) {
+defn probe_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“?A”)
     return make_leaf (name_with_id, owner,  ϕ,  ↪︎probe_handler)
 }
@@ -15,7 +15,7 @@ defn probe_handler (eh, mev) {
 					                 #strcons (“: ”, #asstr (s))))))))
 }
 
-defn trash_instantiate (reg, owner, name, template_data) {
+defn trash_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“trash”)
     return make_leaf (name_with_id, owner, ϕ, ↪︎trash_handler)
 }
@@ -39,7 +39,7 @@ defn reclaim_Buffers_from_heap (inst) {
     pass
 }
 
-defn deracer_instantiate (reg, owner, name, template_data) {
+defn deracer_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“deracer”)
     deftemp inst ⇐ #fresh (Deracer_Instance_Data)
     inst.state ⇐ “idle”
@@ -87,7 +87,7 @@ defn deracer_handler (eh, mev) {
     }
 }
 
-defn low_level_read_text_file_instantiate (reg, owner, name, template_data) {
+defn low_level_read_text_file_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol(“Low Level Read Text File”)
     return make_leaf (name_with_id, owner, ϕ,  ↪︎low_level_read_text_file_handler)
 }
@@ -97,7 +97,7 @@ defn low_level_read_text_file_handler (eh, mev) {
     # low_level_read_text_file_handler (eh, mev, fname, “”, “✗”)
 }
 
-defn ensure_string_datum_instantiate (reg, owner, name, template_data) {
+defn ensure_string_datum_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol(“Ensure String Datum”)
     return make_leaf (name_with_id, owner, ϕ, ↪︎ensure_string_datum_handler)
 }
@@ -116,7 +116,7 @@ defobj Syncfilewrite_Data () {
 }
 
 ⌈ temp copy for bootstrap, sends “done“ (error during bootstrap if not wired)⌉
-defn syncfilewrite_instantiate (reg, owner, name, template_data) {
+defn syncfilewrite_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“syncfilewrite”)
     inst ≡ #fresh (Syncfilewrite_Data)
     return make_leaf (name_with_id, owner, inst, ↪︎syncfilewrite_handler)
@@ -144,7 +144,7 @@ defobj StringConcat_Instance_Data () {
         • buffer2 ⇐ ϕ
 }
 
-defn stringconcat_instantiate (reg, owner, name, template_data) {
+defn stringconcat_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“stringconcat”)
     instp ≡ #fresh (StringConcat_Instance_Data)
     return make_leaf (name_with_id, owner, instp, ↪︎stringconcat_handler)
@@ -184,7 +184,7 @@ defn maybe_stringconcat (eh, inst, mev) {
 
 ⌈⌉
 
-defn string_constant_instantiate (reg, owner, name, template_data) {
+defn string_constant_instantiate (reg, owner, name, template_data, arg) {
     global projectRoot
     name_with_id ≡ gensymbol (“strconst”)
     deftemp s ⇐ template_data
@@ -199,7 +199,7 @@ defn string_constant_handler (eh, mev) {
     send (eh, “”, s, mev)
 }
 
-defn fakepipename_instantiate (reg, owner, name, template_data) {
+defn fakepipename_instantiate (reg, owner, name, template_data, arg) {
     instance_name ≡ gensymbol (“fakepipe”)
     return make_leaf (instance_name, owner, ϕ, ↪︎fakepipename_handler)
 }
@@ -217,7 +217,7 @@ defobj Switch1star_Instance_Data () {
         • state ⇐ “1”
 }
 
-defn switch1star_instantiate (reg, owner, name, template_data) {
+defn switch1star_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“switch1*”)
     instp ≡ #fresh (Switch1star_Instance_Data)
     return make_leaf (name_with_id, owner, instp, ↪︎switch1star_handler)
@@ -246,7 +246,7 @@ defobj StringAccumulator () {
         • s ⇐ “”
 }
 
-defn strcatstar_instantiate (reg, owner, name, template_data) {
+defn strcatstar_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“String Concat *”)
     instp ≡ #fresh (StringAccumulator)
     return make_leaf (name_with_id, owner, instp, ↪︎strcatstar_handler)
