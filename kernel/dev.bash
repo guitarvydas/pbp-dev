@@ -24,9 +24,10 @@ else
     mv modified-kernel.drawio.json kernel.drawio.json
     ./tas.bash 'external'
     ./tas.bash 'stock'
+    ./tas.bash 'kernel_external'
     ./tas.bash '0d'
-    cat external.py stock.py 0d.py >kernel0d.py
+    cat external.py stock.py kernel_external.py 0d.py >kernel0d.py
     node das2json.js kernel.drawio
-    ./tas.bash 'kernel_external.rt'
+    ./tas.bash 'junk'
 fi
 

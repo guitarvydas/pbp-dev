@@ -1,12 +1,12 @@
 defn handle_external (s, eh, mev) {
     firstc = s [1]
-    if firstc == "$" {
-      shell_out_handler (eh, s [2:], mev)
-    } elif firstc == "?" {
-      probe_handler (eh, s [1:], mev)
+    if firstc = "$" {
+      shell_out_handler (eh, #stringcdr (#stringcdr (s)), mev)
+    } elif firstc = "?" {
+      probe_handler (eh, #stringcdr (s), mev)
     } else {
-      # just a string, send it out
-      send (eh, “”, s [1:] , msg)
+      ⌈ just a string, send it out ⌉
+      send (eh, “”, #stringcdr (#stringcdr (s)) , msg)
     }
 }
 
@@ -17,26 +17,19 @@ defn probe_handler (eh, s, mev) {
 		            #strcons (“  ”,
 			              #strcons (“probe ”,
 					        #strcons (“: ”, #asstr (s)))))))
+}
 
-def shell_out_handler (eh, cmd, mev):
-    s =  mev.datum.v
-    ret =  None
-    rc =  None
-    stdout =  None
-    stderr =  None
+defn shell_out_handler (eh, cmd, msg) {
+    s ≡ msg.datum.v
+    deftemp ret ⇐ ϕ
+    deftemp rc ⇐ ϕ
+    deftemp stdout ⇐ ϕ
+    deftemp stderr ⇐ ϕ
+    #run_command (cmd, s, ret, rc, stdout, stderr)
+    if rc = 0 {
+        send (eh, “”, #strcons (stdout, stderr) , msg)
+    } else {
+        send (eh, “✗”, #strcons (stdout, stderr), msg)
+    }
+}
 
-    try:
-        ret = subprocess.run ( cmd, input= s, text=True, capture_output=True)
-        rc = ret.returncode
-        stdout = ret.stdout.strip ()
-        stderr = ret.stderr.strip ()
-    except Exception as e:
-        ret = None
-        rc = 1
-        stdout = ''
-        stderr = str(e)
-
-    if  rc ==  0:
-        send ( eh, "", str( stdout) +  stderr , mev)
-    else:
-        send ( eh, "✗", str( stdout) +  stderr , mev)
