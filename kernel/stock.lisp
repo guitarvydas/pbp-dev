@@ -333,15 +333,15 @@
   ) #|  all of the the built_in leaves are listed here |#   #|line 266|# #|  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project |# #|line 267|# #|line 268|#
 (defun initialize_stock_components (&optional  reg)
   (declare (ignorable  reg))                                #|line 269|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "1then2"  nil  #'deracer_instantiate )  #|line 270|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "?"  nil  #'probe_instantiate )  #|line 271|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "trash"  nil  #'trash_instantiate )  #|line 272|#) #|line 273|# #|line 274|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Read Text File"  nil  #'low_level_read_text_file_instantiate )  #|line 275|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Ensure String Datum"  nil  #'ensure_string_datum_instantiate )  #|line 276|#) #|line 277|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "syncfilewrite"  nil  #'syncfilewrite_instantiate )  #|line 278|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "stringconcat"  nil  #'stringconcat_instantiate )  #|line 279|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "switch1*"  nil  #'switch1star_instantiate )  #|line 280|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "String Concat *"  nil  #'strcatstar_instantiate )  #|line 281|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "1then2"  nil  ""  #'deracer_instantiate )  #|line 270|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "?"  nil  ""  #'probe_instantiate )  #|line 271|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "trash"  nil  ""  #'trash_instantiate )  #|line 272|#) #|line 273|# #|line 274|#
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Read Text File"  nil  ""  #'low_level_read_text_file_instantiate )  #|line 275|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Ensure String Datum"  nil  ""  #'ensure_string_datum_instantiate )  #|line 276|#) #|line 277|#
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "syncfilewrite"  nil  ""  #'syncfilewrite_instantiate )  #|line 278|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "stringconcat"  nil  ""  #'stringconcat_instantiate )  #|line 279|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "switch1*"  nil  ""  #'switch1star_instantiate )  #|line 280|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "String Concat *"  nil  ""  #'strcatstar_instantiate )  #|line 281|#)
   #|  for fakepipe |#                                       #|line 282|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "fakepipename"  nil  #'fakepipename_instantiate )  #|line 283|#) #|line 284|#
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "fakepipename"  nil  ""  #'fakepipename_instantiate )  #|line 283|#) #|line 284|#
   )

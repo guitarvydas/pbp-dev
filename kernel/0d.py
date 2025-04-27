@@ -160,7 +160,7 @@ def create_through_connector (container,proto_conn,connectors,children_by_id):#l
     connector.receiver = mkReceiver ( container.name, container, proto_conn [ "target_port"], container.outq)#line 156
     return  connector                                  #line 157#line 158#line 159
                                                        #line 160
-def container_instantiator (reg,owner,container_name,desc):#line 161
+def container_instantiator (reg,owner,container_name,desc,arg):#line 161
     global enumDown, enumUp, enumAcross, enumThrough   #line 162
     container = make_container ( container_name, owner)#line 163
     children = []                                      #line 164
@@ -542,7 +542,7 @@ def initialize_component_palette_from_files (project_root,diagram_source_files):
         all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)#line 598
         reg = generate_external_components ( reg, all_containers_within_single_file)#line 599
         for container in  all_containers_within_single_file:#line 600
-            register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 601#line 602#line 603
+            register_component ( reg,mkTemplate ( container [ "name"], container, "", container_instantiator))#line 601#line 602#line 603
     initialize_stock_components ( reg)                 #line 604
     return  reg                                        #line 605#line 606#line 607
 
@@ -552,7 +552,7 @@ def initialize_component_palette_from_string (project_root):#line 608
     all_containers = lnet2internal_from_string ()      #line 611
     reg = generate_external_components ( reg, all_containers)#line 612
     for container in  all_containers:                  #line 613
-        register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 614#line 615
+        register_component ( reg,mkTemplate ( container [ "name"], container, "", container_instantiator))#line 614#line 615
     initialize_stock_components ( reg)                 #line 616
     return  reg                                        #line 617#line 618#line 619
                                                        #line 620

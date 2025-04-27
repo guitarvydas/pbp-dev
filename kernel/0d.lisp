@@ -271,8 +271,8 @@ x))))
     (setf (slot-value  connector 'receiver) (funcall (quote mkReceiver)  (slot-value  container 'name)  container (gethash  "target_port"  proto_conn) (slot-value  container 'outq)  #|line 156|#))
     (return-from create_through_connector  connector)       #|line 157|#) #|line 158|#
   )                                                         #|line 160|#
-(defun container_instantiator (&optional  reg  owner  container_name  desc)
-  (declare (ignorable  reg  owner  container_name  desc))   #|line 161|# #|line 162|#
+(defun container_instantiator (&optional  reg  owner  container_name  desc  arg)
+  (declare (ignorable  reg  owner  container_name  desc  arg)) #|line 161|# #|line 162|#
   (let ((container (funcall (quote make_container)   container_name  owner  #|line 163|#)))
     (declare (ignorable container))
     (let ((children  nil))
@@ -766,7 +766,7 @@ x))))
               do
                 (progn
                   container                                 #|line 600|#
-                  (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #| container= |# container  #| instantiator= |# #'container_instantiator )  #|line 601|#) #|line 602|#
+                  (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #| container= |# container  ""  #| instantiator= |# #'container_instantiator )  #|line 601|#) #|line 602|#
                   )))                                       #|line 603|#
           ))
     (funcall (quote initialize_stock_components)   reg      #|line 604|#)
@@ -784,7 +784,7 @@ x))))
         do
           (progn
             container                                       #|line 613|#
-            (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #| container= |# container  #| instantiator= |# #'container_instantiator )  #|line 614|#) #|line 615|#
+            (funcall (quote register_component)   reg (funcall (quote mkTemplate)  (gethash  "name"  container)  #| container= |# container  ""  #| instantiator= |# #'container_instantiator )  #|line 614|#) #|line 615|#
             ))
       (funcall (quote initialize_stock_components)   reg    #|line 616|#)
       (return-from initialize_component_palette_from_string  reg) #|line 617|#)) #|line 618|#

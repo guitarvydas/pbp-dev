@@ -305,15 +305,15 @@ function strcatstar_handler (eh,mev) {                 /* line 255 */
 /*  all of the the built_in leaves are listed here */  /* line 266 */
 /*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 267 *//* line 268 */
 function initialize_stock_components (reg) {           /* line 269 */
-    register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 270 */
-    register_component ( reg,mkTemplate ( "?", null, probe_instantiate))/* line 271 */
-    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 272 *//* line 273 *//* line 274 */
-    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 275 */
-    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 276 *//* line 277 */
-    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 278 */
-    register_component ( reg,mkTemplate ( "stringconcat", null, stringconcat_instantiate))/* line 279 */
-    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 280 */
-    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 281 */
+    register_component ( reg,mkTemplate ( "1then2", null, "", deracer_instantiate))/* line 270 */
+    register_component ( reg,mkTemplate ( "?", null, "", probe_instantiate))/* line 271 */
+    register_component ( reg,mkTemplate ( "trash", null, "", trash_instantiate))/* line 272 *//* line 273 *//* line 274 */
+    register_component ( reg,mkTemplate ( "Read Text File", null, "", low_level_read_text_file_instantiate))/* line 275 */
+    register_component ( reg,mkTemplate ( "Ensure String Datum", null, "", ensure_string_datum_instantiate))/* line 276 *//* line 277 */
+    register_component ( reg,mkTemplate ( "syncfilewrite", null, "", syncfilewrite_instantiate))/* line 278 */
+    register_component ( reg,mkTemplate ( "stringconcat", null, "", stringconcat_instantiate))/* line 279 */
+    register_component ( reg,mkTemplate ( "switch1*", null, "", switch1star_instantiate))/* line 280 */
+    register_component ( reg,mkTemplate ( "String Concat *", null, "", strcatstar_instantiate))/* line 281 */
     /*  for fakepipe */                                /* line 282 */
-    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 283 *//* line 284 *//* line 285 */
+    register_component ( reg,mkTemplate ( "fakepipename", null, "", fakepipename_instantiate))/* line 283 *//* line 284 *//* line 285 */
 }
