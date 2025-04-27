@@ -99,7 +99,7 @@
     "name": "List Filenames",
     "children": [
       {
-        "name": ":DONE",
+        "name": "'DONE",
         "id": 5
       },
       {
@@ -135,7 +135,7 @@
           "id": 8
         },
         "target": {
-          "name": ":DONE",
+          "name": "'DONE",
           "id": 5
         }
       },
@@ -144,7 +144,7 @@
         "source_port": "",
         "target_port": "fini",
         "source": {
-          "name": ":DONE",
+          "name": "'DONE",
           "id": 5
         }
       },

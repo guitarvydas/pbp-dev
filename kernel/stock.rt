@@ -1,6 +1,6 @@
 defn probe_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“?A”)
-    return make_leaf (name_with_id, owner,  ϕ,  ↪︎probe_handler)
+    return make_leaf (name_with_id, owner,  ϕ,  “”, ↪︎probe_handler)
 }
 
 defn probe_handler (eh, mev) {
@@ -17,7 +17,7 @@ defn probe_handler (eh, mev) {
 
 defn trash_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“trash”)
-    return make_leaf (name_with_id, owner, ϕ, ↪︎trash_handler)
+    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎trash_handler)
 }
 
 defn trash_handler (eh, mev) {
@@ -44,7 +44,7 @@ defn deracer_instantiate (reg, owner, name, template_data, arg) {
     deftemp inst ⇐ #fresh (Deracer_Instance_Data)
     inst.state ⇐ “idle”
     inst.buffer ⇐ #fresh (TwoMevents)
-    eh ≡ make_leaf (name_with_id, owner, inst, ↪︎deracer_handler)
+    eh ≡ make_leaf (name_with_id, owner, inst, “”, ↪︎deracer_handler)
     return eh
 }
 
@@ -89,7 +89,7 @@ defn deracer_handler (eh, mev) {
 
 defn low_level_read_text_file_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol(“Low Level Read Text File”)
-    return make_leaf (name_with_id, owner, ϕ,  ↪︎low_level_read_text_file_handler)
+    return make_leaf (name_with_id, owner, ϕ,  “”, ↪︎low_level_read_text_file_handler)
 }
 
 defn low_level_read_text_file_handler (eh, mev) {
@@ -99,7 +99,7 @@ defn low_level_read_text_file_handler (eh, mev) {
 
 defn ensure_string_datum_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol(“Ensure String Datum”)
-    return make_leaf (name_with_id, owner, ϕ, ↪︎ensure_string_datum_handler)
+    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎ensure_string_datum_handler)
 }
 
 defn ensure_string_datum_handler (eh, mev) {
@@ -119,7 +119,7 @@ defobj Syncfilewrite_Data () {
 defn syncfilewrite_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“syncfilewrite”)
     inst ≡ #fresh (Syncfilewrite_Data)
-    return make_leaf (name_with_id, owner, inst, ↪︎syncfilewrite_handler)
+    return make_leaf (name_with_id, owner, inst, “”, ↪︎syncfilewrite_handler)
 }
 
 defn syncfilewrite_handler (eh, mev) {
@@ -147,7 +147,7 @@ defobj StringConcat_Instance_Data () {
 defn stringconcat_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“stringconcat”)
     instp ≡ #fresh (StringConcat_Instance_Data)
-    return make_leaf (name_with_id, owner, instp, ↪︎stringconcat_handler)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎stringconcat_handler)
 }
 
 defn stringconcat_handler (eh, mev) {
@@ -191,7 +191,7 @@ defn string_constant_instantiate (reg, owner, name, template_data, arg) {
     if projectRoot != “” {
         s ⇐ #substitute (“_00_”, projectRoot, s)
     }
-    return make_leaf (name_with_id, owner, s, ↪︎string_constant_handler)
+    return make_leaf (name_with_id, owner, s, “”, ↪︎string_constant_handler)
 }
 
 defn string_constant_handler (eh, mev) {
@@ -201,7 +201,7 @@ defn string_constant_handler (eh, mev) {
 
 defn fakepipename_instantiate (reg, owner, name, template_data, arg) {
     instance_name ≡ gensymbol (“fakepipe”)
-    return make_leaf (instance_name, owner, ϕ, ↪︎fakepipename_handler)
+    return make_leaf (instance_name, owner, ϕ, “”, ↪︎fakepipename_handler)
 }
 
 defvar rand ⇐ 0
@@ -220,7 +220,7 @@ defobj Switch1star_Instance_Data () {
 defn switch1star_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“switch1*”)
     instp ≡ #fresh (Switch1star_Instance_Data)
-    return make_leaf (name_with_id, owner, instp, ↪︎switch1star_handler)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎switch1star_handler)
 }
 
 defn switch1star_handler (eh, mev) {
@@ -249,7 +249,7 @@ defobj StringAccumulator () {
 defn strcatstar_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“String Concat *”)
     instp ≡ #fresh (StringAccumulator)
-    return make_leaf (name_with_id, owner, instp, ↪︎strcatstar_handler)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎strcatstar_handler)
 }
 
 defn strcatstar_handler (eh, mev) {
