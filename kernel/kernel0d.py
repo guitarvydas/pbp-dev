@@ -879,6 +879,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 23
     stderr =  None                                     #line 28
 
     try:
+        with open('junk.txt', 'w') as file:
+            file.write(cmd)
         ret = subprocess.run (shlex.split ( cmd), input= s, text=True, capture_output=True)
         rc = ret.returncode
         stdout = ret.stdout.strip ()
