@@ -11,7 +11,7 @@ def handle_external (eh,mev):                          #line 1
         send ( eh, "",   s[1:] [1:] , mev)             #line 10#line 11#line 12#line 13
 
 def probe_handler (eh,s,mev):                          #line 14
-    live_update ( "fInfo",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 22#line 23#line 24
+    live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 22#line 23#line 24
 
 def shell_out_handler (eh,cmd,mev):                    #line 25
     s =  mev.datum.v                                   #line 26

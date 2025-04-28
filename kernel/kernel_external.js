@@ -15,7 +15,7 @@ function handle_external (eh,mev) {                    /* line 1 */
 }
 
 function probe_handler (eh,s,mev) {                    /* line 14 */
-    live_update ( "fInfo",  ( "  @".toString ()+  (`${ ticktime}`.toString ()+  ( "  ".toString ()+  ( "probe ".toString ()+  ( eh.name.toString ()+  ( ": ".toString ()+ `${ s}`.toString ()) .toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 22 *//* line 23 *//* line 24 */
+    live_update ( "Info",  ( "  @".toString ()+  (`${ ticktime}`.toString ()+  ( "  ".toString ()+  ( "probe ".toString ()+  ( eh.name.toString ()+  ( ": ".toString ()+ `${ s}`.toString ()) .toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 22 *//* line 23 *//* line 24 */
 }
 
 function shell_out_handler (eh,cmd,mev) {              /* line 25 */

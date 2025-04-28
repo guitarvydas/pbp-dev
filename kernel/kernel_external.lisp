@@ -19,7 +19,7 @@
   )
 (defun probe_handler (&optional  eh  s  mev)
   (declare (ignorable  eh  s  mev))                         #|line 14|#
-  (live_update  "fInfo"  (concatenate 'string  "  @"  (concatenate 'string (format nil "~a"  ticktime)  (concatenate 'string  "  "  (concatenate 'string  "probe "  (concatenate 'string (slot-value  eh 'name)  (concatenate 'string  ": " (format nil "~a"  s)))))))) #|line 22|# #|line 23|#
+  (live_update  "Info"  (concatenate 'string  "  @"  (concatenate 'string (format nil "~a"  ticktime)  (concatenate 'string  "  "  (concatenate 'string  "probe "  (concatenate 'string (slot-value  eh 'name)  (concatenate 'string  ": " (format nil "~a"  s)))))))) #|line 22|# #|line 23|#
   )
 (defun shell_out_handler (&optional  eh  cmd  mev)
   (declare (ignorable  eh  cmd  mev))                       #|line 25|#
