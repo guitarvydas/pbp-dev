@@ -1,12 +1,13 @@
-defn handle_external (s, eh, mev) {
-    firstc = s [1]
+defn handle_external (eh, mev) {
+    s ≡ eh.arg
+    deftemp firstc ⇐ s [1]
     if firstc = "$" {
-      shell_out_handler (eh, #stringcdr (#stringcdr (s)), mev)
+      shell_out_handler (eh, #stringcdr (#stringcdr (#stringcdr (s))), mev)
     } elif firstc = "?" {
       probe_handler (eh, #stringcdr (s), mev)
     } else {
       ⌈ just a string, send it out ⌉
-      send (eh, “”, #stringcdr (#stringcdr (s)) , msg)
+      send (eh, “”, #stringcdr (#stringcdr (s)) , mev)
     }
 }
 
@@ -19,17 +20,17 @@ defn probe_handler (eh, s, mev) {
 					        #strcons (“: ”, #asstr (s)))))))
 }
 
-defn shell_out_handler (eh, cmd, msg) {
-    s ≡ msg.datum.v
+defn shell_out_handler (eh, cmd, mev) {
+    s ≡ mev.datum.v
     deftemp ret ⇐ ϕ
     deftemp rc ⇐ ϕ
     deftemp stdout ⇐ ϕ
     deftemp stderr ⇐ ϕ
     #run_command (cmd, s, ret, rc, stdout, stderr)
     if rc = 0 {
-        send (eh, “”, #strcons (stdout, stderr) , msg)
+        send (eh, “”, #strcons (stdout, stderr) , mev)
     } else {
-        send (eh, “✗”, #strcons (stdout, stderr), msg)
+        send (eh, “✗”, #strcons (stdout, stderr), mev)
     }
 }
 

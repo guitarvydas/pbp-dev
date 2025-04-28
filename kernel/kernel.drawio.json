@@ -1022,11 +1022,11 @@
     "name": "Inhale",
     "children": [
       {
-        "name": ":$ ./ndsl internalize.ohm internalize.rewrite ",
+        "name": "Read Text File",
         "id": 5
       },
       {
-        "name": "Read Text File",
+        "name": ":$ ./ndsl internalize.ohm internalize.rewrite",
         "id": 9
       }
     ],
@@ -1037,7 +1037,7 @@
         "target_port": "",
         "target": {
           "name": "Read Text File",
-          "id": 9
+          "id": 5
         }
       },
       {
@@ -1046,11 +1046,11 @@
         "target_port": "",
         "source": {
           "name": "Read Text File",
-          "id": 9
+          "id": 5
         },
         "target": {
-          "name": ":$ ./ndsl internalize.ohm internalize.rewrite ",
-          "id": 5
+          "name": ":$ ./ndsl internalize.ohm internalize.rewrite",
+          "id": 9
         }
       },
       {
@@ -1058,17 +1058,8 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ ./ndsl internalize.ohm internalize.rewrite ",
-          "id": 5
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ ./ndsl internalize.ohm internalize.rewrite ",
-          "id": 5
+          "name": ":$ ./ndsl internalize.ohm internalize.rewrite",
+          "id": 9
         }
       },
       {
@@ -1077,6 +1068,15 @@
         "target_port": "✗",
         "source": {
           "name": "Read Text File",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ ./ndsl internalize.ohm internalize.rewrite",
           "id": 9
         }
       }

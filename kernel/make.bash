@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 node das2json.js kernel.drawio
-./tas '0d'
-./tas 'external'
-./tas 'stock'
+./tas.bash '0d'
+./tas.bash 'external'
+./tas.bash 'stock'
 NOW=$(date)
 FRESHDIR="before-${NOW}"
 mkdir ./"${FRESHDIR}"

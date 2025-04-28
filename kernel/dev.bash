@@ -18,6 +18,7 @@ else
     echo
     echo '                   *** new ***'
     echo
+    # refresh old version for bootstrapping
     cp @golden-kernel0d.py kernel0d.py
     node das2json.js kernel.drawio
     python3 backward.py
@@ -26,7 +27,8 @@ else
     ./tas.bash 'stock'
     ./tas.bash 'kernel_external'
     ./tas.bash '0d'
-    cat external.py stock.py kernel_external.py 0d.py >kernel0d.py
+    # make new 
+    cat 0d.py external.py stock.py kernel_external.py >kernel0d.py
     node das2json.js kernel.drawio
     ./tas.bash 'external'
     ./tas.bash 'stock'

@@ -562,12 +562,12 @@ x))))
     (instantiator :accessor instantiator :initarg :instantiator :initform  nil)  #|line 405|#)) #|line 406|#
 
                                                             #|line 407|#
-(defun mkTemplate (&optional  name  container  instantiator)
-  (declare (ignorable  name  container  instantiator))      #|line 408|#
+(defun mkTemplate (&optional  name  template_data  instantiator)
+  (declare (ignorable  name  template_data  instantiator))  #|line 408|#
   (let (( templ  (make-instance 'Template)                  #|line 409|#))
     (declare (ignorable  templ))
     (setf (slot-value  templ 'name)  name)                  #|line 410|#
-    (setf (slot-value  templ 'container)  container)        #|line 411|#
+    (setf (slot-value  templ 'template_data)  template_data) #|line 411|#
     (setf (slot-value  templ 'instantiator)  instantiator)  #|line 412|#
     (return-from mkTemplate  templ)                         #|line 413|#) #|line 414|#
   )                                                         #|line 416|#
@@ -618,17 +618,17 @@ x))))
   )
 (defun get_component_instance (&optional  reg  full_name  owner)
   (declare (ignorable  reg  full_name  owner))              #|line 448|#
-  (cond
-    (( equal    ":"  (string (char  full_name 0)))          #|line 449|#
-      (let ((instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 450|#)))
-        (declare (ignorable instance_name))
-        (let ((instance (funcall (quote external_instantiate)   reg  owner  instance_name  full_name  #|line 451|#)))
-          (declare (ignorable instance))
-          (return-from get_component_instance  instance)    #|line 452|#))
-      )
-    (t                                                      #|line 453|#
-      (let ((template_name (funcall (quote mangle_name)   full_name  #|line 454|#)))
-        (declare (ignorable template_name))
+  (let ((template_name (funcall (quote mangle_name)   full_name  #|line 449|#)))
+    (declare (ignorable template_name))
+    (cond
+      (( equal    ":"  (string (char  full_name 0)))        #|line 450|#
+        (let ((instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 451|#)))
+          (declare (ignorable instance_name))
+          (let ((instance (funcall (quote external_instantiate)   reg  owner  instance_name  full_name  #|line 452|#)))
+            (declare (ignorable instance))
+            (return-from get_component_instance  instance)  #|line 453|#))
+        )
+      (t                                                    #|line 454|#
         (cond
           (( dict-in?   template_name (slot-value  reg 'templates)) #|line 455|#
             (let ((template (gethash template_name (slot-value  reg 'templates))))
@@ -641,7 +641,7 @@ x))))
                 (t                                          #|line 460|#
                   (let ((instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 461|#)))
                     (declare (ignorable instance_name))
-                    (let ((instance (funcall (slot-value  template 'instantiator)   reg  owner  instance_name (slot-value  template 'container)  ""  #|line 462|#)))
+                    (let ((instance (funcall (slot-value  template 'instantiator)   reg  owner  instance_name (slot-value  template 'template_data)  ""  #|line 462|#)))
                       (declare (ignorable instance))
                       (return-from get_component_instance  instance) #|line 463|#)) #|line 464|#
                   )))
@@ -649,8 +649,8 @@ x))))
           (t                                                #|line 465|#
             (funcall (quote load_error)   (concatenate 'string  "Registry Error (B): Can't find component /"  (concatenate 'string  template_name  "/"))  #|line 466|#)
             (return-from get_component_instance  nil)       #|line 467|# #|line 468|#
-            )))                                             #|line 469|#
-      ))                                                    #|line 470|#
+            ))                                              #|line 469|#
+        )))                                                 #|line 470|#
   )
 (defun generate_instance_name (&optional  owner  template_name)
   (declare (ignorable  owner  template_name))               #|line 472|#
@@ -685,7 +685,7 @@ x))))
     (routings :accessor routings :initarg :routings :initform  (make-instance 'Queue) #|line 514|#)
     (handler :accessor handler :initarg :handler :initform  nil)  #|line 515|#
     (finject :accessor finject :initarg :finject :initform  nil)  #|line 516|#
-    (container :accessor container :initarg :container :initform  nil)  #|line 517|#
+    (instance_data :accessor instance_data :initarg :instance_data :initform  nil)  #|line 517|#
     (arg :accessor arg :initarg :arg :initform  "")         #|line 518|#
     (state :accessor state :initarg :state :initform  "idle")  #|line 519|# #|  bootstrap debugging |# #|line 520|#
     (kind :accessor kind :initarg :kind :initform  nil)  #|  enum { container, leaf, } |# #|line 521|#)) #|line 522|#
@@ -717,7 +717,7 @@ x))))
       (setf (slot-value  eh 'owner)  owner)                 #|line 547|#
       (setf (slot-value  eh 'handler)  handler)             #|line 548|#
       (setf (slot-value  eh 'finject)  #'injector)          #|line 549|#
-      (setf (slot-value  eh 'container)  container)         #|line 550|#
+      (setf (slot-value  eh 'instance_data)  container)     #|line 550|#
       (setf (slot-value  eh 'arg)  arg)                     #|line 551|#
       (setf (slot-value  eh 'state)  "idle")                #|line 552|#
       (setf (slot-value  eh 'kind)  "leaf")                 #|line 553|#

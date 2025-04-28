@@ -410,10 +410,10 @@ class Template {
   }
 }
                                                        /* line 407 */
-function mkTemplate (name,container,instantiator) {    /* line 408 */
+function mkTemplate (name,template_data,instantiator) {/* line 408 */
     let  templ =  new Template ();                     /* line 409 */;
     templ.name =  name;                                /* line 410 */
-    templ.container =  container;                      /* line 411 */
+    templ.template_data =  template_data;              /* line 411 */
     templ.instantiator =  instantiator;                /* line 412 */
     return  templ;                                     /* line 413 *//* line 414 *//* line 415 */
 }
@@ -471,13 +471,13 @@ function abstracted_register_component (reg,template,ok_to_overwrite) {/* line 4
 }
 
 function get_component_instance (reg,full_name,owner) {/* line 448 */
-    if ( ":" ==   full_name[0] ) {                     /* line 449 */
-      let instance_name = generate_instance_name ( owner, template_name)/* line 450 */;
-      let instance = external_instantiate ( reg, owner, instance_name, full_name)/* line 451 */;
-      return  instance;                                /* line 452 */
+    let template_name = mangle_name ( full_name)       /* line 449 */;
+    if ( ":" ==   full_name[0] ) {                     /* line 450 */
+      let instance_name = generate_instance_name ( owner, template_name)/* line 451 */;
+      let instance = external_instantiate ( reg, owner, instance_name, full_name)/* line 452 */;
+      return  instance;                                /* line 453 */
     }
-    else {                                             /* line 453 */
-      let template_name = mangle_name ( full_name)     /* line 454 */;
+    else {                                             /* line 454 */
       if ((( template_name) in ( reg.templates))) {    /* line 455 */
         let template =  reg.templates [template_name]; /* line 456 */
         if (( template ==  null)) {                    /* line 457 */
@@ -486,7 +486,7 @@ function get_component_instance (reg,full_name,owner) {/* line 448 */
         }
         else {                                         /* line 460 */
           let instance_name = generate_instance_name ( owner, template_name)/* line 461 */;
-          let instance =  template.instantiator ( reg, owner, instance_name, template.container, "")/* line 462 */;
+          let instance =  template.instantiator ( reg, owner, instance_name, template.template_data, "")/* line 462 */;
           return  instance;                            /* line 463 *//* line 464 */
         }
       }
@@ -543,7 +543,7 @@ class Eh {
     this.routings =  []                                /* line 514 */;
     this.handler =  null;                              /* line 515 */
     this.finject =  null;                              /* line 516 */
-    this.container =  null;                            /* line 517 */
+    this.instance_data =  null;                        /* line 517 */
     this.arg =  "";                                    /* line 518 */
     this.state =  "idle";                              /* line 519 *//*  bootstrap debugging *//* line 520 */
     this.kind =  null;/*  enum { container, leaf, } */ /* line 521 *//* line 522 */
@@ -575,7 +575,7 @@ function make_leaf (name,owner,container,arg,handler) {/* line 540 */
     eh.owner =  owner;                                 /* line 547 */
     eh.handler =  handler;                             /* line 548 */
     eh.finject =  injector;                            /* line 549 */
-    eh.container =  container;                         /* line 550 */
+    eh.instance_data =  container;                     /* line 550 */
     eh.arg =  arg;                                     /* line 551 */
     eh.state =  "idle";                                /* line 552 */
     eh.kind =  "leaf";                                 /* line 553 */

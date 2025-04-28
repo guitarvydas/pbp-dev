@@ -405,10 +405,10 @@ defobj Template () {
         • instantiator ⇐ ϕ
 }
 
-defn mkTemplate (name, container, instantiator) {
+defn mkTemplate (name, template_data, instantiator) {
      deftemp templ ⇐ #fresh (Template)
      templ.name ⇐ name
-     templ.container ⇐ container
+     templ.template_data ⇐ template_data
      templ.instantiator ⇐ instantiator
      return templ
 }
@@ -446,12 +446,12 @@ defn abstracted_register_component (reg, template, ok_to_overwrite) {
 }
 
 defn get_component_instance (reg, full_name, owner) {
+    template_name ≡ mangle_name (full_name)
     if “:” = #stringcar (full_name) {
 	instance_name ≡ generate_instance_name (owner, template_name)
 	instance ≡ external_instantiate (reg, owner, instance_name, full_name)
 	return instance
     } else {
-	template_name ≡ mangle_name (full_name)
 	if template_name in reg.templates {
 	    template ≡ reg.templates@template_name
 	    if (template = ϕ) {
@@ -459,7 +459,7 @@ defn get_component_instance (reg, full_name, owner) {
 		return ϕ
 	    } else {
 		instance_name ≡ generate_instance_name (owner, template_name)
-		instance ≡ template.instantiator (reg, owner, instance_name, template.container, “”)
+		instance ≡ template.instantiator (reg, owner, instance_name, template.template_data, “”)
 		return instance
 	    }
 	} else {
@@ -514,7 +514,7 @@ defobj Eh () {
         • routings ⇐ #freshQueue ()
         • handler ⇐ ϕ
         • finject ⇐ ϕ
-        • container ⇐ ϕ
+        • instance_data ⇐ ϕ
         • arg ⇐ “”
         • state ⇐ “idle”
         ⌈ bootstrap debugging⌉
@@ -547,7 +547,7 @@ defn make_leaf (name, owner, container, arg, handler) {
     eh.owner ⇐ owner
     eh.handler ⇐ handler
     eh.finject ⇐ ↪︎injector
-    eh.container ⇐ container
+    eh.instance_data ⇐ container
     eh.arg ⇐ arg
     eh.state ⇐ “idle”
     eh.kind ⇐ “leaf”

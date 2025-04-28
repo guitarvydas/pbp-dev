@@ -461,7 +461,6 @@ defn get_component_instance (reg, full_name, owner) {
             } else {
                 instance_name ⇐ template_name
 	    }
-#print_stderr (instance_name)
             instance ≡ template.instantiator (reg, owner, instance_name, template.template_data)
             return instance
 	}
