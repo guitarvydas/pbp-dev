@@ -3,10 +3,11 @@
 set -e
 
 node das2json.js kernel.drawio
-# define OLD=1 if using kernel.drawio that contains "'DONE" and "$ ..."
-# else define OLD=0 for new syntax using ":" instead of "'" and "$"
-OLD=0
-if [ "$OLD" -eq 1 ]; then
+# define VER=1 if using kernel.drawio that contains "'DONE" and "$ ..."
+# else define VER=2 for new syntax using ":" instead of "'" and "$", built using old kernel
+# else define VER=3 for new syntax using ":" instead of "'" and "$", built using generated new kernel
+VER=2
+if [ "$VER" -eq 1 ]; then
     echo '*** old ***'
     cp @golden-kernel0d.py kernel0d.py
     python3 backward.py
@@ -18,15 +19,17 @@ else
     echo
     echo '                   *** new ***'
     echo
-    # refresh old version for bootstrapping
-    cp @golden-kernel0d.py kernel0d.py
-    node das2json.js kernel.drawio
-    python3 backward.py
-    mv modified-kernel.drawio.json kernel.drawio.json
-    ./tas.bash 'external'
-    ./tas.bash 'stock'
-    ./tas.bash 'kernel_external'
-    ./tas.bash '0d'
+    if [ "$VER" -eq 2 ]; then
+	# refresh old version for bootstrapping
+	cp @golden-kernel0d.py kernel0d.py
+	node das2json.js kernel.drawio
+	python3 backward.py
+	mv modified-kernel.drawio.json kernel.drawio.json
+	./tas.bash 'external'
+	./tas.bash 'stock'
+	./tas.bash 'kernel_external'
+	./tas.bash '0d'
+    fi
     # make new 
     cat 0d.py external.py stock.py kernel_external.py >kernel0d.py
     node das2json.js kernel.drawio
