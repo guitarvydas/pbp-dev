@@ -6,6 +6,7 @@ node das2json.js kernel.drawio
 # define VER=1 if using kernel.drawio that contains "'DONE" and "$ ..."
 # else define VER=2 for new syntax using ":" instead of "'" and "$", built using old kernel
 # else define VER=3 for new syntax using ":" instead of "'" and "$", built using generated new kernel
+# leave it at 3, because the new kernel is now OK
 VER=3
 if [ "$VER" -eq 1 ]; then
     echo '*** old ***'

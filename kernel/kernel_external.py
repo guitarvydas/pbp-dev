@@ -11,14 +11,14 @@ def handle_external (eh,mev):                          #line 1
         send ( eh, "",   s[1:] [1:] , mev)             #line 10#line 11#line 12#line 13
 
 def probe_handler (eh,s,mev):                          #line 14
-    live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( ": ") + str ( s)     )#line 20#line 21#line 22
+    live_update ( "fInfo",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 22#line 23#line 24
 
-def shell_out_handler (eh,cmd,mev):                    #line 23
-    s =  mev.datum.v                                   #line 24
-    ret =  None                                        #line 25
-    rc =  None                                         #line 26
-    stdout =  None                                     #line 27
-    stderr =  None                                     #line 28
+def shell_out_handler (eh,cmd,mev):                    #line 25
+    s =  mev.datum.v                                   #line 26
+    ret =  None                                        #line 27
+    rc =  None                                         #line 28
+    stdout =  None                                     #line 29
+    stderr =  None                                     #line 30
 
     try:
         with open('junk.txt', 'w') as file:
@@ -32,8 +32,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 23
         rc = 1
         stdout = ''
         stderr = str(e)
-                                                       #line 29
-    if  rc ==  0:                                      #line 30
-        send ( eh, "", str( stdout) +  stderr , mev)   #line 31
-    else:                                              #line 32
-        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 33#line 34#line 35#line 36
+                                                       #line 31
+    if  rc ==  0:                                      #line 32
+        send ( eh, "", str( stdout) +  stderr , mev)   #line 33
+    else:                                              #line 34
+        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 35#line 36#line 37#line 38

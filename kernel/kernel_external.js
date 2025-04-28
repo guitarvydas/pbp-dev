@@ -15,23 +15,23 @@ function handle_external (eh,mev) {                    /* line 1 */
 }
 
 function probe_handler (eh,s,mev) {                    /* line 14 */
-    live_update ( "Info",  ( "  @".toString ()+  (`${ ticktime}`.toString ()+  ( "  ".toString ()+  ( "probe ".toString ()+  ( ": ".toString ()+ `${ s}`.toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 20 *//* line 21 *//* line 22 */
+    live_update ( "fInfo",  ( "  @".toString ()+  (`${ ticktime}`.toString ()+  ( "  ".toString ()+  ( "probe ".toString ()+  ( eh.name.toString ()+  ( ": ".toString ()+ `${ s}`.toString ()) .toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 22 *//* line 23 *//* line 24 */
 }
 
-function shell_out_handler (eh,cmd,mev) {              /* line 23 */
-    let s =  mev.datum.v;                              /* line 24 */
-    let  ret =  null;                                  /* line 25 */
-    let  rc =  null;                                   /* line 26 */
-    let  stdout =  null;                               /* line 27 */
-    let  stderr =  null;                               /* line 28 */
+function shell_out_handler (eh,cmd,mev) {              /* line 25 */
+    let s =  mev.datum.v;                              /* line 26 */
+    let  ret =  null;                                  /* line 27 */
+    let  rc =  null;                                   /* line 28 */
+    let  stdout =  null;                               /* line 29 */
+    let  stderr =  null;                               /* line 30 */
 
     stdout = execSync(`${ cmd} ${ s}`, { encoding: 'utf-8' });
     ret = true;
-                                                       /* line 29 */
-    if ( rc ==  0) {                                   /* line 30 */
-      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 31 */
+                                                       /* line 31 */
+    if ( rc ==  0) {                                   /* line 32 */
+      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 33 */
     }
-    else {                                             /* line 32 */
-      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 33 *//* line 34 */
-    }                                                  /* line 35 *//* line 36 */
+    else {                                             /* line 34 */
+      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 35 *//* line 36 */
+    }                                                  /* line 37 *//* line 38 */
 }

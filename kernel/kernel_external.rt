@@ -12,12 +12,14 @@ defn handle_external (eh, mev) {
 }
 
 defn probe_handler (eh, s, mev) {
-    #live_update (“Info”,
+    #live_update (“fInfo”,
         #strcons (“  @”, 
                   #strcons (#asstr (ticktime),
 		            #strcons (“  ”,
 			              #strcons (“probe ”,
-					        #strcons (“: ”, #asstr (s)))))))
+                                                #strcons (eh.name,
+					                  #strcons (“: ”,
+						                    #asstr (s))))))))
 }
 
 defn shell_out_handler (eh, cmd, mev) {

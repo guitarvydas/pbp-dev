@@ -172,7 +172,7 @@
         "id": 12
       },
       {
-        "name": ":?A",
+        "name": ":?ghi",
         "id": 19
       }
     ],
@@ -200,7 +200,7 @@
         "source_port": "",
         "target_port": "",
         "target": {
-          "name": ":?A",
+          "name": ":?ghi",
           "id": 19
         }
       },
