@@ -1,5 +1,6 @@
 #!/bin/bash
 # for bootstrapping a kernel build before make.bash fully works
+# update: use ./make.bash instead of this script
 set -e
 
 node das2json.js kernel.drawio

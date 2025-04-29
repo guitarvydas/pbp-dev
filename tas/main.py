@@ -1,9 +1,9 @@
 import sys
-sys.path.insert(0, '../kernel')
+#sys.path.insert(0, '../kernel')
 import kernel0d as zd
 
 try:
-    [palette, env] = zd.initialize_from_files (".", ["rt2all.drawio.json"])
+    [palette, env] = zd.initialize_from_files (".", ["tas.drawio.json"])
     zd.start (arg=sys.argv[3], Part_name="main", palette=palette, env=env)
 except Exception as e:
     _, _, tb = sys.exc_info()
