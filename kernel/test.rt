@@ -1,4 +1,10 @@
-defn TEST () {
-     #live_update (“✗”, #strcons (“A”, #strcons (“B”, “C”)))
 
+defn trash_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“trash”)
+    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎trash_handler)
+}
+
+defn trash_handler (eh, mev) {
+    ⌈ to appease dumped_on_floor checker⌉
+    pass
 }

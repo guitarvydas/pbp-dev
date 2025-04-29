@@ -125,11 +125,12 @@ ExternalPhrase_print_stderr [_octothorpe _ lp e rp] = ‛print («e», file=sys.
 ExternalPhrase_print_nl [_octothorpe _ lp rp] = ‛print ()’
 ExternalPhrase_print_nl_stderr [_octothorpe _ lp rp] = ‛’
 ExternalPhrase_display_queue_as_json [_octothorpe _ lp e rp] = ‛print (deque_to_json («e»), file=sys.stderr)’
-ExternalPhrase_split_string_for_shell [_octothorpe _ lp s rp] = ‛shlex.split («s»)’
 ExternalPhrase_substitute [_octothorpe _ lp find _comma1 replace _comma2 s rp] = ‛re.sub («find», «replace», «s»)’
 ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma3 rc _comma4 out _comma5 errout rp] = ‛
 try:⤷
-    «ret» = subprocess.run («cmd», input=«args», text=True, capture_output=True)
+    with open('junk.txt', 'w') as file:⤷
+        file.write(cmd)⤶
+    «ret» = subprocess.run (shlex.split («cmd»), input=«args», text=True, capture_output=True)
     «rc» = «ret».returncode
     «out» = «ret».stdout.strip ()
     «errout» = «ret».stderr.strip ()⤶
@@ -152,6 +153,9 @@ ExternalPhrase_negate [_octothorpe _ lp x rp] = ‛-«x»’
 ExternalPhrase_liveUpdate [_octothorpe _ lp s1 _comma s2 rp] = ‛live_update («s1», «s2»)’
 ExternalPhrase_queueAsJsonToStdout [_octothorpe _ lp x rp] = ‛print (deque_to_json («x»))’
 ExternalPhrase_dir [_octothorpe _ lp x rp] = ‛ «x» ’
+
+ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛dispatch_lookup («arg», «eh»)’
+ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛«f» («eh», «msg»)’
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 

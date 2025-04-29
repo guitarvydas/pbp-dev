@@ -95,7 +95,6 @@ ExternalPhrase_print_stdout [_octothorpe _ lp e rp] = ‛console.log («e»);’
 ExternalPhrase_print_stderr [_octothorpe _ lp e rp] = ‛console.error («e»);’
 ExternalPhrase_print_nl [_octothorpe _ lp rp] = ‛console.log ();’
 ExternalPhrase_print_nl_stderr [_octothorpe _ lp rp] = ‛’
-ExternalPhrase_split_string_for_shell [_octothorpe _ lp s rp] = ‛«s».split (" ")’
 ExternalPhrase_substitute [_octothorpe _ lp find _comma1 replace _comma2 s rp] = ‛«s».replaceAll («find», «replace»)’
 ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma3 rc _comma4 out _comma5 errout rp] = 
 ‛
@@ -117,6 +116,9 @@ ExternalPhrase_negate [_octothorpe _ lp x rp] = ‛(-«x»)’
 ExternalPhrase_liveUpdate [_octothorpe _ lp s1 _comma s2 rp] = ‛live_update («s1», «s2»)’
 ExternalPhrase_queueAsJsonToStdout [_octothorpe _ lp x rp] = ‛JSON.stringify («x»)’
 ExternalPhrase_dir [_octothorpe _ lp x rp] = ‛ «x» ’
+
+ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛dispatch_lookup («arg», «eh»)’
+ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛«f» («eh», «msg»)’
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 

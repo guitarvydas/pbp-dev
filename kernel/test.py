@@ -1,1 +1,2 @@
-x =  "{\""                                             #line 1
+
+$ ./ndsl emit.ohm emitPython.rewrite

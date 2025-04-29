@@ -12,8 +12,6 @@ delay.rt
 monitor.rt
 0d.rt
 stock.rt
-shellout.rt
+external.rt
 py0d.py
-rt2all.drawio
-rt2py.drawio
-rtcl.drawio
+kernel.drawio

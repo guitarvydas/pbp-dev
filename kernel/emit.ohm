@@ -56,7 +56,6 @@ emit {
      | "#" xkw<"print_nl"> "(" ")" -- print_nl
      | "#" xkw<"print_nl_stderr"> "(" ")" -- print_nl_stderr
      | "#" xkw<"display_queue_as_json"> "(" Exp ")" -- display_queue_as_json
-     | "#" xkw<"split_string_for_shell"> "(" Exp ")" -- split_string_for_shell
      | "#" xkw<"substitute"> "(" Exp Comma Exp Comma Exp ")" -- substitute
      | "#" xkw<"run_command"> "(" Cmd Comma Args Comma ret Comma rc Comma stdout Comma stderr ")" -- run_command
      | "#" xkw<"abort"> "(" ")" -- abort
@@ -71,7 +70,8 @@ emit {
      | "#" xkw<"live_update"> "(" Exp Comma Exp ")" -- liveUpdate
      | "#" xkw<"queue_as_json_to_stdout"> "(" Exp ")" -- queueAsJsonToStdout
      | "#" xkw<"dir"> "(" Exp ")" -- dir
-     
+     | "#" xkw<"dispatch_lookup"> "(" Exp Comma Exp ")" -- dispatch_lookup
+     | "#" xkw<"dispatch"> "(" Exp Comma Exp Comma Exp")" -- dispatch
      
      | "#" ident "(" StuffInsideParentheses* ")" -- unrecognized
 
