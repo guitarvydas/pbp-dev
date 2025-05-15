@@ -1,0 +1,9 @@
+defn Hello_Template () {
+  p ⇐ #freshTemplate (Part_Template)
+  p.handler ⇐ ↪︎Hello_handler
+  return p
+}
+
+defn Hello_handler (eh, mev) {
+  send (eh, "", "Hello")
+}

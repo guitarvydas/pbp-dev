@@ -612,13 +612,10 @@ def new_datum_bang ():                                 #line 686
     d.clone =  lambda : obj_clone ( d)                 #line 689
     d.reclaim =  None                                  #line 690
     return  d                                          #line 691#line 692
-def external_instantiate (reg,owner,name,arg):         #line 1
-    name_with_id = gensymbol ( name)                   #line 2
-    return make_leaf ( name_with_id, owner, None, arg, handle_external)#line 3#line 4#line 5
 
-def generate_external_components (reg,container_list): #line 6
-    # nothing to do here, anymore - get_component_instance doesn;t need a template for ":..." Parts #line 7
-    return  reg                                        #line 8#line 9#line 10
+
+####### stock.py ###########
+
 #line 1
 def trash_instantiate (reg,owner,name,template_data,arg):#line 2
     name_with_id = gensymbol ( "trash")                #line 3
@@ -877,6 +874,10 @@ def initialize_stock_components (reg):                 #line 276
     register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 288
     # for fakepipe                                     #line 289
     register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 290#line 291#line 292
+
+########## kernel_external.py ######
+
+
 def handle_external (eh,mev):                          #line 1
     s =  eh.arg                                        #line 2
     firstc =  s [ 1]                                   #line 3
@@ -915,3 +916,14 @@ def shell_out_handler (eh,cmd,mev):                    #line 25
         send ( eh, "", str( stdout) +  stderr , mev)   #line 33
     else:                                              #line 34
         send ( eh, "✗", str( stdout) +  stderr , mev)  #line 35#line 36#line 37#line 38
+
+########## external.py
+
+
+def external_instantiate (reg,owner,name,arg):         #line 1
+    name_with_id = gensymbol ( name)                   #line 2
+    return make_leaf ( name_with_id, owner, None, arg, handle_external)#line 3#line 4#line 5
+
+def generate_external_components (reg,container_list): #line 6
+    # nothing to do here, anymore - get_component_instance doesn;t need a template for ":..." Parts #line 7
+    return  reg                                        #line 8#line 9#line 10

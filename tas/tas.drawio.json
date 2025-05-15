@@ -584,6 +584,10 @@
       {
         "name": "String Concat *",
         "id": 22
+      },
+      {
+        "name": "blockOnError",
+        "id": 27
       }
     ],
     "connections": [
@@ -658,6 +662,84 @@
         }
       },
       {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        },
+        "target": {
+          "name": "blockOnError",
+          "id": 27
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "String Concat *",
+          "id": 22
+        },
+        "target": {
+          "name": "blockOnError",
+          "id": 27
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Grep for Errors",
+          "id": 18
+        },
+        "target": {
+          "name": "blockOnError",
+          "id": 27
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ python3 jsrelocate.py 55",
+          "id": 14
+        },
+        "target": {
+          "name": "blockOnError",
+          "id": 27
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Exhale Javascript",
+          "id": 10
+        },
+        "target": {
+          "name": "blockOnError",
+          "id": 27
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "RT to Javascript",
+          "id": 6
+        },
+        "target": {
+          "name": "blockOnError",
+          "id": 27
+        }
+      },
+      {
         "dir": 2,
         "source_port": "✗",
         "target_port": "✗",
@@ -707,8 +789,17 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": "String Concat *",
-          "id": 22
+          "name": "blockOnError",
+          "id": 27
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "blockOnError",
+          "id": 27
         }
       }
     ],

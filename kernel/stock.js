@@ -293,17 +293,46 @@ function strcatstar_handler (eh,mev) {                 /* line 239 */
     }                                                  /* line 248 *//* line 249 */
 }
 
-/*  all of the the built_in leaves are listed here */  /* line 250 */
-/*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 251 *//* line 252 */
-function initialize_stock_components (reg) {           /* line 253 */
-    register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 254 */
-    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 255 *//* line 256 *//* line 257 */
-    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 258 */
-    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 259 *//* line 260 */
-    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 261 */
-    register_component ( reg,mkTemplate ( "stringconcat", null, stringconcat_instantiate))/* line 262 */
-    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 263 */
-    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 264 */
-    /*  for fakepipe */                                /* line 265 */
-    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 266 *//* line 267 *//* line 268 */
+class BlockOnErrorState {
+  constructor () {                                     /* line 250 */
+
+    this.hasError =  "no";                             /* line 251 *//* line 252 */
+  }
+}
+                                                       /* line 253 */
+function blockOnError_instantiate (reg,owner,name,template_data) {/* line 254 */
+    let name_with_id = gensymbol ( "blockOnError")     /* line 255 */;
+    let instp =  new BlockOnErrorState ();             /* line 256 */;
+    return make_leaf ( name_with_id, owner, instp, blockOnError_handler)/* line 257 */;/* line 258 *//* line 259 */
+}
+
+function blockOnError_handler (eh,mev) {               /* line 260 */
+    let  inst =  eh.instance_data;                     /* line 261 */
+    if ( "" ==  mev.port) {                            /* line 262 */
+      if ( inst.hasError ==  "no") {                   /* line 263 */
+        send ( eh, "", mev.datum.v, mev)               /* line 264 *//* line 265 */
+      }
+    }
+    else if ( "✗" ==  mev.port) {                      /* line 266 */
+      inst.hasError =  "yes";                          /* line 267 */
+    }
+    else if ( "reset" ==  mev.port) {                  /* line 268 */
+      inst.hasError =  "no";                           /* line 269 *//* line 270 */
+    }                                                  /* line 271 *//* line 272 */
+}
+
+/*  all of the the built_in leaves are listed here */  /* line 273 */
+/*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 274 *//* line 275 */
+function initialize_stock_components (reg) {           /* line 276 */
+    register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 277 */
+    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 278 */
+    register_component ( reg,mkTemplate ( "blockOnError", null, blockOnError_instantiate))/* line 279 *//* line 280 *//* line 281 */
+    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 282 */
+    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 283 *//* line 284 */
+    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 285 */
+    register_component ( reg,mkTemplate ( "stringconcat", null, stringconcat_instantiate))/* line 286 */
+    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 287 */
+    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 288 */
+    /*  for fakepipe */                                /* line 289 */
+    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 290 *//* line 291 *//* line 292 */
 }
