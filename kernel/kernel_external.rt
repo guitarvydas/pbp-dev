@@ -12,6 +12,7 @@ defn handle_external (eh, mev) {
 }
 
 defn probe_handler (eh, s, mev) {
+    s ≡ mev.datum.v
     #live_update (“Info”,
         #strcons (“  @”, 
                   #strcons (#asstr (ticktime),

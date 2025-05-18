@@ -68,7 +68,12 @@ process.stdin.on('end', () => {
       }
     });
     
-      //console.log('Processing complete. Files created: out.lisp, out.py, out.js, out.md');
+      fs.appendFileSync('out.lisp', '\n');
+      fs.appendFileSync('out.py', '\n');
+      fs.appendFileSync('out.js', '\n');
+      fs.appendFileSync('out.wasm', '\n');
+      fs.appendFileSync('out.md', '\n');
+
   } catch (error) {
     console.error('Error processing input:', error.message);
     process.exit(1);
