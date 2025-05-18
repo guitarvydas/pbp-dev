@@ -6,6 +6,7 @@ import fs from 'fs';
 fs.writeFileSync('out.lisp', '\n');
 fs.writeFileSync('out.py', '\n');
 fs.writeFileSync('out.js', '\n');
+fs.writeFileSync('out.wasm', '\n');
 fs.writeFileSync('out.md', '\n');
 
 // Buffer to store stdin data
@@ -51,6 +52,9 @@ process.stdin.on('end', () => {
             break;
           case 'Javascript':
             outputFile = 'out.js';
+            break;
+          case 'WASM':
+            outputFile = 'out.wasm';
             break;
           default:
             // For any other key, write to out.md with a header
