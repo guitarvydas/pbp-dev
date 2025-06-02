@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
+set -x
 wd=.
 pbp=./pbp
-Dev=~/Documents/projects/pbp-dev
+Dev=~/Documents/dev/pbp
 TaS_Dev=${Dev}/tas
 
 
