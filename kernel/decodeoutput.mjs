@@ -3,11 +3,11 @@
 import fs from 'fs';
 
 // Initialize empty files
-fs.writeFileSync('out.lisp', '\n');
-fs.writeFileSync('out.py', '\n');
-fs.writeFileSync('out.js', '\n');
-fs.writeFileSync('out.wasm', '\n');
-fs.writeFileSync('out.md', '\n');
+fs.writeFileSync('out.lisp', '');
+fs.writeFileSync('out.py', '');
+fs.writeFileSync('out.js', '');
+fs.writeFileSync('out.wasm', '');
+fs.writeFileSync('out.md', '');
 
 // Buffer to store stdin data
 let inputData = '';
