@@ -9,5 +9,6 @@ src=$6
 lib=${pbp}/t2t/lib
 
 node "${lib}/rwr.mjs" "${rewrite}" >"${wd}/temp.rewrite.mjs"
-cat "${lib}/front.part.js" "${grammar}" "${lib}/middle.part.js" "${lib}/args.part.js" "${support}" "${wd}/temp.rewrite.mjs" "${lib}/tail.part.js" >"${wd}/temp.nanodsl.mjs"
+sed -e 's/`/\\`/g <${grammar} >temp.grammar
+cat "${lib}/front.part.js" temp.grammar "${lib}/middle.part.js" "${lib}/args.part.js" "${support}" "${wd}/temp.rewrite.mjs" "${lib}/tail.part.js" >"${wd}/temp.nanodsl.mjs"
 node "${wd}/temp.nanodsl.mjs" "${src}"
