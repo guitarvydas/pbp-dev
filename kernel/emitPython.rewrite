@@ -140,7 +140,7 @@ except Exception as e:⤷
     «out» = ''
     «errout» = str(e)⤶
 ’
-ExternalPhrase_abort [_octothorpe _ lp rp] = ‛exit ()’
+ExternalPhrase_abort [_octothorpe _ lp rp] = ‛exit (1)’
 ExternalPhrase_asstr [_octothorpe _ lp e rp] = ‛str («e»)’
 ExternalPhrase_len [_octothorpe _ lp e rp] = ‛len («e»)’
 ExternalPhrase_asint [_octothorpe _ lp e rp] = ‛int («e»)’

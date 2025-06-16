@@ -679,7 +679,9 @@ defn start (arg, Part_name, palette, env) {
 	d.reclaim ⇐ None
         deftemp mev ⇐ make_mevent(“”, d)
         inject (Part, mev)
-	}
+     } else {
+         #abort ()
+     }	
     #queue_as_json_to_stdout (Part.outq)
 }
 

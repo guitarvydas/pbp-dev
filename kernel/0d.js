@@ -693,15 +693,18 @@ function start (arg,Part_name,palette,env) {           /* line 663 */
       d.clone =  function () {return obj_clone ( d)    /* line 678 */;};
       d.reclaim =  None;                               /* line 679 */
       let  mev = make_mevent ( "", d)                  /* line 680 */;
-      inject ( Part, mev)                              /* line 681 *//* line 682 */
+      inject ( Part, mev)                              /* line 681 */
     }
-    JSON.stringify ( Part.outq)                        /* line 683 *//* line 684 *//* line 685 */
+    else {                                             /* line 682 */
+      process.exit (1)                                 /* line 683 *//* line 684 */
+    }
+    JSON.stringify ( Part.outq)                        /* line 685 *//* line 686 *//* line 687 */
 }
 
-function new_datum_bang () {                           /* line 686 */
-    let  d = Datum ();                                 /* line 687 */
-    d.v =  "!";                                        /* line 688 */
-    d.clone =  function () {return obj_clone ( d)      /* line 689 */;};
-    d.reclaim =  None;                                 /* line 690 */
-    return  d;                                         /* line 691 *//* line 692 */
+function new_datum_bang () {                           /* line 688 */
+    let  d = Datum ();                                 /* line 689 */
+    d.v =  "!";                                        /* line 690 */
+    d.clone =  function () {return obj_clone ( d)      /* line 691 */;};
+    d.reclaim =  None;                                 /* line 692 */
+    return  d;                                         /* line 693 *//* line 694 */
 }
