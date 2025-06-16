@@ -1,4 +1,3 @@
-
 #|line 1|#
 (defun trash_instantiate (&optional  reg  owner  name  template_data  arg)
   (declare (ignorable  reg  owner  name  template_data  arg)) #|line 2|#

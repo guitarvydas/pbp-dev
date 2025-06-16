@@ -1,4 +1,3 @@
-
 (defun external_instantiate (&optional  reg  owner  name  arg)
   (declare (ignorable  reg  owner  name  arg))              #|line 1|#
   (let ((name_with_id (funcall (quote gensymbol)   name     #|line 2|#)))

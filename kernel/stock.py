@@ -1,4 +1,3 @@
-
 #line 1
 def trash_instantiate (reg,owner,name,template_data,arg):#line 2
     name_with_id = gensymbol ( "trash")                #line 3

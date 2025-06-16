@@ -1,4 +1,3 @@
-
 (defun handle_external (&optional  eh  mev)
   (declare (ignorable  eh  mev))                            #|line 1|#
   (let ((s (slot-value  eh 'arg)))
@@ -19,26 +18,28 @@
   )
 (defun probe_handler (&optional  eh  s  mev)
   (declare (ignorable  eh  s  mev))                         #|line 14|#
-  (live_update  "Info"  (concatenate 'string  "  @"  (concatenate 'string (format nil "~a"  ticktime)  (concatenate 'string  "  "  (concatenate 'string  "probe "  (concatenate 'string (slot-value  eh 'name)  (concatenate 'string  ": " (format nil "~a"  s)))))))) #|line 22|# #|line 23|#
+  (let ((s (slot-value (slot-value  mev 'datum) 'v)))
+    (declare (ignorable s))                                 #|line 15|#
+    (live_update  "Info"  (concatenate 'string  "  @"  (concatenate 'string (format nil "~a"  ticktime)  (concatenate 'string  "  "  (concatenate 'string  "probe "  (concatenate 'string (slot-value  eh 'name)  (concatenate 'string  ": " (format nil "~a"  s)))))))) #|line 23|#) #|line 24|#
   )
 (defun shell_out_handler (&optional  eh  cmd  mev)
-  (declare (ignorable  eh  cmd  mev))                       #|line 25|#
+  (declare (ignorable  eh  cmd  mev))                       #|line 26|#
   (let ((s (slot-value (slot-value  mev 'datum) 'v)))
-    (declare (ignorable s))                                 #|line 26|#
+    (declare (ignorable s))                                 #|line 27|#
     (let (( ret  nil))
-      (declare (ignorable  ret))                            #|line 27|#
+      (declare (ignorable  ret))                            #|line 28|#
       (let (( rc  nil))
-        (declare (ignorable  rc))                           #|line 28|#
+        (declare (ignorable  rc))                           #|line 29|#
         (let (( stdout  nil))
-          (declare (ignorable  stdout))                     #|line 29|#
+          (declare (ignorable  stdout))                     #|line 30|#
           (let (( stderr  nil))
-            (declare (ignorable  stderr))                   #|line 30|#
-            (multiple-value-setq (stdout stderr rc) (uiop::run-program (concatenate 'string  cmd " "  s) :output :string :error :string)) #|line 31|#
+            (declare (ignorable  stderr))                   #|line 31|#
+            (multiple-value-setq (stdout stderr rc) (uiop::run-program (concatenate 'string  cmd " "  s) :output :string :error :string)) #|line 32|#
             (cond
-              (( equal    rc  0)                            #|line 32|#
-                (funcall (quote send)   eh  ""  (concatenate 'string  stdout  stderr)  mev  #|line 33|#)
+              (( equal    rc  0)                            #|line 33|#
+                (funcall (quote send)   eh  ""  (concatenate 'string  stdout  stderr)  mev  #|line 34|#)
                 )
-              (t                                            #|line 34|#
-                (funcall (quote send)   eh  "✗"  (concatenate 'string  stdout  stderr)  mev  #|line 35|#) #|line 36|#
-                )))))))                                     #|line 37|#
+              (t                                            #|line 35|#
+                (funcall (quote send)   eh  "✗"  (concatenate 'string  stdout  stderr)  mev  #|line 36|#) #|line 37|#
+                )))))))                                     #|line 38|#
   )

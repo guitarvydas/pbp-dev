@@ -1,4 +1,3 @@
-
 (load "~/quicklisp/setup.lisp")
 (proclaim '(optimize (debug 3) (safety 3) (speed 0)))
 (ql:quickload :uiop)
@@ -860,16 +859,19 @@ x))))
               (setf (slot-value  d 'reclaim)  None)         #|line 679|#
               (let (( mev (funcall (quote make_mevent)   ""  d  #|line 680|#)))
                 (declare (ignorable  mev))
-                (funcall (quote inject)   Part  mev         #|line 681|#))) #|line 682|#
+                (funcall (quote inject)   Part  mev         #|line 681|#)))
+            )
+          (t                                                #|line 682|#
+            (break)                                         #|line 683|# #|line 684|#
             ))
-        (queue-as-json-to-stdout (slot-value  Part 'outq))  #|line 683|#))) #|line 684|#
+        (queue-as-json-to-stdout (slot-value  Part 'outq))  #|line 685|#))) #|line 686|#
   )
 (defun new_datum_bang (&optional )
-  (declare (ignorable ))                                    #|line 686|#
+  (declare (ignorable ))                                    #|line 688|#
   (let (( d (funcall (quote Datum) )))
-    (declare (ignorable  d))                                #|line 687|#
-    (setf (slot-value  d 'v)  "!")                          #|line 688|#
-    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 689|#)))
-    (setf (slot-value  d 'reclaim)  None)                   #|line 690|#
-    (return-from new_datum_bang  d)                         #|line 691|#) #|line 692|#
+    (declare (ignorable  d))                                #|line 689|#
+    (setf (slot-value  d 'v)  "!")                          #|line 690|#
+    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 691|#)))
+    (setf (slot-value  d 'reclaim)  None)                   #|line 692|#
+    (return-from new_datum_bang  d)                         #|line 693|#) #|line 694|#
   )
