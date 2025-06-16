@@ -1,3 +1,4 @@
+# from "..Tue 29 Apr 2025 23:09:32..."
 #
 import sys
 import re
@@ -843,39 +844,19 @@ def strcatstar_handler (eh,mev):                       #line 239
     else:                                              #line 245
         send ( eh, "✗", "internal error bad mevent for String Concat *", mev)#line 246#line 247#line 248#line 249
 
-class BlockOnErrorState:
-    def __init__ (self,):                              #line 250
-        self.hasError =  "no"                          #line 251#line 252
-                                                       #line 253
-def blockOnError_instantiate (reg,owner,name,template_data):#line 254
-    name_with_id = gensymbol ( "blockOnError")         #line 255
-    instp =  BlockOnErrorState ()                      #line 256
-    return make_leaf ( name_with_id, owner, instp, blockOnError_handler)#line 257#line 258#line 259
-
-def blockOnError_handler (eh,mev):                     #line 260
-    inst =  eh.instance_data                           #line 261
-    if  "" ==  mev.port:                               #line 262
-        if  inst.hasError ==  "no":                    #line 263
-            send ( eh, "", mev.datum.v, mev)           #line 264#line 265
-    elif  "✗" ==  mev.port:                            #line 266
-        inst.hasError =  "yes"                         #line 267
-    elif  "reset" ==  mev.port:                        #line 268
-        inst.hasError =  "no"                          #line 269#line 270#line 271#line 272
-
-# all of the the built_in leaves are listed here       #line 273
-# future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project#line 274#line 275
-def initialize_stock_components (reg):                 #line 276
-    register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 277
-    register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 278
-    register_component ( reg,mkTemplate ( "blockOnError", None, blockOnError_instantiate))#line 279#line 280#line 281
-    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 282
-    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 283#line 284
-    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 285
-    register_component ( reg,mkTemplate ( "stringconcat", None, stringconcat_instantiate))#line 286
-    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 287
-    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 288
-    # for fakepipe                                     #line 289
-    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 290#line 291#line 292
+# all of the the built_in leaves are listed here       #line 250
+# future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project#line 251#line 252
+def initialize_stock_components (reg):                 #line 253
+    register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 254
+    register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 255#line 256#line 257
+    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 258
+    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 259#line 260
+    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 261
+    register_component ( reg,mkTemplate ( "stringconcat", None, stringconcat_instantiate))#line 262
+    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 263
+    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 264
+    # for fakepipe                                     #line 265
+    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 266#line 267#line 268
 def handle_external (eh,mev):                          #line 1
     s =  eh.arg                                        #line 2
     firstc =  s [ 1]                                   #line 3
@@ -888,15 +869,14 @@ def handle_external (eh,mev):                          #line 1
         send ( eh, "",   s[1:] [1:] , mev)             #line 10#line 11#line 12#line 13
 
 def probe_handler (eh,s,mev):                          #line 14
-    s =  mev.datum.v                                   #line 15
-    live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 23#line 24#line 25
+    live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 22#line 23#line 24
 
-def shell_out_handler (eh,cmd,mev):                    #line 26
-    s =  mev.datum.v                                   #line 27
-    ret =  None                                        #line 28
-    rc =  None                                         #line 29
-    stdout =  None                                     #line 30
-    stderr =  None                                     #line 31
+def shell_out_handler (eh,cmd,mev):                    #line 25
+    s =  mev.datum.v                                   #line 26
+    ret =  None                                        #line 27
+    rc =  None                                         #line 28
+    stdout =  None                                     #line 29
+    stderr =  None                                     #line 30
 
     try:
         with open('junk.txt', 'w') as file:
@@ -910,8 +890,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
         rc = 1
         stdout = ''
         stderr = str(e)
-                                                       #line 32
-    if  rc ==  0:                                      #line 33
-        send ( eh, "", str( stdout) +  stderr , mev)   #line 34
-    else:                                              #line 35
-        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 36#line 37#line 38#line 39
+                                                       #line 31
+    if  rc ==  0:                                      #line 32
+        send ( eh, "", str( stdout) +  stderr , mev)   #line 33
+    else:                                              #line 34
+        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 35#line 36#line 37#line 38
