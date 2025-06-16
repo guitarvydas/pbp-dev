@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+npm install
 node das2json.js kernel.drawio
 ./tas.bash 'external'
 ./tas.bash 'stock'
