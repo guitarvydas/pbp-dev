@@ -589,7 +589,7 @@ def initialize_from_string (project_root):             #line 657
     return [ palette,[ project_root, None, arg]]       #line 660#line 661#line 662
 
 def start (arg,part_name,palette,env):                 #line 663
-    part = start_bare ( part_name, palette, env)       #line 664
+    part = start_bare ( part_name, palette, env)      #line 664
     inject_mevent ( part, "", arg)                     #line 665#line 666#line 667
 
 def start_bare (part_name,palette,env):                #line 668
@@ -605,10 +605,10 @@ def start_bare (part_name,palette,env):                #line 668
 def inject_mevent (part,port,payload):                 #line 683
     if not  load_errors:                               #line 684
         d = Datum ()                                   #line 685
-        d.v =  payload                                 #line 686
+        d.v =  payload                                     #line 686
         d.clone =  lambda : obj_clone ( d)             #line 687
         d.reclaim =  None                              #line 688
-        mev = make_mevent ( port, d)                   #line 689
+        mev = make_mevent ( "", d)                     #line 689
         inject ( part, mev)                            #line 690
     else:                                              #line 691
         exit (1)                                       #line 692#line 693

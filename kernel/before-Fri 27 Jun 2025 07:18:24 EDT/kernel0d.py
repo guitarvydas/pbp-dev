@@ -588,38 +588,31 @@ def initialize_from_string (project_root):             #line 657
     palette = initialize_component_palette_from_string ( project_root)#line 659
     return [ palette,[ project_root, None, arg]]       #line 660#line 661#line 662
 
-def start (arg,part_name,palette,env):                 #line 663
-    part = start_bare ( part_name, palette, env)       #line 664
-    inject_mevent ( part, "", arg)                     #line 665#line 666#line 667
+def start (arg,Part_name,palette,env):                 #line 663
+    project_root =  env [ 0]                           #line 664
+    diagram_names =  env [ 1]                          #line 665
+    set_environment ( project_root)                    #line 666
+    # get entrypoint container                         #line 667
+    Part = get_component_instance ( palette, Part_name, None)#line 668
+    if  None ==  Part:                                 #line 669
+        load_error ( str( "Couldn't find container with page name /") +  str( Part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 673#line 674
+    if not  load_errors:                               #line 675
+        d = Datum ()                                   #line 676
+        d.v =  arg                                     #line 677
+        d.clone =  lambda : obj_clone ( d)             #line 678
+        d.reclaim =  None                              #line 679
+        mev = make_mevent ( "", d)                     #line 680
+        inject ( Part, mev)                            #line 681
+    else:                                              #line 682
+        exit (1)                                       #line 683#line 684
+    print (deque_to_json ( Part.outq))                 #line 685#line 686#line 687
 
-def start_bare (part_name,palette,env):                #line 668
-    project_root =  env [ 0]                           #line 669
-    diagram_names =  env [ 1]                          #line 670
-    set_environment ( project_root)                    #line 671
-    # get entrypoint container                         #line 672
-    part = get_component_instance ( palette, part_name, None)#line 673
-    if  None ==  part:                                 #line 674
-        load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 678#line 679
-    return  part                                       #line 680#line 681#line 682
-
-def inject_mevent (part,port,payload):                 #line 683
-    if not  load_errors:                               #line 684
-        d = Datum ()                                   #line 685
-        d.v =  payload                                 #line 686
-        d.clone =  lambda : obj_clone ( d)             #line 687
-        d.reclaim =  None                              #line 688
-        mev = make_mevent ( port, d)                   #line 689
-        inject ( part, mev)                            #line 690
-    else:                                              #line 691
-        exit (1)                                       #line 692#line 693
-    print (deque_to_json ( part.outq))                 #line 694#line 695#line 696
-
-def new_datum_bang ():                                 #line 697
-    d = Datum ()                                       #line 698
-    d.v =  "!"                                         #line 699
-    d.clone =  lambda : obj_clone ( d)                 #line 700
-    d.reclaim =  None                                  #line 701
-    return  d                                          #line 702#line 703
+def new_datum_bang ():                                 #line 688
+    d = Datum ()                                       #line 689
+    d.v =  "!"                                         #line 690
+    d.clone =  lambda : obj_clone ( d)                 #line 691
+    d.reclaim =  None                                  #line 692
+    return  d                                          #line 693#line 694
 def external_instantiate (reg,owner,name,arg):         #line 1
     name_with_id = gensymbol ( name)                   #line 2
     return make_leaf ( name_with_id, owner, None, arg, handle_external)#line 3#line 4#line 5

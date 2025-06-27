@@ -678,33 +678,42 @@ function initialize_from_string (project_root) {       /* line 657 */
     return [ palette,[ project_root, null, arg]];      /* line 660 *//* line 661 *//* line 662 */
 }
 
-function start (arg,Part_name,palette,env) {           /* line 663 */
-    let project_root =  env [ 0];                      /* line 664 */
-    let diagram_names =  env [ 1];                     /* line 665 */
-    set_environment ( project_root)                    /* line 666 */
-    /*  get entrypoint container */                    /* line 667 */
-    let  Part = get_component_instance ( palette, Part_name, null)/* line 668 */;
-    if ( null ==  Part) {                              /* line 669 */
-      load_error ( ( "Couldn't find container with page name /".toString ()+  ( Part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 673 *//* line 674 */
-    }
-    if ((!  load_errors)) {                            /* line 675 */
-      let  d = Datum ();                               /* line 676 */
-      d.v =  arg;                                      /* line 677 */
-      d.clone =  function () {return obj_clone ( d)    /* line 678 */;};
-      d.reclaim =  None;                               /* line 679 */
-      let  mev = make_mevent ( "", d)                  /* line 680 */;
-      inject ( Part, mev)                              /* line 681 */
-    }
-    else {                                             /* line 682 */
-      process.exit (1)                                 /* line 683 *//* line 684 */
-    }
-    JSON.stringify ( Part.outq)                        /* line 685 *//* line 686 *//* line 687 */
+function start (arg,part_name,palette,env) {           /* line 663 */
+    let part = start_bare ( part_name, palette, env)   /* line 664 */;
+    inject_mevent ( part, "", arg)                     /* line 665 *//* line 666 *//* line 667 */
 }
 
-function new_datum_bang () {                           /* line 688 */
-    let  d = Datum ();                                 /* line 689 */
-    d.v =  "!";                                        /* line 690 */
-    d.clone =  function () {return obj_clone ( d)      /* line 691 */;};
-    d.reclaim =  None;                                 /* line 692 */
-    return  d;                                         /* line 693 *//* line 694 */
+function start_bare (part_name,palette,env) {          /* line 668 */
+    let project_root =  env [ 0];                      /* line 669 */
+    let diagram_names =  env [ 1];                     /* line 670 */
+    set_environment ( project_root)                    /* line 671 */
+    /*  get entrypoint container */                    /* line 672 */
+    let  part = get_component_instance ( palette, part_name, null)/* line 673 */;
+    if ( null ==  part) {                              /* line 674 */
+      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 678 *//* line 679 */
+    }
+    return  part;                                      /* line 680 *//* line 681 *//* line 682 */
+}
+
+function inject_mevent (part,port,payload) {           /* line 683 */
+    if ((!  load_errors)) {                            /* line 684 */
+      let  d = Datum ();                               /* line 685 */
+      d.v =  payload;                                  /* line 686 */
+      d.clone =  function () {return obj_clone ( d)    /* line 687 */;};
+      d.reclaim =  None;                               /* line 688 */
+      let  mev = make_mevent ( port, d)                /* line 689 */;
+      inject ( part, mev)                              /* line 690 */
+    }
+    else {                                             /* line 691 */
+      process.exit (1)                                 /* line 692 *//* line 693 */
+    }
+    JSON.stringify ( part.outq)                        /* line 694 *//* line 695 *//* line 696 */
+}
+
+function new_datum_bang () {                           /* line 697 */
+    let  d = Datum ();                                 /* line 698 */
+    d.v =  "!";                                        /* line 699 */
+    d.clone =  function () {return obj_clone ( d)      /* line 700 */;};
+    d.reclaim =  None;                                 /* line 701 */
+    return  d;                                         /* line 702 *//* line 703 */
 }

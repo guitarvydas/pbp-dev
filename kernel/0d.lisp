@@ -836,42 +836,52 @@ x))))
       (declare (ignorable palette))
       (return-from initialize_from_string (values  palette (list   project_root  nil  arg ))) #|line 660|#)) #|line 661|#
   )
-(defun start (&optional  arg  Part_name  palette  env)
-  (declare (ignorable  arg  Part_name  palette  env))       #|line 663|#
+(defun start (&optional  arg  part_name  palette  env)
+  (declare (ignorable  arg  part_name  palette  env))       #|line 663|#
+  (let ((part (funcall (quote start_bare)   part_name  palette  env  #|line 664|#)))
+    (declare (ignorable part))
+    (funcall (quote inject_mevent)   part  ""  arg          #|line 665|#)) #|line 666|#
+  )
+(defun start_bare (&optional  part_name  palette  env)
+  (declare (ignorable  part_name  palette  env))            #|line 668|#
   (let ((project_root (nth  0  env)))
-    (declare (ignorable project_root))                      #|line 664|#
+    (declare (ignorable project_root))                      #|line 669|#
     (let ((diagram_names (nth  1  env)))
-      (declare (ignorable diagram_names))                   #|line 665|#
-      (funcall (quote set_environment)   project_root       #|line 666|#)
-      #|  get entrypoint container |#                       #|line 667|#
-      (let (( Part (funcall (quote get_component_instance)   palette  Part_name  nil  #|line 668|#)))
-        (declare (ignorable  Part))
+      (declare (ignorable diagram_names))                   #|line 670|#
+      (funcall (quote set_environment)   project_root       #|line 671|#)
+      #|  get entrypoint container |#                       #|line 672|#
+      (let (( part (funcall (quote get_component_instance)   palette  part_name  nil  #|line 673|#)))
+        (declare (ignorable  part))
         (cond
-          (( equal    nil  Part)                            #|line 669|#
-            (funcall (quote load_error)   (concatenate 'string  "Couldn't find container with page name /"  (concatenate 'string  Part_name  (concatenate 'string  "/ in files "  (concatenate 'string (format nil "~a"  diagram_names)  " (check tab names, or disable compression?)"))))  #|line 673|#) #|line 674|#
+          (( equal    nil  part)                            #|line 674|#
+            (funcall (quote load_error)   (concatenate 'string  "Couldn't find container with page name /"  (concatenate 'string  part_name  (concatenate 'string  "/ in files "  (concatenate 'string (format nil "~a"  diagram_names)  " (check tab names, or disable compression?)"))))  #|line 678|#) #|line 679|#
             ))
-        (cond
-          ((not  load_errors)                               #|line 675|#
-            (let (( d (funcall (quote Datum) )))
-              (declare (ignorable  d))                      #|line 676|#
-              (setf (slot-value  d 'v)  arg)                #|line 677|#
-              (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 678|#)))
-              (setf (slot-value  d 'reclaim)  None)         #|line 679|#
-              (let (( mev (funcall (quote make_mevent)   ""  d  #|line 680|#)))
-                (declare (ignorable  mev))
-                (funcall (quote inject)   Part  mev         #|line 681|#)))
-            )
-          (t                                                #|line 682|#
-            (break)                                         #|line 683|# #|line 684|#
-            ))
-        (queue-as-json-to-stdout (slot-value  Part 'outq))  #|line 685|#))) #|line 686|#
+        (return-from start_bare  part)                      #|line 680|#))) #|line 681|#
+  )
+(defun inject_mevent (&optional  part  port  payload)
+  (declare (ignorable  part  port  payload))                #|line 683|#
+  (cond
+    ((not  load_errors)                                     #|line 684|#
+      (let (( d (funcall (quote Datum) )))
+        (declare (ignorable  d))                            #|line 685|#
+        (setf (slot-value  d 'v)  payload)                  #|line 686|#
+        (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 687|#)))
+        (setf (slot-value  d 'reclaim)  None)               #|line 688|#
+        (let (( mev (funcall (quote make_mevent)   port  d  #|line 689|#)))
+          (declare (ignorable  mev))
+          (funcall (quote inject)   part  mev               #|line 690|#)))
+      )
+    (t                                                      #|line 691|#
+      (break)                                               #|line 692|# #|line 693|#
+      ))
+  (queue-as-json-to-stdout (slot-value  part 'outq))        #|line 694|# #|line 695|#
   )
 (defun new_datum_bang (&optional )
-  (declare (ignorable ))                                    #|line 688|#
+  (declare (ignorable ))                                    #|line 697|#
   (let (( d (funcall (quote Datum) )))
-    (declare (ignorable  d))                                #|line 689|#
-    (setf (slot-value  d 'v)  "!")                          #|line 690|#
-    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 691|#)))
-    (setf (slot-value  d 'reclaim)  None)                   #|line 692|#
-    (return-from new_datum_bang  d)                         #|line 693|#) #|line 694|#
+    (declare (ignorable  d))                                #|line 698|#
+    (setf (slot-value  d 'v)  "!")                          #|line 699|#
+    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 700|#)))
+    (setf (slot-value  d 'reclaim)  None)                   #|line 701|#
+    (return-from new_datum_bang  d)                         #|line 702|#) #|line 703|#
   )

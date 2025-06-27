@@ -4,7 +4,7 @@ import kernel0d as zd
 
 try:
     [palette, env] = zd.initialize_from_files (".", ["kernel.drawio.json"])
-    zd.start (arg=sys.argv[3], Part_name="main", palette=palette, env=env)
+    zd.start (arg=sys.argv[3], part_name="main", palette=palette, env=env)
 except Exception as e:
     _, _, tb = sys.exc_info()
     while tb.tb_next:

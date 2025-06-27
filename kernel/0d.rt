@@ -660,29 +660,38 @@ defn initialize_from_string (project_root) {
     return [palette, [project_root, ϕ, arg]]
 }
 
-defn start (arg, Part_name, palette, env) {
+defn start (arg, part_name, palette, env) {
+     part ≡ start_bare (part_name, palette, env)
+     inject_mevent (part, "", arg)
+}
+     
+defn start_bare (part_name, palette, env) {
     project_root ≡ env [0]
     diagram_names ≡ env [1]
     set_environment (project_root)
     ⌈ get entrypoint container⌉
-    deftemp Part ⇐ get_component_instance(palette, Part_name, ϕ)
-    if ϕ = Part {
+    deftemp part ⇐ get_component_instance(palette, part_name, ϕ)
+    if ϕ = part {
         load_error (#strcons (“Couldn't find container with page name /”,
-	              #strcons (Part_name,
+	              #strcons (part_name,
 		        #strcons (“/ in files ”,
 			  #strcons (#asstr (diagram_names), “ (check tab names, or disable compression?)”)))))
     }
+    return part
+}
+
+defn inject_mevent (part, port, payload) {
     if not load_errors {
         deftemp d ⇐ Datum ()
-    	d.v ⇐ arg
+    	d.v ⇐ payload
 	d.clone ⇐ λ: obj_clone (d)
 	d.reclaim ⇐ None
-        deftemp mev ⇐ make_mevent(“”, d)
-        inject (Part, mev)
+        deftemp mev ⇐ make_mevent(port, d)
+        inject (part, mev)
      } else {
          #abort ()
      }	
-    #queue_as_json_to_stdout (Part.outq)
+    #queue_as_json_to_stdout (part.outq)
 }
 
 defn new_datum_bang () {

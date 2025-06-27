@@ -608,7 +608,7 @@ def inject_mevent (part,port,payload):                 #line 683
         d.v =  payload                                 #line 686
         d.clone =  lambda : obj_clone ( d)             #line 687
         d.reclaim =  None                              #line 688
-        mev = make_mevent ( port, d)                   #line 689
+        mev = make_mevent ( "", d)                     #line 689
         inject ( part, mev)                            #line 690
     else:                                              #line 691
         exit (1)                                       #line 692#line 693
