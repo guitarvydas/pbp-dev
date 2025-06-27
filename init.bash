@@ -3,7 +3,7 @@ set -e
 set -x
 wd=.
 pbp=./pbp
-Dev=~/Documents/dev/pbp
+Dev=~/projects/pbp
 TaS_Dev=${Dev}/tas
 
 
