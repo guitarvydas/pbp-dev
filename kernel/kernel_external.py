@@ -7,7 +7,7 @@ def handle_external (eh,mev):                          #line 1
         probe_handler ( eh,  s[1:] , mev)              #line 7
     else:                                              #line 8
         # just a string, send it out                   #line 9
-        send ( eh, "",   s[1:] [1:] , mev)             #line 10#line 11#line 12#line 13
+        send ( eh, "",  s[1:] , mev)                   #line 10#line 11#line 12#line 13
 
 def probe_handler (eh,s,mev):                          #line 14
     s =  mev.datum.v                                   #line 15

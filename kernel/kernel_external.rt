@@ -7,7 +7,7 @@ defn handle_external (eh, mev) {
       probe_handler (eh, #stringcdr (s), mev)
     } else {
       ⌈ just a string, send it out ⌉
-      send (eh, “”, #stringcdr (#stringcdr (s)) , mev)
+      send (eh, “”, #stringcdr (s) , mev)
     }
 }
 

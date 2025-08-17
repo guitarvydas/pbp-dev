@@ -31,9 +31,12 @@ if [ -n "${DEV_PBP}" ]; then
     cp ${Dev}/t2t.bash .
     cp ${Dev}/main.py .
 
+    cp ${Dev}/kernel/package.json .
+    cp ${Dev}/kernel/package.json ..
+
     cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
     cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
-    cp ${Dev}/kernel/decodeoutput.mjs ${KERNEL}
+    cp ${Dev}/kernel/splitoutput.js ${KERNEL}
     cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
     cp ${Dev}/t2t/lib/args.part.js ${T2T}/lib
     cp ${Dev}/t2t/lib/front.part.js ${T2T}/lib

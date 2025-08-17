@@ -13,7 +13,7 @@
           )
         (t                                                  #|line 8|#
           #|  just a string, send it out  |#                #|line 9|#
-          (funcall (quote send)   eh  ""  (subseq  (subseq  s 1) 1)  mev  #|line 10|#) #|line 11|#
+          (funcall (quote send)   eh  ""  (subseq  s 1)  mev  #|line 10|#) #|line 11|#
           ))))                                              #|line 12|#
   )
 (defun probe_handler (&optional  eh  s  mev)

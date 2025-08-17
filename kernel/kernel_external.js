@@ -9,7 +9,7 @@ function handle_external (eh,mev) {                    /* line 1 */
     }
     else {                                             /* line 8 */
       /*  just a string, send it out  */               /* line 9 */
-      send ( eh, "",   s.substring (1) .substring (1) , mev)/* line 10 *//* line 11 */
+      send ( eh, "",  s.substring (1) , mev)           /* line 10 *//* line 11 */
     }                                                  /* line 12 *//* line 13 */
 }
 
