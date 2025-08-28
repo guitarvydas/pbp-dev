@@ -739,7 +739,7 @@ x))))
     (declare (ignorable fwdmev))
     (funcall (quote put_output)   eh  fwdmev                #|line 571|#)) #|line 572|#
   )
-(defun inject (&optional  eh  mev)
+(defun inject_mevent (&optional  eh  mev)
   (declare (ignorable  eh  mev))                            #|line 574|#
   (funcall (slot-value  eh 'finject)   eh  mev              #|line 575|#) #|line 576|#
   )
@@ -840,7 +840,7 @@ x))))
   (declare (ignorable  arg  part_name  palette  env))       #|line 663|#
   (let ((part (funcall (quote start_bare)   part_name  palette  env  #|line 664|#)))
     (declare (ignorable part))
-    (funcall (quote inject_mevent)   part  ""  arg          #|line 665|#)) #|line 666|#
+    (funcall (quote inject)   part  ""  arg                 #|line 665|#)) #|line 666|#
   )
 (defun start_bare (&optional  part_name  palette  env)
   (declare (ignorable  part_name  palette  env))            #|line 668|#
@@ -858,7 +858,7 @@ x))))
             ))
         (return-from start_bare  part)                      #|line 680|#))) #|line 681|#
   )
-(defun inject_mevent (&optional  part  port  payload)
+(defun inject (&optional  part  port  payload)
   (declare (ignorable  part  port  payload))                #|line 683|#
   (cond
     ((not  load_errors)                                     #|line 684|#
@@ -869,7 +869,7 @@ x))))
         (setf (slot-value  d 'reclaim)  None)               #|line 688|#
         (let (( mev (funcall (quote make_mevent)   port  d  #|line 689|#)))
           (declare (ignorable  mev))
-          (funcall (quote inject)   part  mev               #|line 690|#)))
+          (funcall (quote inject_mevent)   part  mev        #|line 690|#)))
       )
     (t                                                      #|line 691|#
       (break)                                               #|line 692|# #|line 693|#

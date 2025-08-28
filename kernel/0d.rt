@@ -571,7 +571,7 @@ defn forward (eh, port, mev) {
     put_output (eh, fwdmev)
 }
 
-defn inject (eh, mev) {
+defn inject_mevent (eh, mev) {
     eh.finject (eh, mev)
 }
 
@@ -662,7 +662,7 @@ defn initialize_from_string (project_root) {
 
 defn start (arg, part_name, palette, env) {
      part ≡ start_bare (part_name, palette, env)
-     inject_mevent (part, "", arg)
+     inject (part, "", arg)
 }
      
 defn start_bare (part_name, palette, env) {
@@ -680,14 +680,14 @@ defn start_bare (part_name, palette, env) {
     return part
 }
 
-defn inject_mevent (part, port, payload) {
+defn inject (part, port, payload) {
     if not load_errors {
         deftemp d ⇐ Datum ()
     	d.v ⇐ payload
 	d.clone ⇐ λ: obj_clone (d)
 	d.reclaim ⇐ None
         deftemp mev ⇐ make_mevent(port, d)
-        inject (part, mev)
+        inject_mevent (part, mev)
      } else {
          #abort ()
      }	

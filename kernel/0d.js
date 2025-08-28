@@ -597,7 +597,7 @@ function forward (eh,port,mev) {                       /* line 569 */
     put_output ( eh, fwdmev)                           /* line 571 *//* line 572 *//* line 573 */
 }
 
-function inject (eh,mev) {                             /* line 574 */
+function inject_mevent (eh,mev) {                      /* line 574 */
     eh.finject ( eh, mev)                              /* line 575 *//* line 576 *//* line 577 */
 }
 
@@ -680,7 +680,7 @@ function initialize_from_string (project_root) {       /* line 657 */
 
 function start (arg,part_name,palette,env) {           /* line 663 */
     let part = start_bare ( part_name, palette, env)   /* line 664 */;
-    inject_mevent ( part, "", arg)                     /* line 665 *//* line 666 *//* line 667 */
+    inject ( part, "", arg)                            /* line 665 *//* line 666 *//* line 667 */
 }
 
 function start_bare (part_name,palette,env) {          /* line 668 */
@@ -695,14 +695,14 @@ function start_bare (part_name,palette,env) {          /* line 668 */
     return  part;                                      /* line 680 *//* line 681 *//* line 682 */
 }
 
-function inject_mevent (part,port,payload) {           /* line 683 */
+function inject (part,port,payload) {                  /* line 683 */
     if ((!  load_errors)) {                            /* line 684 */
       let  d = Datum ();                               /* line 685 */
       d.v =  payload;                                  /* line 686 */
       d.clone =  function () {return obj_clone ( d)    /* line 687 */;};
       d.reclaim =  None;                               /* line 688 */
       let  mev = make_mevent ( port, d)                /* line 689 */;
-      inject ( part, mev)                              /* line 690 */
+      inject_mevent ( part, mev)                       /* line 690 */
     }
     else {                                             /* line 691 */
       process.exit (1)                                 /* line 692 *//* line 693 */
