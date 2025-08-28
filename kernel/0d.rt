@@ -515,6 +515,7 @@ defobj Eh () {
         • handler ⇐ ϕ
         • finject ⇐ ϕ
         • instance_data ⇐ ϕ
+	⌈ arg needed for probe support ⌉
         • arg ⇐ “”
         • state ⇐ “idle”
         ⌈ bootstrap debugging⌉

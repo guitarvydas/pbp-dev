@@ -4,10 +4,10 @@ import kernel0d as zd
 
 # define template
 def install (reg):
-    zd.register_component (reg, zd.mkTemplate ("World", None, winstantiate))
+    zd.register_component (reg, zd.mkTemplate ("World", None, instantiate))
 
 # create an instance of the template
-def winstantiate (reg,owner,name,template_data):
+def instantiate (reg,owner,name,template_data):
     name_with_id = zd.gensymbol ( "World")
     return zd.make_leaf ( name_with_id, owner, None, handler)
 
