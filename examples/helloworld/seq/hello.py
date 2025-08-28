@@ -13,5 +13,5 @@ def instantiate (reg,owner,name, arg, template_data):
 
 # handler for any instance
 def handler (eh,mev):
-    zd.send_string (eh, "", "Hello", mev)
+    zd.send (eh, "", "Hello", mev)
 

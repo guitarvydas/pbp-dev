@@ -14,7 +14,7 @@
     "connections": [
       {
         "dir": 0,
-        "source_port": "go",
+        "source_port": "",
         "target_port": "go",
         "target": {
           "name": "Hello",
