@@ -380,7 +380,7 @@ def lnet2internal_from_file (pathname,container_xml):  #line 417
         return None
                                                        #line 419#line 420#line 421
 
-def lnet2internal_from_string (lnet):                  #line 422
+def lnet2internal_from_string ():                      #line 422
 
     try:
         routings = json.loads(lnet)
@@ -552,10 +552,10 @@ def initialize_component_palette_from_files (project_root,diagram_source_files):
     initialize_stock_components ( reg)                 #line 614
     return  reg                                        #line 615#line 616#line 617
 
-def initialize_component_palette_from_string (project_root,lnet):#line 618
+def initialize_component_palette_from_string (project_root):#line 618
     # this version ignores project_root                #line 619
     reg = make_component_registry ()                   #line 620
-    all_containers = lnet2internal_from_string ( lnet) #line 621
+    all_containers = lnet2internal_from_string ()      #line 621
     reg = generate_external_components ( reg, all_containers)#line 622
     for container in  all_containers:                  #line 623
         register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 624#line 625

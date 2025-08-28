@@ -579,8 +579,8 @@ x))))
     (json2dict (merge-pathnames pathname filename))
                                                             #|line 419|#) #|line 420|#
   )
-(defun lnet2internal_from_string (&optional )
-  (declare (ignorable ))                                    #|line 422|#
+(defun lnet2internal_from_string (&optional  lnet)
+  (declare (ignorable  lnet))                               #|line 422|#
 
   (internalize-lnet-from-JSON *lnet*)
                                                             #|line 423|# #|line 424|#
@@ -785,13 +785,13 @@ x))))
     (funcall (quote initialize_stock_components)   reg      #|line 614|#)
     (return-from initialize_component_palette_from_files  reg) #|line 615|#) #|line 616|#
   )
-(defun initialize_component_palette_from_string (&optional  project_root)
-  (declare (ignorable  project_root))                       #|line 618|#
+(defun initialize_component_palette_from_string (&optional  project_root  lnet)
+  (declare (ignorable  project_root  lnet))                 #|line 618|#
   #|  this version ignores project_root  |#                 #|line 619|#
   (let (( reg (funcall (quote make_component_registry) )))
     (declare (ignorable  reg))                              #|line 620|#
-    (let ((all_containers (funcall (quote lnet2internal_from_string) )))
-      (declare (ignorable all_containers))                  #|line 621|#
+    (let ((all_containers (funcall (quote lnet2internal_from_string)   lnet  #|line 621|#)))
+      (declare (ignorable all_containers))
       (setf  reg (funcall (quote generate_external_components)   reg  all_containers  #|line 622|#))
       (loop for container in  all_containers
         do

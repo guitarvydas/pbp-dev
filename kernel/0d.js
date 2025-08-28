@@ -436,7 +436,7 @@ function lnet2internal_from_file (pathname,container_xml) {/* line 417 */
                                                        /* line 419 *//* line 420 *//* line 421 */
 }
 
-function lnet2internal_from_string () {                /* line 422 */
+function lnet2internal_from_string (lnet) {            /* line 422 */
 
     return JSON.parse (lnet);
                                                        /* line 423 *//* line 424 *//* line 425 */
@@ -637,10 +637,10 @@ function initialize_component_palette_from_files (project_root,diagram_source_fi
     return  reg;                                       /* line 615 *//* line 616 *//* line 617 */
 }
 
-function initialize_component_palette_from_string (project_root) {/* line 618 */
+function initialize_component_palette_from_string (project_root,lnet) {/* line 618 */
     /*  this version ignores project_root  */          /* line 619 */
     let  reg = make_component_registry ();             /* line 620 */
-    let all_containers = lnet2internal_from_string (); /* line 621 */
+    let all_containers = lnet2internal_from_string ( lnet)/* line 621 */;
     reg = generate_external_components ( reg, all_containers)/* line 622 */;
     for (let container of  all_containers) {           /* line 623 */
       register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 624 *//* line 625 */
