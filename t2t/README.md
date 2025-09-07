@@ -12,5 +12,5 @@ The grammar is written in OhmJS format and the rewrite specification is describe
 
 T2t transpiles a source program into another program. T2t uses a grammar and a rewrite specification (files) to guide it. 
 
-![overview](doc/sketches-t2t overview.drawio.png)
+![overview](./doc/sketches-t2t overview.drawio.png)
 
