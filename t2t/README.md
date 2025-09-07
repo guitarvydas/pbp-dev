@@ -14,3 +14,5 @@ T2t transpiles a source program into another program. T2t uses a grammar and a r
 
 ![overview](./doc/sketches-t2t%20overview.drawio.png)
 
+
+See `./doc/T2T.pdf` for more.
