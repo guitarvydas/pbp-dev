@@ -324,14 +324,15 @@ function blockOnError_handler (eh,mev) {               /* line 260 */
 /*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 274 *//* line 275 */
 function initialize_stock_components (reg) {           /* line 276 */
     register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 277 */
-    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 278 */
-    register_component ( reg,mkTemplate ( "blockOnError", null, blockOnError_instantiate))/* line 279 *//* line 280 *//* line 281 */
-    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 282 */
-    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 283 *//* line 284 */
-    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 285 */
-    register_component ( reg,mkTemplate ( "stringconcat", null, stringconcat_instantiate))/* line 286 */
-    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 287 */
-    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 288 */
-    /*  for fakepipe */                                /* line 289 */
-    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 290 *//* line 291 *//* line 292 */
+    register_component ( reg,mkTemplate ( "1→2", null, deracer_instantiate))/* line 278 */
+    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 279 */
+    register_component ( reg,mkTemplate ( "blockOnError", null, blockOnError_instantiate))/* line 280 *//* line 281 *//* line 282 */
+    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 283 */
+    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 284 *//* line 285 */
+    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 286 */
+    register_component ( reg,mkTemplate ( "stringconcat", null, stringconcat_instantiate))/* line 287 */
+    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 288 */
+    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 289 */
+    /*  for fakepipe */                                /* line 290 */
+    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 291 *//* line 292 *//* line 293 */
 }
