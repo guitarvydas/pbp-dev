@@ -275,6 +275,7 @@ defn blockOnError_handler (eh, mev) {
 
 defn initialize_stock_components (reg) {
     register_component (reg, mkTemplate ( “1then2”, ϕ, ↪︎deracer_instantiate))
+    register_component (reg, mkTemplate ( “1→2”, ϕ, ↪︎deracer_instantiate))
     register_component (reg, mkTemplate ( “trash”, ϕ, ↪︎trash_instantiate))
     register_component (reg, mkTemplate ( “blockOnError”, ϕ, ↪︎blockOnError_instantiate))
 
