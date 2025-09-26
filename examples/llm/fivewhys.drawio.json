@@ -1,0 +1,179 @@
+[
+  {
+    "name": "main",
+    "children": [
+      {
+        "name": "Five Times",
+        "id": 5
+      },
+      {
+        "name": ":?A",
+        "id": 9
+      },
+      {
+        "name": ":$ ./llmwhy.bash",
+        "id": 11
+      },
+      {
+        "name": ":?B",
+        "id": 15
+      },
+      {
+        "name": "Agency",
+        "id": 17
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Agency",
+          "id": 17
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Agency",
+          "id": 17
+        },
+        "target": {
+          "name": "Five Times",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ ./llmwhy.bash",
+          "id": 11
+        },
+        "target": {
+          "name": "Agency",
+          "id": 17
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Five Times",
+          "id": 5
+        },
+        "target": {
+          "name": ":?A",
+          "id": 9
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Five Times",
+          "id": 5
+        },
+        "target": {
+          "name": ":$ ./llmwhy.bash",
+          "id": 11
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ ./llmwhy.bash",
+          "id": 11
+        },
+        "target": {
+          "name": ":?B",
+          "id": 15
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "md",
+        "source": {
+          "name": "Agency",
+          "id": 17
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Five Times",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ ./llmwhy.bash",
+          "id": 11
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Agency",
+          "id": 17
+        }
+      }
+    ],
+    "file": "fivewhys.drawio"
+  },
+  {
+    "name": "Agency",
+    "children": [
+      {
+        "name": ":$ ./llm.bash",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ ./llm.bash",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ ./llm.bash",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ ./llm.bash",
+          "id": 5
+        }
+      }
+    ],
+    "file": "fivewhys.drawio"
+  }
+]

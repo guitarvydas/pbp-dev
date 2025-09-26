@@ -1,0 +1,6 @@
+#!/bin/bash
+cd agency
+make
+cd ..
+node ../das/das2json.mjs <fivewhys.drawio >fivewhys.json
+python3 main.py . - 'Why is concurrency so difficult?' main dpink.json |  node ../util/decodeoutput.js
