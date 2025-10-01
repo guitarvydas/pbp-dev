@@ -67,7 +67,7 @@ if [ -n "${DEV_PBP}" ]; then
     cp ${TaS_Dev}/pydecode.{ohm,rewrite} ${TAS}
     cp ${TaS_Dev}/pyrelocate.py ${TAS}
     cp ${TaS_Dev}/repl.py ${TAS}
-    cp ${TaS_Dev}/tas.drawio.json ${TAS}
+    cp ${TaS_Dev}/tas.drawio ${TAS}
     cp ${TaS_Dev}/semantics.{ohm,rewrite} ${TAS}
     cp ${TaS_Dev}/support.js ${TAS}
     cp ${TaS_Dev}/syntax.{ohm,rewrite} ${TAS}
