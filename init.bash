@@ -39,6 +39,7 @@ if [ -n "${DEV_PBP}" ]; then
     cp ${Dev}/kernel/splitoutput.js ${KERNEL}
     cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
     cp ${Dev}/das/PBP.xml ${DAS}/PBP.xml
+    cp ${Dev}/das/PBP.xml ../
     cp ${Dev}/t2t/lib/args.part.js ${T2T}/lib
     cp ${Dev}/t2t/lib/front.part.js ${T2T}/lib
     cp ${Dev}/t2t/lib/middle.part.js ${T2T}/lib

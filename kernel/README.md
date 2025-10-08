@@ -1,4 +1,5 @@
 # Generate 0D Kernel
+![back end diagram](kernel-Back-End.drawio.png)
 - source code for the kernel is written in `.rt` format (similar to Python, but with braces instead of indentation)
 - generates a kernel in Python, in Javascript and in Common Lisp
 - source code is written in `kernel.drawio` (Containers) and `*.rt` (Leaves)
