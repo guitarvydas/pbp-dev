@@ -1,5 +1,31 @@
 import * as fs from 'fs';
 
+let terminated = false;
+
+function xbreak () {
+    terminated = true;
+    return '';
+}
+
+function xcontinue () {
+    terminated = false;
+    return '';
+}
+    
+function is_terminated () {
+    return terminated;
+}
+function expand (src, parser) {
+    let cst = parser.match (src);
+    if (cst.failed ()) {
+	//th  row Error (`${cst.message}\ngrammar=${grammarname (grammar)}\nsrc=\n${src}`);
+	throw Error (cst.message);
+    }
+    let sem = parser.createSemantics ();
+    sem.addOperation ('rwr', _rewrite);
+    return sem (cst).rwr ();
+}
+
 function grammarname (s) {
     let n = s.search (/{/);
     return s.substr (0, n).replaceAll (/\n/g,'').trim ();
@@ -12,14 +38,13 @@ try {
     let src = fs.readFileSync(srcFilename, 'utf-8');
     try {
 	let parser = ohm.grammar (grammar);
-	let cst = parser.match (src);
-	if (cst.failed ()) {
-	    //throw Error (`${cst.message}\ngrammar=${grammarname (grammar)}\nsrc=\n${src}`);
-	    throw Error (cst.message);
+	let s = src;
+	xcontinue ();
+	while (! is_terminated ()) {
+	    xbreak ();
+	    s = expand (s, parser);
 	}
-	let sem = parser.createSemantics ();
-	sem.addOperation ('rwr', _rewrite);
-	console.log (sem (cst).rwr ());
+	console.log (s);
 	process.exit (0);
     } catch (e) {
 	//console.error (`${e}\nargv=${argv}\ngrammar=${grammarname (grammar)}\src=\n${src}`);
