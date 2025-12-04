@@ -117,7 +117,9 @@ function popParameter (name) {
     parameters [name].pop ();
 }
 function getParameter (name) {
-    return parameters [name];
+    let top = parameters [name].pop ();
+    parameters [name].push (top);
+    return top;
 }
 ${parameterDef_i.rwr ().join ('')}
 
