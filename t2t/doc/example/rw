@@ -1,9 +1,0 @@
-#!/bin/bash
-# usage: ./rw grammar rewrite <src
-set -e
-T2T=../..
-GRAMMAR=$1
-REWRITE=$2
-SUPPORT=./support.js
-STDIN=-
-${T2T}/nanodsl ${T2T}/lib ${GRAMMAR} ${REWRITE} ${SUPPORT} ${STDIN} | node indent.mjs

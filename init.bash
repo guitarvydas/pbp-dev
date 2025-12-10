@@ -1,77 +1,11 @@
 #!/bin/bash
-set -e
-set -x
-wd=.
-pbp=./pbp
-Dev=~/projects/pbp
-TaS_Dev=${Dev}/tas
-
-
-if [ -n "${DEV_PBP}" ]; then
-
-    rm -rf pbp
-    mkdir pbp
-    cd pbp
-
-    KERNEL=./kernel
-    DAS=./das
-    TAS=./tas
-    T2T=./t2t
-
-    rm -rf tas
-    rm -rf das
-    rm -rf t2t
-    rm -rf kernel
-    mkdir tas
-    mkdir das
-    mkdir t2t
-    mkdir t2t/lib
-    mkdir kernel
-
-    cp ${Dev}/t2t.bash .
-    cp ${Dev}/main.py .
-
-    cp ${Dev}/kernel/package.json .
-    cp ${Dev}/kernel/package.json ..
-
-    cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
-    cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
-    cp ${Dev}/kernel/splitoutput.js ${KERNEL}
-    cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
-    cp ${Dev}/das/PBP.xml ${DAS}/PBP.xml
-    cp ${Dev}/das/PBP.xml ../
-    cp ${Dev}/t2t/lib/args.part.js ${T2T}/lib
-    cp ${Dev}/t2t/lib/front.part.js ${T2T}/lib
-    cp ${Dev}/t2t/lib/middle.part.js ${T2T}/lib
-    cp ${Dev}/t2t/lib/tail.part.js ${T2T}/lib
-    cp ${Dev}/t2t/lib/rwr.mjs ${T2T}/lib
-
-    # for TaS, use code that is known to work for TaS (ostensibly the same as ${KERNEL}/???, but not necessarily)
-    cp ${TaS_Dev}/cldecode.{ohm,rewrite} ${TAS}
-    cp ${TaS_Dev}/cleanup.py ${TAS}
-    cp ${TaS_Dev}/clindenter.mjs ${TAS}
-    cp ${TaS_Dev}/clmvline.py ${TAS}
-    cp ${TaS_Dev}/clrelocate.py ${TAS}
-    cp ${TaS_Dev}/decodeoutput.mjs ${TAS}
-    cp ${TaS_Dev}/das2json.js ${TAS}
-    cp ${TaS_Dev}/emit.ohm ${TAS}
-    cp ${TaS_Dev}/emitPython.rewrite ${TAS}
-    cp ${TaS_Dev}/emitcl.rewrite ${TAS}
-    cp ${TaS_Dev}/emitjs.rewrite ${TAS}
-    cp ${TaS_Dev}/errgrep.py ${TAS}
-    cp ${TaS_Dev}/indenter.mjs ${TAS}
-    cp ${TaS_Dev}/internalize.{ohm,rewrite} ${TAS}
-    cp ${TaS_Dev}/jsdecode.{ohm,rewrite} ${TAS}
-    cp ${TaS_Dev}/jsindenter.mjs ${TAS}
-    cp ${TaS_Dev}/jsrelocate.py ${TAS}
-    cp ${TaS_Dev}/kernel0d.py ${TAS}
-    cp ${TaS_Dev}/main.py ${TAS}
-    cp ${TaS_Dev}/pydecode.{ohm,rewrite} ${TAS}
-    cp ${TaS_Dev}/pyrelocate.py ${TAS}
-    cp ${TaS_Dev}/repl.py ${TAS}
-    cp ${TaS_Dev}/tas.drawio ${TAS}
-    cp ${TaS_Dev}/semantics.{ohm,rewrite} ${TAS}
-    cp ${TaS_Dev}/support.js ${TAS}
-    cp ${TaS_Dev}/syntax.{ohm,rewrite} ${TAS}
-    cp ${TaS_Dev}/unencode.mjs ${TAS}
+# copy necessary files into local directory, once ./pbp has been copied
+if [ -z "./pbp/" ]; then
+    echo "Error: You need to make a copy of ./pbp/ before running this init.bash script"
+    echo "   see ${PBP_ROOT}/import-minimal.bash"
+    echo "   where ${PBP_ROOT} is the path to your copy of the full pbp development repository"
+    exit 1
 fi
+cp ./pbp/das/PBP.xml .
+cp ./pbp/kernel/package.json .
+

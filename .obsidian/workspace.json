@@ -1,0 +1,202 @@
+{
+  "main": {
+    "id": "970e7f5d7d5f9131",
+    "type": "split",
+    "children": [
+      {
+        "id": "969c8273f9fa81e8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e78cb8d8ff53cac1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "README"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ca68872c684dab1e",
+    "type": "split",
+    "children": [
+      {
+        "id": "736e37eb6b888459",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "27e86f68be0228ad",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "2695f1e24edb9fd5",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "e628cc41e8dc5b29",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "f5c1ed2dde6a7022",
+    "type": "split",
+    "children": [
+      {
+        "id": "338d2d38f104a705",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "75aaedd95c9df48e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "t2t/doc/how-to-create-Makefile.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for how-to-create-Makefile"
+            }
+          },
+          {
+            "id": "8fe3d1dc51b04df8",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "t2t/doc/how-to-create-Makefile.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from how-to-create-Makefile"
+            }
+          },
+          {
+            "id": "847603cea951275f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "576644763572c080",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "933134bcb38f6582",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "t2t/doc/how-to-create-Makefile.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of how-to-create-Makefile"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "e78cb8d8ff53cac1",
+  "lastOpenFiles": [
+    "doc/how-to-create-Makefile.md",
+    "README.md",
+    "doc/how-to-create-main-dot-py.md",
+    "doc/doc-minimal-main-dot-py.drawio.png",
+    "doc/doc-main-dot-py-with-user-defined-parts.drawio.png",
+    "doc/doc-noise-reduced-main-dot-py.drawio.png",
+    "doc/doc-default-input-gate.drawio.png",
+    "doc/doc.drawio",
+    "doc",
+    "#init.bash#",
+    "import-minimal.bash~",
+    "init.bash",
+    "import-minimal.bash"
+  ]
+}

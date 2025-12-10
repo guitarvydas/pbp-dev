@@ -1,0 +1,286 @@
+emit {
+
+  Main = ParaMark TopLevel+
+  TopLevel =
+    | Defvar -- defvar
+    | Defconst -- defconst
+    | Defn -- defn
+    | Defobj -- defobj
+    | Import -- import
+    | External -- external
+    | comment line? -- comment
+    | line -- line
+
+   Defvar = kw<"defvar"> Lval "⇐" Exp line?
+   Defconst = kw<"defconst"> Lval "≡" Exp line?
+   Defn = kw<"defn"> ident Formals StatementBlock line?
+   Defobj = kw<"defobj"> ident ObjFormals line? "{" line? InitStatement+ "}" line?
+   Import = kw<"import"> ident line?
+
+   StatementBlock = line? "{" line? Rec_Statement line? "}" line?
+
+   Rec_Statement = line? R_Statement line?
+   R_Statement =
+     | comment Rec_Statement? -- comment
+     | External Rec_Statement? -- external
+     | Deftemp -- deftemp
+     | Defsynonym -- defsynonym     
+     | kw<"global"> ident CommaIdent* Rec_Statement? -- globals
+     | IfStatement  -- if
+     | kw<"pass"> Rec_Statement? -- pass
+     | kw<"return"> ReturnExp -- return
+     | ForStatement -- for
+     | WhileStatement  -- while
+     | Assignment -- assignment
+     | Lval Rec_Statement? -- call
+     | line Rec_Statement? -- line
+   CommaIdent = Comma ident
+
+   External = ExternalPhrase line?
+   ExternalPhrase =
+     | "#" xkw<"low_level_read_text_file_handler"> "(" eh Comma msg Comma fname Comma ok Comma err ")" -- read
+     | "#" xkw<"read_and_convert_lnet_file"> "(" pathname Comma fname ")" -- raclnetf
+     | "#" xkw<"internalize_lnet_from_string"> "(" ")" -- internalizeLnetFromString
+     | "#" xkw<"freshQueue"> "(" ")" -- freshQueue
+     | "#" xkw<"freshStack"> "(" ")" -- freshStack
+     | "#" xkw<"fresh"> "(" ident ")" -- fresh
+     | "#" xkw<"stringcar"> "(" Exp ")" -- stringcar
+     | "#" xkw<"stringcdr"> "(" Exp ")" -- stringcdr
+     | "#" xkw<"strcons"> "(" Exp Comma Exp ")" -- strcons
+     | "#" xkw<"stringshrink"> "(" Exp ")" -- stringshrink
+     | "#" xkw<"append"> "(" Exp Comma Exp ")" -- append
+     | "#" xkw<"basename"> "(" Exp ")" -- basename
+     | "#" xkw<"preamble"> "(" ")" -- preamble
+     | "#" xkw<"print_stdout"> "(" Exp ")" -- print_stdout
+     | "#" xkw<"print_stderr"> "(" Exp ")" -- print_stderr
+     | "#" xkw<"print_nl"> "(" ")" -- print_nl
+     | "#" xkw<"print_nl_stderr"> "(" ")" -- print_nl_stderr
+     | "#" xkw<"display_queue_as_json"> "(" Exp ")" -- display_queue_as_json
+     | "#" xkw<"split_string_for_shell"> "(" Exp ")" -- split_string_for_shell
+     | "#" xkw<"substitute"> "(" Exp Comma Exp Comma Exp ")" -- substitute
+     | "#" xkw<"run_command"> "(" Cmd Comma Args Comma ret Comma rc Comma stdout Comma stderr ")" -- run_command
+     | "#" xkw<"abort"> "(" ")" -- abort
+     | "#" xkw<"asstr"> "(" Exp ")" -- asstr
+     | "#" xkw<"len"> "(" Exp ")" -- len
+     | "#" xkw<"asint"> "(" Exp ")" -- asint
+     | "#" xkw<"enqueue"> "(" Exp Comma Exp ")" -- enqueue
+     | "#" xkw<"dequeue"> "(" Exp ")" -- dequeue
+     | "#" xkw<"empty"> "(" Exp ")" -- empty
+     | "#" xkw<"queue2list"> "(" Exp ")" -- queue2list
+     | "#" xkw<"negate"> "(" Exp ")" -- negate
+     | "#" xkw<"live_update"> "(" Exp Comma Exp ")" -- liveUpdate
+     | "#" xkw<"queue_as_json_to_stdout"> "(" Exp ")" -- queueAsJsonToStdout
+     | "#" xkw<"dir"> "(" Exp ")" -- dir
+     
+     
+     | "#" ident "(" StuffInsideParentheses* ")" -- unrecognized
+
+
+   Cmd = Exp
+   Args = Exp
+   ret = ident
+   rc = ident
+   stdout = ident
+   stderr = ident
+   
+   Deftemp = kw<"deftemp"> Lval "⇐" Exp Rec_Statement?
+   Defsynonym =
+     | Lval errorMessage "≡" Exp Rec_Statement? -- illegal
+     | ident "≡" Exp Rec_Statement? -- legal
+
+   InitStatement = "•" ident "⇐" Exp (comment | line)*
+
+   IfStatement = kw<"if"> Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?
+   ElifStatement = kw<"elif"> Exp StatementBlock
+   ElseStatement = kw<"else"> StatementBlock
+
+   ForStatement = kw<"for"> ident kw<"in"> Exp StatementBlock Rec_Statement?
+   WhileStatement = kw<"while"> Exp StatementBlock Rec_Statement?
+
+   Assignment = 
+     | "[" LvalComma+ "]" "⇐" Exp Rec_Statement? -- multiple
+     | Lval "⇐" Exp Rec_Statement? -- single
+
+   LvalComma = Lval Comma?
+
+    ReturnExp =
+      | "[" ExpComma+ "]" Rec_Statement? -- multiple
+      | Exp Rec_Statement? -- single
+
+    ExpComma = Exp Comma?
+    
+    Exp =  BooleanAndOrIn
+
+    BooleanAndOrIn =
+      | BooleanAndOrIn andOrIn BooleanExp -- andOrIn
+      | BooleanExp -- default
+      
+    BooleanExp =
+      | BooleanExp boolNeq BooleanNot -- boolopneq
+      | BooleanExp boolOp BooleanNot -- boolop
+      | BooleanNot -- basic
+
+    BooleanNot =
+      | kw<"not"> BooleanExp -- not
+      | AddExp -- basic
+
+    AddExp =
+      | AddExp "+" MulExp  -- plus
+      | AddExp "-" MulExp  -- minus
+      | MulExp -- basic
+
+    MulExp =
+      | MulExp "*" ExpExp  -- times
+      | MulExp "/" ExpExp  -- divide
+      | ExpExp -- basic
+
+    ExpExp =
+      | Primary "^" ExpExp  -- power
+      | Primary -- basic
+
+    Primary =
+      | PrimaryIndexed Actuals -- call
+      | PrimaryIndexed -- plain
+
+    PrimaryIndexed =
+      | PrimaryIndexed "@" ident -- lookupident
+      | PrimaryIndexed "@" PrimaryIndexed -- lookup
+      | PrimaryIndexed "." ident -- fieldident
+      | PrimaryIndexed "." PrimaryIndexed -- field
+      | PrimaryIndexed "[" Exp "]" -- index
+      | PrimaryIndexed "[" digit+ ":" "]" -- nthslice
+      | Atom -- atom
+
+    Atom =
+      | External -- external
+      | "[" "]" -- emptylistconst
+      | "{" "}" -- emptydict
+      | "(" Exp ")" -- paren
+      | "[" line? PrimaryComma+ line? "]" -- listconst
+      | "{" line? PairComma+ line? "}" -- dict
+      | lambda LambdaFormals? ":" Exp -- lambda
+      | phi -- phi
+      | "⊤" -- true
+      | "⊥" -- false
+      | "↪︎" ident -- subr
+      | kw<"range"> "(" Exp ")" -- range
+      | ident Actuals -- callident
+      | string -- string
+      | number -- number
+      | ident -- ident
+
+
+
+    PrimaryComma = Primary Comma? line?
+    PairComma = Pair Comma?
+
+    StuffInsideParentheses =
+      | "(" StuffInsideParentheses* ")" -- rec
+      | ~"(" ~")" any -- default
+    
+    Lval = Exp
+
+    Formals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+    ObjFormals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+    LambdaFormals =
+      | "(" ")" -- noformals
+      | "(" FormalComma* ")" -- withformals
+
+    Formal = 
+       | ident -- plain
+       
+    FormalComma = Formal Comma?
+    
+    Actuals = 
+      | "(" ")" -- noactuals
+      | "(" ActualComma* ")" line? -- actuals
+
+   Actual = Exp
+   ActualComma = comment? Actual Comma? line?
+
+    number =
+      | digit* "." digit+  -- fract
+      | digit+             -- whole
+
+    Pair = string ":" Exp Comma?
+  
+
+  andOrIn =
+    | kw<"and"> -- and
+    | kw<"or"> -- or
+    | kw<"in"> -- in
+
+  boolOp = (boolEq | boolNeq | "<=" | ">=" | ">" | "<")
+  boolEq = "="
+  boolNeq = "!="
+
+  string = "“" stringchar* "”"
+  stringchar = 
+    | "“" stringchar* "”" -- rec
+    | ~"“" ~"”" any -- other
+
+    keyword = (
+        kw<"defconst">
+      | kw<"deftemp">
+      | kw<"defobj">
+      | kw<"defvar">
+      | kw<"defn">
+      | kw<"useglobal">
+      | kw<"pass">
+      | kw<"return">
+      | kw<"if">
+      | kw<"elif">
+      | kw<"else">
+      | kw<"and">
+      | kw<"or">
+      | kw<"in">
+      | kw<"not">
+      | kw<"range">
+      | kw<"while">
+      | kw<"import">
+      | kw<"as">
+      | kw<"pair">
+      | kw<"push">
+      | lambda
+      | phi
+      )
+      
+  lambda = ("λ" | kw<"%CE%BB">)
+  phi = ("ϕ" | kw<"%CF%95">)
+
+  kw<s> = "❲" s "❳"
+  xkw<s> = "❲" s "❳"
+  ident  = ~keyword "❲" idchar+ "❳"
+  idchar =
+    | "❲" idchar+ "❳" -- rec
+    | ~"❲" ~"❳" any -- other
+
+  comment = "⌈" commentchar* "⌉"
+  commentchar = 
+    | "⌈" commentchar* "⌉" -- rec
+    | ~"⌈" ~"⌉" any -- other
+
+  errorMessage = "⎝" errorchar* "⎠"
+  errorchar =  
+    | "⎝" errorchar* "⎠" -- rec
+    | ~"⎝" ~"⎠" any -- other
+
+  eh = ident
+  fname = ident
+  pathname = ident
+  msg = ident
+  ok = port
+  err = port
+  port = string
+  Key = Exp
+  Kvs = Exp
+
+  line = "⎩" (~"⎩" ~"⎭" any)* "⎭"
+
+  Comma = line? "," line?
+  ParaMark = "¶"
+}

@@ -1,0 +1,18 @@
+pydecode {
+  text = char+
+  char =
+    | "“" (~"“" ~"”" any)* "”"  -- string
+    | "⌈" (~"⌈" ~"⌉" any)* "⌉"  -- comment
+    | "⎝" (~"⎝" ~"⎠" any)* "⎠"  -- errormessage
+    | "⎩" (~"⎩" ~"⎭" any)* "⎭"  -- line
+    | "❲"                       -- ulb
+    | "%E2%9D%B2"               -- encodedulb
+    | "❳"                       -- urb
+    | "%E2%9D%B3"               -- encodedurb
+    | "%20"                     -- space
+    | "%09"                     -- tab
+    | "%0A"                     -- newline
+    | "¶"                       -- paramark
+    | any                       -- other
+}
+

@@ -1,0 +1,159 @@
+% rewrite semantics {
+
+Main [ Para TopLevel+] = ‛«Para»«TopLevel»’
+
+TopLevel_defvar [ Defvar] =‛«Defvar»’
+TopLevel_defconst [ Defconst] =‛«Defconst»’
+TopLevel_defn [ Defn] =‛«Defn»’
+TopLevel_defobj [ Defobj] =‛«Defobj»’
+TopLevel_import [ Import] =‛«Import»’
+TopLevel_external [x] =‛«x»’
+TopLevel_comment [ comment line?] =‛«comment»«line»\n’
+TopLevel_line [line] =‛«line»’
+Defvar [ _2 Lval _3 Exp line?] = ‛«_2»«Lval»«_3»«Exp»«line»’
+Defconst [ _5 Lval _6 Exp line?] = ‛«_5»«Lval»«_6»«Exp»«line»’
+Defn [ _8 ident Formals StatementBlock line?] = ‛«_8»«ident»«Formals»«StatementBlock»«line»’
+Defobj [ _10 ident ObjFormals line1? _11 line2? InitStatement+ _12 line3?] = ‛«_10»«ident»«ObjFormals»«line1»«_11»«line2»«InitStatement»«_12»«line3»’
+Import [ _14 ident line?] = ‛«_14»«ident»«line»’
+StatementBlock [ line1? lb line2? Rec_Statement line3? rb line4?] = ‛«line1»«lb»«line2»«Rec_Statement»«line3»«rb»«line4»’
+
+Rec_Statement [line1? R_Statement line2?] = ‛«line1»«R_Statement»«line2»’
+R_Statement_comment [ comment Rec_Statement?] =‛«comment»\n«Rec_Statement»’
+R_Statement_external [x rec?] =‛«x»«rec»’
+R_Statement_deftemp [ Deftemp] =‛«Deftemp»’
+R_Statement_defsynonym [ Defsynonym] =‛«Defsynonym»’
+R_Statement_globals [ _18 ident CommaIdent* Rec_Statement?] =‛«_18»«ident»«CommaIdent»«Rec_Statement»’
+R_Statement_if [ IfStatement] =‛«IfStatement»’
+R_Statement_pass [ _20 Rec_Statement?] =‛«_20»«Rec_Statement»’
+R_Statement_return [ _22 ReturnExp] =‛«_22»«ReturnExp»’
+R_Statement_for [ ForStatement] =‛«ForStatement»’
+R_Statement_while [ WhileStatement] =‛«WhileStatement»’
+R_Statement_assignment [ Assignment] =‛«Assignment»’
+R_Statement_call [ Lval Rec_Statement?] =‛«Lval»«Rec_Statement»’
+R_Statement_line [line rec?] = ‛«line»«rec»’
+CommaIdent [ _23 ident] = ‛«_23»«ident»’
+
+External [_octothorpe id lpar expcomma* rpar line?] = ‛«_octothorpe»«id»«lpar»«expcomma»«rpar»«line»’
+
+Deftemp [ _37 Lval _38 Exp Rec_Statement?] = ‛«_37»«Lval»«_38»«Exp»«Rec_Statement»’
+Defsynonym_legal [ id _39 Exp Rec_Statement?] = ‛«id»«_39»«Exp»«Rec_Statement»’
+Defsynonym_illegal [ e _39 Exp Rec_Statement?] = ‛«e» ⎝ error - LHS must be a single identifier for defsynonym ⎠ «_39»«Exp»«Rec_Statement» ’
+InitStatement [ _40 ident _41 Exp fluff*] = ‛«_40»«ident»«_41»«Exp»«fluff»’
+IfStatement [ _43 Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?] = ‛«_43»«Exp»«StatementBlock»«ElifStatement»«ElseStatement»«Rec_Statement»’
+ElifStatement [ _45 Exp StatementBlock] = ‛«_45»«Exp»«StatementBlock»’
+ElseStatement [ _47 StatementBlock] = ‛«_47»«StatementBlock»’
+ForStatement [ _49 ident _51 Exp StatementBlock Rec_Statement?] = ‛«_49»«ident»«_51»«Exp»«StatementBlock»«Rec_Statement»’
+WhileStatement [ _53 Exp StatementBlock Rec_Statement?] = ‛«_53»«Exp»«StatementBlock»«Rec_Statement»’
+
+Assignment_multiple [ _54 LvalComma+ _55 _56 Exp Rec_Statement?] =‛«_54»«LvalComma»«_55»«_56»«Exp»«Rec_Statement»’
+Assignment_single [ Lval _57 Exp Rec_Statement?] =‛«Lval»«_57»«Exp»«Rec_Statement»’
+LvalComma [Lval Comma?] = ‛«Lval»«Comma»’
+
+ReturnExp_multiple [ _59 ExpComma+ _60 Rec_Statement?] =‛«_59»«ExpComma»«_60»«Rec_Statement»’
+ReturnExp_single [ Exp Rec_Statement?] =‛«Exp»«Rec_Statement»’
+ExpComma [Exp Comma?] = ‛«Exp»«Comma»’
+Exp [ BooleanAndOrIn] = ‛«BooleanAndOrIn»’
+
+BooleanAndOrIn_andOrIn [ BooleanAndOrIn andOrIn BooleanExp] =‛«BooleanAndOrIn»«andOrIn»«BooleanExp»’
+BooleanAndOrIn_default [ BooleanExp] =‛«BooleanExp»’
+
+BooleanExp_boolopneq [ BooleanExp boolNeq BooleanNot] =‛«BooleanExp»«boolNeq»«BooleanNot»’
+BooleanExp_boolop [ BooleanExp boolOp BooleanNot] =‛«BooleanExp»«boolOp»«BooleanNot»’
+BooleanExp_basic [ BooleanNot] =‛«BooleanNot»’
+
+BooleanNot_not [ _63 BooleanExp] =‛«_63»«BooleanExp»’
+BooleanNot_basic [ AddExp] =‛«AddExp»’
+
+AddExp_plus [ AddExp _64 MulExp] =‛«AddExp»«_64»«MulExp»’
+AddExp_minus [ AddExp _65 MulExp] =‛«AddExp»«_65»«MulExp»’
+AddExp_basic [ MulExp] =‛«MulExp»’
+
+MulExp_times [ MulExp _66 ExpExp] =‛«MulExp»«_66»«ExpExp»’
+MulExp_divide [ MulExp _67 ExpExp] =‛«MulExp»«_67»«ExpExp»’
+MulExp_basic [ ExpExp] =‛«ExpExp»’
+
+ExpExp_power [ Primary _68 ExpExp] =‛«Primary»«_68»«ExpExp»’
+ExpExp_basic [ Primary] =‛«Primary»’
+
+Primary_lookupident [ Primary _69 ident] =‛«Primary»«_69»«ident»’
+Primary_lookup [ Primary _70 ePrimary] =‛«Primary»«_70»«ePrimary»’
+Primary_fieldident [ Primary _71 e] =‛«Primary»«_71»«e»’
+Primary_field [ Primary _71 e] =‛«Primary»«_71»«e»’
+Primary_index [ Primary _72 Exp _73] =‛«Primary»«_72»«Exp»«_73»’
+Primary_nthslice [ Primary _74 digit+ _75 _76] =‛«Primary»«_74»«digit»«_75»«_76»’
+Primary_identcall [ ident Actuals] =‛«ident»«Actuals»’
+Primary_call [ Primary Actuals] =‛«Primary»«Actuals»’
+Primary_atom [ Atom] =‛«Atom»’
+
+Atom_emptylistconst [ _77 _78] =‛«_77»«_78»’
+Atom_emptydict [ _79 _80] =‛«_79»«_80»’
+Atom_paren [ _81 Exp _82] =‛«_81»«Exp»«_82»’
+Atom_listconst [ lb line1? PrimaryComma+ line2? rb] =‛«lb»«line1»«PrimaryComma»«rb»«line2»’
+Atom_dict [ lb line1? PairComma+ line2? rb] =‛«lb»«line1»«PairComma»«line2»«rb»’
+Atom_lambda [ lambda LambdaFormals? _87 Exp] =‛«lambda»«LambdaFormals»«_87»«Exp»’
+Atom_phi [ phi] =‛«phi»’
+Atom_true [ _119] =‛«_119»’
+Atom_false [ _120] =‛«_120»’
+Atom_external [m] =‛«m»’
+Atom_subr [_subrref ident] =‛«_subrref»«ident»’
+Atom_range [ _122 _123 Exp _124] =‛«_122»«_123»«Exp»«_124»’
+Atom_string [ string] =‛«string»’
+Atom_number [ number] =‛«number»’
+Atom_ident [ ident] =‛«ident»’
+PrimaryComma [ Primary comma?] = ‛«Primary»«comma»’
+PairComma [ Pair _126?] = ‛«Pair»«_126»’
+Lval [ Exp] = ‛«Exp»’
+
+
+Formals_noformals [ _127 _128] =‛«_127»«_128»’
+Formals_withformals [ _129 FormalComma* _130] =‛«_129»«FormalComma»«_130»’
+
+ObjFormals_noformals [ _131 _132] =‛«_131»«_132»’
+ObjFormals_withformals [ _133 FormalComma* _134] =‛«_133»«FormalComma»«_134»’
+
+LambdaFormals_noformals [ _135 _136] =‛«_135»«_136»’
+LambdaFormals_withformals [ _137 FormalComma* _138] =‛«_137»«FormalComma»«_138»’
+
+Formal [ ident] =‛«ident»’
+FormalComma [Formal comma?] = ‛«Formal»«comma»’
+
+Actuals_noactuals [ _141 _142] =‛«_141»«_142»’
+Actuals_actuals [ _143 ActualComma* _144 line?] =‛«_143»«ActualComma»«_144»«line»’
+Actual [ ParamName? Exp] = ‛«ParamName»«Exp»’
+ActualComma [comment? Actual comma? line?] = ‛«comment»«Actual»«comma»«line»’
+ParamName [ ident _146] = ‛«ident»«_146»’
+
+number_fract [ digit* _147 denominatordigit+] =‛«digit»«_147»«denominatordigit»’
+number_whole [ digit+] =‛«digit»’
+Pair [ string _148 Exp _149?] = ‛«string»«_148»«Exp»«_149»’
+andOrIn [ _156] = ‛«_156»’
+boolOp [ _161] = ‛«_161»’
+boolEq [ _162] = ‛«_162»’
+boolNeq [ _163] = ‛«_163»’
+string [ _164 stringchar* _165] = ‛«_164»«stringchar»«_165»’
+
+stringchar_rec [ _166 stringchar* _167] =‛«_166»«stringchar»«_167»’
+stringchar_other [ any] =‛«any»’
+keyword [ _222] = ‛«_222»’
+lambda [ _226] = ‛«_226»’
+phi [ _230] = ‛«_230»’
+kw [ _231 s _232] = ‛«_231»«s»«_232»’
+ident [ _233 idchar+ _234] = ‛«_233»«idchar»«_234»’
+
+idchar_rec [ _235 idchar+ _236] =‛«_235»«idchar»«_236»’
+idchar_other [ any] =‛«any»’
+comment [ _239 commentchar* _240] = ‛«_239»«commentchar»«_240»\n’
+
+commentchar_rec [ _241 commentchar* _242] =‛«_241»«commentchar»«_242»’
+commentchar_other [ any] =‛«any»’
+eh [ ident] = ‛«ident»’
+fname [ ident] = ‛«ident»’
+msg [ ident] = ‛«ident»’
+ok [ port] = ‛«port»’
+err [ port] = ‛«port»’
+port [ string] = ‛«string»’
+
+line [lb cs* rb] = ‛«lb»«cs»«rb»’
+Comma [line1? _comma line2?] = ‛«line1»«_comma»«line2»’
+ParaMark [c] = ‛«c»’
+}

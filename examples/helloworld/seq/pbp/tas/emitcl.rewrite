@@ -1,0 +1,349 @@
+% rewrite emitCL {
+
+Main [ Para TopLevel+] = ‛«Para»«TopLevel»’
+
+TopLevel_defvar [ Defvar] =‛«Defvar»’
+TopLevel_defconst [ Defconst] =‛«Defconst»’
+TopLevel_defn [ Defn] =‛«Defn»’
+TopLevel_defobj [ Defobj] =‛«Defobj»’
+TopLevel_import [ Import] =‛«Import»’
+TopLevel_comment [s line?] =‛«s»«line»’
+TopLevel_line [line] =‛«line»’
+
+kw [ s] = ‛«s»’
+Defvar [ __ lval _eq e line?] = ‛\n(defparameter «lval» «e»)«line»’
+Defconst [ __ lval _eq e line?] = ‛\n(defparameter «lval» «e»)’
+Defn [ _4 ident Formals StatementBlock line?] = 
+  ⎡ functionName=‛«ident»’
+    ‛\n(defun «ident» (&optional «Formals»)⤷\n(declare (ignorable «Formals»))«StatementBlock»⤶)’
+  ⎦
+
+Defobj [ _defobj ident Formals line1? lb line2? init+ rb line3?] = ‛
+(defclass «ident» ()«line1»⤷«line2»
+  (⤷⎨part ‛«init»’ ‛0’⎬⤶⤶))«line3»\n
+’
+
+Import [ _10 ident line?] = ‛’
+StatementBlock [ line1? lb line2? Statement     line3? rb  line4?] = ‛«line1»«line2»«Statement»«line3»«line4»\n’
+
+Rec_Statement [line1? R_Statement line2?] = ‛«line1»«R_Statement»«line2»’
+R_Statement_globals [ _24 ident1  cidents* scope?] =‛«scope»’
+R_Statement_comment [s rec?] =‛\n«s»«rec»’
+R_Statement_external [x rec?] = ‛\n«x»«rec»’
+R_Statement_if [ IfStatement] =‛«IfStatement»’
+R_Statement_pass [ _27 scope?] =‛\n#| pass |#«scope»’
+R_Statement_return [ _29 ReturnExp] =‛\n(return-from ⟪functionName⟫ ⤷«ReturnExp»⤶)’
+R_Statement_for [ ForStatement] =‛«ForStatement»’
+R_Statement_while [ WhileStatement] =‛«WhileStatement»’
+R_Statement_assignment [ Assignment] =‛«Assignment»’
+R_Statement_call [ Lval scope?] =‛\n«Lval»«scope»’
+R_Statement_line [line rec?] = ‛«line»«rec»’
+CommaIdent [_comma ident] = ‛, «ident»’
+
+External [x line?] = ‛«x»«line»’
+
+ExternalPhrase_read [_octothorpe _read lp eh _comma1 msg _comma2 fname _comma3 ok _comma4 err rp] = ‛
+;; read text from a named file «fname», send the text out on port «ok» else send error info on port «err»
+;; given «eh» and «msg» if needed
+(handler-bind ((error #'(lambda (condition) (send_string «eh» «err» (format nil "~&~A~&" condition)))))⤷
+  (with-open-file (stream «fname»)⤷
+    (let ((contents (make-string (file-length stream))))⤷
+      (read-sequence contents stream)
+      (send_string «eh» «ok» contents))))⤶⤶⤶
+’
+
+ExternalPhrase_raclnetf [_octothorpe _ lp pathname _comma fname rp] = ‛
+  ;; read json from a named file and convert it into internal form (a list of Container alists)
+  (json2dict (merge-pathnames «pathname» «fname»))
+’
+
+ExternalPhrase_internalizeLnetFromString [_octothorpe _ lp rp] = ‛
+  (internalize-lnet-from-JSON *lnet*)
+’
+
+ExternalPhrase_freshQueue [_octothorpe _83 _84 _85] =‛ (make-instance 'Queue)’
+ExternalPhrase_freshStack [_octothorpe _83 _84 _85] =‛ nil’
+ExternalPhrase_fresh [_octothorpe _83 _84 ident _85] =‛ (make-instance '«ident»)’
+ExternalPhrase_stringshrink [_octothorpe _83 _84 e _85 ] =‛ «e»’
+ExternalPhrase_stringcar [_octothorpe _83 _84 e _85 ] =‛ (string (char «e» 0))’
+ExternalPhrase_stringcdr [_octothorpe _83 _84 e _85 ] =‛ (subseq «e» 1)’
+ExternalPhrase_strcons [_octothorpe _strcons lp e1 _comma e2 rp] =‛ (concatenate 'string «e1» «e2»)’
+ExternalPhrase_append [_octothorpe _append lp lis _comma e2 rp] =‛ (setf «lis» (append «lis» (list «e2»)))’
+ExternalPhrase_basename [_octothorpe _basename lp s rp] = ‛«s»’
+
+ExternalPhrase_preamble [_octothorpe _preamble lb rp] =
+‛(load "~/quicklisp/setup.lisp")
+(proclaim '(optimize (debug 3) (safety 3) (speed 0)))
+(ql:quickload :uiop)
+(ql:quickload :cl-json)
+
+(defun getwd (s)
+  #+lispworks (merge-pathnames s (get-working-directory))
+  #-lispworks s
+)
+
+(defun dict-fresh () (make-hash-table :test 'equal))
+
+(defun dict-in? (name table)
+  (when (and table name)
+    (multiple-value-bind (dont-care found)
+       (gethash name table)
+      dont-care ;; quell warnings that dont-care is unused
+      found)))
+
+(defun jparse (filename)
+  (let ((s (uiop:read-file-string filename)))
+    (internalize-lnet-from-JSON s)))
+  
+(defun internalize-lnet-from-JSON (s)
+  (let ((s (uiop:read-file-string filename)))
+    (let ((cl-json:*json-identifier-name-to-lisp* 'identity)) ;; preserves case
+      (with-input-from-string (strm s)
+        (cl-json:decode-json strm)))))
+
+(defun json2dict (filename)
+  (let ((j (jparse filename)))
+    (make-dict nil j)))
+
+
+(defun make-dict (dict x)
+  (assert (or (not (null dict)) (not (null x))))
+  (cond 
+
+    ;; done
+    ((null x) dict)
+
+    ;; bottom
+    ((atom x) x)
+
+    ;; key/value pair - put it in dict
+    ((kv? x)
+      (let ((v (make-dict dict (val x))))
+        (setf (gethash (key x) dict) v)
+	dict))
+
+    ;; begin new dict
+    ((kv? (car x))
+      (let ((new-dict (make-hash-table :test 'equal)))
+        (mapc #'(lambda (y)
+                  (make-dict new-dict y))
+          x)
+        new-dict))
+
+    ;; list of dicts (json array)
+    ((not (kv? (car x)))
+      ;; list of kvs (json array)
+      (mapcar #'(lambda (y)
+                  (make-dict nil y))
+        x))))
+
+(defun key (kv)
+  (symbol-name (car kv)))
+
+(defun val (kv)
+  (cdr kv))
+
+(defun kv? (x)
+  (and (listp x)
+       (atom (car x))))
+
+;;;;
+;(load "~/quicklisp/setup.lisp")
+(ql:quickload '(:websocket-driver-client :cl-json :uiop))
+
+(defun live_update (key value)
+  (let* ((client (wsd:make-client "ws://localhost:8966"))
+         (json-data (json:encode-json-to-string 
+                    (list (cons key value)))))
+    (wsd:start-connection client)
+    (wsd:send client json-data)
+    (sleep 0.1)  ; Add small delay to ensure message is sent
+    (wsd:close-connection client)))
+
+
+;;;;
+
+(defclass Queue ()
+  ((contents :accessor contents :initform nil)))
+
+(defmethod enqueue ((self Queue) v)
+  (setf (contents self) (append (contents self) (list v))))
+
+(defmethod dequeue ((self Queue))
+  (pop (contents self)))
+    
+(defmethod empty? ((self Queue))
+  (null (contents self)))
+
+(defmethod queue2list ((self Queue))
+  (contents self))
+’
+
+ExternalPhrase_print_stdout [_octothorpe _ lp e rp] = ‛(format *standard-output* "~a~%25" «e»)’
+ExternalPhrase_print_stderr [_octothorpe _ lp e rp] = ‛(format *error-output* "~a~%25" «e»)’
+ExternalPhrase_print_nl [_octothorpe _ lp rp] = ‛(format *standard-output* "%0A")’
+ExternalPhrase_print_nl_stderr [_octothorpe _ lp rp] = ‛(format *error-output* "%0A")’
+ExternalPhrase_split_string_for_shell [_octothorpe _ lp s rp] = ‛(split-sequence '(#\\space) «s»)’
+ExternalPhrase_substitute [_octothorpe _ lp new_item _comma1 old_item _comma2 s rp] = ‛(substitute «new_item» «old_item» «s»)’
+
+ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma3 rc _comma4 out _comma5 errout rp] = ‛(multiple-value-setq («out» «errout» «rc») (uiop::run-program (concatenate 'string «cmd» " " «args») :output :string :error :string))’
+ExternalPhrase_abort [_octothorpe _ lp rp] = ‛(break)’
+ExternalPhrase_asstr [_octothorpe _ lp e rp] = ‛(format nil "~a" «e»)’
+ExternalPhrase_len [_octothorpe _ lp e rp] = ‛(length «e»)’
+ExternalPhrase_asint [_octothorpe _ lp e rp] = ‛(parse-integer «e»)’
+ExternalPhrase_enqueue [_octothorpe _ lp obj _comma e rp] = ‛(enqueue «obj» «e»)’
+ExternalPhrase_dequeue [_octothorpe _ lp obj rp] = ‛(dequeue «obj»)’
+ExternalPhrase_empty [_octothorpe _ lp q rp] = ‛(empty? «q»)’
+ExternalPhrase_queue2list [_octothorpe _ lp q rp] = ‛(queue2list «q»)’
+ExternalPhrase_negate [_octothorpe _ lp x rp] = ‛(- «x»)’
+
+ExternalPhrase_liveUpdate [_octothorpe _ lp s1 _comma s2 rp] = ‛(live_update «s1» «s2»)’
+ExternalPhrase_queueAsJsonToStdout [_octothorpe _ lp x rp] = ‛(queue-as-json-to-stdout «x»)’
+ExternalPhrase_dir [_octothorpe _ lp x rp] = ‛(getwd «x»)’
+
+
+ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
+
+Deftemp [_deftemp lval _mutate e rec?] = ‛\n(let ((«lval» «e»))⤷\n(declare (ignorable «lval»))«rec»⤶)’
+Defsynonym_illegal [ lval err _eqv e rec?] = ‛\n«lval» «err» = «e»«rec»’
+Defsynonym_legal [id _eqv e rec?] = ‛\n(let ((«id» «e»))⤷\n(declare (ignorable «id»))«rec»⤶)’
+
+InitStatement [ _mark ident _33 Exp fluff*] = ‛\n(«ident» :accessor «ident» :initarg :«ident» :initform «Exp») «fluff»⫶ «ident» ⫶ :«ident» «ident» ⫶’
+
+IfStatement [ _35 Exp StatementBlock ElifStatement* ElseStatement? rec?] = ‛\n(cond ⤷\n(«Exp»⤷«StatementBlock»⤶)«ElifStatement»«ElseStatement»⤶)«rec»’
+ElifStatement [ _37 Exp StatementBlock] = ‛\n(«Exp»⤷«StatementBlock»⤶)’
+ElseStatement [ _39 StatementBlock] = ‛\n(t⤷«StatementBlock»⤶)’
+ForStatement [ _41 ident _43 Exp StatementBlock rec?] = ‛\n(loop for «ident» in «Exp»⤷\ndo⤷\n(progn⤷\n«ident»«StatementBlock»))⤶⤶⤶«rec»’
+WhileStatement [ _45 Exp StatementBlock rec?] = ‛\n(loop while «Exp»⤷\ndo⤷\n(progn⤷«StatementBlock»⤶)⤶)⤶«rec»’
+
+Assignment_multiple [ lb Lvals+ rb _assign Exp rec?] =‛\n(multiple-value-setq («Lvals») ⤷«Exp»⤶)«rec»’
+
+Assignment_single [ Lval _59 Exp rec?] =‛\n(setf «Lval» «Exp»)«rec»’
+LvalComma [Lval Comma?] = ‛«Lval»«Comma»’
+
+ReturnExp_multiple [ _60 Exps+ _62 rec?] =‛(values «Exps»)«rec»’
+ReturnExp_single [ Exp rec?] =‛«Exp»«rec»’
+ExpComma [Exp Comma?] = ‛«Exp»«Comma»’
+Exp [e] = ‛«e»’
+BooleanAndOrIn_andOrIn [e1 op e2] = ‛(«op» «e1» «e2»)’
+BooleanAndOrIn_default [e] = ‛«e»’
+
+BooleanExp_boolopneq [ BooleanExp boolOp BooleanNot] =‛(not («boolOp» «BooleanExp» «BooleanNot»))’
+BooleanExp_boolop [ BooleanExp boolOp BooleanNot] =‛(«boolOp» «BooleanExp» «BooleanNot»)’
+BooleanExp_basic [ BooleanNot] =‛«BooleanNot»’
+
+BooleanNot_not [ _64 BooleanExp] =‛(not «BooleanExp»)’
+BooleanNot_basic [ AddExp] =‛«AddExp»’
+
+AddExp_plus [ AddExp _65 MulExp] =‛(+ «AddExp» «MulExp»)’
+AddExp_minus [ AddExp _66 MulExp] =‛(- «AddExp» «MulExp»)’
+AddExp_basic [ MulExp] =‛«MulExp»’
+
+MulExp_times [ MulExp _67 ExpExp] =‛(* «MulExp» «ExpExp»)’
+MulExp_divide [ MulExp _68 ExpExp] =‛(/ «MulExp» «ExpExp»)’
+MulExp_basic [ ExpExp] =‛«ExpExp»’
+
+ExpExp_power [ Primary _69 ExpExp] =‛(expt «Primary» «ExpExp»)’
+ExpExp_basic [ Primary] =‛«Primary»’
+
+Primary_call [p actuals] = ‛(funcall «p» «actuals»)’
+Primary_plain [p] = ‛«p»’
+
+PrimaryIndexed_lookupident [p _at key] = ‛(gethash «key» «p»)’
+PrimaryIndexed_lookup [p _at key] = ‛(gethash «key» «p»)’
+PrimaryIndexed_fieldident [p _dot key] = ‛(slot-value «p» '«key»)’ 
+PrimaryIndexed_field [p _dot key] = ‛(slot-value «p» «key»)’ 
+PrimaryIndexed_index [p lb e rb] = ‛(nth «e» «p»)’ 
+PrimaryIndexed_nthslice [p lb ds+ _colon rb] = ‛(nthcdr «ds» «p»)’
+PrimaryIndexed_atom [a] = ‛«a»’
+
+
+Atom_external [x] = ‛«x»’
+
+Atom_callident [id actuals] = ‛(funcall (quote «id») «actuals»)’
+
+Atom_emptylistconst [ _72 _73] =‛ nil’
+Atom_emptydict [ _76 _77] =‛ (dict-fresh)’
+Atom_paren [ _70 Exp _71] =‛«Exp»’
+Atom_listconst [lb line1? PrimaryComma+ line2? rb] =‛(list «line1» «PrimaryComma»)«line2»’
+
+Atom_dict [ _78 line1? PairComma+ line2? _79] = 
+⎡ freshdict=‛_dict’
+  ‛\n(let ((_dict (dict-fresh)))⤷«line1»«PairComma»«line2»\n_dict⤶)’
+⎦
+
+Atom_lambda [ _80 Formals? _81 Exp] = ‛ #'(lambda (&optional «Formals»)⤷«Exp»⤶)’
+Atom_phi [ phi] =‛ nil’
+Atom_true [ _88] =‛ t’
+Atom_false [ _89] =‛ nil’
+Atom_subr [_ ident] = ‛ #'«ident»’
+Atom_range [ _91 _92 Exp _93] =‛(loop for n from 0 below «Exp» by 1 collect n)’
+Atom_string [ string] =‛ «string»’
+Atom_number [ number] =‛ «number»’
+Atom_ident [ ident ] =‛ «ident»’
+
+PrimaryComma [ Primary _94? line?] = ‛«Primary» «line»’
+PairComma [ Pair _95?] = ‛«Pair» ’
+
+StuffInsideParentheses_rec [lp stuff* rp] = ‛«lp»«stuff»«rp»’
+StuffInsideParentheses_default [x] = ‛«x»’
+
+Lval [ Exp ] = ‛«Exp»’
+keyword [ _144] = ‛«_144»’
+Formals_noformals [ _148 _149] =‛’
+Formals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+ObjFormals_noformals [ _148 _149] =‛’
+ObjFormals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+LambdaFormals_noformals [ _148 _149] =‛’
+LambdaFormals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+Formal [ ident] = ‛«ident»’
+FormalComma [Formal comma?] =‛ «Formal»«comma»’
+
+Actuals_noactuals [ _154 _155] =‛’
+Actuals_actuals [ _156 ActualComma* _157 line?] =‛ «ActualComma» «line»’
+Actual [ Exp] = ‛«Exp»’
+ActualComma [comment? Actual comma? line?] = ‛«comment»«Actual»«comma»«line»’
+
+number_fract [ num* _160 den+] =‛«num».«den»’
+number_whole [ digit+] =‛«digit»’
+Pair [ string _161 Exp _162?] = ‛\n(setf (gethash «string» ⟪freshdict⟫) ⤷«Exp»⤶)’
+
+andOrIn_and [op] = ‛ and ’
+andOrIn_or [op] = ‛ or ’
+andOrIn_in [op] = ‛ dict-in? ’
+
+boolOp [ _191] = ‛ «_191» ’
+boolEq [op] = ‛equal ’
+boolNeq [op] = ‛equal ’
+phi [ _192] = ‛ nil’
+
+string [lb cs* rb] = ‛«lb»«cs»«rb»’
+stringchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+stringchar_other [c] = ‛«c»’
+
+kw [lb s rb] = ‛«lb»«s»«rb»’
+ident [lb cs* rb] = ‛«lb»«cs»«rb»’
+idchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+idchar_other [c] = ‛«c»’
+
+comment [lb cs* rb] = ‛«lb»«cs»«rb»’
+commentchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+commentchar_other [c] = ‛«c»’
+
+errorMessage [ _239 errorchar* _240] = ‛«_239»«errorchar»«_240»’
+errorchar_rec [ _241 errorchar* _242] =‛«_241»«errorchar»«_242»’
+errorchar_other [ any] =‛«any»’
+
+eh [id] = ‛«id»’
+fname [id] = ‛«id»’
+msg [id] = ‛«id»’
+ok [p] = ‛«p»’
+err [p] = ‛«p»’
+port [s] = ‛«s»’
+
+line [lb cs* rb] = ‛«lb»«cs»«rb»’
+Comma [line1? _comma line2?] = ‛«line1» «line2»’
+
+ParaMark [c] = ‛«c»’
+
+}

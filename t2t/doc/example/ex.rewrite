@@ -1,8 +1,0 @@
-% rewrite ex {
-  Main [Statement+] = ‛«Statement»’
-  Statement [a _assign e] = ‛\n«a»«_assign»«e»’
-  Expression_plus [a _op e] = ‛«a»«_op»«e»’
-  Expression_primary [a] = ‛«a»’
-  atom_id [letters+ _lookahead] = ‛«letters»’
-  atom_int [digits+ _lookahead] = ‛«digits»’
-}

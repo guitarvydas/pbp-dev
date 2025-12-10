@@ -1,0 +1,255 @@
+% rewrite emitJavascript {
+
+Main [ Para TopLevel+] = ‛«Para»«TopLevel»’
+
+TopLevel_defvar [ Defvar] =‛«Defvar»’
+TopLevel_defconst [ Defconst] =‛«Defconst»’
+TopLevel_defn [ Defn] =‛«Defn»’
+TopLevel_defobj [ Defobj] =‛«Defobj»’
+TopLevel_import [ Import] =‛«Import»’
+TopLevel_external [x] =‛«x»’
+TopLevel_comment [s line?] =‛\n«s»«line»’
+TopLevel_line [line] =‛«line»’
+
+kw [ s] = ‛«s»’
+Defvar [ __ lval _eq e line?] = ‛\nlet «lval» = «e»;«line»’
+Defconst [ __ lval _eq e line?] = ‛\nconst «lval» = «e»«line»;’
+Defn [ _4 ident Formals StatementBlock line?] = ‛\nfunction «ident» «Formals» {⤷«StatementBlock»«line»⤶\n}\n’
+
+Defobj [ _defobj ident Formals line1? lb line2? init+ rb line3?] = ‛
+class «ident» {⤷
+constructor («Formals») {«line1»⤷«line2»
+«init»«line3»⤶
+}⤶
+}
+’
+
+Import [ _10 ident line?] = ‛\nimport «ident»«line»’
+StatementBlock [ line1? lb line2? Statement     line3? rb  line4?] = ‛«line1»«line2»⤷«Statement»«line3»«line4»⤶’
+
+Rec_Statement [line1? R_Statement line2?] = ‛«line1»«R_Statement»«line2»’
+R_Statement_globals [ _24 ident1  cidents* rec?] =‛«rec»’
+R_Statement_comment [s rec?] =‛\n«s»«rec»’
+R_Statement_external [x rec?] = ‛\n«x»«rec»’
+R_Statement_if [ IfStatement] =‛«IfStatement»’
+R_Statement_pass [ _27 scope?] =‛«scope»’
+R_Statement_return [ _29 ReturnExp] =‛\nreturn «ReturnExp»;’
+R_Statement_for [ ForStatement] =‛«ForStatement»’
+R_Statement_while [ WhileStatement] =‛«WhileStatement»’
+R_Statement_assignment [ Assignment] =‛«Assignment»’
+R_Statement_call [ Lval scope?] =‛\n«Lval»«scope»’
+R_Statement_line [line rec?] = ‛«line»«rec»’
+CommaIdent [_comma ident] = ‛, «ident»’
+
+External [x line?] = ‛«x»«line»’
+ExternalPhrase_read [_octothorpe _read lp eh _comma1 msg _comma2 fname _comma3 ok _comma4 err rp] = ‛
+    if (fname == "0") {
+	data = fs.readFileSync (0, { encoding: 'utf8'});
+    } else {
+        data = fs.readFileSync («fname», { encoding: 'utf8'});
+    }
+    if (data) {⤷
+        send_string (eh, «ok», data, «msg»);⤶
+    } else {⤷
+        send_string (eh, «err», \`read error on file '\$\{«fname»}'\`, «msg»);⤶
+    }
+’
+
+ExternalPhrase_raclnetf [_octothorpe _ lp pathname _comma fname rp] = ‛
+    let jstr = undefined;
+    if (filename == "0") {
+	jstr = fs.readFileSync (0, { encoding: 'utf8'});
+    } else if (pathname) {
+	jstr = fs.readFileSync (\`\${pathname}/\${filename}\`, { encoding: 'utf8'});
+    } else {
+	jstr = fs.readFileSync (\`\${filename}\`, { encoding: 'utf8'});
+    }
+    if (jstr) {
+        return JSON.parse (jstr);
+    } else {
+        return undefined;
+    }
+’
+
+ExternalPhrase_internalizeLnetFromString [_octothorpe _ lp rp] = ‛
+    return JSON.parse (lnet);
+’
+
+ExternalPhrase_freshQueue [_octothorpe _ lp rp] = ‛ []’
+ExternalPhrase_freshStack [_octothorpe _ lp rp] = ‛ []’
+ExternalPhrase_fresh [_octothorpe _83 _84 ident _85] =‛ new «ident» ();’
+ExternalPhrase_stringshrink [_octothorpe _83 _84 e _85 ] =‛ «e»’
+ExternalPhrase_stringcar [_octothorpe _83 _84 e _85 ] =‛ «e»[0] ’
+ExternalPhrase_stringcdr [_octothorpe _83 _84 e _85 ] =‛ «e».substring (1) ’
+ExternalPhrase_strcons [_octothorpe _strcons lp e1 _comma e2 rp] =‛ («e1».toString ()+ «e2».toString ()) ’
+ExternalPhrase_append [_octothorpe _ lp e1 _comma e2 rp] =‛ «e1».push («e2») ’
+ExternalPhrase_basename [_octothorpe _basename lp s rp] = ‛ «s»’
+ExternalPhrase_preamble [_octothorpe _preamble lb rp] =
+‛
+import * as fs from 'fs';
+import path from 'path';
+import execSync from 'child_process';
+’
+
+ExternalPhrase_print_stdout [_octothorpe _ lp e rp] = ‛console.log («e»);’
+ExternalPhrase_print_stderr [_octothorpe _ lp e rp] = ‛console.error («e»);’
+ExternalPhrase_print_nl [_octothorpe _ lp rp] = ‛console.log ();’
+ExternalPhrase_print_nl_stderr [_octothorpe _ lp rp] = ‛’
+ExternalPhrase_split_string_for_shell [_octothorpe _ lp s rp] = ‛«s».split (" ")’
+ExternalPhrase_substitute [_octothorpe _ lp find _comma1 replace _comma2 s rp] = ‛«s».replaceAll («find», «replace»)’
+ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma3 rc _comma4 out _comma5 errout rp] = 
+‛
+«out» = execSync(\`\${«cmd»} \${⎨enspace ‛«args»’⎬}\`, { encoding: 'utf-8' });
+«ret» = true;
+’
+
+ExternalPhrase_abort [_octothorpe _ lp rp] = ‛ process.exit (1)’
+ExternalPhrase_asstr [_octothorpe _ lp e rp] = ‛\`\${«e»}\`’
+ExternalPhrase_len [_octothorpe _ lp e rp] = ‛(«e».length)’
+
+ExternalPhrase_asint [_octothorpe _ lp e rp] = ‛Number («e»)’
+ExternalPhrase_enqueue [_octothorpe _ lp obj _comma e rp] = ‛«obj».push («e»)’
+ExternalPhrase_dequeue [_octothorpe _ lp obj rp] = ‛«obj».shift ()’
+ExternalPhrase_empty [_octothorpe _ lp q rp] = ‛(0===«q».length)’
+ExternalPhrase_queue2list [_octothorpe _ lp q rp] = ‛ «q»’
+ExternalPhrase_negate [_octothorpe _ lp x rp] = ‛(-«x»)’
+
+ExternalPhrase_liveUpdate [_octothorpe _ lp s1 _comma s2 rp] = ‛live_update («s1», «s2»)’
+ExternalPhrase_queueAsJsonToStdout [_octothorpe _ lp x rp] = ‛JSON.stringify («x»)’
+ExternalPhrase_dir [_octothorpe _ lp x rp] = ‛ «x» ’
+
+ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
+
+Deftemp [_deftemp lval _mutate e rec?] = ‛\nlet «lval» = «e»;«rec»’
+Defsynonym_illegal [ lval err _eqv e rec?] = ‛\nlet «lval» «err» = «e»;«rec»’
+Defsynonym_legal [id _eqv e rec?] = ‛\nlet «id» = «e»;«rec»’
+
+
+InitStatement [ _mark ident _33 Exp fluff*] = ‛\nthis.«ident» = «Exp»;«fluff»’
+IfStatement [ _35 Exp StatementBlock ElifStatement* ElseStatement? rec?] = ‛\nif («Exp») {«StatementBlock»\n}«ElifStatement»«ElseStatement»«rec»’
+ElifStatement [ _37 Exp StatementBlock] = ‛\nelse if («Exp») {«StatementBlock»\n}’
+ElseStatement [ _39 StatementBlock] = ‛\n else {«StatementBlock»\n}’
+ForStatement [ _41 ident _43 Exp StatementBlock rec?] = ‛\nfor (let «ident» of «Exp») {«StatementBlock»\n}«rec»’
+WhileStatement [ _45 Exp StatementBlock rec?] = ‛\nwhile («Exp») {«StatementBlock»\n}«rec»’
+
+Assignment_multiple [ _55 Lvals+ _57 _58 Exp rec?] =‛\n[«Lvals»] = «Exp»;«rec»’
+Assignment_single [ Lval _59 Exp rec?] =‛\n«Lval» = «Exp»;«rec»’
+LvalComma [Lval Comma?] = ‛«Lval»«Comma»’
+
+ReturnExp_multiple [ _60 Exps+ _62 rec?] =‛[«Exps»]«rec»’
+ReturnExp_single [ Exp rec?] =‛«Exp»«rec»’
+ExpComma [Exp Comma?] = ‛«Exp»«Comma»’
+Exp [e] = ‛«e»’
+BooleanAndOrIn_andOrIn [e1 op e2] = ‛((«e1»)«op»(«e2»))’
+BooleanAndOrIn_default [e] = ‛«e»’
+
+BooleanExp_boolopneq [ BooleanExp boolOp BooleanNot] =‛«BooleanExp»«boolOp»«BooleanNot»’
+BooleanExp_boolop [ BooleanExp boolOp BooleanNot] =‛«BooleanExp»«boolOp»«BooleanNot»’
+BooleanExp_basic [ BooleanNot] =‛«BooleanNot»’
+
+BooleanNot_not [ _64 BooleanExp] =‛(! «BooleanExp»)’
+BooleanNot_basic [ AddExp] =‛«AddExp»’
+
+AddExp_plus [ AddExp _65 MulExp] =‛«AddExp»«_65»«MulExp»’
+AddExp_minus [ AddExp _66 MulExp] =‛«AddExp»«_66»«MulExp»’
+AddExp_basic [ MulExp] =‛«MulExp»’
+
+MulExp_times [ MulExp _67 ExpExp] =‛«MulExp»«_67»«ExpExp»’
+MulExp_divide [ MulExp _68 ExpExp] =‛«MulExp»«_68»«ExpExp»’
+MulExp_basic [ ExpExp] =‛«ExpExp»’
+
+ExpExp_power [ Primary _69 ExpExp] =‛«Primary»«_69»«ExpExp»’
+ExpExp_basic [ Primary] =‛«Primary»’
+
+Primary_call [p actuals] = ‛«p» «actuals»’
+Primary_plain [p] = ‛«p»’
+
+PrimaryIndexed_lookupident [p _at key] = ‛«p» [«key»]’
+PrimaryIndexed_lookup [p _at key] = ‛«p» [«key»]’
+PrimaryIndexed_fieldident [p _dot key] = ‛«p».«key»’ 
+PrimaryIndexed_field [p _dot key] = ‛«p».«key»’ 
+PrimaryIndexed_index [p lb e rb] = ‛«p» [«e»]’ 
+PrimaryIndexed_nthslice [p lb ds+ _colon rb] = ‛«p» [«ds»:]’
+PrimaryIndexed_atom [a] = ‛«a»’
+
+Atom_external [x] = ‛«x»’
+Atom_emptylistconst [ _72 _73] =‛«_72»«_73»’
+Atom_emptydict [ _76 _77] =‛«_76»«_77»’
+Atom_paren [ _70 Exp _71] =‛«_70»«Exp»«_71»’
+Atom_listconst [ lb line1? PrimaryComma+ line2? rb] =‛«lb»«PrimaryComma»«rb»«line2»’
+Atom_dict [ _78 line1? PairComma+ line2? _79] =‛«_78»«line1»«PairComma»«line2»«_79»’
+Atom_lambda [ _80 Formals? _81 Exp] =‛ function («Formals») {return «Exp»;}’
+Atom_phi [ phi] =‛ null’
+Atom_true [ _88] =‛ true’
+Atom_false [ _89] =‛ false’
+Atom_subr [_ ident] = ‛ «ident»’
+Atom_range [ _91 _92 Exp _93] =‛«_91»«_92»«Exp»«_93»’
+Atom_callident [id actuals] = ‛«id» «actuals»’
+Atom_string [ string] =‛ «string»’
+Atom_number [ number] =‛ «number»’
+Atom_ident [ ident ] =‛ «ident»’
+
+PrimaryComma [ Primary _94? line?] = ‛«Primary»«_94»«line»’
+PairComma [ Pair _95?] = ‛«Pair»«_95»’
+
+StuffInsideParentheses_rec [lp stuff* rp] = ‛«lp»«stuff»«rp»’
+StuffInsideParentheses_default [x] = ‛«x»’
+
+Lval [ Exp ] = ‛«Exp»’
+keyword [ _144] = ‛«_144»’
+Formals_noformals [ _148 _149] =‛«_148»«_149»’
+Formals_withformals [ _150 FormalComma* _151] =‛«_150»«FormalComma»«_151»’
+ObjFormals_noformals [ _148 _149] =‛’
+ObjFormals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+LambdaFormals_noformals [ _148 _149] =‛’
+LambdaFormals_withformals [ _150 FormalComma* _151] =‛«FormalComma»’
+Formal [ ident] = ‛«ident»’
+FormalComma [Formal comma?] =‛«Formal»«comma»’
+
+Actuals_noactuals [ _154 _155] =‛«_154»«_155»’
+Actuals_actuals [ _156 ActualComma* _157 line?] =‛«_156»«ActualComma»«_157»«line»’
+Actual [Exp] = ‛«Exp»’
+ActualComma [comment? Actual comma? line?] = ‛«Actual»«comma»«line»’
+
+number_fract [ num* _160 den+] =‛«num»«_160»«den»’
+number_whole [ digit+] =‛«digit»’
+Pair [ string _161 Exp _162?] = ‛«string»«_161»«Exp»«_162»’
+
+andOrIn_and [op] = ‛ && ’
+andOrIn_or [op] = ‛ || ’
+andOrIn_in [op] = ‛ in ’
+
+boolOp [ _191] = ‛ «_191» ’
+boolEq [op] = ‛==’
+boolNeq [op] = ‛!=’
+phi [ _192] = ‛ null’
+
+string [lb cs* rb] = ‛«lb»«cs»«rb»’
+stringchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+stringchar_other [c] = ‛«c»’
+
+
+kw [lb s rb] = ‛«lb»«s»«rb»’
+ident [lb cs* rb] = ‛«lb»«cs»«rb»’
+idchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+idchar_other [c] = ‛«c»’
+
+comment [lb cs* rb] = ‛«lb»«cs»«rb»’
+commentchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+commentchar_other [c] = ‛«c»’
+
+errorMessage [ _239 errorchar* _240] = ‛«_239»«errorchar»«_240»’
+errorchar_rec [ _241 errorchar* _242] =‛«_241»«errorchar»«_242»’
+errorchar_other [ any] =‛«any»’
+
+eh [id] = ‛«id»’
+fname [id] = ‛«id»’
+msg [id] = ‛«id»’
+ok [p] = ‛«p»’
+err [p] = ‛«p»’
+port [s] = ‛«s»’
+
+line [lb cs* rb] = ‛«lb»«cs»«rb»’
+Comma [line1? _comma line2?] = ‛«_comma»’
+ParaMark [c] = ‛«c»’
+}
