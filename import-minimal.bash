@@ -32,6 +32,7 @@ cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
 
 cp ${Dev}/kernel/package.json ..
+cp ${Dev}/kernel/package.json .
 
 cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
 cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
