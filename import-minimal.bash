@@ -29,6 +29,7 @@ mkdir kernel
 
 cp ${Dev}/t2t.bash .
 cp ${Dev}/main.py .
+cp ${Dev}/init.bash .
 
 cp ${Dev}/kernel/package.json ..
 
