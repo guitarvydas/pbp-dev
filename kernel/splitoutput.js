@@ -1,11 +1,9 @@
 #!/usr/bin/env node
-
 const fs = require('fs');
 const path = require('path');
 
 // Read from stdin
 let inputData = '';
-
 process.stdin.setEncoding('utf8');
 
 process.stdin.on('readable', () => {
@@ -43,9 +41,9 @@ process.stdin.on('end', () => {
           const filename = `out.${key}`;
           
           try {
-            // Write the string value to the file
-            fs.writeFileSync(filename, value, 'utf8');
-            console.log(`Created file: ${filename}`);
+            // Append the string value to the file
+            fs.appendFileSync(filename, value, 'utf8');
+            console.log(`Appended to file: ${filename}`);
           } catch (error) {
             console.error(`Error writing file ${filename}: ${error.message}`);
           }
