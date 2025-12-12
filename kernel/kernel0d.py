@@ -611,15 +611,17 @@ def inject (part,port,payload):                        #line 684
         mev = make_mevent ( port, d)                   #line 690
         inject_mevent ( part, mev)                     #line 691
     else:                                              #line 692
-        exit (1)                                       #line 693#line 694
-    print (deque_to_json ( part.outq))                 #line 695#line 696#line 697
+        exit (1)                                       #line 693#line 694#line 695#line 696
 
-def new_datum_bang ():                                 #line 698
-    d = Datum ()                                       #line 699
-    d.v =  "!"                                         #line 700
-    d.clone =  lambda : obj_clone ( d)                 #line 701
-    d.reclaim =  None                                  #line 702
-    return  d                                          #line 703#line 704
+def finalize (part):                                   #line 697
+    print (deque_to_json ( part.outq))                 #line 698#line 699#line 700
+
+def new_datum_bang ():                                 #line 701
+    d = Datum ()                                       #line 702
+    d.v =  "!"                                         #line 703
+    d.clone =  lambda : obj_clone ( d)                 #line 704
+    d.reclaim =  None                                  #line 705
+    return  d                                          #line 706#line 707
 def external_instantiate (reg,owner,name,arg):         #line 1
     name_with_id = gensymbol ( name)                   #line 2
     return make_leaf ( name_with_id, owner, None, arg, handle_external)#line 3#line 4#line 5

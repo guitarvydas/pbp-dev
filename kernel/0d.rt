@@ -692,6 +692,9 @@ defn inject (part, port, payload) {
      } else {
          #abort ()
      }	
+}
+
+defn finalize (part) {
     #queue_as_json_to_stdout (part.outq)
 }
 
@@ -701,4 +704,5 @@ defn new_datum_bang () {
     d.clone ⇐ λ: obj_clone (d)
     d.reclaim ⇐ None
     return d
-    }
+    
+}
