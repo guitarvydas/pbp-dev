@@ -680,40 +680,44 @@ function initialize_from_string (project_root) {       /* line 658 */
 
 function start (arg,part_name,palette,env) {           /* line 664 */
     let part = start_bare ( part_name, palette, env)   /* line 665 */;
-    inject ( part, "", arg)                            /* line 666 *//* line 667 *//* line 668 */
+    inject ( part, "", arg)                            /* line 666 */
+    finalize ( part)                                   /* line 667 *//* line 668 *//* line 669 */
 }
 
-function start_bare (part_name,palette,env) {          /* line 669 */
-    let project_root =  env [ 0];                      /* line 670 */
-    let diagram_names =  env [ 1];                     /* line 671 */
-    set_environment ( project_root)                    /* line 672 */
-    /*  get entrypoint container */                    /* line 673 */
-    let  part = get_component_instance ( palette, part_name, null)/* line 674 */;
-    if ( null ==  part) {                              /* line 675 */
-      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 679 *//* line 680 */
+function start_bare (part_name,palette,env) {          /* line 670 */
+    let project_root =  env [ 0];                      /* line 671 */
+    let diagram_names =  env [ 1];                     /* line 672 */
+    set_environment ( project_root)                    /* line 673 */
+    /*  get entrypoint container */                    /* line 674 */
+    let  part = get_component_instance ( palette, part_name, null)/* line 675 */;
+    if ( null ==  part) {                              /* line 676 */
+      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 680 *//* line 681 */
     }
-    return  part;                                      /* line 681 *//* line 682 *//* line 683 */
+    return  part;                                      /* line 682 *//* line 683 *//* line 684 */
 }
 
-function inject (part,port,payload) {                  /* line 684 */
-    if ((!  load_errors)) {                            /* line 685 */
-      let  d = Datum ();                               /* line 686 */
-      d.v =  payload;                                  /* line 687 */
-      d.clone =  function () {return obj_clone ( d)    /* line 688 */;};
-      d.reclaim =  None;                               /* line 689 */
-      let  mev = make_mevent ( port, d)                /* line 690 */;
-      inject_mevent ( part, mev)                       /* line 691 */
+function inject (part,port,payload) {                  /* line 685 */
+    if ((!  load_errors)) {                            /* line 686 */
+      let  d = Datum ();                               /* line 687 */
+      d.v =  payload;                                  /* line 688 */
+      d.clone =  function () {return obj_clone ( d)    /* line 689 */;};
+      d.reclaim =  None;                               /* line 690 */
+      let  mev = make_mevent ( port, d)                /* line 691 */;
+      inject_mevent ( part, mev)                       /* line 692 */
     }
-    else {                                             /* line 692 */
-      process.exit (1)                                 /* line 693 *//* line 694 */
-    }
-    JSON.stringify ( part.outq)                        /* line 695 *//* line 696 *//* line 697 */
+    else {                                             /* line 693 */
+      process.exit (1)                                 /* line 694 *//* line 695 */
+    }                                                  /* line 696 *//* line 697 */
 }
 
-function new_datum_bang () {                           /* line 698 */
-    let  d = Datum ();                                 /* line 699 */
-    d.v =  "!";                                        /* line 700 */
-    d.clone =  function () {return obj_clone ( d)      /* line 701 */;};
-    d.reclaim =  None;                                 /* line 702 */
-    return  d;                                         /* line 703 *//* line 704 */
+function finalize (part) {                             /* line 698 */
+    JSON.stringify ( part.outq)                        /* line 699 *//* line 700 *//* line 701 */
+}
+
+function new_datum_bang () {                           /* line 702 */
+    let  d = Datum ();                                 /* line 703 */
+    d.v =  "!";                                        /* line 704 */
+    d.clone =  function () {return obj_clone ( d)      /* line 705 */;};
+    d.reclaim =  None;                                 /* line 706 */
+    return  d;                                         /* line 707 *//* line 708 */
 }

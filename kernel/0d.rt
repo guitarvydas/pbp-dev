@@ -664,6 +664,7 @@ defn initialize_from_string (project_root) {
 defn start (arg, part_name, palette, env) {
      part ≡ start_bare (part_name, palette, env)
      inject (part, "", arg)
+     finalize (part)
 }
      
 defn start_bare (part_name, palette, env) {
@@ -692,6 +693,9 @@ defn inject (part, port, payload) {
      } else {
          #abort ()
      }	
+}
+
+defn finalize (part) {
     #queue_as_json_to_stdout (part.outq)
 }
 
