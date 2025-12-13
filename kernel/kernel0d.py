@@ -590,18 +590,20 @@ def initialize_from_string (project_root):             #line 658
 
 def start (arg,part_name,palette,env):                 #line 664
     part = start_bare ( part_name, palette, env)       #line 665
-    inject ( part, "", arg)                            #line 666#line 667#line 668
+    inject ( part, "", arg)                            #line 666
+    finalize ( part)                                   #line 667#line 668#line 669
 
-def start_bare (part_name,palette,env):                #line 669
-    project_root =  env [ 0]                           #line 670
-    diagram_names =  env [ 1]                          #line 671
-    set_environment ( project_root)                    #line 672
-    # get entrypoint container                         #line 673
-    part = get_component_instance ( palette, part_name, None)#line 674
-    if  None ==  part:                                 #line 675
-        load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 679#line 680
-    return  part                                       #line 681#line 682#line 683
+def start_bare (part_name,palette,env):                #line 670
+    project_root =  env [ 0]                           #line 671
+    diagram_names =  env [ 1]                          #line 672
+    set_environment ( project_root)                    #line 673
+    # get entrypoint container                         #line 674
+    part = get_component_instance ( palette, part_name, None)#line 675
+    if  None ==  part:                                 #line 676
+        load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 680#line 681
+    return  part                                       #line 682#line 683#line 684
 
+<<<<<<< HEAD
 def inject (part,port,payload):                        #line 684
     if not  load_errors:                               #line 685
         d = Datum ()                                   #line 686
@@ -622,6 +624,28 @@ def new_datum_bang ():                                 #line 701
     d.clone =  lambda : obj_clone ( d)                 #line 704
     d.reclaim =  None                                  #line 705
     return  d                                          #line 706#line 707
+=======
+def inject (part,port,payload):                        #line 685
+    if not  load_errors:                               #line 686
+        d = Datum ()                                   #line 687
+        d.v =  payload                                 #line 688
+        d.clone =  lambda : obj_clone ( d)             #line 689
+        d.reclaim =  None                              #line 690
+        mev = make_mevent ( port, d)                   #line 691
+        inject_mevent ( part, mev)                     #line 692
+    else:                                              #line 693
+        exit (1)                                       #line 694#line 695#line 696#line 697
+
+def finalize (part):                                   #line 698
+    print (deque_to_json ( part.outq))                 #line 699#line 700#line 701
+
+def new_datum_bang ():                                 #line 702
+    d = Datum ()                                       #line 703
+    d.v =  "!"                                         #line 704
+    d.clone =  lambda : obj_clone ( d)                 #line 705
+    d.reclaim =  None                                  #line 706
+    return  d                                          #line 707#line 708
+>>>>>>> append
 def external_instantiate (reg,owner,name,arg):         #line 1
     name_with_id = gensymbol ( name)                   #line 2
     return make_leaf ( name_with_id, owner, None, arg, handle_external)#line 3#line 4#line 5
