@@ -603,28 +603,6 @@ def start_bare (part_name,palette,env):                #line 670
         load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 680#line 681
     return  part                                       #line 682#line 683#line 684
 
-<<<<<<< HEAD
-def inject (part,port,payload):                        #line 684
-    if not  load_errors:                               #line 685
-        d = Datum ()                                   #line 686
-        d.v =  payload                                 #line 687
-        d.clone =  lambda : obj_clone ( d)             #line 688
-        d.reclaim =  None                              #line 689
-        mev = make_mevent ( port, d)                   #line 690
-        inject_mevent ( part, mev)                     #line 691
-    else:                                              #line 692
-        exit (1)                                       #line 693#line 694#line 695#line 696
-
-def finalize (part):                                   #line 697
-    print (deque_to_json ( part.outq))                 #line 698#line 699#line 700
-
-def new_datum_bang ():                                 #line 701
-    d = Datum ()                                       #line 702
-    d.v =  "!"                                         #line 703
-    d.clone =  lambda : obj_clone ( d)                 #line 704
-    d.reclaim =  None                                  #line 705
-    return  d                                          #line 706#line 707
-=======
 def inject (part,port,payload):                        #line 685
     if not  load_errors:                               #line 686
         d = Datum ()                                   #line 687
@@ -645,4 +623,3 @@ def new_datum_bang ():                                 #line 702
     d.clone =  lambda : obj_clone ( d)                 #line 705
     d.reclaim =  None                                  #line 706
     return  d                                          #line 707#line 708
->>>>>>> append

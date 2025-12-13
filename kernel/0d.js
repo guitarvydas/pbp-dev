@@ -705,23 +705,6 @@ function inject (part,port,payload) {                  /* line 685 */
       let  mev = make_mevent ( port, d)                /* line 691 */;
       inject_mevent ( part, mev)                       /* line 692 */
     }
-<<<<<<< HEAD
-    else {                                             /* line 692 */
-      process.exit (1)                                 /* line 693 *//* line 694 */
-    }                                                  /* line 695 *//* line 696 */
-}
-
-function finalize (part) {                             /* line 697 */
-    JSON.stringify ( part.outq)                        /* line 698 *//* line 699 *//* line 700 */
-}
-
-function new_datum_bang () {                           /* line 701 */
-    let  d = Datum ();                                 /* line 702 */
-    d.v =  "!";                                        /* line 703 */
-    d.clone =  function () {return obj_clone ( d)      /* line 704 */;};
-    d.reclaim =  None;                                 /* line 705 */
-    return  d                                          /* line 706 *//* line 707 */;
-=======
     else {                                             /* line 693 */
       process.exit (1)                                 /* line 694 *//* line 695 */
     }                                                  /* line 696 *//* line 697 */
@@ -736,6 +719,5 @@ function new_datum_bang () {                           /* line 702 */
     d.v =  "!";                                        /* line 704 */
     d.clone =  function () {return obj_clone ( d)      /* line 705 */;};
     d.reclaim =  None;                                 /* line 706 */
-    return  d;                                         /* line 707 *//* line 708 */
->>>>>>> append
+    return  d                                          /* line 707 *//* line 708 */;
 }

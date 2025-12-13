@@ -872,24 +872,6 @@ x))))
           (declare (ignorable  mev))
           (funcall (quote inject_mevent)   part  mev        #|line 692|#)))
       )
-<<<<<<< HEAD
-    (t                                                      #|line 692|#
-      (break)                                               #|line 693|# #|line 694|#
-      ))                                                    #|line 695|#
-  )
-(defun finalize (&optional  part)
-  (declare (ignorable  part))                               #|line 697|#
-  (queue-as-json-to-stdout (slot-value  part 'outq))        #|line 698|# #|line 699|#
-  )
-(defun new_datum_bang (&optional )
-  (declare (ignorable ))                                    #|line 701|#
-  (let (( d (funcall (quote Datum) )))
-    (declare (ignorable  d))                                #|line 702|#
-    (setf (slot-value  d 'v)  "!")                          #|line 703|#
-    (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 704|#)))
-    (setf (slot-value  d 'reclaim)  None)                   #|line 705|#
-    (return-from new_datum_bang  d                          #|line 706|# #|line 707|#))
-=======
     (t                                                      #|line 693|#
       (break)                                               #|line 694|# #|line 695|#
       ))                                                    #|line 696|#
@@ -905,6 +887,5 @@ x))))
     (setf (slot-value  d 'v)  "!")                          #|line 704|#
     (setf (slot-value  d 'clone)  #'(lambda (&optional )(funcall (quote obj_clone)   d  #|line 705|#)))
     (setf (slot-value  d 'reclaim)  None)                   #|line 706|#
-    (return-from new_datum_bang  d)                         #|line 707|#) #|line 708|#
->>>>>>> append
+    (return-from new_datum_bang  d                          #|line 707|# #|line 708|#))
   )
