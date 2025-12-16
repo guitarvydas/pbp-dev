@@ -284,7 +284,7 @@ defn initialize_stock_components (reg) {
     register_component (reg, mkTemplate ( “Ensure String Datum”, ϕ, ↪︎ensure_string_datum_instantiate))
 
     register_component (reg, mkTemplate ( “syncfilewrite”, ϕ, ↪︎syncfilewrite_instantiate))
-    register_component (reg, mkTemplate ( “stringconcat”, ϕ, ↪︎stringconcat_instantiate))
+    register_component (reg, mkTemplate ( “String Concat”, ϕ, ↪︎stringconcat_instantiate))
     register_component (reg, mkTemplate ( “switch1*”, ϕ, ↪︎switch1star_instantiate))
     register_component (reg, mkTemplate ( “String Concat *”, ϕ, ↪︎strcatstar_instantiate))
        ⌈ for fakepipe⌉
