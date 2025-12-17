@@ -884,7 +884,7 @@ def initialize_stock_components (reg):                 #line 276
     register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 283
     register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 284#line 285
     register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 286
-    register_component ( reg,mkTemplate ( "String Concat", None, stringconcat_instantiate))#line 287
+    register_component ( reg,mkTemplate ( "stringconcat", None, stringconcat_instantiate))#line 287
     register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 288
     register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 289
     # for fakepipe                                     #line 290

@@ -330,7 +330,7 @@ function initialize_stock_components (reg) {           /* line 276 */
     register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 283 */
     register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 284 *//* line 285 */
     register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 286 */
-    register_component ( reg,mkTemplate ( "stringconcat", null, stringconcat_instantiate))/* line 287 */
+    register_component ( reg,mkTemplate ( "String Concat", null, stringconcat_instantiate))/* line 287 */
     register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 288 */
     register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 289 */
     /*  for fakepipe */                                /* line 290 */
