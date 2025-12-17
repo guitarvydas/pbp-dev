@@ -296,133 +296,127 @@ function step_child_once (child,mev) {                 /* line 293 */
     let  began_long_run =  null;                       /* line 294 */
     let  continued_long_run =  null;                   /* line 295 */
     let  ended_long_run =  null;                       /* line 296 */
-    [ began_long_run, continued_long_run, ended_long_run] = step_child ( child, mev)/* line 297 */;
-    if ( began_long_run) {                             /* line 298 *//* line 299 */
-    }
-    else if ( continued_long_run) {                    /* line 300 *//* line 301 */
-    }
-    else if ( ended_long_run) {                        /* line 302 *//* line 303 *//* line 304 */
-    }                                                  /* line 305 *//* line 306 */
+    [ began_long_run, continued_long_run, ended_long_run] = step_child ( child, mev)/* line 297 */;/* line 298 *//* line 299 */
 }
 
-function step_children (container,causingMevent) {     /* line 307 */
-    container.state =  "idle";                         /* line 308 */
-    for (let child of   container.visit_ordering) {    /* line 309 */
-      /*  child = container represents self, skip it *//* line 310 */
-      if (((! (is_self ( child, container))))) {       /* line 311 */
-        if (((! ((0=== child.inq.length))))) {         /* line 312 */
-          let mev =  child.inq.shift ()                /* line 313 */;
-          step_child_once ( child, mev)                /* line 314 *//* line 315 */
-          destroy_mevent ( mev)                        /* line 316 */
+function step_children (container,causingMevent) {     /* line 300 */
+    container.state =  "idle";                         /* line 301 */
+    for (let child of   container.visit_ordering) {    /* line 302 */
+      /*  child = container represents self, skip it *//* line 303 */
+      if (((! (is_self ( child, container))))) {       /* line 304 */
+        if (((! ((0=== child.inq.length))))) {         /* line 305 */
+          let mev =  child.inq.shift ()                /* line 306 */;
+          step_child_once ( child, mev)                /* line 307 *//* line 308 */
+          destroy_mevent ( mev)                        /* line 309 */
         }
-        else {                                         /* line 317 */
-          if ( child.state!= "idle") {                 /* line 318 */
-            let mev = force_tick ( container, child)   /* line 319 */;
-            step_child_once ( child, mev)              /* line 320 */
-            destroy_mevent ( mev)                      /* line 321 *//* line 322 */
-          }                                            /* line 323 */
-        }                                              /* line 324 */
-        if ( child.state ==  "active") {               /* line 325 */
-          /*  if child remains active, then the container must remain active and must propagate “ticks“ to child *//* line 326 */
-          container.state =  "active";                 /* line 327 *//* line 328 */
-        }                                              /* line 329 */
-        while (((! ((0=== child.outq.length))))) {     /* line 330 */
-          let mev =  child.outq.shift ()               /* line 331 */;
-          route ( container, child, mev)               /* line 332 */
-          destroy_mevent ( mev)                        /* line 333 *//* line 334 */
-        }                                              /* line 335 */
-      }                                                /* line 336 */
-    }                                                  /* line 337 *//* line 338 */
+        else {                                         /* line 310 */
+          if ( child.state!= "idle") {                 /* line 311 */
+            let mev = force_tick ( container, child)   /* line 312 */;
+            step_child_once ( child, mev)              /* line 313 */
+            destroy_mevent ( mev)                      /* line 314 *//* line 315 */
+          }                                            /* line 316 */
+        }                                              /* line 317 */
+        if ( child.state ==  "active") {               /* line 318 */
+          /*  if child remains active, then the container must remain active and must propagate “ticks“ to child *//* line 319 */
+          container.state =  "active";                 /* line 320 *//* line 321 */
+        }                                              /* line 322 */
+        while (((! ((0=== child.outq.length))))) {     /* line 323 */
+          let mev =  child.outq.shift ()               /* line 324 */;
+          route ( container, child, mev)               /* line 325 */
+          destroy_mevent ( mev)                        /* line 326 *//* line 327 */
+        }                                              /* line 328 */
+      }                                                /* line 329 */
+    }                                                  /* line 330 *//* line 331 */
 }
 
-function attempt_tick (parent,eh) {                    /* line 339 */
-    if ( eh.state!= "idle") {                          /* line 340 */
-      force_tick ( parent, eh)                         /* line 341 *//* line 342 */
-    }                                                  /* line 343 *//* line 344 */
+function attempt_tick (parent,eh) {                    /* line 332 */
+    if ( eh.state!= "idle") {                          /* line 333 */
+      force_tick ( parent, eh)                         /* line 334 *//* line 335 */
+    }                                                  /* line 336 *//* line 337 */
 }
 
-function is_tick (mev) {                               /* line 345 */
+function is_tick (mev) {                               /* line 338 */
     return  "." ==  mev.port
-    /*  assume that any mevent that is sent to port "." is a tick  *//* line 346 */;/* line 347 *//* line 348 */
+    /*  assume that any mevent that is sent to port "." is a tick  *//* line 339 */;/* line 340 *//* line 341 */
 }
 
-/*  Routes a single mevent to all matching destinations, according to *//* line 349 */
-/*  the container's connection network. */             /* line 350 *//* line 351 */
-function route (container,from_component,mevent) {     /* line 352 */
+/*  Routes a single mevent to all matching destinations, according to *//* line 342 */
+/*  the container's connection network. */             /* line 343 *//* line 344 */
+function route (container,from_component,mevent) {     /* line 345 */
     let  was_sent =  false;
-    /*  for checking that output went somewhere (at least during bootstrap) *//* line 353 */
-    let  fromname =  "";                               /* line 354 *//* line 355 */
-    ticktime =  ticktime+ 1;                           /* line 356 */
-    if (is_tick ( mevent)) {                           /* line 357 */
-      for (let child of  container.children) {         /* line 358 */
-        attempt_tick ( container, child)               /* line 359 */
+    /*  for checking that output went somewhere (at least during bootstrap) *//* line 346 */
+    let  fromname =  "";                               /* line 347 *//* line 348 */
+    ticktime =  ticktime+ 1;                           /* line 349 */
+    if (is_tick ( mevent)) {                           /* line 350 */
+      for (let child of  container.children) {         /* line 351 */
+        attempt_tick ( container, child)               /* line 352 */
       }
-      was_sent =  true;                                /* line 360 */
+      was_sent =  true;                                /* line 353 */
     }
-    else {                                             /* line 361 */
-      if (((! (is_self ( from_component, container))))) {/* line 362 */
-        fromname =  from_component.name;               /* line 363 *//* line 364 */
+    else {                                             /* line 354 */
+      if (((! (is_self ( from_component, container))))) {/* line 355 */
+        fromname =  from_component.name;               /* line 356 *//* line 357 */
       }
-      let from_sender = mkSender ( fromname, from_component, mevent.port)/* line 365 */;/* line 366 */
-      for (let connector of  container.connections) {  /* line 367 */
-        if (sender_eq ( from_sender, connector.sender)) {/* line 368 */
-          deposit ( container, connector, mevent)      /* line 369 */
-          was_sent =  true;                            /* line 370 *//* line 371 */
-        }                                              /* line 372 */
-      }                                                /* line 373 */
+      let from_sender = mkSender ( fromname, from_component, mevent.port)/* line 358 */;/* line 359 */
+      for (let connector of  container.connections) {  /* line 360 */
+        if (sender_eq ( from_sender, connector.sender)) {/* line 361 */
+          deposit ( container, connector, mevent)      /* line 362 */
+          was_sent =  true;                            /* line 363 *//* line 364 */
+        }                                              /* line 365 */
+      }                                                /* line 366 */
     }
-    if ((! ( was_sent))) {                             /* line 374 */
-      live_update ( "✗",  ( container.name.toString ()+  ( ": mevent '".toString ()+  ( mevent.port.toString ()+  ( "' from ".toString ()+  ( fromname.toString ()+  " dropped on floor...".toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 375 *//* line 376 */
-    }                                                  /* line 377 *//* line 378 */
+    if ((! ( was_sent))) {                             /* line 367 */
+      live_update ( "✗",  ( container.name.toString ()+  ( ": mevent '".toString ()+  ( mevent.port.toString ()+  ( "' from ".toString ()+  ( fromname.toString ()+  " dropped on floor...".toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 368 *//* line 369 */
+    }                                                  /* line 370 *//* line 371 */
 }
 
-function any_child_ready (container) {                 /* line 379 */
-    for (let child of  container.children) {           /* line 380 */
-      if (child_is_ready ( child)) {                   /* line 381 */
-        return  true;                                  /* line 382 *//* line 383 */
-      }                                                /* line 384 */
+function any_child_ready (container) {                 /* line 372 */
+    for (let child of  container.children) {           /* line 373 */
+      if (child_is_ready ( child)) {                   /* line 374 */
+        return  true;                                  /* line 375 *//* line 376 */
+      }                                                /* line 377 */
     }
-    return  false;                                     /* line 385 *//* line 386 *//* line 387 */
+    return  false;                                     /* line 378 *//* line 379 *//* line 380 */
 }
 
-function child_is_ready (eh) {                         /* line 388 */
-    return ((((((((! ((0=== eh.outq.length))))) || (((! ((0=== eh.inq.length))))))) || (( eh.state!= "idle")))) || ((any_child_ready ( eh))));/* line 389 *//* line 390 *//* line 391 */
+function child_is_ready (eh) {                         /* line 381 */
+    return ((((((((! ((0=== eh.outq.length))))) || (((! ((0=== eh.inq.length))))))) || (( eh.state!= "idle")))) || ((any_child_ready ( eh))));/* line 382 *//* line 383 *//* line 384 */
 }
 
-function append_routing_descriptor (container,desc) {  /* line 392 */
-    container.routings.push ( desc)                    /* line 393 *//* line 394 *//* line 395 */
+function append_routing_descriptor (container,desc) {  /* line 385 */
+    container.routings.push ( desc)                    /* line 386 *//* line 387 *//* line 388 */
 }
 
-function injector (eh,mevent) {                        /* line 396 */
-    eh.handler ( eh, mevent)                           /* line 397 *//* line 398 *//* line 399 */
+function injector (eh,mevent) {                        /* line 389 */
+    eh.handler ( eh, mevent)                           /* line 390 *//* line 391 *//* line 392 */
 }
-                                                       /* line 400 *//* line 401 *//* line 402 */
+                                                       /* line 393 *//* line 394 *//* line 395 */
 class Component_Registry {
-  constructor () {                                     /* line 403 */
+  constructor () {                                     /* line 396 */
 
-    this.templates = {};                               /* line 404 *//* line 405 */
+    this.templates = {};                               /* line 397 *//* line 398 */
   }
 }
-                                                       /* line 406 */
+                                                       /* line 399 */
 class Template {
-  constructor () {                                     /* line 407 */
+  constructor () {                                     /* line 400 */
 
-    this.name =  null;                                 /* line 408 */
-    this.container =  null;                            /* line 409 */
-    this.instantiator =  null;                         /* line 410 *//* line 411 */
+    this.name =  null;                                 /* line 401 */
+    this.container =  null;                            /* line 402 */
+    this.instantiator =  null;                         /* line 403 *//* line 404 */
   }
 }
-                                                       /* line 412 */
-function mkTemplate (name,template_data,instantiator) {/* line 413 */
-    let  templ =  new Template ();                     /* line 414 */;
-    templ.name =  name;                                /* line 415 */
-    templ.template_data =  template_data;              /* line 416 */
-    templ.instantiator =  instantiator;                /* line 417 */
-    return  templ;                                     /* line 418 *//* line 419 *//* line 420 */
+                                                       /* line 405 */
+function mkTemplate (name,template_data,instantiator) {/* line 406 */
+    let  templ =  new Template ();                     /* line 407 */;
+    templ.name =  name;                                /* line 408 */
+    templ.template_data =  template_data;              /* line 409 */
+    templ.instantiator =  instantiator;                /* line 410 */
+    return  templ;                                     /* line 411 *//* line 412 *//* line 413 */
 }
-                                                       /* line 421 */
-function lnet2internal_from_file (pathname,container_xml) {/* line 422 */
-    let filename =   container_xml                     /* line 423 */;
+                                                       /* line 414 */
+function lnet2internal_from_file (pathname,container_xml) {/* line 415 */
+    let filename =   container_xml                     /* line 416 */;
 
     let jstr = undefined;
     if (filename == "0") {
@@ -437,291 +431,291 @@ function lnet2internal_from_file (pathname,container_xml) {/* line 422 */
     } else {
     return undefined;
     }
-                                                       /* line 424 *//* line 425 *//* line 426 */
+                                                       /* line 417 *//* line 418 *//* line 419 */
 }
 
-function lnet2internal_from_string (lnet) {            /* line 427 */
+function lnet2internal_from_string (lnet) {            /* line 420 */
 
     return JSON.parse (lnet);
-                                                       /* line 428 *//* line 429 *//* line 430 */
+                                                       /* line 421 *//* line 422 *//* line 423 */
 }
 
-function delete_decls (d) {                            /* line 431 *//* line 432 *//* line 433 *//* line 434 */
+function delete_decls (d) {                            /* line 424 *//* line 425 *//* line 426 *//* line 427 */
 }
 
-function make_component_registry () {                  /* line 435 */
-    return  new Component_Registry ();                 /* line 436 */;/* line 437 *//* line 438 */
+function make_component_registry () {                  /* line 428 */
+    return  new Component_Registry ();                 /* line 429 */;/* line 430 *//* line 431 */
 }
 
 function register_component (reg,template) {
-    return abstracted_register_component ( reg, template, false);/* line 439 */
+    return abstracted_register_component ( reg, template, false);/* line 432 */
 }
 
 function register_component_allow_overwriting (reg,template) {
-    return abstracted_register_component ( reg, template, true);/* line 440 *//* line 441 */
+    return abstracted_register_component ( reg, template, true);/* line 433 *//* line 434 */
 }
 
-function abstracted_register_component (reg,template,ok_to_overwrite) {/* line 442 */
-    let name = mangle_name ( template.name)            /* line 443 */;
-    if ((((((( reg!= null) && ( name))) in ( reg.templates))) && ((!  ok_to_overwrite)))) {/* line 444 */
-      load_error ( ( "Component /".toString ()+  ( template.name.toString ()+  "/ already declared".toString ()) .toString ()) )/* line 445 */
-      return  reg;                                     /* line 446 */
+function abstracted_register_component (reg,template,ok_to_overwrite) {/* line 435 */
+    let name = mangle_name ( template.name)            /* line 436 */;
+    if ((((((( reg!= null) && ( name))) in ( reg.templates))) && ((!  ok_to_overwrite)))) {/* line 437 */
+      load_error ( ( "Component /".toString ()+  ( template.name.toString ()+  "/ already declared".toString ()) .toString ()) )/* line 438 */
+      return  reg;                                     /* line 439 */
     }
-    else {                                             /* line 447 */
-      reg.templates [name] =  template;                /* line 448 */
-      return  reg;                                     /* line 449 *//* line 450 */
-    }                                                  /* line 451 *//* line 452 */
+    else {                                             /* line 440 */
+      reg.templates [name] =  template;                /* line 441 */
+      return  reg;                                     /* line 442 *//* line 443 */
+    }                                                  /* line 444 *//* line 445 */
 }
 
-function get_component_instance (reg,full_name,owner) {/* line 453 */
-    let template_name = mangle_name ( full_name)       /* line 454 */;
-    if ( ":" ==   full_name[0] ) {                     /* line 455 */
-      let instance_name = generate_instance_name ( owner, template_name)/* line 456 */;
-      let instance = external_instantiate ( reg, owner, instance_name, full_name)/* line 457 */;
-      return  instance;                                /* line 458 */
+function get_component_instance (reg,full_name,owner) {/* line 446 */
+    let template_name = mangle_name ( full_name)       /* line 447 */;
+    if ( ":" ==   full_name[0] ) {                     /* line 448 */
+      let instance_name = generate_instance_name ( owner, template_name)/* line 449 */;
+      let instance = external_instantiate ( reg, owner, instance_name, full_name)/* line 450 */;
+      return  instance;                                /* line 451 */
     }
-    else {                                             /* line 459 */
-      if ((( template_name) in ( reg.templates))) {    /* line 460 */
-        let template =  reg.templates [template_name]; /* line 461 */
-        if (( template ==  null)) {                    /* line 462 */
-          load_error ( ( "Registry Error (A): Can't find component /".toString ()+  ( template_name.toString ()+  "/".toString ()) .toString ()) )/* line 463 */
-          return  null;                                /* line 464 */
+    else {                                             /* line 452 */
+      if ((( template_name) in ( reg.templates))) {    /* line 453 */
+        let template =  reg.templates [template_name]; /* line 454 */
+        if (( template ==  null)) {                    /* line 455 */
+          load_error ( ( "Registry Error (A): Can't find component /".toString ()+  ( template_name.toString ()+  "/".toString ()) .toString ()) )/* line 456 */
+          return  null;                                /* line 457 */
         }
-        else {                                         /* line 465 */
-          let instance_name = generate_instance_name ( owner, template_name)/* line 466 */;
-          let instance =  template.instantiator ( reg, owner, instance_name, template.template_data, "")/* line 467 */;
-          return  instance;                            /* line 468 *//* line 469 */
+        else {                                         /* line 458 */
+          let instance_name = generate_instance_name ( owner, template_name)/* line 459 */;
+          let instance =  template.instantiator ( reg, owner, instance_name, template.template_data, "")/* line 460 */;
+          return  instance;                            /* line 461 *//* line 462 */
         }
       }
-      else {                                           /* line 470 */
-        load_error ( ( "Registry Error (B): Can't find component /".toString ()+  ( template_name.toString ()+  "/".toString ()) .toString ()) )/* line 471 */
-        return  null;                                  /* line 472 *//* line 473 */
-      }                                                /* line 474 */
-    }                                                  /* line 475 *//* line 476 */
+      else {                                           /* line 463 */
+        load_error ( ( "Registry Error (B): Can't find component /".toString ()+  ( template_name.toString ()+  "/".toString ()) .toString ()) )/* line 464 */
+        return  null;                                  /* line 465 *//* line 466 */
+      }                                                /* line 467 */
+    }                                                  /* line 468 *//* line 469 */
 }
 
-function generate_instance_name (owner,template_name) {/* line 477 */
-    let owner_name =  "";                              /* line 478 */
-    let instance_name =  template_name;                /* line 479 */
-    if ( null!= owner) {                               /* line 480 */
-      owner_name =  owner.name;                        /* line 481 */
-      instance_name =  ( owner_name.toString ()+  ( "▹".toString ()+  template_name.toString ()) .toString ()) /* line 482 */;
+function generate_instance_name (owner,template_name) {/* line 470 */
+    let owner_name =  "";                              /* line 471 */
+    let instance_name =  template_name;                /* line 472 */
+    if ( null!= owner) {                               /* line 473 */
+      owner_name =  owner.name;                        /* line 474 */
+      instance_name =  ( owner_name.toString ()+  ( "▹".toString ()+  template_name.toString ()) .toString ()) /* line 475 */;
     }
-    else {                                             /* line 483 */
-      instance_name =  template_name;                  /* line 484 *//* line 485 */
+    else {                                             /* line 476 */
+      instance_name =  template_name;                  /* line 477 *//* line 478 */
     }
-    return  instance_name;                             /* line 486 *//* line 487 *//* line 488 */
+    return  instance_name;                             /* line 479 *//* line 480 *//* line 481 */
 }
 
-function mangle_name (s) {                             /* line 489 */
-    /*  trim name to remove code from Container component names _ deferred until later (or never) *//* line 490 */
-    return  s;                                         /* line 491 *//* line 492 *//* line 493 */
+function mangle_name (s) {                             /* line 482 */
+    /*  trim name to remove code from Container component names _ deferred until later (or never) *//* line 483 */
+    return  s;                                         /* line 484 *//* line 485 *//* line 486 */
 }
-                                                       /* line 494 */
-/*  Data for an asyncronous component _ effectively, a function with input *//* line 495 */
-/*  and output queues of mevents. */                   /* line 496 */
-/*  */                                                 /* line 497 */
-/*  Components can either be a user_supplied function (“leaf“), or a “container“ *//* line 498 */
-/*  that routes mevents to child components according to a list of connections *//* line 499 */
-/*  that serve as a mevent routing table. */           /* line 500 */
-/*  */                                                 /* line 501 */
-/*  Child components themselves can be leaves or other containers. *//* line 502 */
-/*  */                                                 /* line 503 */
-/*  `handler` invokes the code that is attached to this component. *//* line 504 */
-/*  */                                                 /* line 505 */
-/*  `instance_data` is a pointer to instance data that the `leaf_handler` *//* line 506 */
-/*  function may want whenever it is invoked again. */ /* line 507 */
-/*  */                                                 /* line 508 *//* line 509 */
-/*  Eh_States :: enum { idle, active } */              /* line 510 */
+                                                       /* line 487 */
+/*  Data for an asyncronous component _ effectively, a function with input *//* line 488 */
+/*  and output queues of mevents. */                   /* line 489 */
+/*  */                                                 /* line 490 */
+/*  Components can either be a user_supplied function (“leaf“), or a “container“ *//* line 491 */
+/*  that routes mevents to child components according to a list of connections *//* line 492 */
+/*  that serve as a mevent routing table. */           /* line 493 */
+/*  */                                                 /* line 494 */
+/*  Child components themselves can be leaves or other containers. *//* line 495 */
+/*  */                                                 /* line 496 */
+/*  `handler` invokes the code that is attached to this component. *//* line 497 */
+/*  */                                                 /* line 498 */
+/*  `instance_data` is a pointer to instance data that the `leaf_handler` *//* line 499 */
+/*  function may want whenever it is invoked again. */ /* line 500 */
+/*  */                                                 /* line 501 *//* line 502 */
+/*  Eh_States :: enum { idle, active } */              /* line 503 */
 class Eh {
-  constructor () {                                     /* line 511 */
+  constructor () {                                     /* line 504 */
 
-    this.name =  "";                                   /* line 512 */
-    this.inq =  []                                     /* line 513 */;
-    this.outq =  []                                    /* line 514 */;
-    this.owner =  null;                                /* line 515 */
-    this.children = [];                                /* line 516 */
-    this.visit_ordering =  []                          /* line 517 */;
-    this.connections = [];                             /* line 518 */
-    this.routings =  []                                /* line 519 */;
-    this.handler =  null;                              /* line 520 */
-    this.finject =  null;                              /* line 521 */
-    this.instance_data =  null;                        /* line 522 *//*  arg needed for probe support  *//* line 523 */
-    this.arg =  "";                                    /* line 524 */
-    this.state =  "idle";                              /* line 525 *//*  bootstrap debugging *//* line 526 */
-    this.kind =  null;/*  enum { container, leaf, } */ /* line 527 *//* line 528 */
+    this.name =  "";                                   /* line 505 */
+    this.inq =  []                                     /* line 506 */;
+    this.outq =  []                                    /* line 507 */;
+    this.owner =  null;                                /* line 508 */
+    this.children = [];                                /* line 509 */
+    this.visit_ordering =  []                          /* line 510 */;
+    this.connections = [];                             /* line 511 */
+    this.routings =  []                                /* line 512 */;
+    this.handler =  null;                              /* line 513 */
+    this.finject =  null;                              /* line 514 */
+    this.instance_data =  null;                        /* line 515 *//*  arg needed for probe support  *//* line 516 */
+    this.arg =  "";                                    /* line 517 */
+    this.state =  "idle";                              /* line 518 *//*  bootstrap debugging *//* line 519 */
+    this.kind =  null;/*  enum { container, leaf, } */ /* line 520 *//* line 521 */
   }
 }
-                                                       /* line 529 */
-/*  Creates a component that acts as a container. It is the same as a `Eh` instance *//* line 530 */
-/*  whose handler function is `container_handler`. */  /* line 531 */
-function make_container (name,owner) {                 /* line 532 */
-    let  eh =  new Eh ();                              /* line 533 */;
-    eh.name =  name;                                   /* line 534 */
-    eh.owner =  owner;                                 /* line 535 */
-    eh.handler =  container_handler;                   /* line 536 */
-    eh.finject =  injector;                            /* line 537 */
-    eh.state =  "idle";                                /* line 538 */
-    eh.kind =  "container";                            /* line 539 */
-    return  eh;                                        /* line 540 *//* line 541 *//* line 542 */
+                                                       /* line 522 */
+/*  Creates a component that acts as a container. It is the same as a `Eh` instance *//* line 523 */
+/*  whose handler function is `container_handler`. */  /* line 524 */
+function make_container (name,owner) {                 /* line 525 */
+    let  eh =  new Eh ();                              /* line 526 */;
+    eh.name =  name;                                   /* line 527 */
+    eh.owner =  owner;                                 /* line 528 */
+    eh.handler =  container_handler;                   /* line 529 */
+    eh.finject =  injector;                            /* line 530 */
+    eh.state =  "idle";                                /* line 531 */
+    eh.kind =  "container";                            /* line 532 */
+    return  eh;                                        /* line 533 *//* line 534 *//* line 535 */
 }
 
-/*  Creates a new leaf component out of a handler function, and a data parameter *//* line 543 */
-/*  that will be passed back to your handler when called. *//* line 544 *//* line 545 */
-function make_leaf (name,owner,container,arg,handler) {/* line 546 */
-    let  eh =  new Eh ();                              /* line 547 */;
-    let  nm =  "";                                     /* line 548 */
-    if ( null!= owner) {                               /* line 549 */
-      nm =  owner.name;                                /* line 550 *//* line 551 */
+/*  Creates a new leaf component out of a handler function, and a data parameter *//* line 536 */
+/*  that will be passed back to your handler when called. *//* line 537 *//* line 538 */
+function make_leaf (name,owner,container,arg,handler) {/* line 539 */
+    let  eh =  new Eh ();                              /* line 540 */;
+    let  nm =  "";                                     /* line 541 */
+    if ( null!= owner) {                               /* line 542 */
+      nm =  owner.name;                                /* line 543 *//* line 544 */
     }
-    eh.name =  ( nm.toString ()+  ( "▹".toString ()+  name.toString ()) .toString ()) /* line 552 */;
-    eh.owner =  owner;                                 /* line 553 */
-    eh.handler =  handler;                             /* line 554 */
-    eh.finject =  injector;                            /* line 555 */
-    eh.instance_data =  container;                     /* line 556 */
-    eh.arg =  arg;                                     /* line 557 */
-    eh.state =  "idle";                                /* line 558 */
-    eh.kind =  "leaf";                                 /* line 559 */
-    return  eh;                                        /* line 560 *//* line 561 *//* line 562 */
+    eh.name =  ( nm.toString ()+  ( "▹".toString ()+  name.toString ()) .toString ()) /* line 545 */;
+    eh.owner =  owner;                                 /* line 546 */
+    eh.handler =  handler;                             /* line 547 */
+    eh.finject =  injector;                            /* line 548 */
+    eh.instance_data =  container;                     /* line 549 */
+    eh.arg =  arg;                                     /* line 550 */
+    eh.state =  "idle";                                /* line 551 */
+    eh.kind =  "leaf";                                 /* line 552 */
+    return  eh;                                        /* line 553 *//* line 554 *//* line 555 */
 }
 
-/*  Sends a mevent on the given `port` with `data`, placing it on the output *//* line 563 */
-/*  of the given component. */                         /* line 564 *//* line 565 */
-function send (eh,port,obj,causingMevent) {            /* line 566 */
-    let  d = Datum ();                                 /* line 567 */
-    d.v =  obj;                                        /* line 568 */
-    d.clone =  function () {return obj_clone ( d)      /* line 569 */;};
-    d.reclaim =  None;                                 /* line 570 */
-    let mev = make_mevent ( port, d)                   /* line 571 */;
-    put_output ( eh, mev)                              /* line 572 *//* line 573 *//* line 574 */
+/*  Sends a mevent on the given `port` with `data`, placing it on the output *//* line 556 */
+/*  of the given component. */                         /* line 557 *//* line 558 */
+function send (eh,port,obj,causingMevent) {            /* line 559 */
+    let  d = Datum ();                                 /* line 560 */
+    d.v =  obj;                                        /* line 561 */
+    d.clone =  function () {return obj_clone ( d)      /* line 562 */;};
+    d.reclaim =  None;                                 /* line 563 */
+    let mev = make_mevent ( port, d)                   /* line 564 */;
+    put_output ( eh, mev)                              /* line 565 *//* line 566 *//* line 567 */
 }
 
-function forward (eh,port,mev) {                       /* line 575 */
-    let fwdmev = make_mevent ( port, mev.datum)        /* line 576 */;
-    put_output ( eh, fwdmev)                           /* line 577 *//* line 578 *//* line 579 */
+function forward (eh,port,mev) {                       /* line 568 */
+    let fwdmev = make_mevent ( port, mev.datum)        /* line 569 */;
+    put_output ( eh, fwdmev)                           /* line 570 *//* line 571 *//* line 572 */
 }
 
-function inject_mevent (eh,mev) {                      /* line 580 */
-    eh.finject ( eh, mev)                              /* line 581 *//* line 582 *//* line 583 */
+function inject_mevent (eh,mev) {                      /* line 573 */
+    eh.finject ( eh, mev)                              /* line 574 *//* line 575 *//* line 576 */
 }
 
-function set_active (eh) {                             /* line 584 */
-    eh.state =  "active";                              /* line 585 *//* line 586 *//* line 587 */
+function set_active (eh) {                             /* line 577 */
+    eh.state =  "active";                              /* line 578 *//* line 579 *//* line 580 */
 }
 
-function set_idle (eh) {                               /* line 588 */
-    eh.state =  "idle";                                /* line 589 *//* line 590 *//* line 591 */
+function set_idle (eh) {                               /* line 581 */
+    eh.state =  "idle";                                /* line 582 *//* line 583 *//* line 584 */
 }
 
-function put_output (eh,mev) {                         /* line 592 */
-    eh.outq.push ( mev)                                /* line 593 *//* line 594 *//* line 595 */
+function put_output (eh,mev) {                         /* line 585 */
+    eh.outq.push ( mev)                                /* line 586 *//* line 587 *//* line 588 */
 }
 
-let  projectRoot =  "";                                /* line 596 *//* line 597 */
-function set_environment (project_root) {              /* line 598 *//* line 599 */
-    projectRoot =  project_root;                       /* line 600 *//* line 601 *//* line 602 */
+let  projectRoot =  "";                                /* line 589 *//* line 590 */
+function set_environment (project_root) {              /* line 591 *//* line 592 */
+    projectRoot =  project_root;                       /* line 593 *//* line 594 *//* line 595 */
 }
 
-function obj_clone (obj) {                             /* line 603 */
-    return  obj;                                       /* line 604 *//* line 605 *//* line 606 */
+function obj_clone (obj) {                             /* line 596 */
+    return  obj;                                       /* line 597 *//* line 598 *//* line 599 */
 }
 
-/*  usage: app ${_00_} diagram_filename1 diagram_filename2 ... *//* line 607 */
-/*  where ${_00_} is the root directory for the project *//* line 608 *//* line 609 */
-function initialize_component_palette_from_files (project_root,diagram_source_files) {/* line 610 */
-    let  reg = make_component_registry ();             /* line 611 */
-    for (let diagram_source of  diagram_source_files) {/* line 612 */
-      let all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)/* line 613 */;
-      reg = generate_external_components ( reg, all_containers_within_single_file)/* line 614 */;
-      for (let container of  all_containers_within_single_file) {/* line 615 */
-        register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 616 *//* line 617 */
-      }                                                /* line 618 */
+/*  usage: app ${_00_} diagram_filename1 diagram_filename2 ... *//* line 600 */
+/*  where ${_00_} is the root directory for the project *//* line 601 *//* line 602 */
+function initialize_component_palette_from_files (project_root,diagram_source_files) {/* line 603 */
+    let  reg = make_component_registry ();             /* line 604 */
+    for (let diagram_source of  diagram_source_files) {/* line 605 */
+      let all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)/* line 606 */;
+      reg = generate_external_components ( reg, all_containers_within_single_file)/* line 607 */;
+      for (let container of  all_containers_within_single_file) {/* line 608 */
+        register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 609 *//* line 610 */
+      }                                                /* line 611 */
     }
-    initialize_stock_components ( reg)                 /* line 619 */
-    return  reg;                                       /* line 620 *//* line 621 *//* line 622 */
+    initialize_stock_components ( reg)                 /* line 612 */
+    return  reg;                                       /* line 613 *//* line 614 *//* line 615 */
 }
 
-function initialize_component_palette_from_string (project_root,lnet) {/* line 623 */
-    /*  this version ignores project_root  */          /* line 624 */
-    let  reg = make_component_registry ();             /* line 625 */
-    let all_containers = lnet2internal_from_string ( lnet)/* line 626 */;
-    reg = generate_external_components ( reg, all_containers)/* line 627 */;
-    for (let container of  all_containers) {           /* line 628 */
-      register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 629 *//* line 630 */
+function initialize_component_palette_from_string (project_root,lnet) {/* line 616 */
+    /*  this version ignores project_root  */          /* line 617 */
+    let  reg = make_component_registry ();             /* line 618 */
+    let all_containers = lnet2internal_from_string ( lnet)/* line 619 */;
+    reg = generate_external_components ( reg, all_containers)/* line 620 */;
+    for (let container of  all_containers) {           /* line 621 */
+      register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 622 *//* line 623 */
     }
-    initialize_stock_components ( reg)                 /* line 631 */
-    return  reg;                                       /* line 632 *//* line 633 *//* line 634 */
+    initialize_stock_components ( reg)                 /* line 624 */
+    return  reg;                                       /* line 625 *//* line 626 *//* line 627 */
 }
-                                                       /* line 635 */
-function clone_string (s) {                            /* line 636 */
-    return  s                                          /* line 637 *//* line 638 */;/* line 639 */
+                                                       /* line 628 */
+function clone_string (s) {                            /* line 629 */
+    return  s                                          /* line 630 *//* line 631 */;/* line 632 */
 }
 
-let  load_errors =  false;                             /* line 640 */
-let  runtime_errors =  false;                          /* line 641 *//* line 642 */
-function load_error (s) {                              /* line 643 *//* line 644 */
+let  load_errors =  false;                             /* line 633 */
+let  runtime_errors =  false;                          /* line 634 *//* line 635 */
+function load_error (s) {                              /* line 636 *//* line 637 */
+    console.error ( s);                                /* line 638 */
+                                                       /* line 639 */
+    load_errors =  true;                               /* line 640 *//* line 641 *//* line 642 */
+}
+
+function runtime_error (s) {                           /* line 643 *//* line 644 */
     console.error ( s);                                /* line 645 */
-                                                       /* line 646 */
-    load_errors =  true;                               /* line 647 *//* line 648 *//* line 649 */
+    runtime_errors =  true;                            /* line 646 *//* line 647 *//* line 648 */
+}
+                                                       /* line 649 */
+function initialize_from_files (project_root,diagram_names) {/* line 650 */
+    let arg =  null;                                   /* line 651 */
+    let palette = initialize_component_palette_from_files ( project_root, diagram_names)/* line 652 */;
+    return [ palette,[ project_root, diagram_names, arg]];/* line 653 *//* line 654 *//* line 655 */
 }
 
-function runtime_error (s) {                           /* line 650 *//* line 651 */
-    console.error ( s);                                /* line 652 */
-    runtime_errors =  true;                            /* line 653 *//* line 654 *//* line 655 */
-}
-                                                       /* line 656 */
-function initialize_from_files (project_root,diagram_names) {/* line 657 */
-    let arg =  null;                                   /* line 658 */
-    let palette = initialize_component_palette_from_files ( project_root, diagram_names)/* line 659 */;
-    return [ palette,[ project_root, diagram_names, arg]];/* line 660 *//* line 661 *//* line 662 */
+function initialize_from_string (project_root) {       /* line 656 */
+    let arg =  null;                                   /* line 657 */
+    let palette = initialize_component_palette_from_string ( project_root)/* line 658 */;
+    return [ palette,[ project_root, null, arg]];      /* line 659 *//* line 660 *//* line 661 */
 }
 
-function initialize_from_string (project_root) {       /* line 663 */
-    let arg =  null;                                   /* line 664 */
-    let palette = initialize_component_palette_from_string ( project_root)/* line 665 */;
-    return [ palette,[ project_root, null, arg]];      /* line 666 *//* line 667 *//* line 668 */
+function start (arg,part_name,palette,env) {           /* line 662 */
+    let part = start_bare ( part_name, palette, env)   /* line 663 */;
+    inject ( part, "", arg)                            /* line 664 */
+    finalize ( part)                                   /* line 665 *//* line 666 *//* line 667 */
 }
 
-function start (arg,part_name,palette,env) {           /* line 669 */
-    let part = start_bare ( part_name, palette, env)   /* line 670 */;
-    inject ( part, "", arg)                            /* line 671 */
-    finalize ( part)                                   /* line 672 *//* line 673 *//* line 674 */
-}
-
-function start_bare (part_name,palette,env) {          /* line 675 */
-    let project_root =  env [ 0];                      /* line 676 */
-    let diagram_names =  env [ 1];                     /* line 677 */
-    set_environment ( project_root)                    /* line 678 */
-    /*  get entrypoint container */                    /* line 679 */
-    let  part = get_component_instance ( palette, part_name, null)/* line 680 */;
-    if ( null ==  part) {                              /* line 681 */
-      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 685 *//* line 686 */
+function start_bare (part_name,palette,env) {          /* line 668 */
+    let project_root =  env [ 0];                      /* line 669 */
+    let diagram_names =  env [ 1];                     /* line 670 */
+    set_environment ( project_root)                    /* line 671 */
+    /*  get entrypoint container */                    /* line 672 */
+    let  part = get_component_instance ( palette, part_name, null)/* line 673 */;
+    if ( null ==  part) {                              /* line 674 */
+      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 678 *//* line 679 */
     }
-    return  part;                                      /* line 687 *//* line 688 *//* line 689 */
+    return  part;                                      /* line 680 *//* line 681 *//* line 682 */
 }
 
-function inject (part,port,payload) {                  /* line 690 */
-    if ((!  load_errors)) {                            /* line 691 */
-      let  d = Datum ();                               /* line 692 */
-      d.v =  payload;                                  /* line 693 */
-      d.clone =  function () {return obj_clone ( d)    /* line 694 */;};
-      d.reclaim =  None;                               /* line 695 */
-      let  mev = make_mevent ( port, d)                /* line 696 */;
-      inject_mevent ( part, mev)                       /* line 697 */
+function inject (part,port,payload) {                  /* line 683 */
+    if ((!  load_errors)) {                            /* line 684 */
+      let  d = Datum ();                               /* line 685 */
+      d.v =  payload;                                  /* line 686 */
+      d.clone =  function () {return obj_clone ( d)    /* line 687 */;};
+      d.reclaim =  None;                               /* line 688 */
+      let  mev = make_mevent ( port, d)                /* line 689 */;
+      inject_mevent ( part, mev)                       /* line 690 */
     }
-    else {                                             /* line 698 */
-      process.exit (1)                                 /* line 699 *//* line 700 */
-    }                                                  /* line 701 *//* line 702 */
+    else {                                             /* line 691 */
+      process.exit (1)                                 /* line 692 *//* line 693 */
+    }                                                  /* line 694 *//* line 695 */
 }
 
-function finalize (part) {                             /* line 703 */
-    JSON.stringify ( part.outq)                        /* line 704 *//* line 705 *//* line 706 */
+function finalize (part) {                             /* line 696 */
+    JSON.stringify ( part.outq)                        /* line 697 *//* line 698 *//* line 699 */
 }
 
-function new_datum_bang () {                           /* line 707 */
-    let  d = Datum ();                                 /* line 708 */
-    d.v =  "!";                                        /* line 709 */
-    d.clone =  function () {return obj_clone ( d)      /* line 710 */;};
-    d.reclaim =  None;                                 /* line 711 */
-    return  d                                          /* line 712 *//* line 713 */;
+function new_datum_bang () {                           /* line 700 */
+    let  d = Datum ();                                 /* line 701 */
+    d.v =  "!";                                        /* line 702 */
+    d.clone =  function () {return obj_clone ( d)      /* line 703 */;};
+    d.reclaim =  None;                                 /* line 704 */
+    return  d                                          /* line 705 *//* line 706 */;
 }
