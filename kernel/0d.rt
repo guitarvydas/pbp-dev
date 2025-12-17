@@ -290,6 +290,20 @@ defn step_child (child, mev) {
             before_state != “idle” and after_state = “idle”]
 }
 
+defn step_child_once (child, mev) {
+    deftemp began_long_run ⇐ ϕ
+    deftemp continued_long_run ⇐ ϕ
+    deftemp ended_long_run ⇐ ϕ
+    [began_long_run, continued_long_run, ended_long_run] ⇐ step_child (child, mev)
+    if began_long_run {
+	pass
+    } elif continued_long_run {
+	pass 
+    } elif ended_long_run {
+	pass 
+    }
+}
+
 defn step_children (container, causingMevent) {
     container.state ⇐ “idle”
     for child in #queue2list (container.visit_ordering) {
@@ -297,32 +311,13 @@ defn step_children (container, causingMevent) {
         if (not (is_self (child, container))){
             if (not (#empty (child.inq))){
                 mev ≡ #dequeue (child.inq)
-                deftemp began_long_run ⇐ ϕ
-                deftemp continued_long_run ⇐ ϕ
-                deftemp ended_long_run ⇐ ϕ
-                [began_long_run, continued_long_run, ended_long_run] ⇐ step_child (child, mev)
-                if began_long_run {
-                    pass
-                } elif continued_long_run {
-                    pass 
-                } elif ended_long_run {
-                    pass 
-                }
+		step_child_once (child, mev)
+		
                 destroy_mevent(mev)
             } else {
                 if child.state !=  “idle” {
                     mev ≡ force_tick (container, child)
-                    deftemp began_long_run ⇐ ϕ
-                    deftemp continued_long_run ⇐ ϕ
-                    deftemp ended_long_run ⇐ ϕ
-                    [began_long_run, continued_long_run, ended_long_run] ⇐ step_child (child, mev)
-                    if began_long_run {
-                        pass
-                    } elif continued_long_run {
-                        pass 
-                    } elif ended_long_run {
-                        pass 
-                    }
+		    step_child_once (child, mev)
                     destroy_mevent(mev)
                  }
              }
