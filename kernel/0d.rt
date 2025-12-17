@@ -281,17 +281,13 @@ defn is_self (child, container) {
     return child = container
 }
 
-defn step_child (child, mev) {
+defn step_child_once (child, mev) {
     before_state ≡ child.state
     child.handler(child, mev)
     after_state ≡ child.state
     return [before_state = “idle” and after_state != “idle”, 
             before_state != “idle” and after_state != “idle”,
             before_state != “idle” and after_state = “idle”]
-}
-
-defn step_child_once (child, mev) {
-    step_child (child, mev)
 }
 
 defn step_children (container, causingMevent) {
