@@ -111,9 +111,9 @@ defn create_down_connector (container, proto_conn, connectors, children_by_id) {
     id_proto ≡ target_proto@“id”
     target_component ≡ children_by_id@id_proto
     if (target_component = ϕ) {
-	load_error (#strcons (“internal error: .Down connection target internal error ”, (proto_conn@“target”)@“name”))}
+        load_error (#strcons (“internal error: .Down connection target internal error ”, (proto_conn@“target”)@“name”))}
     else{
-	connector.receiver ⇐ mkReceiver (target_component.name, target_component, proto_conn@“target_port”, target_component.inq)
+        connector.receiver ⇐ mkReceiver (target_component.name, target_component, proto_conn@“target_port”, target_component.inq)
     }
     return connector
 }
@@ -124,14 +124,14 @@ defn create_across_connector (container, proto_conn, connectors, children_by_id)
     source_component ≡ children_by_id@((proto_conn@“source”)@“id”)
     target_component ≡ children_by_id@((proto_conn@“target”)@“id”)
     if source_component = ϕ {
-	load_error (#strcons (“internal error: .Across connection source not ok ”, (proto_conn@“source”)@“name”))
+        load_error (#strcons (“internal error: .Across connection source not ok ”, (proto_conn@“source”)@“name”))
     } else {
-	connector.sender ⇐ mkSender (source_component.name, source_component, proto_conn@“source_port”)
-	if target_component = ϕ {
-	    load_error (#strcons (“internal error: .Across connection target not ok ”, (proto_conn@“target”)@“name”))
-	} else {
-	    connector.receiver ⇐ mkReceiver (target_component.name, target_component, proto_conn@“target_port”, target_component.inq)
-	}
+        connector.sender ⇐ mkSender (source_component.name, source_component, proto_conn@“source_port”)
+        if target_component = ϕ {
+            load_error (#strcons (“internal error: .Across connection target not ok ”, (proto_conn@“target”)@“name”))
+        } else {
+            connector.receiver ⇐ mkReceiver (target_component.name, target_component, proto_conn@“target_port”, target_component.inq)
+        }
      }
     return connector
 }
@@ -141,10 +141,10 @@ defn create_up_connector (container, proto_conn, connectors, children_by_id) {
     connector.direction ⇐ “up”
     source_component ≡ children_by_id@((proto_conn@“source”)@“id”)
     if source_component = ϕ {
-	load_error (#strcons (“internal error: .Up connection source not ok ”, (proto_conn@“source”)@“name”)) }
+        load_error (#strcons (“internal error: .Up connection source not ok ”, (proto_conn@“source”)@“name”)) }
     else {
-	connector.sender ⇐ mkSender (source_component.name, source_component, proto_conn@“source_port”)
-	connector.receiver ⇐ mkReceiver (container.name, container, proto_conn@“target_port”, container.outq)
+        connector.sender ⇐ mkSender (source_component.name, source_component, proto_conn@“source_port”)
+        connector.receiver ⇐ mkReceiver (container.name, container, proto_conn@“target_port”, container.outq)
     }
     return connector
 }
@@ -167,7 +167,7 @@ defn container_instantiator (reg, owner, container_name, desc, arg) {
     for child_desc in desc@“children” {
         child_instance ≡ get_component_instance (reg, child_desc@“name”, container)
         #append (children, child_instance)
-	id ≡ child_desc@“id”
+        id ≡ child_desc@“id”
         children_by_id@id ⇐ child_instance
 
     }
@@ -177,14 +177,14 @@ defn container_instantiator (reg, owner, container_name, desc, arg) {
     for proto_conn in desc@“connections” {
         deftemp connector ⇐ #fresh (Connector)
         if proto_conn@“dir” = enumDown {
-	    #append (connectors, create_down_connector (container, proto_conn, connectors, children_by_id))
+            #append (connectors, create_down_connector (container, proto_conn, connectors, children_by_id))
         } elif proto_conn@“dir” = enumAcross {
-	    #append (connectors, create_across_connector (container, proto_conn, connectors, children_by_id))
+            #append (connectors, create_across_connector (container, proto_conn, connectors, children_by_id))
         } elif proto_conn@“dir” = enumUp {
-	    #append (connectors, create_up_connector (container, proto_conn, connectors, children_by_id))
+            #append (connectors, create_up_connector (container, proto_conn, connectors, children_by_id))
         } elif proto_conn@“dir” = enumThrough {
-	    #append (connectors, create_through_connector (container, proto_conn, connectors, children_by_id))
-	}
+            #append (connectors, create_through_connector (container, proto_conn, connectors, children_by_id))
+        }
      }            
     container.connections ⇐ connectors
     return container
@@ -297,9 +297,9 @@ defn step_children (container, causingMevent) {
         if (not (is_self (child, container))){
             if (not (#empty (child.inq))){
                 mev ≡ #dequeue (child.inq)
-		deftemp began_long_run ⇐ ϕ
-		deftemp continued_long_run ⇐ ϕ
-		deftemp ended_long_run ⇐ ϕ
+                deftemp began_long_run ⇐ ϕ
+                deftemp continued_long_run ⇐ ϕ
+                deftemp ended_long_run ⇐ ϕ
                 [began_long_run, continued_long_run, ended_long_run] ⇐ step_child (child, mev)
                 if began_long_run {
                     pass
@@ -312,22 +312,32 @@ defn step_children (container, causingMevent) {
             } else {
                 if child.state !=  “idle” {
                     mev ≡ force_tick (container, child)
-                    child.handler(child, mev)
+                    deftemp began_long_run ⇐ ϕ
+                    deftemp continued_long_run ⇐ ϕ
+                    deftemp ended_long_run ⇐ ϕ
+                    [began_long_run, continued_long_run, ended_long_run] ⇐ step_child (child, mev)
+                    if began_long_run {
+                        pass
+                    } elif continued_long_run {
+                        pass 
+                    } elif ended_long_run {
+                        pass 
+                    }
                     destroy_mevent(mev)
-		 }
+                 }
              }
             
             if child.state = “active” {
                 ⌈ if child remains active, then the container must remain active and must propagate “ticks“ to child⌉
                 container.state ⇐ “active”
-	     }
+             }
             
             while (not (#empty (child.outq))) {
                 mev ≡ #dequeue (child.outq)
                 route(container, child, mev)
                 destroy_mevent(mev)
-	     }
-	 }
+             }
+         }
     }
 }
 
@@ -356,15 +366,15 @@ defn route (container, from_component, mevent) {
     } else {
         if (not (is_self (from_component, container))) {
             fromname ⇐ from_component.name
-	}
+        }
         from_sender ≡ mkSender (fromname, from_component, mevent.port)
         
         for connector in container.connections {
             if sender_eq (from_sender, connector.sender) {
                 deposit (container, connector, mevent)
                 was_sent ⇐ ⊤
-	    }
-	}
+            }
+        }
     }
     if not (was_sent) {
         #live_update (“✗”, #strcons (container.name, #strcons (“: mevent '”, #strcons (mevent.port, #strcons (“' from ”, #strcons (fromname, “ dropped on floor...”))))))
@@ -375,7 +385,7 @@ defn any_child_ready (container) {
     for child in container.children {
         if child_is_ready(child) {
             return ⊤
-	}
+        }
     }
     return ⊥
 }
@@ -438,34 +448,34 @@ defn abstracted_register_component (reg, template, ok_to_overwrite) {
     name ≡ mangle_name (template.name)
     if reg != ϕ and name in reg.templates and not ok_to_overwrite {
         load_error (#strcons (“Component /”, #strcons (template.name, “/ already declared”)))
-	return reg
+        return reg
     } else {
         reg.templates@name ⇐ template
-	return reg
+        return reg
     }
 }
 
 defn get_component_instance (reg, full_name, owner) {
     template_name ≡ mangle_name (full_name)
     if “:” = #stringcar (full_name) {
-	instance_name ≡ generate_instance_name (owner, template_name)
-	instance ≡ external_instantiate (reg, owner, instance_name, full_name)
-	return instance
+        instance_name ≡ generate_instance_name (owner, template_name)
+        instance ≡ external_instantiate (reg, owner, instance_name, full_name)
+        return instance
     } else {
-	if template_name in reg.templates {
-	    template ≡ reg.templates@template_name
-	    if (template = ϕ) {
-		load_error (#strcons (“Registry Error (A): Can't find component /”, #strcons (template_name, “/”)))
-		return ϕ
-	    } else {
-		instance_name ≡ generate_instance_name (owner, template_name)
-		instance ≡ template.instantiator (reg, owner, instance_name, template.template_data, “”)
-		return instance
-	    }
-	} else {
-	    load_error (#strcons (“Registry Error (B): Can't find component /”, #strcons (template_name, “/”)))
-	    return ϕ
-	}
+        if template_name in reg.templates {
+            template ≡ reg.templates@template_name
+            if (template = ϕ) {
+                load_error (#strcons (“Registry Error (A): Can't find component /”, #strcons (template_name, “/”)))
+                return ϕ
+            } else {
+                instance_name ≡ generate_instance_name (owner, template_name)
+                instance ≡ template.instantiator (reg, owner, instance_name, template.template_data, “”)
+                return instance
+            }
+        } else {
+            load_error (#strcons (“Registry Error (B): Can't find component /”, #strcons (template_name, “/”)))
+            return ϕ
+        }
     }
 }
 
@@ -515,7 +525,7 @@ defobj Eh () {
         • handler ⇐ ϕ
         • finject ⇐ ϕ
         • instance_data ⇐ ϕ
-	⌈ arg needed for probe support ⌉
+        ⌈ arg needed for probe support ⌉
         • arg ⇐ “”
         • state ⇐ “idle”
         ⌈ bootstrap debugging⌉
@@ -609,7 +619,7 @@ defn initialize_component_palette_from_files (project_root, diagram_source_files
         reg ⇐ generate_external_components (reg, all_containers_within_single_file)
         for container in all_containers_within_single_file {
             register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
-	}
+        }
     }
     initialize_stock_components (reg)
     return reg
@@ -622,7 +632,7 @@ defn initialize_component_palette_from_string (project_root, lnet) {
     reg ⇐ generate_external_components (reg, all_containers)
     for container in all_containers {
             register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
-	}
+        }
     initialize_stock_components (reg)
     return reg
 }
@@ -675,9 +685,9 @@ defn start_bare (part_name, palette, env) {
     deftemp part ⇐ get_component_instance(palette, part_name, ϕ)
     if ϕ = part {
         load_error (#strcons (“Couldn't find container with page name /”,
-	              #strcons (part_name,
-		        #strcons (“/ in files ”,
-			  #strcons (#asstr (diagram_names), “ (check tab names, or disable compression?)”)))))
+                      #strcons (part_name,
+                        #strcons (“/ in files ”,
+                          #strcons (#asstr (diagram_names), “ (check tab names, or disable compression?)”)))))
     }
     return part
 }
@@ -685,14 +695,14 @@ defn start_bare (part_name, palette, env) {
 defn inject (part, port, payload) {
     if not load_errors {
         deftemp d ⇐ Datum ()
-    	d.v ⇐ payload
-	d.clone ⇐ λ: obj_clone (d)
-	d.reclaim ⇐ None
+        d.v ⇐ payload
+        d.clone ⇐ λ: obj_clone (d)
+        d.reclaim ⇐ None
         deftemp mev ⇐ make_mevent(port, d)
         inject_mevent (part, mev)
      } else {
          #abort ()
-     }	
+     }  
 }
 
 defn finalize (part) {
