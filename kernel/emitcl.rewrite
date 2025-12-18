@@ -62,6 +62,7 @@ ExternalPhrase_internalizeLnetFromString [_octothorpe _ lp rp] = ‛
 ’
 
 ExternalPhrase_freshQueue [_octothorpe _83 _84 _85] =‛ (make-instance 'Queue)’
+ExternalPhrase_resetQueue [_octothorpe _83 _84 e _85] =‛\n(setf «e» (make-instance 'Queue))’
 ExternalPhrase_freshStack [_octothorpe _83 _84 _85] =‛ nil’
 ExternalPhrase_fresh [_octothorpe _83 _84 ident _85] =‛ (make-instance '«ident»)’
 ExternalPhrase_stringshrink [_octothorpe _83 _84 e _85 ] =‛ «e»’

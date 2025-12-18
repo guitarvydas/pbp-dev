@@ -42,7 +42,6 @@ emit {
      | "#" xkw<"read_and_convert_lnet_file"> "(" pathname Comma fname ")" -- raclnetf
      | "#" xkw<"internalize_lnet_from_string"> "(" ")" -- internalizeLnetFromString
      | "#" xkw<"freshQueue"> "(" ")" -- freshQueue
-     | "#" xkw<"resetQueue"> "(" Exp ")" -- resetQueue
      | "#" xkw<"freshStack"> "(" ")" -- freshStack
      | "#" xkw<"fresh"> "(" ident ")" -- fresh
      | "#" xkw<"stringcar"> "(" Exp ")" -- stringcar

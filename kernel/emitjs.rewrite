@@ -76,6 +76,7 @@ ExternalPhrase_internalizeLnetFromString [_octothorpe _ lp rp] = ‛
 ’
 
 ExternalPhrase_freshQueue [_octothorpe _ lp rp] = ‛ []’
+ExternalPhrase_resetQueue [_octothorpe _ lp e rp] = ‛\n«e» = [];’
 ExternalPhrase_freshStack [_octothorpe _ lp rp] = ‛ []’
 ExternalPhrase_fresh [_octothorpe _83 _84 ident _85] =‛ new «ident» ();’
 ExternalPhrase_stringshrink [_octothorpe _83 _84 e _85 ] =‛ «e»’

@@ -292,6 +292,8 @@ defn step_child_once (child, mev) {
 
 defn step_children (container, causingMevent) {
     container.state ⇐ “idle”
+
+    ⌈ phase 1 - loop through children and process inputs or children that not "idle" ⌉
     for child in #queue2list (container.visit_ordering) {
         ⌈ child = container represents self, skip it⌉
         if (not (is_self (child, container))){
@@ -307,7 +309,12 @@ defn step_children (container, causingMevent) {
                     destroy_mevent(mev)
                  }
              }
-            
+         }
+    }
+    #resetQueue (container.visit_ordering)
+
+    ⌈ phase 2 - loop through children and route their outputs to appropriate receiver queues based on .connections ⌉
+    for child in container.children {
             if child.state = “active” {
                 ⌈ if child remains active, then the container must remain active and must propagate “ticks“ to child⌉
                 container.state ⇐ “active”
@@ -318,7 +325,6 @@ defn step_children (container, causingMevent) {
                 route(container, child, mev)
                 destroy_mevent(mev)
              }
-         }
     }
 }
 
