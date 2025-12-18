@@ -70,10 +70,10 @@ class Cell {
         this.mxgraphTarget = '';
         this.mxgraphParent = '';
         this.value = '';
-        this.id = 0;
-        this.source = 0;
-        this.target = 0;
-        this.parent = 0;
+        this.id = undefined;
+        this.source = undefined;
+        this.target = undefined;
+        this.parent = undefined;
         this.flags = new Set();
         this.type = CellType.Rect;
     }
