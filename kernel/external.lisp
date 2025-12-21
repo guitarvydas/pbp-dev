@@ -1,11 +1,12 @@
+#|  This is called `external` due to historical reasons. This has evolved into 2 kinds of Leaf parts: AOT and JIT (statically generated before runtime, vs. dynamically generated at runtime). If a part name begins with ;:', it is treated specially as a JIT part, else the part is assumed to have been pre-loaded into the register in the regular way.  |# #|line 1|# #|line 2|#
 (defun external_instantiate (&optional  reg  owner  name  arg)
-  (declare (ignorable  reg  owner  name  arg))              #|line 1|#
-  (let ((name_with_id (funcall (quote gensymbol)   name     #|line 2|#)))
+  (declare (ignorable  reg  owner  name  arg))              #|line 3|#
+  (let ((name_with_id (funcall (quote gensymbol)   name     #|line 4|#)))
     (declare (ignorable name_with_id))
-    (return-from external_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_external  #|line 3|#))) #|line 4|#
+    (return-from external_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_external  #|line 5|#))) #|line 6|#
   )
 (defun generate_external_components (&optional  reg  container_list)
-  (declare (ignorable  reg  container_list))                #|line 6|#
-  #|  nothing to do here, anymore - get_component_instance doesn;t need a template for ":..." Parts  |# #|line 7|#
-  (return-from generate_external_components  reg)           #|line 8|# #|line 9|#
+  (declare (ignorable  reg  container_list))                #|line 8|#
+  #|  nothing to do here, anymore - get_component_instance doesn't need a template for ":..." Parts  |# #|line 9|#
+  (return-from generate_external_components  reg)           #|line 10|# #|line 11|#
   )

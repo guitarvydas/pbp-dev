@@ -443,6 +443,10 @@ defn abstracted_register_component (reg, template, ok_to_overwrite) {
 }
 
 defn get_component_instance (reg, full_name, owner) {
+⌈ If a part name begins with ":", it is treated as a JIT part and we let the runtime factory generate it on-the-fly (see kernel_external.rt and external.rt) else it is assumed to be a regular AOT part and assumed to have been registered before runtime, so we just pull its template out of the registry and instantiate it. ⌉
+⌈ ":?<string>" is a probe part that is tagged with <string> ⌉
+⌈ ":$ <command>" is a shell-out part that sends <command> to the operating system shell ⌉
+⌈ ":<string>" else, it's just treated as a string part that produces <string> on its output ⌉
     template_name ≡ mangle_name (full_name)
     if “:” = #stringcar (full_name) {
         instance_name ≡ generate_instance_name (owner, template_name)
