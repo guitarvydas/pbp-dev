@@ -3,7 +3,6 @@
 echo
 echo "updating $1"
 echo
-set -x
 cp ~/projects/pbp-dev/kernel/kernel0d.py "$1/pbp/kernel"
 cp ~/projects/pbp-dev/kernel/kernel0d.js "$1/pbp/kernel"
 cp ~/projects/pbp-dev/kernel/kernel0d.lisp "$1/pbp/kernel"
@@ -14,4 +13,5 @@ git add "./pbp/kernel/kernel0d.js"
 git add "./pbp/kernel/kernel0d.lisp"
 git add "./pbp/das/das2json.mjs"
 git commit -q -m 'update kernel and das2json'
-git push
+git push -q
+
