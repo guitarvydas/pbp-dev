@@ -11,11 +11,11 @@ TopLevel_external [x] =‛«x»’
 TopLevel_comment [ comment] =‛«comment»’
 TopLevel_line [line] =‛«line»’
 
-Defvar [ _2 Lval _3 Exp line?] = ‛«_2»«Lval»«_3»«Exp»«line»’
-Defconst [ _5 Lval _6 Exp line?] = ‛«_5»«Lval»«_6»«Exp»«line»’
-Defn [ _8 ident Formals StatementBlock line?] = ‛«_8»«ident»«Formals»«StatementBlock»«line»’
-Defobj [ _10 ident ObjFormals line1? _11 line2? InitStatement+ _12 line3?] = ‛«_10»«ident»«ObjFormals»«line1»«_11»«line2»«InitStatement»«_12»«line3»’
-Import [ _14 ident line?] = ‛«_14»«ident»«line»’
+Defvar [ _2 Lval _3 Exp line?] = ‛«_2» «Lval»«_3»«Exp»«line»’
+Defconst [ _5 Lval _6 Exp line?] = ‛«_5» «Lval»«_6»«Exp»«line»’
+Defn [ _8 ident Formals StatementBlock line?] = ‛«_8» «ident»«Formals»«StatementBlock»«line»’
+Defobj [ _10 ident ObjFormals line1? _11 line2? InitStatement+ _12 line3?] = ‛«_10» «ident»«ObjFormals»«line1»«_11»«line2»«InitStatement»«_12»«line3»’
+Import [ _14 ident line?] = ‛«_14» «ident»«line»’
 StatementBlock [ line1? lb line2 Rec_Statement rb line4?] = ‛«line1»«lb»«line2»«Rec_Statement»«rb»«line4»’
 
 Rec_Statement [line1? r_stmt line2?] = ‛«line1»«r_stmt»«line2»’
@@ -23,10 +23,10 @@ R_Statement_comment [ comment Rec_Statement?] =‛«comment»«Rec_Statement»�
 R_Statement_external [x rec?] =‛«x»«rec»’
 R_Statement_deftemp [ Deftemp] =‛«Deftemp»’
 R_Statement_defsynonym [ Defsynonym] =‛«Defsynonym»’
-R_Statement_globals [ _18 ident CommaIdent* Rec_Statement?] =‛«_18»«ident»«CommaIdent»«Rec_Statement»’
+R_Statement_globals [ _18 ident CommaIdent* Rec_Statement?] =‛«_18» «ident»«CommaIdent»«Rec_Statement»’
 R_Statement_if [ IfStatement] =‛«IfStatement»’
-R_Statement_pass [ _20 Rec_Statement?] =‛«_20»«Rec_Statement»’
-R_Statement_return [ _22 ReturnExp] =‛«_22»«ReturnExp»’
+R_Statement_pass [ _20 Rec_Statement?] =‛«_20» «Rec_Statement»’
+R_Statement_return [ _22 ReturnExp] =‛«_22» «ReturnExp»’
 R_Statement_for [ ForStatement] =‛«ForStatement»’
 R_Statement_while [ WhileStatement] =‛«WhileStatement»’
 R_Statement_assignment [ Assignment] =‛«Assignment»’
@@ -37,14 +37,14 @@ CommaIdent [ _23 ident] = ‛«_23»«ident»’
 
 External [_octothorpe id lpar expcomma* rpar line?] = ‛«_octothorpe»«id»«lpar»«expcomma»«rpar»«line»’
 
-Deftemp [ _37 Lval _38 Exp Rec_Statement?] = ‛«_37»«Lval»«_38»«Exp»«Rec_Statement»’
+Deftemp [ _37 Lval _38 Exp Rec_Statement?] = ‛«_37» «Lval»«_38»«Exp»«Rec_Statement»’
 Defsynonym [ Lval _39 Exp Rec_Statement?] = ‛«Lval»«_39»«Exp»«Rec_Statement»’
-InitStatement [ _40 ident _41 Exp fluff*] = ‛«_40»«ident»«_41»«Exp»«fluff»’
-IfStatement [ _43 Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?] = ‛«_43»«Exp»«StatementBlock»«ElifStatement»«ElseStatement»«Rec_Statement»’
-ElifStatement [ _45 Exp StatementBlock] = ‛«_45»«Exp»«StatementBlock»’
-ElseStatement [ _47 StatementBlock] = ‛«_47»«StatementBlock»’
-ForStatement [ _49 ident _51 Exp StatementBlock Rec_Statement?] = ‛«_49»«ident»«_51»«Exp»«StatementBlock»«Rec_Statement»’
-WhileStatement [ _53 Exp StatementBlock Rec_Statement?] = ‛«_53»«Exp»«StatementBlock»«Rec_Statement»’
+InitStatement [ _40 ident _41 Exp fluff*] = ‛«_40» «ident»«_41»«Exp»«fluff»’
+IfStatement [ _43 Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?] = ‛«_43» «Exp»«StatementBlock»«ElifStatement»«ElseStatement»«Rec_Statement»’
+ElifStatement [ _45 Exp StatementBlock] = ‛«_45» «Exp»«StatementBlock»’
+ElseStatement [ _47 StatementBlock] = ‛«_47» «StatementBlock»’
+ForStatement [ _49 ident _51 Exp StatementBlock Rec_Statement?] = ‛«_49» «ident»«_51»«Exp»«StatementBlock»«Rec_Statement»’
+WhileStatement [ _53 Exp StatementBlock Rec_Statement?] = ‛«_53» «Exp»«StatementBlock»«Rec_Statement»’
 
 Assignment_multiple [ _54 Lval CommaLval+ _55 _56 Exp Rec_Statement?] =‛«_54»«Lval»«CommaLval»«_55»«_56»«Exp»«Rec_Statement»’
 Assignment_single [ Lval _57 Exp Rec_Statement?] =‛«Lval»«_57»«Exp»«Rec_Statement»’
@@ -97,7 +97,7 @@ Atom_true [ _119] =‛«_119»’
 Atom_false [ _120] =‛«_120»’
 Atom_external [m] =‛«m»’
 Atom_subr [_subrref ident] =‛«_subrref»«ident»’
-Atom_range [ _122 _123 Exp _124] =‛«_122»«_123»«Exp»«_124»’
+Atom_range [ _122 _123 Exp _124] =‛«_122» «_123»«Exp»«_124»’
 Atom_string [ string] =‛«string»’
 Atom_number [ number] =‛«number»’
 Atom_ident [ ident] =‛«ident»’
@@ -134,10 +134,10 @@ string [ _164 stringchar* _165] = ‛«_164»«stringchar»«_165»’
 
 stringchar_rec [ _166 stringchar* _167] =‛«_166»«stringchar»«_167»’
 stringchar_other [ any] =‛«any»’
-keyword [ _222] = ‛«_222»’
-lambda [ _226] = ‛«_226»’
+keyword [ _222] = ‛«_222» ’
+lambda [ _226] = ‛«_226» ’
 phi [ _230] = ‛«_230»’
-ident [ idchar+] = ‛«idchar»’
+ident [ idchar+] = ‛«idchar» ’
 
 comment [ _239 commentchar* _240] = ‛«_239»«commentchar»«_240»’
 

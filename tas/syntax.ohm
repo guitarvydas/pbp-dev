@@ -108,7 +108,7 @@ syntax {
       | "(" Exp ")" -- paren
       | "[" line? PrimaryComma+ line? "]" -- listconst
       | "{" line? PairComma+ line? "}" -- dict
-      | lambda LambdaFormals? ":" Exp -- lambda
+      | "lambda" LambdaFormals? ":" Exp -- lambda
       | phi -- phi
       | "⊤" -- true
       | "⊥" -- false
@@ -157,7 +157,7 @@ syntax {
   
 
   andOrIn = ("and" | "or" | "in")
-  boolOp = (boolEq | boolNeq | "<=" | "=" | "<")
+  boolOp = (boolEq | boolNeq | "<=" | "=" | "<" | ">")
   boolEq = "="
   boolNeq = "!="
 

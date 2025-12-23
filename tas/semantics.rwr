@@ -1,6 +1,6 @@
 % rewrite semantics {
 
-Main [ Para TopLevel+] = ‛«Para»«TopLevel»’
+Main [TopLevel+] = ‛«TopLevel»’
 
 TopLevel_defvar [ Defvar] =‛«Defvar»’
 TopLevel_defconst [ Defconst] =‛«Defconst»’
@@ -155,5 +155,4 @@ port [ string] = ‛«string»’
 
 line [lb cs* rb] = ‛«lb»«cs»«rb»’
 Comma [line1? _comma line2?] = ‛«line1»«_comma»«line2»’
-ParaMark [c] = ‛«c»’
 }

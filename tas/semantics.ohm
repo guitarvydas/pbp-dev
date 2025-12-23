@@ -1,6 +1,6 @@
 semantics {
 
-  Main = ParaMark TopLevel+
+  Main = TopLevel+
   TopLevel =
     | Defvar -- defvar
     | Defconst -- defconst
@@ -220,6 +220,5 @@ semantics {
   line = "⎩" (~"⎩" ~"⎭" any)* "⎭"
 
   Comma = line? "," line?
-  ParaMark = "¶"
 }
 
