@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+wd=../..
+pbp=..
+grammar=$1.ohm
+rewrite=$2.rwr
+support=support.js
+src=-
+lib=${pbp}/t2t/lib
+
+generated_rewriter="${wd}/temp.rewrite.mjs"
+generated_transmogrifier="${wd}/temp.transmogrifier.mjs"
+
+node "${lib}/rwr.mjs" "${rewrite}" >"${generated_rewriter}"
+sed -e 's/`/` + "`" + String.raw`/g' <${grammar} >temp.grammar
+cat "${lib}/front.part.js" temp.grammar "${lib}/middle.part.js" "${lib}/args.part.js" "${support}" "${generated_rewriter}" "${lib}/tail.part.js" >"${generated_transmogrifier}"
+node "${generated_transmogrifier}" "${src}"

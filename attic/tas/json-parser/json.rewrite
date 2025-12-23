@@ -1,0 +1,49 @@
+% rewrite JSON {
+
+main [item+] = ‛«item»’
+
+object_multiple [lb nameValuePair _commas+ nvps+ rb] = ‛(dict «nameValuePair» «nvps»)’
+object_single [lb nvp rb] = ‛(obj «nvp»)’
+object_empty [lb ws rb] = ‛(obj)’
+
+nameValuePair [ws1 str ws2 _colon ws3 val] = ‛(«str» . «val»)’
+
+array_multiple [lb ws val _commas+ vals+ rb] = ‛(jarray «val» «vals»)’
+array_single [lb ws val rb] = ‛(jarray «val»)’
+array_empty [lb ws rb] = ‛(jarray)’
+
+value [ws1 val ws2] = ‛«val»’
+
+value1_string [x] = ‛«x»’
+value1_number [x] = ‛«x»’
+value1_object [x] = ‛«x»’
+value1_array [x] = ‛«x»’
+value1_true [x] = ‛«x»’
+value1_false [x] = ‛«x»’
+value1_null [x] = ‛«x»’
+
+string [lq cs* rq] = ‛«lq»«cs»«rq»’
+
+string_innard_quotationMark [c1 c2] = ‛«c1»«c2»’
+string_innard_solidus [c1 c2] = ‛«c1»«c2»’
+string_innard_reverseSolidus [c1 c2] = ‛«c1»«c2»’
+string_innard_backSpace [c1 c2] = ‛«c1»«c2»’
+string_innard_formFeed [c1 c2] = ‛«c1»«c2»’
+string_innard_lineFeed [c1 c2] = ‛«c1»«c2»’
+string_innard_carriageReturn [c1 c2] = ‛«c1»«c2»’
+string_innard_horizontalTab [c1 c2] = ‛«c1»«c2»’
+string_innard_fourHexDigits [_ cu h1 h2 h3 h4] = ‛«_»«cu»«h1»«h2»«h3»«h4»’
+string_innard_other [c] = ‛«c»’
+
+hex [c] = ‛«c»’
+
+number_fractional [sign? zero fraction? exponent?] = ‛«sign»«zero»«fraction»«exponent»’
+number_number [sign? d ds* fraction? exponent?] = ‛«sign»«d»«ds»«fraction»«exponent»’
+
+fraction [dot ds+] = ‛«dot»«ds»’
+
+exponent [e sign? ds+] = ‛«e»«sign»«ds»’
+
+ws [c*] = ‛«c»’
+
+}

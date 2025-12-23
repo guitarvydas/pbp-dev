@@ -1,0 +1,134 @@
+[
+    {
+        "file": "seq12tester.drawio",
+        "name": "main",
+        "children": [
+            {
+                "name": "seq12c",
+                "id": 8
+            },
+            {
+                "name": "'hello",
+                "id": 11
+            }
+        ],
+        "connections": [
+            {
+                "dir": 0,
+                "source": {
+                    "name": "",
+                    "id": 0
+                },
+                "source_port": "",
+                "target": {
+                    "name": "'hello",
+                    "id": 11
+                },
+                "target_port": ""
+            },
+            {
+                "dir": 1,
+                "source": {
+                    "name": "'hello",
+                    "id": 11
+                },
+                "source_port": "",
+                "target": {
+                    "name": "seq12c",
+                    "id": 8
+                },
+                "target_port": ""
+            },
+            {
+                "dir": 2,
+                "source": {
+                    "name": "seq12c",
+                    "id": 8
+                },
+                "source_port": "2",
+                "target": {
+                    "name": "",
+                    "id": 0
+                },
+                "target_port": "2"
+            },
+            {
+                "dir": 2,
+                "source": {
+                    "name": "seq12c",
+                    "id": 8
+                },
+                "source_port": "1",
+                "target": {
+                    "name": "",
+                    "id": 0
+                },
+                "target_port": "1"
+            }
+        ]
+    },
+    {
+        "file": "seq12tester.drawio",
+        "name": "seq12c",
+        "children": [
+            {
+                "name": "1then2",
+                "id": 8
+            }
+        ],
+        "connections": [
+            {
+                "dir": 0,
+                "source": {
+                    "name": "",
+                    "id": 0
+                },
+                "source_port": "",
+                "target": {
+                    "name": "1then2",
+                    "id": 8
+                },
+                "target_port": "2"
+            },
+            {
+                "dir": 0,
+                "source": {
+                    "name": "",
+                    "id": 0
+                },
+                "source_port": "",
+                "target": {
+                    "name": "1then2",
+                    "id": 8
+                },
+                "target_port": "1"
+            },
+            {
+                "dir": 2,
+                "source": {
+                    "name": "1then2",
+                    "id": 8
+                },
+                "source_port": "2",
+                "target": {
+                    "name": "",
+                    "id": 0
+                },
+                "target_port": "2"
+            },
+            {
+                "dir": 2,
+                "source": {
+                    "name": "1then2",
+                    "id": 8
+                },
+                "source_port": "1",
+                "target": {
+                    "name": "",
+                    "id": 0
+                },
+                "target_port": "1"
+            }
+        ]
+    }
+]

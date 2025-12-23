@@ -1,10 +1,10 @@
 import sys
-#sys.path.insert(0, '../kernel')
+sys.path.insert(0, './')
 import kernel0d as zd
 
 try:
-    [palette, env] = zd.initialize_from_files (".", ["tas.drawio.json"])
-    zd.start (arg=sys.argv[3], Part_name="main", palette=palette, env=env)
+    [palette, env] = zd.initialize_from_files (".", ["transmogrify.drawio.json"])
+    zd.start (arg=sys.argv[3], part_name="main", palette=palette, env=env)
 except Exception as e:
     _, _, tb = sys.exc_info()
     while tb.tb_next:

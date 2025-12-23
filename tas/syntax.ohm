@@ -14,7 +14,7 @@ syntax {
    Defvar = kw<"defvar"> Lval "⇐" Exp line?
    Defconst = kw<"defconst"> Lval "≡" Exp line?
    Defn = kw<"defn"> ident Formals StatementBlock line?
-   Defobj = kw<"defobj"> ident ObjFormals line? "{" line? InitStatement+ "}" line?
+   Defobj = kw<"defobj"> ident ObjFormals line? "{" line? InitStatement* "}" line?
    Import = kw<"import"> ident line?
 
    StatementBlock = line? "{" line? Rec_Statement "}" line?
