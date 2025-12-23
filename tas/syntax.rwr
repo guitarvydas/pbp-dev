@@ -38,7 +38,7 @@ CommaIdent [ _23 ident] = ‛«_23»«ident»’
 External [_octothorpe id lpar expcomma* rpar line?] = ‛«_octothorpe»«id»«lpar»«expcomma»«rpar»«line»’
 
 Deftemp [ _37 Lval _38 Exp Rec_Statement?] = ‛«_37» «Lval»«_38»«Exp»«Rec_Statement»’
-Defsynonym [ Lval _39 Exp Rec_Statement?] = ‛«Lval»«_39»«Exp»«Rekeyc_Statement»’
+Defsynonym [ Lval _39 Exp Rec_Statement?] = ‛«Lval»«_39»«Exp»«Rec_Statement»’
 InitStatement [ _40 ident _41 Exp fluff*] = ‛«_40» «ident»«_41»«Exp»«fluff»’
 IfStatement [ _43 Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?] = ‛«_43» «Exp»«StatementBlock»«ElifStatement»«ElseStatement»«Rec_Statement»’
 ElifStatement [ _45 Exp StatementBlock] = ‛«_45» «Exp»«StatementBlock»’
