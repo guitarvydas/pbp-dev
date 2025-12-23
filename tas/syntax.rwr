@@ -1,6 +1,6 @@
 % rewrite syntax {
 
-Main [ Para TopLevel+] = ‛«Para»«TopLevel»’
+Main [TopLevel+] = ‛«TopLevel»’
 
 TopLevel_defvar [ Defvar] =‛«Defvar»’
 TopLevel_defconst [ Defconst] =‛«Defconst»’
@@ -137,11 +137,8 @@ stringchar_other [ any] =‛«any»’
 keyword [ _222] = ‛«_222»’
 lambda [ _226] = ‛«_226»’
 phi [ _230] = ‛«_230»’
-kw [ _231 s _232] = ‛«_231»«s»«_232»’
-ident [ _233 idchar+ _234] = ‛«_233»«idchar»«_234»’
+ident [ idchar+] = ‛«idchar»’
 
-idchar_rec [ _235 idchar+ _236] =‛«_235»«idchar»«_236»’
-idchar_other [ any] =‛«any»’
 comment [ _239 commentchar* _240] = ‛«_239»«commentchar»«_240»’
 
 commentchar_rec [ _241 commentchar* _242] =‛«_241»«commentchar»«_242»’
@@ -158,5 +155,4 @@ line [lb cs* rb] = ‛«lb»«cs»«rb»’
 
 Comma [line1? _comma line2?] = ‛«line1»«_comma»«line2»’
 
-ParaMark [c] = ‛«c»’
 }
