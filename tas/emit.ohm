@@ -11,11 +11,11 @@ emit {
     | comment line? -- comment
     | line -- line
 
-   Defvar = kw<"defvar"> Lval "⇐" Exp line?
-   Defconst = kw<"defconst"> Lval "≡" Exp line?
-   Defn = kw<"defn"> ident Formals StatementBlock line?
-   Defobj = kw<"defobj"> ident ObjFormals line? "{" line? InitStatement+ "}" line?
-   Import = kw<"import"> ident line?
+   Defvar = "defvar" Lval "⇐" Exp line?
+   Defconst = "defconst" Lval "≡" Exp line?
+   Defn = "defn" ident Formals StatementBlock line?
+   Defobj = "defobj" ident ObjFormals line? "{" line? InitStatement* "}" line?
+   Import = "import" ident line?
 
    StatementBlock = line? "{" line? Rec_Statement line? "}" line?
 
@@ -25,10 +25,10 @@ emit {
      | External Rec_Statement? -- external
      | Deftemp -- deftemp
      | Defsynonym -- defsynonym     
-     | kw<"global"> ident CommaIdent* Rec_Statement? -- globals
+     | "global" ident CommaIdent* Rec_Statement? -- globals
      | IfStatement  -- if
-     | kw<"pass"> Rec_Statement? -- pass
-     | kw<"return"> ReturnExp -- return
+     | "pass" Rec_Statement? -- pass
+     | "return" ReturnExp -- return
      | ForStatement -- for
      | WhileStatement  -- while
      | Assignment -- assignment
@@ -38,41 +38,41 @@ emit {
 
    External = ExternalPhrase line?
    ExternalPhrase =
-     | "#" xkw<"low_level_read_text_file_handler"> "(" eh Comma msg Comma fname Comma ok Comma err ")" -- read
-     | "#" xkw<"read_and_convert_lnet_file"> "(" pathname Comma fname ")" -- raclnetf
-     | "#" xkw<"internalize_lnet_from_string"> "(" ")" -- internalizeLnetFromString
-     | "#" xkw<"freshQueue"> "(" ")" -- freshQueue
-     | "#" xkw<"resetQueue"> "(" Exp ")" -- resetQueue
-     | "#" xkw<"freshStack"> "(" ")" -- freshStack
-     | "#" xkw<"fresh"> "(" ident ")" -- fresh
-     | "#" xkw<"stringcar"> "(" Exp ")" -- stringcar
-     | "#" xkw<"stringcdr"> "(" Exp ")" -- stringcdr
-     | "#" xkw<"strcons"> "(" Exp Comma Exp ")" -- strcons
-     | "#" xkw<"stringshrink"> "(" Exp ")" -- stringshrink
-     | "#" xkw<"append"> "(" Exp Comma Exp ")" -- append
-     | "#" xkw<"basename"> "(" Exp ")" -- basename
-     | "#" xkw<"preamble"> "(" ")" -- preamble
-     | "#" xkw<"print_stdout"> "(" Exp ")" -- print_stdout
-     | "#" xkw<"print_stderr"> "(" Exp ")" -- print_stderr
-     | "#" xkw<"print_nl"> "(" ")" -- print_nl
-     | "#" xkw<"print_nl_stderr"> "(" ")" -- print_nl_stderr
-     | "#" xkw<"display_queue_as_json"> "(" Exp ")" -- display_queue_as_json
-     | "#" xkw<"substitute"> "(" Exp Comma Exp Comma Exp ")" -- substitute
-     | "#" xkw<"run_command"> "(" Cmd Comma Args Comma ret Comma rc Comma stdout Comma stderr ")" -- run_command
-     | "#" xkw<"abort"> "(" ")" -- abort
-     | "#" xkw<"asstr"> "(" Exp ")" -- asstr
-     | "#" xkw<"len"> "(" Exp ")" -- len
-     | "#" xkw<"asint"> "(" Exp ")" -- asint
-     | "#" xkw<"enqueue"> "(" Exp Comma Exp ")" -- enqueue
-     | "#" xkw<"dequeue"> "(" Exp ")" -- dequeue
-     | "#" xkw<"empty"> "(" Exp ")" -- empty
-     | "#" xkw<"queue2list"> "(" Exp ")" -- queue2list
-     | "#" xkw<"negate"> "(" Exp ")" -- negate
-     | "#" xkw<"live_update"> "(" Exp Comma Exp ")" -- liveUpdate
-     | "#" xkw<"queue_as_json_to_stdout"> "(" Exp ")" -- queueAsJsonToStdout
-     | "#" xkw<"dir"> "(" Exp ")" -- dir
-     | "#" xkw<"dispatch_lookup"> "(" Exp Comma Exp ")" -- dispatch_lookup
-     | "#" xkw<"dispatch"> "(" Exp Comma Exp Comma Exp")" -- dispatch
+     | "#" x"low_level_read_text_file_handler" "(" eh Comma msg Comma fname Comma ok Comma err ")" -- read
+     | "#" x"read_and_convert_lnet_file" "(" pathname Comma fname ")" -- raclnetf
+     | "#" x"internalize_lnet_from_string" "(" ")" -- internalizeLnetFromString
+     | "#" x"freshQueue" "(" ")" -- freshQueue
+     | "#" x"resetQueue" "(" Exp ")" -- resetQueue
+     | "#" x"freshStack" "(" ")" -- freshStack
+     | "#" x"fresh" "(" ident ")" -- fresh
+     | "#" x"stringcar" "(" Exp ")" -- stringcar
+     | "#" x"stringcdr" "(" Exp ")" -- stringcdr
+     | "#" x"strcons" "(" Exp Comma Exp ")" -- strcons
+     | "#" x"stringshrink" "(" Exp ")" -- stringshrink
+     | "#" x"append" "(" Exp Comma Exp ")" -- append
+     | "#" x"basename" "(" Exp ")" -- basename
+     | "#" x"preamble" "(" ")" -- preamble
+     | "#" x"print_stdout" "(" Exp ")" -- print_stdout
+     | "#" x"print_stderr" "(" Exp ")" -- print_stderr
+     | "#" x"print_nl" "(" ")" -- print_nl
+     | "#" x"print_nl_stderr" "(" ")" -- print_nl_stderr
+     | "#" x"display_queue_as_json" "(" Exp ")" -- display_queue_as_json
+     | "#" x"substitute" "(" Exp Comma Exp Comma Exp ")" -- substitute
+     | "#" x"run_command" "(" Cmd Comma Args Comma ret Comma rc Comma stdout Comma stderr ")" -- run_command
+     | "#" x"abort" "(" ")" -- abort
+     | "#" x"asstr" "(" Exp ")" -- asstr
+     | "#" x"len" "(" Exp ")" -- len
+     | "#" x"asint" "(" Exp ")" -- asint
+     | "#" x"enqueue" "(" Exp Comma Exp ")" -- enqueue
+     | "#" x"dequeue" "(" Exp ")" -- dequeue
+     | "#" x"empty" "(" Exp ")" -- empty
+     | "#" x"queue2list" "(" Exp ")" -- queue2list
+     | "#" x"negate" "(" Exp ")" -- negate
+     | "#" x"live_update" "(" Exp Comma Exp ")" -- liveUpdate
+     | "#" x"queue_as_json_to_stdout" "(" Exp ")" -- queueAsJsonToStdout
+     | "#" x"dir" "(" Exp ")" -- dir
+     | "#" x"dispatch_lookup" "(" Exp Comma Exp ")" -- dispatch_lookup
+     | "#" x"dispatch" "(" Exp Comma Exp Comma Exp")" -- dispatch
      
      | "#" ident "(" StuffInsideParentheses* ")" -- unrecognized
 
@@ -84,19 +84,19 @@ emit {
    stdout = ident
    stderr = ident
    
-   Deftemp = kw<"deftemp"> Lval "⇐" Exp Rec_Statement?
+   Deftemp = "deftemp" Lval "⇐" Exp Rec_Statement?
    Defsynonym =
      | Lval errorMessage "≡" Exp Rec_Statement? -- illegal
      | ident "≡" Exp Rec_Statement? -- legal
 
    InitStatement = "•" ident "⇐" Exp (comment | line)*
 
-   IfStatement = kw<"if"> Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?
-   ElifStatement = kw<"elif"> Exp StatementBlock
-   ElseStatement = kw<"else"> StatementBlock
+   IfStatement = "if" Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?
+   ElifStatement = "elif" Exp StatementBlock
+   ElseStatement = "else" StatementBlock
 
-   ForStatement = kw<"for"> ident kw<"in"> Exp StatementBlock Rec_Statement?
-   WhileStatement = kw<"while"> Exp StatementBlock Rec_Statement?
+   ForStatement = "for" ident "in" Exp StatementBlock Rec_Statement?
+   WhileStatement = "while" Exp StatementBlock Rec_Statement?
 
    Assignment = 
      | "[" LvalComma+ "]" "⇐" Exp Rec_Statement? -- multiple
@@ -122,7 +122,7 @@ emit {
       | BooleanNot -- basic
 
     BooleanNot =
-      | kw<"not"> BooleanExp -- not
+      | "not" BooleanExp -- not
       | AddExp -- basic
 
     AddExp =
@@ -164,7 +164,7 @@ emit {
       | "⊤" -- true
       | "⊥" -- false
       | "↪︎" ident -- subr
-      | kw<"range"> "(" Exp ")" -- range
+      | "range" "(" Exp ")" -- range
       | ident Actuals -- callident
       | string -- string
       | number -- number
@@ -211,11 +211,11 @@ emit {
   
 
   andOrIn =
-    | kw<"and"> -- and
-    | kw<"or"> -- or
-    | kw<"in"> -- in
+    | "and" -- and
+    | "or" -- or
+    | "in" -- in
 
-  boolOp = (boolEq | boolNeq | "<=" | ">=" | ">" | "<")
+  boolOp = (boolEq | boolNeq | "<=" | "=" | "" | "<")
   boolEq = "="
   boolNeq = "!="
 
@@ -225,40 +225,36 @@ emit {
     | ~"“" ~"”" any -- other
 
     keyword = (
-        kw<"defconst">
-      | kw<"deftemp">
-      | kw<"defobj">
-      | kw<"defvar">
-      | kw<"defn">
-      | kw<"useglobal">
-      | kw<"pass">
-      | kw<"return">
-      | kw<"if">
-      | kw<"elif">
-      | kw<"else">
-      | kw<"and">
-      | kw<"or">
-      | kw<"in">
-      | kw<"not">
-      | kw<"range">
-      | kw<"while">
-      | kw<"import">
-      | kw<"as">
-      | kw<"pair">
-      | kw<"push">
+        "defconst"
+      | "deftemp"
+      | "defobj"
+      | "defvar"
+      | "defn"
+      | "useglobal"
+      | "pass"
+      | "return"
+      | "if"
+      | "elif"
+      | "else"
+      | "and"
+      | "or"
+      | "in"
+      | "not"
+      | "range"
+      | "while"
+      | "import"
+      | "as"
+      | "pair"
+      | "push"
       | lambda
       | phi
       )
       
-  lambda = ("λ" | kw<"%CE%BB">)
-  phi = ("ϕ" | kw<"%CF%95">)
+  lambda = ("λ" | "%CE%BB")
+  phi = ("ϕ" | "%CF%95")
 
-  kw<s> = "❲" s "❳"
-  xkw<s> = "❲" s "❳"
-  ident  = ~keyword "❲" idchar+ "❳"
-  idchar =
-    | "❲" idchar+ "❳" -- rec
-    | ~"❲" ~"❳" any -- other
+  ident  = ~keyword idchar+
+  idchar = alnum | "_"
 
   comment = "⌈" commentchar* "⌉"
   commentchar = 

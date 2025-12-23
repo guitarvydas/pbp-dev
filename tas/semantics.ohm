@@ -11,11 +11,11 @@ semantics {
     | comment line? -- comment
     | line -- line
 
-   Defvar = kw<"defvar"> Lval "⇐" Exp line?
-   Defconst = kw<"defconst"> Lval "≡" Exp line?
-   Defn = kw<"defn"> ident Formals StatementBlock line?
-   Defobj = kw<"defobj"> ident ObjFormals line? "{" line? InitStatement+ "}" line?
-   Import = kw<"import"> ident line?
+   Defvar = "defvar" Lval "⇐" Exp line?
+   Defconst = "defconst" Lval "≡" Exp line?
+   Defn = "defn" ident Formals StatementBlock line?
+   Defobj = "defobj" ident ObjFormals line? "{" line? InitStatement* "}" line?
+   Import = "import" ident line?
 
    StatementBlock = line? "{" line? Rec_Statement line? "}" line?
 
@@ -25,10 +25,10 @@ semantics {
      | External Rec_Statement? -- external
      | Deftemp -- deftemp
      | Defsynonym -- defsynonym     
-     | kw<"global"> ident CommaIdent* Rec_Statement? -- globals
+     | "global" ident CommaIdent* Rec_Statement? -- globals
      | IfStatement  -- if
-     | kw<"pass"> Rec_Statement? -- pass
-     | kw<"return"> ReturnExp -- return
+     | "pass" Rec_Statement? -- pass
+     | "return" ReturnExp -- return
      | ForStatement -- for
      | WhileStatement  -- while
      | Assignment -- assignment
@@ -38,19 +38,19 @@ semantics {
 
    External = "#" ident "(" ExpComma* ")" line?
 
-   Deftemp = kw<"deftemp"> Lval "⇐" Exp Rec_Statement?
+   Deftemp = "deftemp" Lval "⇐" Exp Rec_Statement?
    Defsynonym =
      | ident "≡" Exp Rec_Statement? -- legal
      | Lval "≡" Exp Rec_Statement? -- illegal
 
    InitStatement = "•" ident "⇐" Exp (comment | line)*
 
-   IfStatement = kw<"if"> Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?
-   ElifStatement = kw<"elif"> Exp StatementBlock
-   ElseStatement = kw<"else"> StatementBlock
+   IfStatement = "if" Exp StatementBlock ElifStatement* ElseStatement? Rec_Statement?
+   ElifStatement = "elif" Exp StatementBlock
+   ElseStatement = "else" StatementBlock
 
-   ForStatement = kw<"for"> ident kw<"in"> Exp StatementBlock Rec_Statement?
-   WhileStatement = kw<"while"> Exp StatementBlock Rec_Statement?
+   ForStatement = "for" ident "in" Exp StatementBlock Rec_Statement?
+   WhileStatement = "while" Exp StatementBlock Rec_Statement?
 
    Assignment = 
      | "[" LvalComma+ "]" "⇐" Exp Rec_Statement? -- multiple
@@ -76,7 +76,7 @@ semantics {
       | BooleanNot -- basic
 
     BooleanNot =
-      | kw<"not"> BooleanExp -- not
+      | "not" BooleanExp -- not
       | AddExp -- basic
 
     AddExp =
@@ -116,7 +116,7 @@ semantics {
       | "⊥" -- false
       | "↪︎" ident -- subr
       | External -- external
-      | kw<"range"> "(" Exp ")" -- range
+      | "range" "(" Exp ")" -- range
       | string -- string
       | number -- number
       | ident -- ident
@@ -157,8 +157,8 @@ semantics {
     Pair = string ":" Exp Comma?
   
 
-  andOrIn = (kw<"and"> | kw<"or"> | kw<"in">)
-  boolOp = (boolEq | boolNeq | "<=" | ">=" | ">" | "<")
+  andOrIn = ("and" | "or" | "in")
+  boolOp = (boolEq | boolNeq | "<=" | "=" | ">" | "<")
   boolEq = "="
   boolNeq = "!="
 
@@ -168,37 +168,34 @@ semantics {
     | ~"“" ~"”" any -- other
 
     keyword = (
-        kw<"defconst">
-      | kw<"deftemp">
-      | kw<"defobj">
-      | kw<"defvar">
-      | kw<"defn">
-      | kw<"useglobal">
-      | kw<"pass">
-      | kw<"return">
-      | kw<"if">
-      | kw<"elif">
-      | kw<"else">
-      | kw<"and">
-      | kw<"or">
-      | kw<"in">
-      | kw<"not">
-      | kw<"range">
-      | kw<"while">
-      | kw<"import">
-      | kw<"as">
+        "defconst"
+      | "deftemp"
+      | "defobj"
+      | "defvar"
+      | "defn"
+      | "useglobal"
+      | "pass"
+      | "return"
+      | "if"
+      | "elif"
+      | "else"
+      | "and"
+      | "or"
+      | "in"
+      | "not"
+      | "range"
+      | "while"
+      | "import"
+      | "as"
       | lambda
       | phi
       )
       
-  lambda = ("λ" | kw<"%CE%BB">)
-  phi = ("ϕ" | kw<"%CF%95">)
+  lambda = ("λ" | "%CE%BB")
+  phi = ("ϕ" | "%CF%95")
 
-  kw<s> = "❲" s "❳"
-  ident  = ~keyword "❲" idchar+ "❳"
-  idchar =
-    | "❲" idchar+ "❳" -- rec
-    | ~"❲" ~"❳" any -- other
+  ident  = ~keyword idchar+
+  idchar = alnum | "_"
 
   comment = "⌈" commentchar* "⌉"
   commentchar = 
