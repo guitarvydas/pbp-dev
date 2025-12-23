@@ -543,7 +543,6 @@ def obj_clone (obj):                                   #line 599
 # usage: app ${_00_} diagram_filename1 diagram_filename2 ...#line 603
 # where ${_00_} is the root directory for the project  #line 604#line 605
 def initialize_component_palette_from_files (project_root,diagram_source_files):#line 606
-    print (diagram_source_files, file=sys.stderr)
     reg = make_component_registry ()                   #line 607
     for diagram_source in  diagram_source_files:       #line 608
         all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)#line 609

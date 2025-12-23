@@ -161,7 +161,7 @@ ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe�
 
 Deftemp [_deftemp lval _mutate e rec?] = ‛\n«lval» = «e»«rec»’
 Defsynonym_illegal [ lval err _eqv e rec?] = ‛\n«lval» «err» = «e»«rec»’
-Defsynonym_legal [id _eqv e rec?] = ‛\n«id» = «e»«rec»’
+Defsynonym_legal [id _eqv e rec?] = ‛\n«id» = «e»#defsyn«rec»’
 
 
 InitStatement [ _mark ident _33 Exp fluff*] = ‛\nself.«ident» = «Exp» «fluff»’

@@ -158,7 +158,7 @@ semantics {
   
 
   andOrIn = ("and" | "or" | "in")
-  boolOp = (boolEq | boolNeq | "<=" | "=" | ">" | "<")
+  boolOp = (boolEq | boolNeq | "<=" | ">=" | "=" | "<" | ">")
   boolEq = "="
   boolNeq = "!="
 
