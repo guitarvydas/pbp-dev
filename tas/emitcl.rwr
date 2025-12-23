@@ -1,6 +1,6 @@
 % rewrite emitCL {
 
-Main [ Para TopLevel+] = ‛«Para»«TopLevel»’
+Main [TopLevel+] = ‛«TopLevel»’
 
 TopLevel_defvar [ Defvar] =‛«Defvar»’
 TopLevel_defconst [ Defconst] =‛«Defconst»’
@@ -10,7 +10,6 @@ TopLevel_import [ Import] =‛«Import»’
 TopLevel_comment [s line?] =‛«s»«line»’
 TopLevel_line [line] =‛«line»’
 
-kw [ s] = ‛«s»’
 Defvar [ __ lval _eq e line?] = ‛\n(defparameter «lval» «e»)«line»’
 Defconst [ __ lval _eq e line?] = ‛\n(defparameter «lval» «e»)’
 Defn [ _4 ident Formals StatementBlock line?] = 
@@ -324,10 +323,8 @@ string [lb cs* rb] = ‛«lb»«cs»«rb»’
 stringchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
 stringchar_other [c] = ‛«c»’
 
-kw [lb s rb] = ‛«lb»«s»«rb»’
-ident [lb cs* rb] = ‛«lb»«cs»«rb»’
-idchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
-idchar_other [c] = ‛«c»’
+ident [cs*] = ‛«cs» ’
+idchar [c] = ‛«c»’
 
 comment [lb cs* rb] = ‛«lb»«cs»«rb»’
 commentchar_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
@@ -346,7 +343,5 @@ port [s] = ‛«s»’
 
 line [lb cs* rb] = ‛«lb»«cs»«rb»’
 Comma [line1? _comma line2?] = ‛«line1» «line2»’
-
-ParaMark [c] = ‛«c»’
 
 }

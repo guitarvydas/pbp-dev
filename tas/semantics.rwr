@@ -137,11 +137,8 @@ stringchar_other [ any] =‛«any»’
 keyword [ _222] = ‛«_222»’
 lambda [ _226] = ‛«_226»’
 phi [ _230] = ‛«_230»’
-kw [ _231 s _232] = ‛«_231»«s»«_232»’
-ident [ _233 idchar+ _234] = ‛«_233»«idchar»«_234»’
-
-idchar_rec [ _235 idchar+ _236] =‛«_235»«idchar»«_236»’
-idchar_other [ any] =‛«any»’
+ident [idchar+] = ‛«idchar» ’
+idchar [c] =‛«c»’
 comment [ _239 commentchar* _240] = ‛«_239»«commentchar»«_240»\n’
 
 commentchar_rec [ _241 commentchar* _242] =‛«_241»«commentchar»«_242»’

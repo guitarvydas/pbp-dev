@@ -1,6 +1,6 @@
 emit {
 
-  Main = ParaMark TopLevel+
+  Main = TopLevel+
   TopLevel =
     | Defvar -- defvar
     | Defconst -- defconst
@@ -38,41 +38,41 @@ emit {
 
    External = ExternalPhrase line?
    ExternalPhrase =
-     | "#" x"low_level_read_text_file_handler" "(" eh Comma msg Comma fname Comma ok Comma err ")" -- read
-     | "#" x"read_and_convert_lnet_file" "(" pathname Comma fname ")" -- raclnetf
-     | "#" x"internalize_lnet_from_string" "(" ")" -- internalizeLnetFromString
-     | "#" x"freshQueue" "(" ")" -- freshQueue
-     | "#" x"resetQueue" "(" Exp ")" -- resetQueue
-     | "#" x"freshStack" "(" ")" -- freshStack
-     | "#" x"fresh" "(" ident ")" -- fresh
-     | "#" x"stringcar" "(" Exp ")" -- stringcar
-     | "#" x"stringcdr" "(" Exp ")" -- stringcdr
-     | "#" x"strcons" "(" Exp Comma Exp ")" -- strcons
-     | "#" x"stringshrink" "(" Exp ")" -- stringshrink
-     | "#" x"append" "(" Exp Comma Exp ")" -- append
-     | "#" x"basename" "(" Exp ")" -- basename
-     | "#" x"preamble" "(" ")" -- preamble
-     | "#" x"print_stdout" "(" Exp ")" -- print_stdout
-     | "#" x"print_stderr" "(" Exp ")" -- print_stderr
-     | "#" x"print_nl" "(" ")" -- print_nl
-     | "#" x"print_nl_stderr" "(" ")" -- print_nl_stderr
-     | "#" x"display_queue_as_json" "(" Exp ")" -- display_queue_as_json
-     | "#" x"substitute" "(" Exp Comma Exp Comma Exp ")" -- substitute
-     | "#" x"run_command" "(" Cmd Comma Args Comma ret Comma rc Comma stdout Comma stderr ")" -- run_command
-     | "#" x"abort" "(" ")" -- abort
-     | "#" x"asstr" "(" Exp ")" -- asstr
-     | "#" x"len" "(" Exp ")" -- len
-     | "#" x"asint" "(" Exp ")" -- asint
-     | "#" x"enqueue" "(" Exp Comma Exp ")" -- enqueue
-     | "#" x"dequeue" "(" Exp ")" -- dequeue
-     | "#" x"empty" "(" Exp ")" -- empty
-     | "#" x"queue2list" "(" Exp ")" -- queue2list
-     | "#" x"negate" "(" Exp ")" -- negate
-     | "#" x"live_update" "(" Exp Comma Exp ")" -- liveUpdate
-     | "#" x"queue_as_json_to_stdout" "(" Exp ")" -- queueAsJsonToStdout
-     | "#" x"dir" "(" Exp ")" -- dir
-     | "#" x"dispatch_lookup" "(" Exp Comma Exp ")" -- dispatch_lookup
-     | "#" x"dispatch" "(" Exp Comma Exp Comma Exp")" -- dispatch
+     | "#" "low_level_read_text_file_handler" "(" eh Comma msg Comma fname Comma ok Comma err ")" -- read
+     | "#" "read_and_convert_lnet_file" "(" pathname Comma fname ")" -- raclnetf
+     | "#" "internalize_lnet_from_string" "(" ")" -- internalizeLnetFromString
+     | "#" "freshQueue" "(" ")" -- freshQueue
+     | "#" "resetQueue" "(" Exp ")" -- resetQueue
+     | "#" "freshStack" "(" ")" -- freshStack
+     | "#" "fresh" "(" ident ")" -- fresh
+     | "#" "stringcar" "(" Exp ")" -- stringcar
+     | "#" "stringcdr" "(" Exp ")" -- stringcdr
+     | "#" "strcons" "(" Exp Comma Exp ")" -- strcons
+     | "#" "stringshrink" "(" Exp ")" -- stringshrink
+     | "#" "append" "(" Exp Comma Exp ")" -- append
+     | "#" "basename" "(" Exp ")" -- basename
+     | "#" "preamble" "(" ")" -- preamble
+     | "#" "print_stdout" "(" Exp ")" -- print_stdout
+     | "#" "print_stderr" "(" Exp ")" -- print_stderr
+     | "#" "print_nl" "(" ")" -- print_nl
+     | "#" "print_nl_stderr" "(" ")" -- print_nl_stderr
+     | "#" "display_queue_as_json" "(" Exp ")" -- display_queue_as_json
+     | "#" "substitute" "(" Exp Comma Exp Comma Exp ")" -- substitute
+     | "#" "run_command" "(" Cmd Comma Args Comma ret Comma rc Comma stdout Comma stderr ")" -- run_command
+     | "#" "abort" "(" ")" -- abort
+     | "#" "asstr" "(" Exp ")" -- asstr
+     | "#" "len" "(" Exp ")" -- len
+     | "#" "asint" "(" Exp ")" -- asint
+     | "#" "enqueue" "(" Exp Comma Exp ")" -- enqueue
+     | "#" "dequeue" "(" Exp ")" -- dequeue
+     | "#" "empty" "(" Exp ")" -- empty
+     | "#" "queue2list" "(" Exp ")" -- queue2list
+     | "#" "negate" "(" Exp ")" -- negate
+     | "#" "live_update" "(" Exp Comma Exp ")" -- liveUpdate
+     | "#" "queue_as_json_to_stdout" "(" Exp ")" -- queueAsJsonToStdout
+     | "#" "dir" "(" Exp ")" -- dir
+     | "#" "dispatch_lookup" "(" Exp Comma Exp ")" -- dispatch_lookup
+     | "#" "dispatch" "(" Exp Comma Exp Comma Exp")" -- dispatch
      
      | "#" ident "(" StuffInsideParentheses* ")" -- unrecognized
 
@@ -279,5 +279,4 @@ emit {
   line = "⎩" (~"⎩" ~"⎭" any)* "⎭"
 
   Comma = line? "," line?
-  ParaMark = "¶"
 }
