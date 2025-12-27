@@ -215,7 +215,7 @@ emit {
     | "or" -- or
     | "in" -- in
 
-  boolOp = (boolEq | boolNeq | "<=" | "=" | ">" | "<")
+  boolOp = (boolEq | boolNeq | "<=" | ">=" | "=" | ">" | "<")
   boolEq = "="
   boolNeq = "!="
 
