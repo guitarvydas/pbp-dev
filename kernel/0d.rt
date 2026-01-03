@@ -364,7 +364,7 @@ defn route (container, from_component, mevent) {
         }
     }
     if not (was_sent) {
-        #live_update (“✗”, #strcons (container.name, #strcons (“: mevent '”, #strcons (mevent.port, #strcons (“' from ”, #strcons (fromname, “ dropped on floor...”))))))
+        #live_update (“internal error”, #strcons (container.name, #strcons (“: mevent on port '”, #strcons (mevent.port, #strcons (“' from ”, #strcons (fromname, “ dropped on floor...”))))))
     }
 }
 

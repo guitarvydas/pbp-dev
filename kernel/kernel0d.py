@@ -325,7 +325,7 @@ def route (container,from_component,mevent):           #line 344
                 deposit ( container, connector, mevent)#line 361
                 was_sent =  True                       #line 362#line 363#line 364#line 365
     if not ( was_sent):                                #line 366
-        live_update ( "✗",  str( container.name) +  str( ": mevent '") +  str( mevent.port) +  str( "' from ") +  str( fromname) +  " dropped on floor..."     )#line 367#line 368#line 369#line 370
+        live_update ( "internal error",  str( container.name) +  str( ": mevent on port '") +  str( mevent.port) +  str( "' from ") +  str( fromname) +  " dropped on floor..."     )#line 367#line 368#line 369#line 370
 
 def any_child_ready (container):                       #line 371
     for child in  container.children:                  #line 372

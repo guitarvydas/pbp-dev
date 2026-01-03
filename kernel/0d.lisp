@@ -514,7 +514,7 @@ x))))
           ))
       (cond
         ((not  was_sent)                                    #|line 366|#
-          (live_update  "✗"  (concatenate 'string (slot-value  container 'name)  (concatenate 'string  ": mevent '"  (concatenate 'string (slot-value  mevent 'port)  (concatenate 'string  "' from "  (concatenate 'string  fromname  " dropped on floor...")))))) #|line 367|# #|line 368|#
+          (live_update  "internal error"  (concatenate 'string (slot-value  container 'name)  (concatenate 'string  ": mevent on port '"  (concatenate 'string (slot-value  mevent 'port)  (concatenate 'string  "' from "  (concatenate 'string  fromname  " dropped on floor...")))))) #|line 367|# #|line 368|#
           ))))                                              #|line 369|#
   )
 (defun any_child_ready (&optional  container)

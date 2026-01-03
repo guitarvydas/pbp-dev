@@ -365,7 +365,7 @@ function route (container,from_component,mevent) {     /* line 344 */
       }                                                /* line 365 */
     }
     if ((! ( was_sent))) {                             /* line 366 */
-      console.error ( "✗" + ": " +  ( container.name.toString ()+  ( ": mevent '".toString ()+  ( mevent.port.toString ()+  ( "' from ".toString ()+  ( fromname.toString ()+  " dropped on floor...".toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 367 *//* line 368 */
+      console.error ( "internal error" + ": " +  ( container.name.toString ()+  ( ": mevent on port '".toString ()+  ( mevent.port.toString ()+  ( "' from ".toString ()+  ( fromname.toString ()+  " dropped on floor...".toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 367 *//* line 368 */
     }                                                  /* line 369 *//* line 370 */
 }
 
