@@ -1290,23 +1290,29 @@ x))))
     (live_update  "Info"  (concatenate 'string  "  @"  (concatenate 'string (format nil "~a"  ticktime)  (concatenate 'string  "  "  (concatenate 'string  "probe "  (concatenate 'string (slot-value  eh 'name)  (concatenate 'string  ": " (format nil "~a"  s)))))))) #|line 23|#) #|line 24|#
   )
 (defun shell_out_handler (&optional  eh  cmd  mev)
-  (declare (ignorable  eh  cmd  mev))                       #|line 26|#
+  (declare (ignorable  eh  cmd  mev))                       #|line 26|# #|line 27|#
   (let ((s (slot-value (slot-value  mev 'datum) 'v)))
-    (declare (ignorable s))                                 #|line 27|#
+    (declare (ignorable s))                                 #|line 28|#
     (let (( ret  nil))
-      (declare (ignorable  ret))                            #|line 28|#
+      (declare (ignorable  ret))                            #|line 29|#
       (let (( rc  nil))
-        (declare (ignorable  rc))                           #|line 29|#
+        (declare (ignorable  rc))                           #|line 30|#
         (let (( stdout  nil))
-          (declare (ignorable  stdout))                     #|line 30|#
+          (declare (ignorable  stdout))                     #|line 31|#
           (let (( stderr  nil))
-            (declare (ignorable  stderr))                   #|line 31|#
-            (multiple-value-setq (stdout stderr rc) (uiop::run-program (concatenate 'string  cmd " "  s) :output :string :error :string)) #|line 32|#
-            (cond
-              (( equal    rc  0)                            #|line 33|#
-                (funcall (quote send)   eh  ""  (concatenate 'string  stdout  stderr)  mev  #|line 34|#)
-                )
-              (t                                            #|line 35|#
-                (funcall (quote send)   eh  "✗"  (concatenate 'string  stdout  stderr)  mev  #|line 36|#) #|line 37|#
-                )))))))                                     #|line 38|#
+            (declare (ignorable  stderr))                   #|line 32|#
+            (let (( command  cmd))
+              (declare (ignorable  command))                #|line 33|#
+              (cond
+                ((not (equal   projectRoot  ""))            #|line 34|#
+                  (setf  command (substitute  "_00_"  projectRoot  command) #|line 35|#) #|line 36|#
+                  ))
+              (multiple-value-setq (stdout stderr rc) (uiop::run-program (concatenate 'string  command " "  s) :output :string :error :string)) #|line 37|#
+              (cond
+                (( equal    rc  0)                          #|line 38|#
+                  (funcall (quote send)   eh  ""  (concatenate 'string  stdout  stderr)  mev  #|line 39|#)
+                  )
+                (t                                          #|line 40|#
+                  (funcall (quote send)   eh  "✗"  (concatenate 'string  stdout  stderr)  mev  #|line 41|#) #|line 42|#
+                  ))))))))                                  #|line 43|#
   )
