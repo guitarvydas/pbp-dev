@@ -1090,20 +1090,24 @@ function probe_handler (eh,tag,mev) {                  /* line 14 */
     console.error ( "Info" + ": " +  ( "  @".toString ()+  (`${ ticktime}`.toString ()+  ( "  ".toString ()+  ( "probe ".toString ()+  ( eh.name.toString ()+  ( ": ".toString ()+ `${ s}`.toString ()) .toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 23 *//* line 24 *//* line 25 */
 }
 
-function shell_out_handler (eh,cmd,mev) {              /* line 26 */
-    let s =  mev.datum.v;                              /* line 27 */
-    let  ret =  null;                                  /* line 28 */
-    let  rc =  null;                                   /* line 29 */
-    let  stdout =  null;                               /* line 30 */
-    let  stderr =  null;                               /* line 31 */
-
-    stdout = execSync(`${ cmd} ${ s}`, { encoding: 'utf-8' });
-    ret = true;
-                                                       /* line 32 */
-    if ( rc ==  0) {                                   /* line 33 */
-      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 34 */
+function shell_out_handler (eh,cmd,mev) {              /* line 26 *//* line 27 */
+    let s =  mev.datum.v;                              /* line 28 */
+    let  ret =  null;                                  /* line 29 */
+    let  rc =  null;                                   /* line 30 */
+    let  stdout =  null;                               /* line 31 */
+    let  stderr =  null;                               /* line 32 */
+    let  command =  cmd;                               /* line 33 */
+    if ( projectRoot!= "") {                           /* line 34 */
+      command =  command.replaceAll ( "_00_",  projectRoot)/* line 35 */;/* line 36 */
     }
-    else {                                             /* line 35 */
-      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 36 *//* line 37 */
-    }                                                  /* line 38 *//* line 39 */
+
+    stdout = execSync(`${ command} ${ s}`, { encoding: 'utf-8' });
+    ret = true;
+                                                       /* line 37 */
+    if ( rc ==  0) {                                   /* line 38 */
+      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 39 */
+    }
+    else {                                             /* line 40 */
+      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 41 *//* line 42 */
+    }                                                  /* line 43 *//* line 44 */
 }

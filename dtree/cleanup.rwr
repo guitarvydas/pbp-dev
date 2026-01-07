@@ -1,0 +1,7 @@
+%rewrite cleanup {
+  main [cs+] = ‛«cs»’
+  char_commanlbrace [_] = ‛\n}’
+  char_commabrace [_] = ‛}’
+  char_bracecommabracket [_] = ‛}]’
+  char_c [c] = ‛«c»’
+}

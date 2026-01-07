@@ -1,0 +1,68 @@
+%parameter diagramid
+%parameter cellid
+%parameter parentid
+
+% rewrite dtree {
+  Top [lb stuff* _ Diagrams+ rb] =
+    ⎡ ⎨reset⎬
+      ‛[«Diagrams»\n{"map":⎨maptojson⎬}\n]’
+    ⎦
+
+  Diagram [lb attr+ _ graphmodel rb] =
+      ⎡ diagramid=‛⎨newid ‛d’⎬’
+	⎡ parentid =‛⟪diagramid⟫’
+	  ‛\n{\n"type":"diagram",\n"attributes":{\n"id":"⟪diagramid⟫",«attr»\n},«graphmodel»\n},’
+	⎦
+      ⎦
+
+  GraphModel [lb stuff+ _gt _root cells+ _eroot rb] = ‛\n"cells":[«cells»\]’
+  Cell_long [lb attr+ _gt geometry? rb] =
+    ⎡ cellid=‛⎨newid ‛c’⎬’
+      ⎡ parentid =‛⟪cellid⟫’
+          ‛\n{\n"type":"cell",\n"attributes":{\n"id":"⟪cellid⟫",«attr»\n}\n},’
+      ⎦
+    ⎦
+  Cell_short [lb attr+ _slgt] = 
+    ⎡ cellid=‛⎨newid ‛c’⎬’
+      ⎡ parentid =‛⟪cellid⟫’
+        ‛\n{\n"type":"cell",\n"attributes":{\n"id":"⟪cellid⟫",«attr»\n}\n},’
+      ⎦
+    ⎦
+
+  Geometry_long [lb attr+ _gt any+ rb] = ‛’
+  Geometry_short [lb attr+ rb] = ‛’
+
+  Attribute_id [name _eq id] =
+    ⎡ ⎨memoid ‛«id»’ ‛⟪parentid⟫’⎬
+      ‛\n  "drawio_id":"«id»",’
+    ⎦
+
+  Attribute_name [name _eq s] = ‛\n"«name»":«s»,’
+  Attribute_parent [name _eq id] = ‛\n "parent":"«id»",’
+  Attribute_source [name _eq id] = ‛\n "source":"«id»",’
+  Attribute_target [name _eq id] = ‛\n "target":"«id»",’
+  Attribute_edge [name _eq s] = ‛\n "kind":"edge",’
+  Attribute_style [_style _eq lq attr+ rq] = ‛«attr»’
+  Attribute_no [name _eq s] = ‛\n"branch":false,’
+  Attribute_yes [name _eq s] = ‛\n"branch":true,’
+  Attribute_value [name _eq s] = ‛\n"text":«s»,’
+  Attribute_vertex [name _eq s] = ‛’
+  Attribute_connectable [name _eq s] = ‛’
+  Attribute_other [name _eq s] = ‛’
+
+  styleattr_edgelabel [_ _semi] = ‛\n"kind":"branchLabel",’
+  styleattr_process [name _eq _p _semi] = ‛\n"kind":"process",’
+  styleattr_rhombus [name _semi] = ‛\n "kind":"rhombus",’
+  styleattr_shape [name _eq s _semi] = ‛\n"shape":«s»,’
+  styleattr_long [name _eq v _semi] = ‛’
+  styleattr_short [name _semi] = ‛’
+
+  number [d+ frac?] = ‛«d»«frac»’
+  frac [_dot d+] = ‛.«d»’
+  points [lb n* _comma* rb] = ‛’
+  name [c cs*] = ‛«c»«cs»’
+  stuff [x] = ‛’
+  string [lq cs+ rq] = ‛"«cs»"’
+  id [lq cs+ rq] = ‛«cs»’
+  schar [c] = ‛«c»’
+}

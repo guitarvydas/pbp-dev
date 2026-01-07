@@ -1,4 +1,6 @@
 #!/bin/bash
+# cd to pbp-kit (or local project), then run this script
+# ~/projects/pbp-dev/import-minimal.bash
 wd=.
 pbp=./pbp
 if [ -z "$PBP_ROOT" ]; then
@@ -8,6 +10,7 @@ if [ -z "$PBP_ROOT" ]; then
 fi
 Dev=${PBP_ROOT}
 TaS_Dev=${PBP_ROOT}/tas
+dtree_Dev=${PBP_ROOT}/dtree
 rm -rf pbp
 mkdir pbp
 cd pbp
@@ -16,6 +19,7 @@ KERNEL=./kernel
 DAS=./das
 TAS=./tas
 T2T=./t2t
+DTREE=./dtree
 
 rm -rf tas
 rm -rf das
@@ -26,8 +30,10 @@ mkdir das
 mkdir t2t
 mkdir t2t/lib
 mkdir kernel
+mkdir dtree
 
 cp ${Dev}/t2t.bash .
+cp ${Dev}/dtree.sh .
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
 cp ${Dev}/kernel/package.json .
@@ -46,4 +52,5 @@ cp ${Dev}/t2t/lib/middle.part.js ${T2T}/lib
 cp ${Dev}/t2t/lib/tail.part.js ${T2T}/lib
 cp ${Dev}/t2t/lib/rwr.mjs ${T2T}/lib
 
-${Dev}/import-minimal-tas.bash ${Tas_Dev} ${TAS}
+${Dev}/import-minimal-tas.bash ${TaS_Dev} ${TAS}
+${Dev}/import-minimal-dtree.bash ${dtree_Dev} ${DTREE}

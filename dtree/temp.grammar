@@ -1,0 +1,20 @@
+dt {
+  Main = YesNo
+  YesNo = "[" text YesBranch NoBranch "]"
+
+  YesBranch = "|" "yes" ":" (YesNo | text)
+  NoBranch = "|" "no" ":" (YesNo | text)
+
+  text = char+
+  
+  char =
+    | "\n" -- newline
+    | "?" -- questionmark
+    | "&lt;div&gt;" -- begindiv
+    | "&lt;/div&gt;" -- enddiv
+    | "&lt;span" (~"&gt;" any)* "&gt;" -- beginspan
+    | "&lt;/span&gt;" -- endspan
+    | "@" -- at
+    | space -- space
+    | (~space ~"[" ~"]" ~"|" ~"yes" ~"no" ~":" ~"&" ~";" any) -- other
+}
