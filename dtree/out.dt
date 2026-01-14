@@ -1,0 +1,33 @@
+[ found 
+    | yes: [ %incompilingstate 
+        | yes: [ foundimmediate 
+            | yes: @exec(item) 
+        
+            | no: @compileword(item) 
+        ]
+    
+        | no: @exec(item) 
+    ]
+
+    | no: [ %incompilingstate 
+        | yes: [ %isinteger(item) 
+            | yes: @compileinteger(item) 
+        
+            | no: [ %isfloat(item) 
+                | yes: @compilefloat(item) 
+            
+                | no: %return False 
+            ]
+        ]
+    
+        | no: [ %isinteger(item) 
+            | yes: @push as integer(item) 
+        
+            | no: [ %isfloat(item) 
+                | yes: @push as float(item) 
+            
+                | no: %return False 
+            ]
+        ]
+    ]
+]

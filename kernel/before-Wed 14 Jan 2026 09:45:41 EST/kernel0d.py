@@ -684,14 +684,14 @@ def deracer_handler (eh,mev):                          #line 41
             send_firstmev_then_secondmev ( eh, inst)   #line 56
             inst.state =  "idle"                       #line 57
         else:                                          #line 58
-            runtime_error ( str( "deracer: waiting for 1 but got [") +  str( mev.port) +  "] (case B)"  )#line 59#line 60
+            runtime_error ( str( "deracer: waiting for 1 but got ;") + strcons ( mev.port, "' (case B)") )#line 59#line 60
     elif  inst.state ==  "waitingForSecondmev":        #line 61
         if  "2" ==  mev.port:                          #line 62
             inst.buffer.secondmev =  mev               #line 63
             send_firstmev_then_secondmev ( eh, inst)   #line 64
             inst.state =  "idle"                       #line 65
         else:                                          #line 66
-            runtime_error ( str( "deracer: waiting for 2 but got [") +  str( mev.port) +  "] (case C)"  )#line 67#line 68
+            runtime_error ( str( "deracer: waiting for 2 but got '") + strcons ( mev.port, "' (case C)") )#line 67#line 68
     else:                                              #line 69
         runtime_error ( "bad state for deracer {eh.state}")#line 70#line 71#line 72#line 73
 
@@ -810,7 +810,7 @@ rand =  0                                              #line 191#line 192
 def fakepipename_handler (eh,mev):                     #line 193
     global rand                                        #line 194
     rand =  rand+ 1
-    # not very random, but good enough _ ;rand' must be unique within a single run#line 195
+    # not very random, but good enough _ 'rand' must be unique within a single run#line 195
     send ( eh, "", str( "/tmp/fakepipe") +  rand , mev)#line 196#line 197#line 198
                                                        #line 199
 class Switch1star_Instance_Data:

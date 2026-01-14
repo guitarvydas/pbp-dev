@@ -56,7 +56,7 @@ defn deracer_handler (eh, mev) {
             send_firstmev_then_secondmev (eh, inst)
             inst.state ⇐ “idle”
         } else {
-            runtime_error (#strcons (“bad mev.port (case B) for deracer ”, mev.port))
+            runtime_error (#strcons (“deracer: waiting for 1 but got [”, #strcons (mev.port, “] (case B)”)))
 	}
     } elif inst.state = “waitingForSecondmev” {
         if “2” = mev.port {
@@ -64,7 +64,7 @@ defn deracer_handler (eh, mev) {
             send_firstmev_then_secondmev (eh, inst)
             inst.state ⇐ “idle”
         } else {
-            runtime_error (#strcons (“bad mev.port (case C) for deracer ”, mev.port))
+            runtime_error (#strcons (“deracer: waiting for 2 but got [”, #strcons (mev.port, “] (case C)”)))
 	}
     } else {
         runtime_error (“bad state for deracer {eh.state}”)
@@ -277,6 +277,7 @@ defn initialize_stock_components (reg) {
     register_component (reg, mkTemplate ( “1then2”, ϕ, ↪︎deracer_instantiate))
     register_component (reg, mkTemplate ( “1→2”, ϕ, ↪︎deracer_instantiate))
     register_component (reg, mkTemplate ( “trash”, ϕ, ↪︎trash_instantiate))
+    register_component (reg, mkTemplate ( “🗑️”, ϕ, ↪︎trash_instantiate))
     register_component (reg, mkTemplate ( “blockOnError”, ϕ, ↪︎blockOnError_instantiate))
 
 

@@ -219,8 +219,8 @@
       },
       {
         "dir": 2,
-        "source_port": "py",
-        "target_port": "py",
+        "source_port": "dt",
+        "target_port": "dt",
         "source": {
           "name": "Transmogrify DT",
           "id": 34
@@ -280,11 +280,11 @@
         "id": 10
       },
       {
-        "name": ":$ ./t2t2 _00_ dt dtpython",
+        "name": "Indent",
         "id": 14
       },
       {
-        "name": "Indent",
+        "name": ":$ ./t2t2 _00_ dt dtpretty",
         "id": 18
       },
       {
@@ -320,25 +320,12 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ swipl tree_walk.pl",
-          "id": 6
-        },
-        "target": {
-          "name": ":$ ./t2t2 _00_ dt dtpython",
-          "id": 14
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
           "name": ":$ ./t2t2 _00_ dt dtfrish",
           "id": 10
         },
         "target": {
           "name": "Indent",
-          "id": 18
+          "id": 14
         }
       },
       {
@@ -346,12 +333,25 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ ./t2t2 _00_ dt dtpython",
-          "id": 14
+          "name": ":$ ./t2t2 _00_ dt dtpretty",
+          "id": 18
         },
         "target": {
           "name": "Indent",
           "id": 22
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ swipl tree_walk.pl",
+          "id": 6
+        },
+        "target": {
+          "name": ":$ ./t2t2 _00_ dt dtpretty",
+          "id": 18
         }
       },
       {
@@ -360,16 +360,7 @@
         "target_port": "frish",
         "source": {
           "name": "Indent",
-          "id": 18
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "",
-        "target_port": "py",
-        "source": {
-          "name": "Indent",
-          "id": 22
+          "id": 14
         }
       },
       {
@@ -386,7 +377,7 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": ":$ ./t2t2 _00_ dt dtpython",
+          "name": "Indent",
           "id": 14
         }
       },
@@ -395,14 +386,14 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": "Indent",
-          "id": 18
+          "name": ":$ swipl tree_walk.pl",
+          "id": 6
         }
       },
       {
         "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
+        "source_port": "",
+        "target_port": "dt",
         "source": {
           "name": "Indent",
           "id": 22
@@ -413,8 +404,17 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": ":$ swipl tree_walk.pl",
-          "id": 6
+          "name": ":$ ./t2t2 _00_ dt dtpretty",
+          "id": 18
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Indent",
+          "id": 22
         }
       }
     ],

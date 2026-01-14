@@ -51,14 +51,14 @@ def deracer_handler (eh,mev):                          #line 41
             send_firstmev_then_secondmev ( eh, inst)   #line 56
             inst.state =  "idle"                       #line 57
         else:                                          #line 58
-            runtime_error ( str( "bad mev.port (case B) for deracer ") +  mev.port )#line 59#line 60
+            runtime_error ( str( "deracer: waiting for 1 but got [") +  str( mev.port) +  "] (case B)"  )#line 59#line 60
     elif  inst.state ==  "waitingForSecondmev":        #line 61
         if  "2" ==  mev.port:                          #line 62
             inst.buffer.secondmev =  mev               #line 63
             send_firstmev_then_secondmev ( eh, inst)   #line 64
             inst.state =  "idle"                       #line 65
         else:                                          #line 66
-            runtime_error ( str( "bad mev.port (case C) for deracer ") +  mev.port )#line 67#line 68
+            runtime_error ( str( "deracer: waiting for 2 but got [") +  str( mev.port) +  "] (case C)"  )#line 67#line 68
     else:                                              #line 69
         runtime_error ( "bad state for deracer {eh.state}")#line 70#line 71#line 72#line 73
 
@@ -248,12 +248,13 @@ def initialize_stock_components (reg):                 #line 276
     register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 277
     register_component ( reg,mkTemplate ( "1→2", None, deracer_instantiate))#line 278
     register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 279
-    register_component ( reg,mkTemplate ( "blockOnError", None, blockOnError_instantiate))#line 280#line 281#line 282
-    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 283
-    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 284#line 285
-    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 286
-    register_component ( reg,mkTemplate ( "String Concat", None, stringconcat_instantiate))#line 287
-    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 288
-    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 289
-    # for fakepipe                                     #line 290
-    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 291#line 292#line 293
+    register_component ( reg,mkTemplate ( "🗑️", None, trash_instantiate))#line 280
+    register_component ( reg,mkTemplate ( "blockOnError", None, blockOnError_instantiate))#line 281#line 282#line 283
+    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 284
+    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 285#line 286
+    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 287
+    register_component ( reg,mkTemplate ( "String Concat", None, stringconcat_instantiate))#line 288
+    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 289
+    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 290
+    # for fakepipe                                     #line 291
+    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 292#line 293#line 294
