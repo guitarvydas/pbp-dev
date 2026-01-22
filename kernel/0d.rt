@@ -646,6 +646,7 @@ defn load_error (s) {
 defn runtime_error (s) {
     global runtime_errors
     #print_stderr (s)
+    #abort ()
     runtime_errors ⇐ ⊤
 }
 

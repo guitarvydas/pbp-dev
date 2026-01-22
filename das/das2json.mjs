@@ -301,6 +301,25 @@ function lintConnections(name, cells) {
     let drawioTopIdx = cells.find(cell => cell.parent === 0)?.id;
     let drawioSecondIdx = cells.find(cell => cell.parent === drawioTopIdx)?.id;
 
+    // Check for orphaned ports (ports not parented to containers)
+    // A port should be inside a container, not at the page root level
+    for (const cell of cells) {
+        if (cell.type !== CellType.Rect || cell.flags.has(FlagValue.Container)) continue;
+        
+        // Check if this port's mxgraphParent is "1" (the page root in draw.io)
+        if (cell.mxgraphParent === "1") {
+            // Check if this cell is used in any connections
+            const isUsedInConnection = cells.some(c => 
+                c.type === CellType.Arrow && (c.source === cell.id || c.target === cell.id)
+            );
+            
+            if (isUsedInConnection) {
+                console.error(`WARNING in ${name}: Port "${cell.value}" is not inside a container but is used in connections. This connection will be ignored.`);
+                ok = false;
+            }
+        }
+    }
+
     for (const cell of cells) {
         if (cell.type !== CellType.Arrow) continue;
 
