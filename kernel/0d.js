@@ -664,61 +664,62 @@ function load_error (s) {                              /* line 639 *//* line 640
 
 function runtime_error (s) {                           /* line 646 *//* line 647 */
     console.error ( s);                                /* line 648 */
-    runtime_errors =  true;                            /* line 649 *//* line 650 *//* line 651 */
+    process.exit (1)                                   /* line 649 */
+    runtime_errors =  true;                            /* line 650 *//* line 651 *//* line 652 */
 }
-                                                       /* line 652 */
-function initialize_from_files (project_root,diagram_names) {/* line 653 */
-    let arg =  null;                                   /* line 654 */
-    let palette = initialize_component_palette_from_files ( project_root, diagram_names)/* line 655 */;
-    return [ palette,[ project_root, diagram_names, arg]];/* line 656 *//* line 657 *//* line 658 */
-}
-
-function initialize_from_string (project_root) {       /* line 659 */
-    let arg =  null;                                   /* line 660 */
-    let palette = initialize_component_palette_from_string ( project_root)/* line 661 */;
-    return [ palette,[ project_root, null, arg]];      /* line 662 *//* line 663 *//* line 664 */
+                                                       /* line 653 */
+function initialize_from_files (project_root,diagram_names) {/* line 654 */
+    let arg =  null;                                   /* line 655 */
+    let palette = initialize_component_palette_from_files ( project_root, diagram_names)/* line 656 */;
+    return [ palette,[ project_root, diagram_names, arg]];/* line 657 *//* line 658 *//* line 659 */
 }
 
-function start (arg,part_name,palette,env) {           /* line 665 */
-    let part = start_bare ( part_name, palette, env)   /* line 666 */;
-    inject ( part, "", arg)                            /* line 667 */
-    finalize ( part)                                   /* line 668 *//* line 669 *//* line 670 */
+function initialize_from_string (project_root) {       /* line 660 */
+    let arg =  null;                                   /* line 661 */
+    let palette = initialize_component_palette_from_string ( project_root)/* line 662 */;
+    return [ palette,[ project_root, null, arg]];      /* line 663 *//* line 664 *//* line 665 */
 }
 
-function start_bare (part_name,palette,env) {          /* line 671 */
-    let project_root =  env [ 0];                      /* line 672 */
-    let diagram_names =  env [ 1];                     /* line 673 */
-    set_environment ( project_root)                    /* line 674 */
-    /*  get entrypoint container */                    /* line 675 */
-    let  part = get_component_instance ( palette, part_name, null)/* line 676 */;
-    if ( null ==  part) {                              /* line 677 */
-      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 681 *//* line 682 */
+function start (arg,part_name,palette,env) {           /* line 666 */
+    let part = start_bare ( part_name, palette, env)   /* line 667 */;
+    inject ( part, "", arg)                            /* line 668 */
+    finalize ( part)                                   /* line 669 *//* line 670 *//* line 671 */
+}
+
+function start_bare (part_name,palette,env) {          /* line 672 */
+    let project_root =  env [ 0];                      /* line 673 */
+    let diagram_names =  env [ 1];                     /* line 674 */
+    set_environment ( project_root)                    /* line 675 */
+    /*  get entrypoint container */                    /* line 676 */
+    let  part = get_component_instance ( palette, part_name, null)/* line 677 */;
+    if ( null ==  part) {                              /* line 678 */
+      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 682 *//* line 683 */
     }
-    return  part;                                      /* line 683 *//* line 684 *//* line 685 */
+    return  part;                                      /* line 684 *//* line 685 *//* line 686 */
 }
 
-function inject (part,port,payload) {                  /* line 686 */
-    if ((!  load_errors)) {                            /* line 687 */
-      let  d =  new Datum ();                          /* line 688 */;
-      d.v =  payload;                                  /* line 689 */
-      d.clone =  function () {return obj_clone ( d)    /* line 690 */;};
-      d.reclaim =  null;                               /* line 691 */
-      let  mev = make_mevent ( port, d)                /* line 692 */;
-      inject_mevent ( part, mev)                       /* line 693 */
+function inject (part,port,payload) {                  /* line 687 */
+    if ((!  load_errors)) {                            /* line 688 */
+      let  d =  new Datum ();                          /* line 689 */;
+      d.v =  payload;                                  /* line 690 */
+      d.clone =  function () {return obj_clone ( d)    /* line 691 */;};
+      d.reclaim =  null;                               /* line 692 */
+      let  mev = make_mevent ( port, d)                /* line 693 */;
+      inject_mevent ( part, mev)                       /* line 694 */
     }
-    else {                                             /* line 694 */
-      process.exit (1)                                 /* line 695 *//* line 696 */
-    }                                                  /* line 697 *//* line 698 */
+    else {                                             /* line 695 */
+      process.exit (1)                                 /* line 696 *//* line 697 */
+    }                                                  /* line 698 *//* line 699 */
 }
 
-function finalize (part) {                             /* line 699 */
-    console.log (JSON.stringify ( part.outq.map(item => ({ [item.port]: item.datum.v })), null, 2));/* line 700 *//* line 701 *//* line 702 */
+function finalize (part) {                             /* line 700 */
+    console.log (JSON.stringify ( part.outq.map(item => ({ [item.port]: item.datum.v })), null, 2));/* line 701 *//* line 702 *//* line 703 */
 }
 
-function new_datum_bang () {                           /* line 703 */
-    let  d =  new Datum ();                            /* line 704 */;
-    d.v =  "!";                                        /* line 705 */
-    d.clone =  function () {return obj_clone ( d)      /* line 706 */;};
-    d.reclaim =  null;                                 /* line 707 */
-    return  d                                          /* line 708 *//* line 709 */;
+function new_datum_bang () {                           /* line 704 */
+    let  d =  new Datum ();                            /* line 705 */;
+    d.v =  "!";                                        /* line 706 */
+    d.clone =  function () {return obj_clone ( d)      /* line 707 */;};
+    d.reclaim =  null;                                 /* line 708 */
+    return  d                                          /* line 709 *//* line 710 */;
 }

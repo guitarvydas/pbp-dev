@@ -576,53 +576,54 @@ def load_error (s):                                    #line 639
 def runtime_error (s):                                 #line 646
     global runtime_errors                              #line 647
     print ( s, file=sys.stderr)                        #line 648
-    runtime_errors =  True                             #line 649#line 650#line 651
-                                                       #line 652
-def initialize_from_files (project_root,diagram_names):#line 653
-    arg =  None                                        #line 654
-    palette = initialize_component_palette_from_files ( project_root, diagram_names)#line 655
-    return [ palette,[ project_root, diagram_names, arg]]#line 656#line 657#line 658
+    exit (1)                                           #line 649
+    runtime_errors =  True                             #line 650#line 651#line 652
+                                                       #line 653
+def initialize_from_files (project_root,diagram_names):#line 654
+    arg =  None                                        #line 655
+    palette = initialize_component_palette_from_files ( project_root, diagram_names)#line 656
+    return [ palette,[ project_root, diagram_names, arg]]#line 657#line 658#line 659
 
-def initialize_from_string (project_root):             #line 659
-    arg =  None                                        #line 660
-    palette = initialize_component_palette_from_string ( project_root)#line 661
-    return [ palette,[ project_root, None, arg]]       #line 662#line 663#line 664
+def initialize_from_string (project_root):             #line 660
+    arg =  None                                        #line 661
+    palette = initialize_component_palette_from_string ( project_root)#line 662
+    return [ palette,[ project_root, None, arg]]       #line 663#line 664#line 665
 
-def start (arg,part_name,palette,env):                 #line 665
-    part = start_bare ( part_name, palette, env)       #line 666
-    inject ( part, "", arg)                            #line 667
-    finalize ( part)                                   #line 668#line 669#line 670
+def start (arg,part_name,palette,env):                 #line 666
+    part = start_bare ( part_name, palette, env)       #line 667
+    inject ( part, "", arg)                            #line 668
+    finalize ( part)                                   #line 669#line 670#line 671
 
-def start_bare (part_name,palette,env):                #line 671
-    project_root =  env [ 0]                           #line 672
-    diagram_names =  env [ 1]                          #line 673
-    set_environment ( project_root)                    #line 674
-    # get entrypoint container                         #line 675
-    part = get_component_instance ( palette, part_name, None)#line 676
-    if  None ==  part:                                 #line 677
-        load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 681#line 682
-    return  part                                       #line 683#line 684#line 685
+def start_bare (part_name,palette,env):                #line 672
+    project_root =  env [ 0]                           #line 673
+    diagram_names =  env [ 1]                          #line 674
+    set_environment ( project_root)                    #line 675
+    # get entrypoint container                         #line 676
+    part = get_component_instance ( palette, part_name, None)#line 677
+    if  None ==  part:                                 #line 678
+        load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 682#line 683
+    return  part                                       #line 684#line 685#line 686
 
-def inject (part,port,payload):                        #line 686
-    if not  load_errors:                               #line 687
-        d =  Datum ()                                  #line 688
-        d.v =  payload                                 #line 689
-        d.clone =  lambda : obj_clone ( d)             #line 690
-        d.reclaim =  None                              #line 691
-        mev = make_mevent ( port, d)                   #line 692
-        inject_mevent ( part, mev)                     #line 693
-    else:                                              #line 694
-        exit (1)                                       #line 695#line 696#line 697#line 698
+def inject (part,port,payload):                        #line 687
+    if not  load_errors:                               #line 688
+        d =  Datum ()                                  #line 689
+        d.v =  payload                                 #line 690
+        d.clone =  lambda : obj_clone ( d)             #line 691
+        d.reclaim =  None                              #line 692
+        mev = make_mevent ( port, d)                   #line 693
+        inject_mevent ( part, mev)                     #line 694
+    else:                                              #line 695
+        exit (1)                                       #line 696#line 697#line 698#line 699
 
-def finalize (part):                                   #line 699
-    print (deque_to_json ( part.outq))                 #line 700#line 701#line 702
+def finalize (part):                                   #line 700
+    print (deque_to_json ( part.outq))                 #line 701#line 702#line 703
 
-def new_datum_bang ():                                 #line 703
-    d =  Datum ()                                      #line 704
-    d.v =  "!"                                         #line 705
-    d.clone =  lambda : obj_clone ( d)                 #line 706
-    d.reclaim =  None                                  #line 707
-    return  d                                          #line 708#line 709
+def new_datum_bang ():                                 #line 704
+    d =  Datum ()                                      #line 705
+    d.v =  "!"                                         #line 706
+    d.clone =  lambda : obj_clone ( d)                 #line 707
+    d.reclaim =  None                                  #line 708
+    return  d                                          #line 709#line 710
 # This is called `external` due to historical reasons. This has evolved into 2 kinds of Leaf parts: AOT and JIT (statically generated before runtime, vs. dynamically generated at runtime). If a part name begins with ;:', it is treated specially as a JIT part, else the part is assumed to have been pre-loaded into the register in the regular way. #line 1#line 2
 def external_instantiate (reg,owner,name,arg):         #line 3
     name_with_id = gensymbol ( name)                   #line 4
