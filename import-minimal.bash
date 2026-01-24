@@ -37,6 +37,9 @@ cp ${Dev}/dtree.sh .
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
 cp ${Dev}/kernel/package.json .
+cp ${Dev}/semantics.pdf .
+cp ${Dev}/pbp-lifecycle.drawio.png .
+cp ${Dev}/api.md .
 
 cp ${Dev}/kernel/package.json ${KERNEL}
 cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
