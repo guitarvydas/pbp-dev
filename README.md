@@ -135,6 +135,19 @@ As far as I can determine, there are only a few key considerations. We can imple
     - `Forth` uses double-indirection, while `/bin/*sh` uses Greenspunian double-indirection involving forks.
   - In pure message-passing[^mp], there is implicitly the concept of moving data from one place to another. A simple pair `{sender, receiver}` can describe such a connection. To implement nesting, extend this to a triple `{direction, sender, receiver}`, where direction can be `[down|across|up|through]`. Down and up can be implemented by having Container Parts punt messages to/from inner Parts.
 
+# Semantics 
+![Semantics](Semantics.md)
+# Layering and Abstracting
+## Fan-Out
+Fan-out is necessary for DX ([article](https://programmingsimplicity.substack.com/p/layered-abstraction?r=1egdky))
+
+![](doc/Fan-Out%20For%20Layering.png)
+## Control For Layering
+![](doc/Control%20Flow%20For%20Layering.png)
+
+## First Class Mevent Sending and First Class Functions
+We need to use a programming language/notation that makes it equally easy to use asynchronous message sends and function calls, so that we may choose appropriately. It is not good enough to make function calls convenient, but, to require extra work to enact async message sending.
+
 [^p]: UNIX drew inspiration from earlier systems, but it made the concept of pipes accessible to a broader audience.
 [^tc]: Type checkers are synonymous with linter tools. Rather than creating separate tools, we permitted the needs of type-checking linters to influence the syntax of our programming languages with type annotations and numerous restrictions that facilitated linting at the expense of making programming more difficult. Ironically, a language for linting, Prolog, was developed early on but was largely ignored by compiler writers who opted to manually implement type checking into compiler implementations.
 [^c]: Concurrency is ubiquitous. Humanity has developed numerous protocols for managing concurrent events, such as shaking hands and adhering to meeting schedules. I even taught my five-year-olds how to handle challenging real-time situations, such as piano lessons and sheet music.

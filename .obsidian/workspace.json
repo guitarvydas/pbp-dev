@@ -25,14 +25,12 @@
             "id": "2aafda6bd4dc58d5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Semantics.md",
-                "mode": "source",
-                "source": false
+                "file": "doc/Control Flow For Layering.png"
               },
-              "icon": "lucide-file",
-              "title": "Semantics"
+              "icon": "lucide-image",
+              "title": "Control Flow For Layering"
             }
           },
           {
@@ -63,8 +61,7 @@
               "title": "deltas"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -137,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Semantics.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +144,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Semantics"
+              "title": "Backlinks for README"
             }
           },
           {
@@ -199,13 +196,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Semantics.md",
+                "file": "README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Semantics"
+              "title": "Outline of README"
             }
           }
         ],
@@ -226,31 +223,40 @@
       "bases:Create new base": false
     }
   },
-  "active": "2aafda6bd4dc58d5",
+  "active": "e78cb8d8ff53cac1",
   "lastOpenFiles": [
-    "Semantics.pdf",
+    "doc/Control Flow For Layering.png",
+    "doc/Fan-Out For Layering.png",
     "README.md",
+    "doc/Semantics.md",
+    "doc/mapping.excalidraw",
+    "dtree/README.md",
+    "pbp/dtree/tree_walk.pl",
+    "pbp/dtree/translate.js",
+    "pbp/dtree/t2t2",
+    "pbp/dtree/t2t",
+    "pbp/dtree/support.mjs",
+    "pbp/dtree/README.process_json.md",
+    "pbp/dtree/README.md",
+    "pbp/dtree/process_json.pl",
+    "pbp/dtree/process_json_jq.bash",
+    "pbp/dtree/PBP.xml",
+    "pbp/dtree/main.py",
+    "pbp/dtree/DOCUMENTATION.md",
+    "pbp/pbp-lifecycle.drawio.png",
+    "pbp/api.md",
+    "dtree/doc/dtree-transmogrifier-Transmogrify_DT.drawio.png",
+    "dtree/DOCUMENTATION seed.md",
+    "dtree/doc/xinterpret.drawio.png",
     "attic/deltas.md",
     "documenting.md",
-    "Semantics.md",
-    "doc/mapping-3.excalidraw",
-    "doc/ABCDE.excalidraw",
     "doc/mapping.png",
     "doc/ABCDE.png",
     "doc/looptest.png",
-    "das/das2json.mjs~",
     "Philosophy Corner.md",
     "doc/how-to-create-Makefile.md",
     "doc/how-to-create-main-dot-py.md",
     "doc/doc-minimal-main-dot-py.drawio.png",
-    "doc/doc-main-dot-py-with-user-defined-parts.drawio.png",
-    "doc/doc-noise-reduced-main-dot-py.drawio.png",
-    "doc/doc-default-input-gate.drawio.png",
-    "doc/doc.drawio",
-    "doc",
-    "#init.bash#",
-    "import-minimal.bash~",
-    "init.bash",
-    "import-minimal.bash"
+    "doc/doc-main-dot-py-with-user-defined-parts.drawio.png"
   ]
 }
