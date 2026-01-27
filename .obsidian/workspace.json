@@ -225,6 +225,8 @@
   },
   "active": "e78cb8d8ff53cac1",
   "lastOpenFiles": [
+    "#runpbp#",
+    "kernel/splitoutput.js~",
     "dtree/process_json.pl",
     "dtree/#dtpretty.rwr#",
     "dtree/dtpretty.rwr~",
@@ -234,8 +236,6 @@
     "dtree/xinterpret.frish",
     "dtree/xinterpret.dt",
     "dtree/tree_walk.pl",
-    "dtree/translate.js",
-    "dtree/temp.nanodsl.mjs",
     "dtree/junk.md",
     "dtree/explain-jq.md",
     "dtree/README.md",

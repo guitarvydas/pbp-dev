@@ -440,7 +440,6 @@ async function main() {
     const diagramName = await parseCommandLineArgs();
     try {
         const fname = await drawio2json(diagramName);
-        console.log('Created:', fname);
     } catch (err) {
         console.error('Error:', err);
         process.exit(1);
