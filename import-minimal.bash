@@ -20,18 +20,21 @@ DAS=./das
 TAS=./tas
 T2T=./t2t
 DTREE=./dtree
+DOC=./doc
 
 rm -rf tas
 rm -rf das
 rm -rf t2t
 rm -rf kernel
 rm -rf dtree
+rm -rf doc
 mkdir tas
 mkdir das
 mkdir t2t
 mkdir t2t/lib
 mkdir kernel
 mkdir dtree
+mkdir doc
 
 cp ${Dev}/t2t.bash .
 cp ${Dev}/runpbp .
@@ -41,6 +44,7 @@ cp ${Dev}/kernel/package.json .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
+cp ${Dev}/doc/semantics.pdf ${DOC}
 
 cp ${Dev}/kernel/package.json ${KERNEL}
 cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
@@ -48,7 +52,6 @@ cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
 cp ${Dev}/kernel/splitoutput.js ${KERNEL}
 cp ${Dev}/kernel/kernel0d.js ${KERNEL}/kernel0d.js
 cp ${Dev}/kernel/kernel0d.lisp ${KERNEL}/kernel0d.lisp
-cp ${Dev}/kernel/semantics.pdf ${KERNEL}
 
 cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
 cp ${Dev}/das/check-for-span-error.bash ${DAS}
