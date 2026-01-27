@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "doc/Semantics.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "Semantics"
             }
           },
           {
@@ -196,13 +196,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md",
+                "file": "doc/Semantics.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of README"
+              "title": "Outline of Semantics"
             }
           }
         ],
@@ -225,9 +225,11 @@
   },
   "active": "e78cb8d8ff53cac1",
   "lastOpenFiles": [
+    "das/check-for-span-error.bash",
+    "#import-minimal.bash#",
+    "README.md",
     "doc/Control Flow For Layering.png",
     "doc/Fan-Out For Layering.png",
-    "README.md",
     "doc/Semantics.md",
     "doc/mapping.excalidraw",
     "dtree/README.md",
@@ -241,7 +243,6 @@
     "pbp/dtree/process_json.pl",
     "pbp/dtree/process_json_jq.bash",
     "pbp/dtree/PBP.xml",
-    "pbp/dtree/main.py",
     "pbp/dtree/DOCUMENTATION.md",
     "pbp/pbp-lifecycle.drawio.png",
     "pbp/api.md",

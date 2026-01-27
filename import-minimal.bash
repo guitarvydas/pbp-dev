@@ -25,6 +25,7 @@ rm -rf tas
 rm -rf das
 rm -rf t2t
 rm -rf kernel
+rm -rf dtree
 mkdir tas
 mkdir das
 mkdir t2t
@@ -41,13 +42,17 @@ cp ${Dev}/semantics.pdf .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
+
 cp ${Dev}/kernel/package.json ${KERNEL}
 cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
 cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
 cp ${Dev}/kernel/splitoutput.js ${KERNEL}
 cp ${Dev}/kernel/kernel0d.js ${KERNEL}/kernel0d.js
 cp ${Dev}/kernel/kernel0d.lisp ${KERNEL}/kernel0d.lisp
+
 cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
+cp ${Dev}/das/check-for-span-error.bash ${DAS}
+
 cp ${Dev}/das/PBP.xml ${DAS}/PBP.xml
 cp ${Dev}/t2t/lib/args.part.js ${T2T}/lib
 cp ${Dev}/t2t/lib/front.part.js ${T2T}/lib

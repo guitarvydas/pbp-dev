@@ -2,7 +2,6 @@
 dtree_Dev=$1
 DTREE=$2
 
-cp -f ${dtree_Dev}/check-for-span-error.bash ${DTREE}
 cp -f ${dtree_Dev}/cleanup.ohm ${DTREE}
 cp -f ${dtree_Dev}/cleanup.rwr ${DTREE}
 cp -f ${dtree_Dev}/DOCUMENTATION.md ${DTREE}
