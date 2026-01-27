@@ -34,11 +34,10 @@ mkdir kernel
 mkdir dtree
 
 cp ${Dev}/t2t.bash .
-cp ${Dev}/dtree.sh .
+cp ${Dev}/runpbp .
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
 cp ${Dev}/kernel/package.json .
-cp ${Dev}/semantics.pdf .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
@@ -49,6 +48,7 @@ cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
 cp ${Dev}/kernel/splitoutput.js ${KERNEL}
 cp ${Dev}/kernel/kernel0d.js ${KERNEL}/kernel0d.js
 cp ${Dev}/kernel/kernel0d.lisp ${KERNEL}/kernel0d.lisp
+cp ${Dev}/kernel/semantics.pdf ${KERNEL}
 
 cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
 cp ${Dev}/das/check-for-span-error.bash ${DAS}
