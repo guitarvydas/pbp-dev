@@ -1,30 +1,30 @@
 if (found) {
     if (%incompilingstate) {
         if (foundimmediate) {
-            %funcall exec(item)
+            exec(item)
         } else {
-            %funcall compileword(item)
+            compileword(item)
         }
     } else {
-        %funcall exec(item)
+        exec(item)
     }
 } else {
     if (%incompilingstate) {
         if (%isinteger(item)) {
-            %funcall compileinteger(item)
+            compileinteger(item)
         } else {
             if (%isfloat(item)) {
-                %funcall compilefloat(item)
+                compilefloat(item)
             } else {
                 %returnFalse
             }
         }
     } else {
         if (%isinteger(item)) {
-            %funcall pushasinteger(item)
+            pushasinteger(item)
         } else {
             if (%isfloat(item)) {
-                %funcall pushasfloat(item)
+                pushasfloat(item)
             } else {
                 %returnFalse
             }

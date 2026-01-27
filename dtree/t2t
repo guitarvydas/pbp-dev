@@ -1,2 +1,2 @@
 #!/bin/bash
-$1/t2t.bash . $1 $2.ohm $2.rwr support.mjs -
+${PBP_LIB}/t2t.bash ${SRC_DRAWING_PATH} ${PBP_LIB} $1.ohm $1.rwr support.mjs -

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo
+echo '*** var dump ***'
+for var in src_drawing PBP_LIB SRC_DRAWING_PATH PBP_KERNEL_PATH PBP_DAS_PATH PYTHONPATH PBP_SPLITOUTJS PBP_T2T arg
+do
+    echo "$var=${!var}"
+done
+echo '*** ------ ***'
+echo
+

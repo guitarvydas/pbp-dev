@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+export PBP_PROJECT_PATH=$(pwd)
+src_drawing=$(python3 -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$1").drawio
+export PBP_LIB=$(python3 -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$2")
+export SRC_DRAWING_PATH="$(dirname ${src_drawing})"
+if [[ -f $3 ]]
+then
+    arg=$(python3 -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$3")
+else
+    arg="$3"
+fi
+
+export PBP_KERNEL_PATH="${PBP_LIB}/kernel"
+export PBP_DAS_PATH="${PBP_LIB}/das"
+
+export PYTHONPATH="${PBP_KERNEL_PATH}:$PYTHONPATH"
+export PBP_SPLITOUTJS="${PBP_LIB}/kernel/splitoutput.js"
+export PBP_T2T="${PBP_LIB}/t2t.bash"
+
+echo
+echo '*** runpbp ***'
+for var in src_drawing PBP_LIB SRC_DRAWING_PATH PBP_KERNEL_PATH PBP_DAS_PATH PYTHONPATH PBP_SPLITOUTJS PBP_T2T arg PBP_PROJECT_PATH
+do
+    echo "$var=${!var}"
+done
+echo '*** ------ ***'
+echo
+
+cd "${SRC_DRAWING_PATH}"
+rm -f 'out.*'
+node "${PBP_LIB}/das/das2json.mjs" "${src_drawing}"
+${PBP_LIB}/das/check-for-span-error.bash  ${src_drawing}.json
+python main.py "${PBP_LIB}" "${arg}" main  "${src_drawing}.json" >/tmp/xyz
+node "${PBP_SPLITOUTJS}" </tmp/xyz
+if [ -f out.✗ ]
+then
+    mv out.✗ out.err
+    cat out.err
+    echo
+    echo "ERRORS!!!"
+    exit 1
+else
+    mv out.frish ${PBP_PROJECT_PATH}
+fi
+

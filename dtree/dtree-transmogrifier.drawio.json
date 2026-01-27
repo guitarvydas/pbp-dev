@@ -3,36 +3,16 @@
     "name": "main",
     "children": [
       {
-        "name": ":$ ./t2t _00_ dtree",
+        "name": "Read Text File",
         "id": 6
       },
       {
-        "name": ":$ ./t2t _00_ cleanup",
+        "name": "Transmogrify DT",
         "id": 10
       },
       {
-        "name": ":$ ./process_json_jq.bash",
-        "id": 14
-      },
-      {
-        "name": "Read Text File",
-        "id": 18
-      },
-      {
-        "name": ":$ jq .",
-        "id": 22
-      },
-      {
-        "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
-        "id": 26
-      },
-      {
-        "name": ":$ node translate.js",
-        "id": 30
-      },
-      {
-        "name": "Transmogrify DT",
-        "id": 34
+        "name": "Convert Diagram to Culled JSON",
+        "id": 15
       }
     ],
     "connections": [
@@ -42,33 +22,7 @@
         "target_port": "",
         "target": {
           "name": "Read Text File",
-          "id": 18
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ ./t2t _00_ dtree",
           "id": 6
-        },
-        "target": {
-          "name": ":$ ./t2t _00_ cleanup",
-          "id": 10
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ ./t2t _00_ cleanup",
-          "id": 10
-        },
-        "target": {
-          "name": ":$ ./process_json_jq.bash",
-          "id": 14
         }
       },
       {
@@ -77,24 +31,11 @@
         "target_port": "",
         "source": {
           "name": "Read Text File",
-          "id": 18
-        },
-        "target": {
-          "name": ":$ ./t2t _00_ dtree",
           "id": 6
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ ./process_json_jq.bash",
-          "id": 14
         },
         "target": {
-          "name": ":$ jq .",
-          "id": 22
+          "name": "Convert Diagram to Culled JSON",
+          "id": 15
         }
       },
       {
@@ -102,55 +43,11 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ jq .",
-          "id": 22
-        },
-        "target": {
-          "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
-          "id": 26
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
-          "id": 26
-        },
-        "target": {
-          "name": ":$ node translate.js",
-          "id": 30
-        }
-      },
-      {
-        "dir": 1,
-        "source_port": "",
-        "target_port": "",
-        "source": {
-          "name": ":$ node translate.js",
-          "id": 30
+          "name": "Convert Diagram to Culled JSON",
+          "id": 15
         },
         "target": {
           "name": "Transmogrify DT",
-          "id": 34
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ ./process_json_jq.bash",
-          "id": 14
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ ./t2t _00_ cleanup",
           "id": 10
         }
       },
@@ -159,8 +56,8 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": ":$ ./t2t _00_ dtree",
-          "id": 6
+          "name": "Convert Diagram to Culled JSON",
+          "id": 15
         }
       },
       {
@@ -169,34 +66,7 @@
         "target_port": "✗",
         "source": {
           "name": "Read Text File",
-          "id": 18
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
-          "id": 26
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ jq .",
-          "id": 22
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ node translate.js",
-          "id": 30
+          "id": 6
         }
       },
       {
@@ -205,7 +75,7 @@
         "target_port": "✗",
         "source": {
           "name": "Transmogrify DT",
-          "id": 34
+          "id": 10
         }
       },
       {
@@ -214,20 +84,20 @@
         "target_port": "frish",
         "source": {
           "name": "Transmogrify DT",
-          "id": 34
+          "id": 10
         }
       },
       {
         "dir": 2,
-        "source_port": "dt",
-        "target_port": "dt",
+        "source_port": "py",
+        "target_port": "py",
         "source": {
           "name": "Transmogrify DT",
-          "id": 34
+          "id": 10
         }
       }
     ],
-    "file": "dtree-transmogrifier.drawio"
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
   },
   {
     "name": "Indent",
@@ -266,7 +136,7 @@
         }
       }
     ],
-    "file": "dtree-transmogrifier.drawio"
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
   },
   {
     "name": "Transmogrify DT",
@@ -280,11 +150,11 @@
         "id": 10
       },
       {
-        "name": "Indent",
+        "name": ":$ ./t2t2 _00_ dt dtpython",
         "id": 14
       },
       {
-        "name": ":$ ./t2t2 _00_ dt dtpretty",
+        "name": "Indent",
         "id": 18
       },
       {
@@ -320,11 +190,11 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ ./t2t2 _00_ dt dtfrish",
-          "id": 10
+          "name": ":$ swipl tree_walk.pl",
+          "id": 6
         },
         "target": {
-          "name": "Indent",
+          "name": ":$ ./t2t2 _00_ dt dtpython",
           "id": 14
         }
       },
@@ -333,12 +203,12 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ ./t2t2 _00_ dt dtpretty",
-          "id": 18
+          "name": ":$ ./t2t2 _00_ dt dtfrish",
+          "id": 10
         },
         "target": {
           "name": "Indent",
-          "id": 22
+          "id": 18
         }
       },
       {
@@ -346,12 +216,12 @@
         "source_port": "",
         "target_port": "",
         "source": {
-          "name": ":$ swipl tree_walk.pl",
-          "id": 6
+          "name": ":$ ./t2t2 _00_ dt dtpython",
+          "id": 14
         },
         "target": {
-          "name": ":$ ./t2t2 _00_ dt dtpretty",
-          "id": 18
+          "name": "Indent",
+          "id": 22
         }
       },
       {
@@ -360,7 +230,16 @@
         "target_port": "frish",
         "source": {
           "name": "Indent",
-          "id": 14
+          "id": 18
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "py",
+        "source": {
+          "name": "Indent",
+          "id": 22
         }
       },
       {
@@ -377,7 +256,7 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": "Indent",
+          "name": ":$ ./t2t2 _00_ dt dtpython",
           "id": 14
         }
       },
@@ -386,25 +265,7 @@
         "source_port": "✗",
         "target_port": "✗",
         "source": {
-          "name": ":$ swipl tree_walk.pl",
-          "id": 6
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "",
-        "target_port": "dt",
-        "source": {
           "name": "Indent",
-          "id": 22
-        }
-      },
-      {
-        "dir": 2,
-        "source_port": "✗",
-        "target_port": "✗",
-        "source": {
-          "name": ":$ ./t2t2 _00_ dt dtpretty",
           "id": 18
         }
       },
@@ -416,8 +277,316 @@
           "name": "Indent",
           "id": 22
         }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ swipl tree_walk.pl",
+          "id": 6
+        }
       }
     ],
-    "file": "dtree-transmogrifier.drawio"
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
+  },
+  {
+    "name": "Convert Diagram to Culled JSON",
+    "children": [
+      {
+        "name": "Decision Tree Diagram to JSON",
+        "id": 5
+      },
+      {
+        "name": "Detect Edge Kinds",
+        "id": 9
+      },
+      {
+        "name": "Drop drawio_id",
+        "id": 13
+      },
+      {
+        "name": "Make Remaining ID References Human Readable",
+        "id": 17
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": "Decision Tree Diagram to JSON",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Decision Tree Diagram to JSON",
+          "id": 5
+        },
+        "target": {
+          "name": "Detect Edge Kinds",
+          "id": 9
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Detect Edge Kinds",
+          "id": 9
+        },
+        "target": {
+          "name": "Drop drawio_id",
+          "id": 13
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Drop drawio_id",
+          "id": 13
+        },
+        "target": {
+          "name": "Make Remaining ID References Human Readable",
+          "id": 17
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": "Make Remaining ID References Human Readable",
+          "id": 17
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Drop drawio_id",
+          "id": 13
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Make Remaining ID References Human Readable",
+          "id": 17
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Detect Edge Kinds",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": "Decision Tree Diagram to JSON",
+          "id": 5
+        }
+      }
+    ],
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
+  },
+  {
+    "name": "Decision Tree Diagram to JSON",
+    "children": [
+      {
+        "name": ":$ ./t2t dtree",
+        "id": 5
+      },
+      {
+        "name": ":$ ./t2t cleanup",
+        "id": 9
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ ./t2t dtree",
+          "id": 5
+        }
+      },
+      {
+        "dir": 1,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ ./t2t dtree",
+          "id": 5
+        },
+        "target": {
+          "name": ":$ ./t2t cleanup",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ ./t2t dtree",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ ./t2t cleanup",
+          "id": 9
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ ./t2t cleanup",
+          "id": 9
+        }
+      }
+    ],
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
+  },
+  {
+    "name": "Detect Edge Kinds",
+    "children": [
+      {
+        "name": ":$ ./process_json_jq.bash",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ ./process_json_jq.bash",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ ./process_json_jq.bash",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ ./process_json_jq.bash",
+          "id": 5
+        }
+      }
+    ],
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
+  },
+  {
+    "name": "Drop drawio_id",
+    "children": [
+      {
+        "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ jq 'map(if has(\"cells\") then .cells |= map(.attributes | del(.drawio_id)) else . end)'",
+          "id": 5
+        }
+      }
+    ],
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
+  },
+  {
+    "name": "Make Remaining ID References Human Readable",
+    "children": [
+      {
+        "name": ":$ node translate.js",
+        "id": 5
+      }
+    ],
+    "connections": [
+      {
+        "dir": 0,
+        "source_port": "",
+        "target_port": "",
+        "target": {
+          "name": ":$ node translate.js",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "",
+        "target_port": "",
+        "source": {
+          "name": ":$ node translate.js",
+          "id": 5
+        }
+      },
+      {
+        "dir": 2,
+        "source_port": "✗",
+        "target_port": "✗",
+        "source": {
+          "name": ":$ node translate.js",
+          "id": 5
+        }
+      }
+    ],
+    "file": "/Users/paultarvydas/projects/pbp-dev/dtree/dtree-transmogrifier.drawio"
   }
 ]

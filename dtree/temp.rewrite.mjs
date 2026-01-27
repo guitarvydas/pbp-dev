@@ -24,17 +24,17 @@ return exit_rule ("Main");
 },
 YesNo : function (lb,text,y,n,rb,) {
 enter_rule ("YesNo");
-    set_return (`[ ${text.rwr ()}⤷${y.rwr ()}⤶\n⤷${n.rwr ()}⤶\n]`);
+    set_return (`if (${text.rwr ()}) {⤷${y.rwr ()}⤶\n} else {⤷${n.rwr ()}⤶\n}`);
 return exit_rule ("YesNo");
 },
 YesBranch : function (_or,_yes,_,x,) {
 enter_rule ("YesBranch");
-    set_return (`\n| yes: ${x.rwr ()}`);
+    set_return (`\n${x.rwr ()}`);
 return exit_rule ("YesBranch");
 },
 NoBranch : function (_or,_no,_,x,) {
 enter_rule ("NoBranch");
-    set_return (`\n| no: ${x.rwr ()}`);
+    set_return (`\n${x.rwr ()}`);
 return exit_rule ("NoBranch");
 },
 text : function (cs,) {
@@ -71,6 +71,16 @@ char_endspan : function (_,) {
 enter_rule ("char_endspan");
     set_return (``);
 return exit_rule ("char_endspan");
+},
+char_at : function (_,) {
+enter_rule ("char_at");
+    set_return (``);
+return exit_rule ("char_at");
+},
+char_space : function (_,) {
+enter_rule ("char_space");
+    set_return (``);
+return exit_rule ("char_space");
 },
 char_other : function (c,) {
 enter_rule ("char_other");
