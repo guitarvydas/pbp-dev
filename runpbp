@@ -33,4 +33,6 @@ then
 else
     mv out.frish "${PBP_PROJECT_PATH}/${basename_arg}.frish"
     mv out.dt "${PBP_PROJECT_PATH}/${basename_arg}.dt"
+    mv out.js "${PBP_PROJECT_PATH}/${basename_arg}.js"
+    mv out.py "${PBP_PROJECT_PATH}/${basename_arg}.py"
 fi

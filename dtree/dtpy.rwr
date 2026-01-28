@@ -1,0 +1,19 @@
+% rewrite dtpy {
+  Main [YesNo] = ‛«YesNo»’
+  YesNo [lb text y n rb] = ‛if «text»:⤷«y»⤶\nelse:⤷«n»⤶\n’
+
+  YesBranch [_or _yes _ x] = ‛\n«x»’
+  NoBranch [_or _no _ x] = ‛\n«x»’
+
+  text [cs+] = ‛«cs»’
+
+  char_newline [_] = ‛_’
+  char_questionmark [_] = ‛_p’
+  char_begindiv [_] = ‛’
+  char_enddiv [_] = ‛’
+  char_beginspan [lb cs* rb] = ‛’
+  char_endspan [_] = ‛’
+  char_at [_] = ‛’
+  char_space [_] = ‛_’
+  char_other [c] =‛«c»’
+}
