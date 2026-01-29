@@ -25,8 +25,20 @@ export PBP_das2json="${PBP_LIBD}/das2json.sh"
 export PBP_split_outputs="${PBP_LIBD}/splitoutputs.sh"
 export PBP_check_for_errors="${PBP_LIBD}/check-for-errors.sh"
 
+export PBP_DAS2JSONJS="${PBP_LIBD}/das/das2json.mjs"
+export PBP_T2TD="${PBP_LIBD}/t2t"
+export PBP_T2T_LIBD="${PBP_LIBD}/t2t/lib"
+export PBP_SPLITOUTPUTSJS="${PBP_LIBD}/kernel/splitoutput.js"
+export PBP_WSUPPORT="${PBP_WD}/support.mjs"
+
 # Push kernel onto PYTHONPATH
 export PYTHONPATH="${PBP_LIBD}/kernel:${PYTHONPATH}"
+
+
+for i in PBP_WD PBP_WSUPPORT PBP_LIBD PBP_APPD app_main PBP_T2TD PBP_arg PBP_t2t PBP_SPLITOUTPUTSJS PBP_split_outputs PBP_DAS2JSONJS PBP_check_for_errors
+do
+    echo $i "=" ${!i}
+done
 
 # Change to the app directory
 cd "${PBP_APPD}"

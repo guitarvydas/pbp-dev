@@ -225,6 +225,7 @@
   },
   "active": "e78cb8d8ff53cac1",
   "lastOpenFiles": [
+    "das2json.sh~",
     "#runpbp#",
     "check-for-errors.sh",
     "#das2json.sh#",
@@ -236,7 +237,6 @@
     "#ehsh-transmogrifier-spec.md#",
     "ehsh-transmogrifier-spec.md~",
     "ehsh-transmogrifier-spec.md",
-    "#ehsh.md#",
     "ehsh-transmogrifier.md",
     "ehsh.md",
     "esh.md",

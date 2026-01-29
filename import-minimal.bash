@@ -59,7 +59,6 @@ cp ${Dev}/kernel/kernel0d.js ${KERNEL}/kernel0d.js
 cp ${Dev}/kernel/kernel0d.lisp ${KERNEL}/kernel0d.lisp
 
 cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
-cp ${Dev}/das/check-for-span-error.bash ${DAS}
 
 cp ${Dev}/das/PBP.xml ${DAS}/PBP.xml
 cp ${Dev}/t2t/lib/args.part.js ${T2T}/lib
