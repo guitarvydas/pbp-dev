@@ -1,47 +1,17 @@
 #!/bin/bash
 
-# use a pbp multi-language tool to build a part of the current project
-# $1 = the tool, often "./pbp/dtree/dtree-transmogrifier"
-# $2 = path to pbp tools (often "./pbp")
-# $3 = command line arg passed to the $1 tool ; if $3 is a valid file, then it is fully qualified, else no change
-
-# this script assumes that ./pbp has a certain structure,
-# the t2t.sh script assumes that the t2t lib is a subdirectory of PBP_T2T_LIBD
-# but, no other scripts that are invoked make directory structure assumptions
-# (this hard-wired knownledge should eventually be removed, but I can't be bothered at the moment)
-## ./pbp/t2t.sh
-## ./pbp/das2json.sh
-## ./pbp/splitoutputs.sh
-## ./pbp/check-for-errors.sh
-## ./pbp/kernel/
-## ./pbp/das2json/
-## ./pbp/t2t2/
-## ./pbp/tas/
-
-# env vars that can be used by spawned scripts:
-## PBP_WD    is the path to the current project that is using a given PBP APP (e.g. pwd)
-## PBP_LIBD  is the path to the pbp tools (often "./pbp")
-## PBP_APPD  is the path to the pbp-based tool that is being used by the APP
-
-## PBP_WSUPPORT is the javascript support file (must exist even if empty) in PBP_WD
-
-## PBP_t2t           - t2t (text to text transmogrifier) tool
-## PBP_das2json      - das2json tool (drawing (drawio) to JSON converter)
-## PBP_splitoutputs  - output splitter - takes output from PBP and creates one 'out.??' file per stream
-## PBP_dtree         - decision tree diagram to .py/.js transmogrifier
-
-## PBP_arg - argument passed to the pbp-based APP, fully qualified if it's a valid filename 
-
 # Quit immediately if there are any errors
 set -e
 
 # Variable assignments (uppercase = exported, lowercase = local)
 export PBP_WD="$(pwd)"
-export PBP_WSUPPORT="${PBP_WD}/supportjs"
 export PBP_LIBD="$(python -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$2")"
-export PBP_APPD="$(python -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$1")"
-app_main="${PBP_APPD}.drawio"
-export PBP_T2TD="${PBP_T2T_LIBD}/t2t/lib"
+
+# Get full path of first parameter, then extract directory and basename
+param1_full="$(python -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$1")"
+export PBP_APPD="$(dirname "${param1_full}")"
+app_main_base="$(basename "${param1_full}" .drawio)"
+app_main="${PBP_APPD}/${app_main_base}.drawio"
 
 # PBP arg: third parameter as full path if it's a file, otherwise just the parameter
 if [[ -f "$3" ]]; then
@@ -52,20 +22,11 @@ fi
 
 export PBP_t2t="${PBP_LIBD}/t2t.sh"
 export PBP_das2json="${PBP_LIBD}/das2json.sh"
-export PBP_SPLITOUTPUTSJS="${PBP_LIBD}/kernel/splitoutput.js"
 export PBP_split_outputs="${PBP_LIBD}/splitoutputs.sh"
-export PBP_DAS2JSONJS="${PBP_LIBD}/das2json/das2json.mjs"
 export PBP_check_for_errors="${PBP_LIBD}/check-for-errors.sh"
 
 # Push kernel onto PYTHONPATH
 export PYTHONPATH="${PBP_LIBD}/kernel:${PYTHONPATH}"
-
-for i in PBP_WD PBP_WSUPPORT PBP_LIBD PBP_APPD app_main PBP_T2TD PBP_arg PBP_t2t PBP_das2json PBP_SPLITOUTPUTSJS PBP_split_outputs PBP_DAS2JSONJS PBP_check_for_errors
-do
-    echo $i "=" ${!i}
-done
-
-    
 
 # Change to the app directory
 cd "${PBP_APPD}"
@@ -97,4 +58,3 @@ else
     mv "out.js" "${PBP_WD}/${arg_basename}.js"
     mv "out.py" "${PBP_WD}/${arg_basename}.py"
 fi
-
