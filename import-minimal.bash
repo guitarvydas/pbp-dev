@@ -44,6 +44,11 @@ cp ${Dev}/kernel/package.json .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
+cp ${Dev}/t2t.sh .
+cp ${Dev}/das2json.sh .
+cp ${Dev}/splitoutputs.sh .
+cp ${Dev}/check-for-errors.sh .
+
 cp ${Dev}/doc/semantics.pdf ${DOC}
 
 cp ${Dev}/kernel/package.json ${KERNEL}
