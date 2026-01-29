@@ -1,0 +1,17 @@
+{
+  quit immediately if there are any errors
+  PBP WD = working directory from which this script was invoked
+  PBP LIBD = path specified by second parameter
+  PBP APPD = path of first parameter
+  app main = «PBP APPD» with suffix '.drawio'
+  PBP arg = third parameter as full path if it's a file or just the third parameter
+  PBP t2t = «PBP LIBD»/t2t.sh
+  PBP das2json = «PBP LIBD>/das2json.sh
+  PBP splitoutputs = «PBP LIBD»/splitoutputs.sh
+  PBP check for errors = «PBP LIBD»/check-for-errors.sh
+  push «PBP LIBD»/kernel onto PYTHONPATH
+  cd to the «PBP APPD» directory, to run the tool
+  first, remove all 'out.*' files
+  run «das2json» giving it the third parameter from this enclosing script
+  run «check for errors»
+}

@@ -1,38 +1,100 @@
 #!/bin/bash
+
+# use a pbp multi-language tool to build a part of the current project
+# $1 = the tool, often "./pbp/dtree/dtree-transmogrifier"
+# $2 = path to pbp tools (often "./pbp")
+# $3 = command line arg passed to the $1 tool ; if $3 is a valid file, then it is fully qualified, else no change
+
+# this script assumes that ./pbp has a certain structure,
+# the t2t.sh script assumes that the t2t lib is a subdirectory of PBP_T2T_LIBD
+# but, no other scripts that are invoked make directory structure assumptions
+# (this hard-wired knownledge should eventually be removed, but I can't be bothered at the moment)
+## ./pbp/t2t.sh
+## ./pbp/das2json.sh
+## ./pbp/splitoutputs.sh
+## ./pbp/check-for-errors.sh
+## ./pbp/kernel/
+## ./pbp/das2json/
+## ./pbp/t2t2/
+## ./pbp/tas/
+
+# env vars that can be used by spawned scripts:
+## PBP_WD    is the path to the current project that is using a given PBP APP (e.g. pwd)
+## PBP_LIBD  is the path to the pbp tools (often "./pbp")
+## PBP_APPD  is the path to the pbp-based tool that is being used by the APP
+
+## PBP_WSUPPORT is the javascript support file (must exist even if empty) in PBP_WD
+
+## PBP_t2t           - t2t (text to text transmogrifier) tool
+## PBP_das2json      - das2json tool (drawing (drawio) to JSON converter)
+## PBP_splitoutputs  - output splitter - takes output from PBP and creates one 'out.??' file per stream
+## PBP_dtree         - decision tree diagram to .py/.js transmogrifier
+
+## PBP_arg - argument passed to the pbp-based APP, fully qualified if it's a valid filename 
+
+# Quit immediately if there are any errors
 set -e
-export PBP_PROJECT_PATH=$(pwd)
-src_drawing=$(python3 -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$1").drawio
-export PBP_LIB=$(python3 -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$2")
-export SRC_DRAWING_PATH="$(dirname "${src_drawing}")"
-if [[ -f "$3" ]]
-then
-    arg=$(python3 -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$3")
-    basename_arg=$(basename "$arg")
+
+# Variable assignments (uppercase = exported, lowercase = local)
+export PBP_WD="$(pwd)"
+export PBP_WSUPPORT="${PBP_WD}/supportjs"
+export PBP_LIBD="$(python -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$2")"
+export PBP_APPD="$(python -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$1")"
+app_main="${PBP_APPD}.drawio"
+export PBP_T2TD="${PBP_T2T_LIBD}/t2t/lib"
+
+# PBP arg: third parameter as full path if it's a file, otherwise just the parameter
+if [[ -f "$3" ]]; then
+    export PBP_arg="$(python -c "import os, sys; print(os.path.abspath(sys.argv[1]))" "$3")"
 else
-    arg="$3"
-    basename_arg="$3"
+    export PBP_arg="$3"
 fi
-export PBP_KERNEL_PATH="${PBP_LIB}/kernel"
-export PBP_DAS_PATH="${PBP_LIB}/das"
-export PYTHONPATH="${PBP_KERNEL_PATH}:$PYTHONPATH"
-export PBP_SPLITOUTJS="${PBP_LIB}/kernel/splitoutput.js"
-export PBP_T2T="${PBP_LIB}/t2t.bash"
-cd "${SRC_DRAWING_PATH}"
-rm -f 'out.*'
-node "${PBP_LIB}/das/das2json.mjs" "${src_drawing}"
-"${PBP_LIB}/das/check-for-span-error.bash" "${src_drawing}.json"
-python main.py "${PBP_LIB}" "${arg}" main "${src_drawing}.json" >/tmp/xyz
-node "${PBP_SPLITOUTJS}" </tmp/xyz
-if [ -f out.✗ ]
-then
-    mv out.✗ out.err
-    cat out.err
-    echo
-    echo "ERRORS!!!"
+
+export PBP_t2t="${PBP_LIBD}/t2t.sh"
+export PBP_das2json="${PBP_LIBD}/das2json.sh"
+export PBP_SPLITOUTPUTSJS="${PBP_LIBD}/kernel/splitoutput.js"
+export PBP_split_outputs="${PBP_LIBD}/splitoutputs.sh"
+export PBP_DAS2JSONJS="${PBP_LIBD}/das2json/das2json.mjs"
+export PBP_check_for_errors="${PBP_LIBD}/check-for-errors.sh"
+
+# Push kernel onto PYTHONPATH
+export PYTHONPATH="${PBP_LIBD}/kernel:${PYTHONPATH}"
+
+for i in PBP_WD PBP_WSUPPORT PBP_LIBD PBP_APPD app_main PBP_T2TD PBP_arg PBP_t2t PBP_das2json PBP_SPLITOUTPUTSJS PBP_split_outputs PBP_DAS2JSONJS PBP_check_for_errors
+do
+    echo $i "=" ${!i}
+done
+
+    
+
+# Change to the app directory
+cd "${PBP_APPD}"
+
+# Remove all 'out.*' files
+rm -f out.*
+
+# Run das2json on app main
+"${PBP_das2json}" "${app_main}"
+
+# Run check for errors on app main.json
+"${PBP_check_for_errors}" "${app_main}.json"
+
+# Run python and pipe to split outputs
+python main.py "${PBP_LIBD}" "${PBP_arg}" main "${PBP_arg}.json" | "${PBP_split_outputs}"
+
+# Check if the run produced "out.✗"
+if [[ -f "out.✗" ]]; then
+    mv "out.✗" "ERRORS"
+    cat "ERRORS"
     exit 1
 else
-    mv out.frish "${PBP_PROJECT_PATH}/${basename_arg}.frish"
-    mv out.dt "${PBP_PROJECT_PATH}/${basename_arg}.dt"
-    mv out.js "${PBP_PROJECT_PATH}/${basename_arg}.js"
-    mv out.py "${PBP_PROJECT_PATH}/${basename_arg}.py"
+    # Get basename of PBP_arg for output filenames
+    arg_basename="$(basename "${PBP_arg}")"
+    
+    # Move output files to original working directory with renamed filenames
+    mv "out.frish" "${PBP_WD}/${arg_basename}.frish"
+    mv "out.dt" "${PBP_WD}/${arg_basename}.dt"
+    mv "out.js" "${PBP_WD}/${arg_basename}.js"
+    mv "out.py" "${PBP_WD}/${arg_basename}.py"
 fi
+

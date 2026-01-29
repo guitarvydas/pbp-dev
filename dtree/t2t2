@@ -1,2 +1,2 @@
 #!/bin/bash
-${PBP_LIB}/t2t.bash ${PBP_PROJECT_PATH} ${PBP_LIB} ${PBP_PROJECT_PATH}/$2.ohm ${PBP_PROJECT_PATH}/$3.rwr ${PBP_PROJECT_PATH}/support.mjs -
+${PBP_T2T} ${PBP_APPD}/$2.ohm ${PBP_APPD}/$3.rwr ${PBP_APPD}/support.mjs -
