@@ -58,10 +58,10 @@ ExternalPhrase_raclnetf [_octothorpe _ lp pathname _comma fname rp] = ‛
 	fil.close ()
         return routings ⤶
     except FileNotFoundError:⤷
-        print (f"File not found: '{«fname»}'")
+        print (f"File not found: '{«fname»}'", file=sys.stderr)
         return None⤶
     except json.JSONDecodeError as e:⤷
-        print ("Error decoding JSON in file: '{e}'")
+        print (f"Error decoding JSON in path /{pathname}/: '{e}'", file=sys.stderr)
         return None⤶
 ’
 

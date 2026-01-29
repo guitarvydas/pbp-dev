@@ -364,15 +364,17 @@ def lnet2internal_from_file (pathname,container_xml):  #line 414
 
     try:
         fil = open(filename, "r")
+        print(f'  %%%%% lnet2 filename={filename}', file=sys.stderr)
         json_data = fil.read()
         routings = json.loads(json_data)
+        print(f'  %%%%% %% lnet2 routings={routings}', file=sys.stderr)
         fil.close ()
         return routings
     except FileNotFoundError:
         print (f"File not found: '{filename}'", file=sys.stderr)
         return None
     except json.JSONDecodeError as e:
-        print (f"Error decoding JSON in path /{pathname}/: '{e}'", file=sys.stderr)
+        print (f"Error decoding JSON in path /{pathname}/: '{e}'")
         return None
                                                        #line 416#line 417#line 418
 
@@ -544,10 +546,15 @@ def obj_clone (obj):                                   #line 599
 # where ${_00_} is the root directory for the project  #line 604#line 605
 def initialize_component_palette_from_files (project_root,diagram_source_files):#line 606
     reg = make_component_registry ()                   #line 607
+    print (f'  ** init diagram files root={project_root} diagrams={diagram_source_files}', file=sys.stderr)
     for diagram_source in  diagram_source_files:       #line 608
+        print (f'    -- init diagram files diagram={diagram_source}', file=sys.stderr)
         all_containers_within_single_file = lnet2internal_from_file ( project_root, diagram_source)#line 609
+        print (f'    -- init diagram files all_containers={all_containers_within_single_file}', file=sys.stderr)
         reg = generate_external_components ( reg, all_containers_within_single_file)#line 610
+        print (f'    -- init diagram files 3', file=sys.stderr)
         for container in  all_containers_within_single_file:#line 611
+            print (f'  -- init diagram files 4', file=sys.stderr)
             register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 612#line 613#line 614
     initialize_stock_components ( reg)                 #line 615
     return  reg                                        #line 616#line 617#line 618
@@ -582,6 +589,7 @@ def runtime_error (s):                                 #line 646
 def initialize_from_files (project_root,diagram_names):#line 654
     arg =  None                                        #line 655
     palette = initialize_component_palette_from_files ( project_root, diagram_names)#line 656
+    print(f' --- init_from_files root={project_root} diagrams={diagram_names}', file=sys.stderr)
     return [ palette,[ project_root, diagram_names, arg]]#line 657#line 658#line 659
 
 def initialize_from_string (project_root):             #line 660
@@ -597,6 +605,7 @@ def start (arg,part_name,palette,env):                 #line 666
 def start_bare (part_name,palette,env):                #line 672
     project_root =  env [ 0]                           #line 673
     diagram_names =  env [ 1]                          #line 674
+    print(f' --- start bare root={project_root} diagrams={diagram_names}', file=sys.stderr)
     set_environment ( project_root)                    #line 675
     # get entrypoint container                         #line 676
     part = get_component_instance ( palette, part_name, None)#line 677

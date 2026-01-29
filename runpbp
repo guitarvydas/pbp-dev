@@ -53,7 +53,8 @@ rm -f out.*
 "${PBP_check_for_errors}" "${app_main}.json"
 
 # Run python and pipe to split outputs
-python main.py "${PBP_LIBD}" "${PBP_arg}" main "${PBP_arg}.json" | "${PBP_split_outputs}"
+set -x
+python main.py "${PBP_LIBD}" "${PBP_arg}" main "${app_main}.json" | "${PBP_split_outputs}"
 
 # Check if the run produced "out.✗"
 if [[ -f "out.✗" ]]; then
