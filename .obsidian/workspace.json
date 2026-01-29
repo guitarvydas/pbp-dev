@@ -8,29 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e78cb8d8ff53cac1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "doc/Semantics.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Semantics"
-            }
-          },
-          {
             "id": "2aafda6bd4dc58d5",
             "type": "leaf",
             "state": {
-              "type": "image",
-              "state": {
-                "file": "doc/Control Flow For Layering.png"
-              },
-              "icon": "lucide-image",
-              "title": "Control Flow For Layering"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           },
           {
@@ -196,13 +180,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "doc/Semantics.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Semantics"
+              "title": "Outline"
             }
           }
         ],
@@ -223,49 +206,53 @@
       "bases:Create new base": false
     }
   },
-  "active": "e78cb8d8ff53cac1",
+  "active": "2aafda6bd4dc58d5",
   "lastOpenFiles": [
-    "kernel/before-Wed 28 Jan 2026 23:10:59 EST/kernel0d.py",
-    "kernel/before-Wed 28 Jan 2026 23:10:59 EST",
-    "kernel/out.js",
-    "kernel/out.py",
-    "kernel/out.lisp",
-    "kernel/before-Wed 28 Jan 2026 23:09:00 EST/kernel0d.py",
-    "kernel/before-Wed 28 Jan 2026 23:09:00 EST",
-    "kernel/#kernel0d.py#",
-    "das2json.sh~",
+    "splitoutputs~",
+    "#das2json#",
+    "#import-minimal.bash#",
     "#runpbp#",
-    "check-for-errors.sh",
-    "ehsh-transmogrifier-spec.md",
-    "ehsh-transmogrifier.md",
-    "ehsh.md",
-    "esh.md",
-    "dtree/junk.md",
-    "dtree/explain-jq.md",
-    "dtree/README.md",
-    "dtree/README.process_json.md",
-    "dtree/DOCUMENTATION.md",
-    "dtree/DOCUMENTATION seed.md",
-    "README.md",
-    "doc/Control Flow For Layering.png",
-    "doc/Fan-Out For Layering.png",
-    "doc/Semantics.md",
-    "pbp/dtree/README.process_json.md",
-    "pbp/dtree/README.md",
-    "pbp/dtree/DOCUMENTATION.md",
-    "pbp/pbp-lifecycle.drawio.png",
-    "pbp/api.md",
-    "dtree/doc/dtree-transmogrifier-Transmogrify_DT.drawio.png",
-    "dtree/doc/xinterpret.drawio.png",
-    "attic/deltas.md",
-    "documenting.md",
-    "doc/mapping.png",
-    "doc/ABCDE.png",
-    "doc/looptest.png",
-    "Philosophy Corner.md",
-    "doc/how-to-create-Makefile.md",
-    "doc/how-to-create-main-dot-py.md",
-    "doc/doc-minimal-main-dot-py.drawio.png",
-    "doc/doc-main-dot-py-with-user-defined-parts.drawio.png"
+    "t2t-d/self-compile-d/temp.rewrite.mjs",
+    "t2t-d/self-compile-d/temp.ndsl.mjs",
+    "t2t-d/self-compile-d/t2t.rewrite",
+    "t2t-d/self-compile-d/t2t.grammar",
+    "t2t-d/self-compile-d/t2t.mjs",
+    "t2t-d/self-compile-d/self-compile.bash",
+    "t2t-d/self-compile-d/run-self",
+    "t2t-d/doc-d/rwr/rwr-overview.drawio.png",
+    "t2t-d/doc-d/rwr/rwr-overview-t2t c.drawio.png",
+    "t2t-d/doc-d/rwr/rwr-overview-t2t c-t2t c.jpg",
+    "t2t-d/doc-d/rwr/rwr-overview-t2t b.drawio.png",
+    "t2t-d/doc-d/rwr/rwr-overview-t2t c-t2t c.drawio.png",
+    "t2t-d/doc-d/rwr/rwr-overview-t2t b copy.drawio.png",
+    "t2t-d/doc-d/rwr/rwr-overview-Python.drawio.png",
+    "t2t-d/doc-d/rwr/rwr-overview-t2t a.drawio.png",
+    "t2t-d/doc-d/t2t-2.png",
+    "t2t-d/doc-d/t2t workflow.png",
+    "attic-d/tas/prompt.md",
+    "attic-d/tas/plwb.md",
+    "attic-d/tas/out.md",
+    "attic-d/tas/choreographer.md",
+    "attic-d/tas/NOTES.md",
+    "attic-d/tas/README.md",
+    "attic-d/deltas.md",
+    "tas-bloated-d/node_modules/wrap-ansi/node_modules/strip-ansi/readme.md",
+    "tas-bloated-d/node_modules/wrap-ansi/node_modules/ansi-regex/readme.md",
+    "tas-bloated-d/node_modules/string-width/node_modules/strip-ansi/readme.md",
+    "tas-bloated-d/node_modules/string-width/node_modules/ansi-regex/readme.md",
+    "tas-bloated-d/node_modules/cliui/node_modules/strip-ansi/readme.md",
+    "tas-bloated-d/node_modules/cliui/node_modules/ansi-regex/readme.md",
+    "tas-bloated-d/node_modules/@xmldom/xmldom/readme.md",
+    "tas-bloated-d/node_modules/@xmldom/xmldom/SECURITY.md",
+    "tas-bloated-d/node_modules/@xmldom/xmldom/CHANGELOG.md",
+    "tas-bloated-d/node_modules/yargs-parser/README.md",
+    "tas-bloated-d/node_modules/yargs-parser/CHANGELOG.md",
+    "tas-bloated-d/node_modules/yargs/README.md",
+    "tas-bloated-d/node_modules/y18n/README.md",
+    "tas-bloated-d/node_modules/y18n/CHANGELOG.md",
+    "tas-bloated-d/node_modules/wrap-ansi/readme.md",
+    "tas-bloated-d/node_modules/strip-ansi/readme.md",
+    "tas-bloated-d/node_modules/string-width/readme.md",
+    "tas-bloated-d/node_modules/ohm-js/README.md"
   ]
 }

@@ -9,63 +9,66 @@ if [ -z "$PBP_ROOT" ]; then
     exit 1
 fi
 Dev=${PBP_ROOT}
-TaS_Dev=${PBP_ROOT}/tas
-dtree_Dev=${PBP_ROOT}/dtree
+TaS_Dev=${PBP_ROOT}/tas-d
+dtree_Dev=${PBP_ROOT}/dtree-d
 rm -rf pbp
 mkdir pbp
 cd pbp
 
-KERNEL=./kernel
-DAS=./das
-TAS=./tas
-T2T=./t2t
-DTREE=./dtree
-DOC=./doc
+# convention: each subdirectory is suffixed by "-d"
+KERNEL=./kernel-d
+DAS=./das-d
+TAS=./tas-d
+T2T=./t2t-d
+DTREE=./dtree-d
+DOC=./doc-d
 
-rm -rf tas
-rm -rf das
-rm -rf t2t
-rm -rf kernel
-rm -rf dtree
-rm -rf doc
-mkdir tas
-mkdir das
-mkdir t2t
-mkdir t2t/lib
-mkdir kernel
-mkdir dtree
-mkdir doc
+rm -rf tas-d
+rm -rf das-d
+rm -rf t2t-d
+rm -rf kernel-d
+rm -rf dtree-d
+rm -rf doc-d
+mkdir tas-d
+mkdir das-d
+mkdir t2t-d
+mkdir t2t-d/lib-d
+mkdir kernel-d
+mkdir dtree-d
+mkdir doc-d
 
 cp ${Dev}/t2t.bash .
 cp ${Dev}/runpbp .
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
-cp ${Dev}/kernel/package.json .
+cp ${Dev}/kernel-d/package.json .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
-cp ${Dev}/t2t.sh .
-cp ${Dev}/das2json.sh .
-cp ${Dev}/splitoutputs.sh .
-cp ${Dev}/check-for-errors.sh .
+cp ${Dev}/runpbp .
+cp ${Dev}/indent .
+cp ${Dev}/t2t .
+cp ${Dev}/das2json .
+cp ${Dev}/splitoutputs .
+cp ${Dev}/check-for-errors .
 
-cp ${Dev}/doc/semantics.pdf ${DOC}
+cp ${Dev}/doc-d/semantics.pdf ${DOC}
 
-cp ${Dev}/kernel/package.json ${KERNEL}
-cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
-cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
-cp ${Dev}/kernel/splitoutput.js ${KERNEL}
-cp ${Dev}/kernel/kernel0d.js ${KERNEL}/kernel0d.js
-cp ${Dev}/kernel/kernel0d.lisp ${KERNEL}/kernel0d.lisp
+cp ${Dev}/kernel-d/package.json ${KERNEL}
+cp ${Dev}/kernel-d/kernel0d.py ${KERNEL}/kernel0d.py
+cp ${Dev}/kernel-d/stubbed-out-repl.py ${KERNEL}/repl.py
+cp ${Dev}/kernel-d/splitoutput.js ${KERNEL}
+cp ${Dev}/kernel-d/kernel0d.js ${KERNEL}/kernel0d.js
+cp ${Dev}/kernel-d/kernel0d.lisp ${KERNEL}/kernel0d.lisp
 
-cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
+cp ${Dev}/das-d/das2json.mjs ${DAS}/das2json.mjs
 
-cp ${Dev}/das/PBP.xml ${DAS}/PBP.xml
-cp ${Dev}/t2t/lib/args.part.js ${T2T}/lib
-cp ${Dev}/t2t/lib/front.part.js ${T2T}/lib
-cp ${Dev}/t2t/lib/middle.part.js ${T2T}/lib
-cp ${Dev}/t2t/lib/tail.part.js ${T2T}/lib
-cp ${Dev}/t2t/lib/rwr.mjs ${T2T}/lib
+cp ${Dev}/t2t-d/lib-d/args.part.js ${T2T}/lib
+cp ${Dev}/t2t-d/lib-d/front.part.js ${T2T}/lib
+cp ${Dev}/t2t-d/lib-d/middle.part.js ${T2T}/lib
+cp ${Dev}/t2t-d/lib-d/tail.part.js ${T2T}/lib
+cp ${Dev}/t2t-d/lib-d/rwr.mjs ${T2T}/lib
 
 ${Dev}/import-minimal-tas.bash ${TaS_Dev} ${TAS}
 ${Dev}/import-minimal-dtree.bash ${dtree_Dev} ${DTREE}
+

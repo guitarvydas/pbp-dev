@@ -20,22 +20,20 @@ else
     export PBP_arg="$3"
 fi
 
-export PBP_t2t="${PBP_LIBD}/t2t.sh"
-export PBP_das2json="${PBP_LIBD}/das2json.sh"
-export PBP_split_outputs="${PBP_LIBD}/splitoutputs.sh"
-export PBP_check_for_errors="${PBP_LIBD}/check-for-errors.sh"
+export PBP_runpbp="${PBP_LIBD}/runpbp"
+export PBP_indent="${PBP_LIBD}/indent"
+export PBP_t2t="${PBP_LIBD}/t2t"
+export PBP_das2json="${PBP_LIBD}/das2json"
+export PBP_split_outputs="${PBP_LIBD}/splitoutputs"
+export PBP_check_for_errors="${PBP_LIBD}/check-for-errors"
 
-export PBP_DAS2JSONJS="${PBP_LIBD}/das/das2json.mjs"
-export PBP_T2TD="${PBP_LIBD}/t2t"
-export PBP_T2T_LIBD="${PBP_LIBD}/t2t/lib"
-export PBP_SPLITOUTPUTSJS="${PBP_LIBD}/kernel/splitoutput.js"
 export PBP_WSUPPORT="${PBP_WD}/support.mjs"
 
 # Push kernel onto PYTHONPATH
-export PYTHONPATH="${PBP_LIBD}/kernel:${PYTHONPATH}"
+export PYTHONPATH="${PBP_LIBD}/kernel-d:${PYTHONPATH}"
 
 
-for i in PBP_WD PBP_WSUPPORT PBP_LIBD PBP_APPD app_main PBP_T2TD PBP_arg PBP_t2t PBP_SPLITOUTPUTSJS PBP_split_outputs PBP_DAS2JSONJS PBP_check_for_errors
+for i in PBP_WD PBP_WSUPPORT PBP_LIBD PBP_APPD app_main PBP_arg PBP_runpbp PBP_indent PBP_t2t PBP_das2json PBP_split_outputs PBP_check_for_errors
 do
     echo $i "=" ${!i}
 done
@@ -53,17 +51,25 @@ rm -f out.*
 "${PBP_check_for_errors}" "${app_main}.json"
 
 # Run python and pipe to split outputs
+echo runpbp "$PYTHONPATH"
 set -x
 python main.py "${PBP_LIBD}" "${PBP_arg}" main "${app_main}.json" | "${PBP_split_outputs}"
 
 # Check if the run produced "out.✗"
 if [[ -f "out.✗" ]]; then
+    echo
     mv "out.✗" "ERRORS"
     cat "ERRORS"
+    echo
+    echo
+    echo "!!! ERRORS !!!"
+    echo
     exit 1
 else
     # Get basename of PBP_arg for output filenames
     arg_basename="$(basename "${PBP_arg}")"
+
+    ls -l out*
     
     # Move output files to original working directory with renamed filenames
     mv "out.frish" "${PBP_WD}/${arg_basename}.frish"

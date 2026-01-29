@@ -1,0 +1,2 @@
+#!/bin/bash
+${PBP_LIBD}/t2t.bash ${PBP_APPD} ${PBP_LIBD} $1.ohm $1.rwr support.mjs -

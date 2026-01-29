@@ -1,0 +1,3 @@
+write a bash script
+if there is only one arg {
+  invoke ${PBP_T2T} 

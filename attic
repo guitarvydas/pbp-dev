@@ -1,0 +1,21 @@
+#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$#" -eq 1 ]; then
+  grammar="$1.ohm"
+  rewrite="$1.rwr"
+elif [ "$#" -eq 2 ]; then
+  grammar="$1.ohm"
+  rewrite="$2.rwr"
+else
+  echo "Usage: $0 base            # uses base.ohm and base.rwr" >&2
+  echo "   or: $0 grammar-base rewrite-base" >&2
+  exit 1
+fi
+src=-
+
+node "${PBP_T2T_LIBD}/rwr.mjs" "${rewrite}" >"${PBP_WD}/temp.rewrite.mjs"
+sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >temp.grammar
+cat "${PBP_T2T_LIBD}/front.part.js" temp.grammar "${PBP_T2T_LIBD}/middle.part.js" "${PBP_T2T_LIBD}/args.part.js" "${PBP_WSUPPORT}" "${PBP_WD}/temp.rewrite.mjs" "${PBP_T2T_LIBD}/tail.part.js" >"${PBP_WD}/temp.nanodsl.mjs"
+node "${PBP_WD}/temp.nanodsl.mjs" "${src}"

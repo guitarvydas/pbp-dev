@@ -1,0 +1,3 @@
+#!/bin/bash
+set -euo pipefail
+node ${PBP_TASD}/indenter.mjs

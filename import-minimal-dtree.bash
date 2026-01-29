@@ -13,7 +13,6 @@ cp -f ${dtree_Dev}/dtpretty.rwr ${DTREE}
 cp -f ${dtree_Dev}/dtree-transmogrifier.drawio ${DTREE}
 cp -f ${dtree_Dev}/dtree.ohm ${DTREE}
 cp -f ${dtree_Dev}/dtree.rwr ${DTREE}
-cp -f ${dtree_Dev}/empty.mjs ${DTREE}
 cp -f ${dtree_Dev}/main.py ${DTREE}
 cp -f ${dtree_Dev}/PBP.xml ${DTREE}
 cp -f ${dtree_Dev}/process_json_jq.bash ${DTREE}
@@ -21,7 +20,5 @@ cp -f ${dtree_Dev}/process_json.pl ${DTREE}
 cp -f ${dtree_Dev}/README.md ${DTREE}
 cp -f ${dtree_Dev}/README.process_json.md ${DTREE}
 cp -f ${dtree_Dev}/support.mjs ${DTREE}
-cp -f ${dtree_Dev}/t2t ${DTREE}
-cp -f ${dtree_Dev}/t2t2 ${DTREE}
 cp -f ${dtree_Dev}/translate.js ${DTREE}
 cp -f ${dtree_Dev}/tree_walk.pl ${DTREE}

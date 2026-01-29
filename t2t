@@ -1,8 +1,18 @@
 #!/bin/bash
-set -e
-grammar=$1
-rewrite=$2
-src=$3
+set -euo pipefail
+
+if [ "$#" -eq 1 ]; then
+  grammar="$1.ohm"
+  rewrite="$1.rwr"
+elif [ "$#" -eq 2 ]; then
+  grammar="$1.ohm"
+  rewrite="$2.rwr"
+else
+  echo "Usage: $0 base            # uses base.ohm and base.rwr" >&2
+  echo "   or: $0 grammar-base rewrite-base" >&2
+  exit 1
+fi
+src=-
 
 node "${PBP_T2T_LIBD}/rwr.mjs" "${rewrite}" >"${PBP_WD}/temp.rewrite.mjs"
 sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >temp.grammar

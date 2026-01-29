@@ -47,13 +47,13 @@
           <mxGeometry height="25" width="70" x="740" y="380" as="geometry" />
         </mxCell>
         <mxCell id="NXzrPp-EyFkYuxEwoDF9-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" value="PBP_das2json" vertex="1">
-          <mxGeometry height="30" width="90" x="790" y="435" as="geometry" />
+          <mxGeometry height="30" width="90" x="795" y="470" as="geometry" />
         </mxCell>
         <mxCell id="NXzrPp-EyFkYuxEwoDF9-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" value="PBP_splitoutputs" vertex="1">
-          <mxGeometry height="25" width="100" x="880" y="390" as="geometry" />
+          <mxGeometry height="25" width="100" x="890" y="460" as="geometry" />
         </mxCell>
         <mxCell id="NXzrPp-EyFkYuxEwoDF9-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" value="PBP_runpbp" vertex="1">
-          <mxGeometry height="30" width="80" x="870" y="475" as="geometry" />
+          <mxGeometry height="30" width="80" x="710" y="465" as="geometry" />
         </mxCell>
         <mxCell id="NXzrPp-EyFkYuxEwoDF9-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;shadow=1;" value="wd&lt;div&gt;working directory for project under development&lt;/div&gt;" vertex="1">
           <mxGeometry height="140" width="320" x="420" y="70" as="geometry" />
@@ -90,6 +90,18 @@
         </mxCell>
         <mxCell id="NXzrPp-EyFkYuxEwoDF9-38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Container" vertex="1">
           <mxGeometry height="20" width="60" x="640" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="NXzrPp-EyFkYuxEwoDF9-41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;shadow=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;spacingLeft=10;opacity=50;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;goal: a set of standard scripts&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;goal: envelope working PBP project and make it portable to other projects&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="260" x="60" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NXzrPp-EyFkYuxEwoDF9-43" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" value="PBP_indent" vertex="1">
+          <mxGeometry height="30" width="80" x="700" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="NXzrPp-EyFkYuxEwoDF9-44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" value="PBP_t2t" vertex="1">
+          <mxGeometry height="30" width="80" x="790" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="NXzrPp-EyFkYuxEwoDF9-45" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" value="PBP_check-for-errors" vertex="1">
+          <mxGeometry height="30" width="80" x="880" y="425" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
