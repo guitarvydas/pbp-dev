@@ -922,7 +922,10 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
 
     try:
         with open('junk.command.txt', 'w') as file:
+            file.write(os.getcwd())
+            file.write('\n')
             file.write(cmd)
+            file.write('\n')
         ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
         rc = ret.returncode
         stdout = ret.stdout.strip ()

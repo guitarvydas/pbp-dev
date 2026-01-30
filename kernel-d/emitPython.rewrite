@@ -130,7 +130,10 @@ ExternalPhrase_substitute [_octothorpe _ lp find _comma1 replace _comma2 s rp] =
 ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma3 rc _comma4 out _comma5 errout rp] = ‛
 try:⤷
     with open('junk.command.txt', 'w') as file:⤷
-        file.write(cmd)⤶
+            file.write(os.getcwd())
+            file.write('\n')
+            file.write(cmd)
+            file.write('\n')⤶
     «ret» = subprocess.run (shlex.split («cmd»), input=«args», text=True, capture_output=True)
     «rc» = «ret».returncode
     «out» = «ret».stdout.strip ()
