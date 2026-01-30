@@ -935,7 +935,7 @@ def stop_instantiate (reg,owner,name,template_data,arg):#line 302
 
 def stop_handler (eh,mev):                             #line 308
     inst =  eh.instance_data                           #line 309
-    parent =  eh.owner                                 #line 310
+    parent =  inst.owner                               #line 310
     s =  str( "   !!! stopping") +  parent.name        #line 311
     print ( s, file=sys.stderr)                        #line 312
                                                        #line 313

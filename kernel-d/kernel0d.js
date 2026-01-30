@@ -1125,7 +1125,7 @@ function stop_instantiate (reg,owner,name,template_data,arg) {/* line 302 */
 
 function stop_handler (eh,mev) {                       /* line 308 */
     let  inst =  eh.instance_data;                     /* line 309 */
-    let  parent =  inst.owner;                         /* line 310 */
+    let  parent =  eh.owner;                           /* line 310 */
     let  s =  ( "   !!! stopping".toString ()+  parent.name.toString ()) /* line 311 */;
     console.error ( s);                                /* line 312 */
                                                        /* line 313 */

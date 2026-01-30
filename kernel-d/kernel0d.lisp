@@ -1330,7 +1330,7 @@ x))))
   (declare (ignorable  eh  mev))                            #|line 308|#
   (let (( inst (slot-value  eh 'instance_data)))
     (declare (ignorable  inst))                             #|line 309|#
-    (let (( parent (slot-value  inst 'owner)))
+    (let (( parent (slot-value  eh 'owner)))
       (declare (ignorable  parent))                         #|line 310|#
       (let (( s  (concatenate 'string  "   !!! stopping" (slot-value  parent 'name)) #|line 311|#))
         (declare (ignorable  s))
