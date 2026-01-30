@@ -4,9 +4,9 @@ echo 'aaa...' t2t in "$(pwd)"
 
 
 echo "*** T2T ***"
-echo t2t "$#"
+echo "# $#"
+echo "pwd=$(pwd)"
 echo "$@"
-echo "$0" "[$1]" "[$2]" "[$3]"
 echo
 
 if [ "$#" -eq 1 ]; then
@@ -22,7 +22,8 @@ else
 fi
 src=-
 
-node "${PBP_T2T_LIBD}/rwr.mjs" "${rewrite}" >"${PBP_WD}/temp.rewrite.mjs"
+t2tlibd="${PBP_LIBD}/t2t-d/lib-d"
+node "${t2tlibd}/rwr.mjs" "${rewrite}" >"${PBP_WD}/temp.rewrite.mjs"
 sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >temp.grammar
-cat "${PBP_T2T_LIBD}/front.part.js" temp.grammar "${PBP_T2T_LIBD}/middle.part.js" "${PBP_T2T_LIBD}/args.part.js" "${PBP_WSUPPORT}" "${PBP_WD}/temp.rewrite.mjs" "${PBP_T2T_LIBD}/tail.part.js" >"${PBP_WD}/temp.nanodsl.mjs"
+cat "${t2tlibd}/front.part.js" temp.grammar "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${PBP_WSUPPORT}" "${PBP_WD}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${PBP_WD}/temp.nanodsl.mjs"
 node "${PBP_WD}/temp.nanodsl.mjs" "${src}"

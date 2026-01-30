@@ -37,8 +37,6 @@ mkdir kernel-d
 mkdir dtree-d
 mkdir doc-d
 
-cp ${Dev}/t2t .
-cp ${Dev}/runpbp .
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
 cp ${Dev}/kernel-d/package.json .
@@ -63,11 +61,11 @@ cp ${Dev}/kernel-d/kernel0d.lisp ${KERNEL}/kernel0d.lisp
 
 cp ${Dev}/das-d/das2json.mjs ${DAS}/das2json.mjs
 
-cp ${Dev}/t2t-d/lib-d/args.part.js ${T2T}/lib
-cp ${Dev}/t2t-d/lib-d/front.part.js ${T2T}/lib
-cp ${Dev}/t2t-d/lib-d/middle.part.js ${T2T}/lib
-cp ${Dev}/t2t-d/lib-d/tail.part.js ${T2T}/lib
-cp ${Dev}/t2t-d/lib-d/rwr.mjs ${T2T}/lib
+cp ${Dev}/t2t-d/lib-d/args.part.js ${T2T}/lib-d
+cp ${Dev}/t2t-d/lib-d/front.part.js ${T2T}/lib-d
+cp ${Dev}/t2t-d/lib-d/middle.part.js ${T2T}/lib-d
+cp ${Dev}/t2t-d/lib-d/tail.part.js ${T2T}/lib-d
+cp ${Dev}/t2t-d/lib-d/rwr.mjs ${T2T}/lib-d
 
 ${Dev}/import-minimal-tas.bash ${TaS_Dev} ${TAS}
 ${Dev}/import-minimal-dtree.bash ${dtree_Dev} ${DTREE}

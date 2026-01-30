@@ -1,2 +1,2 @@
 #!/bin/bash
-${PBP_LIBD}/t2t ${PBP_APPD} ${PBP_LIBD} $1
+"${PBP_LIBD}/t2t" "$1"
