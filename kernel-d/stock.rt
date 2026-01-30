@@ -300,14 +300,17 @@ defn blockOnError_handler (eh, mev) {
  }
 
 defn stop_instantiate (reg, owner, name, template_data, arg) {
-    name_with_id ≡ gensymbol (“blockOnError”)
-    instp ≡ #fresh (BlockOnErrorState)
-    return make_leaf (name_with_id, owner, instp, “”, ↪︎blockOnError_handler, ϕ)
+    name_with_id ≡ gensymbol (“Stop”)
+    inst ≡ ϕ
+    return make_leaf (name_with_id, owner, inst, “”, ↪︎stop_handler, ϕ)
 }
 
 defn stop_handler (eh, mev) {
     deftemp inst ⇐ eh.instance_data
     deftemp parent ⇐ inst.owner
+    deftemp s ⇐#strcons (“   !!! stopping”, parent.name)
+    #print_stderr (s)
+    #print_nl_stderr ()
     parent.stop ()
     forward (eh, “”, mev)
 }

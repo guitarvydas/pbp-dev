@@ -931,7 +931,7 @@ def blockOnError_handler (eh,mev):                     #line 289
 def stop_instantiate (reg,owner,name,template_data,arg):#line 302
     name_with_id = gensymbol ( "Stop")                 #line 303
     inst =  None                                       #line 304
-    return make_leaf ( name_with_id, owner, inst, "", stop_handler, None)#line 305#line 306#line 307
+    return make_leaf ( name_with_id, owner, inst, "", blockOnError_handler, None)#line 305#line 306#line 307
 
 def stop_handler (eh,mev):                             #line 308
     inst =  eh.instance_data                           #line 309

@@ -1320,11 +1320,11 @@ x))))
   )
 (defun stop_instantiate (&optional  reg  owner  name  template_data  arg)
   (declare (ignorable  reg  owner  name  template_data  arg)) #|line 302|#
-  (let ((name_with_id (funcall (quote gensymbol)   "blockOnError"  #|line 303|#)))
+  (let ((name_with_id (funcall (quote gensymbol)   "Stop"   #|line 303|#)))
     (declare (ignorable name_with_id))
-    (let ((instp  (make-instance 'BlockOnErrorState)        #|line 304|#))
-      (declare (ignorable instp))
-      (return-from stop_instantiate (funcall (quote make_leaf)   name_with_id  owner  instp  ""  #'blockOnError_handler  nil  #|line 305|#)))) #|line 306|#
+    (let ((inst  nil))
+      (declare (ignorable inst))                            #|line 304|#
+      (return-from stop_instantiate (funcall (quote make_leaf)   name_with_id  owner  inst  ""  #'stop_handler  nil  #|line 305|#)))) #|line 306|#
   )
 (defun stop_handler (&optional  eh  mev)
   (declare (ignorable  eh  mev))                            #|line 308|#
@@ -1332,25 +1332,30 @@ x))))
     (declare (ignorable  inst))                             #|line 309|#
     (let (( parent (slot-value  inst 'owner)))
       (declare (ignorable  parent))                         #|line 310|#
-      (funcall (slot-value  parent 'stop) )                 #|line 311|#
-      (funcall (quote forward)   eh  ""  mev                #|line 312|#))) #|line 313|#
-  ) #|  all of the the built_in leaves are listed here |#   #|line 315|# #|  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project |# #|line 316|# #|line 317|#
+      (let (( s  (concatenate 'string  "   !!! stopping" (slot-value  parent 'name)) #|line 311|#))
+        (declare (ignorable  s))
+        (format *error-output* "~a~%"  s)                   #|line 312|#
+        (format *error-output* "
+        ")                                                  #|line 313|#
+        (funcall (slot-value  parent 'stop) )               #|line 314|#
+        (funcall (quote forward)   eh  ""  mev              #|line 315|#)))) #|line 316|#
+  ) #|  all of the the built_in leaves are listed here |#   #|line 318|# #|  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project |# #|line 319|# #|line 320|#
 (defun initialize_stock_components (&optional  reg)
-  (declare (ignorable  reg))                                #|line 318|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "1then2"  nil  #'deracer_instantiate )  #|line 319|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "1→2"  nil  #'deracer_instantiate )  #|line 320|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "trash"  nil  #'trash_instantiate )  #|line 321|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "🗑️"  nil  #'trash_instantiate )  #|line 322|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "🚫"  nil  #'stop_instantiate )  #|line 323|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "blockOnError"  nil  #'blockOnError_instantiate )  #|line 324|#) #|line 325|# #|line 326|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Read Text File"  nil  #'low_level_read_text_file_instantiate )  #|line 327|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Ensure String Datum"  nil  #'ensure_string_datum_instantiate )  #|line 328|#) #|line 329|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "syncfilewrite"  nil  #'syncfilewrite_instantiate )  #|line 330|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "String Concat"  nil  #'stringconcat_instantiate )  #|line 331|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "switch1*"  nil  #'switch1star_instantiate )  #|line 332|#)
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "String Concat *"  nil  #'strcatstar_instantiate )  #|line 333|#)
-  #|  for fakepipe |#                                       #|line 334|#
-  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "fakepipename"  nil  #'fakepipename_instantiate )  #|line 335|#) #|line 336|#
+  (declare (ignorable  reg))                                #|line 321|#
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "1then2"  nil  #'deracer_instantiate )  #|line 322|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "1→2"  nil  #'deracer_instantiate )  #|line 323|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "trash"  nil  #'trash_instantiate )  #|line 324|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "🗑️"  nil  #'trash_instantiate )  #|line 325|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "🚫"  nil  #'stop_instantiate )  #|line 326|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "blockOnError"  nil  #'blockOnError_instantiate )  #|line 327|#) #|line 328|# #|line 329|#
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Read Text File"  nil  #'low_level_read_text_file_instantiate )  #|line 330|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "Ensure String Datum"  nil  #'ensure_string_datum_instantiate )  #|line 331|#) #|line 332|#
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "syncfilewrite"  nil  #'syncfilewrite_instantiate )  #|line 333|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "String Concat"  nil  #'stringconcat_instantiate )  #|line 334|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "switch1*"  nil  #'switch1star_instantiate )  #|line 335|#)
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "String Concat *"  nil  #'strcatstar_instantiate )  #|line 336|#)
+  #|  for fakepipe |#                                       #|line 337|#
+  (funcall (quote register_component)   reg (funcall (quote mkTemplate)   "fakepipename"  nil  #'fakepipename_instantiate )  #|line 338|#) #|line 339|#
   )
 (defun handle_external (&optional  eh  mev)
   (declare (ignorable  eh  mev))                            #|line 1|#

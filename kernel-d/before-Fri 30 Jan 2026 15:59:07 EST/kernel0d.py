@@ -929,36 +929,33 @@ def blockOnError_handler (eh,mev):                     #line 289
         inst.hasError =  "no"                          #line 298#line 299#line 300#line 301
 
 def stop_instantiate (reg,owner,name,template_data,arg):#line 302
-    name_with_id = gensymbol ( "Stop")                 #line 303
-    inst =  None                                       #line 304
-    return make_leaf ( name_with_id, owner, inst, "", stop_handler, None)#line 305#line 306#line 307
+    name_with_id = gensymbol ( "blockOnError")         #line 303
+    instp =  BlockOnErrorState ()                      #line 304
+    return make_leaf ( name_with_id, owner, instp, "", blockOnError_handler, None)#line 305#line 306#line 307
 
 def stop_handler (eh,mev):                             #line 308
     inst =  eh.instance_data                           #line 309
     parent =  inst.owner                               #line 310
-    s =  str( "   !!! stopping") +  parent.name        #line 311
-    print ( s, file=sys.stderr)                        #line 312
-                                                       #line 313
-    parent.stop ()                                     #line 314
-    forward ( eh, "", mev)                             #line 315#line 316#line 317
+    parent.stop ()                                     #line 311
+    forward ( eh, "", mev)                             #line 312#line 313#line 314
 
-# all of the the built_in leaves are listed here       #line 318
-# future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project#line 319#line 320
-def initialize_stock_components (reg):                 #line 321
-    register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 322
-    register_component ( reg,mkTemplate ( "1→2", None, deracer_instantiate))#line 323
-    register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 324
-    register_component ( reg,mkTemplate ( "🗑️", None, trash_instantiate))#line 325
-    register_component ( reg,mkTemplate ( "🚫", None, stop_instantiate))#line 326
-    register_component ( reg,mkTemplate ( "blockOnError", None, blockOnError_instantiate))#line 327#line 328#line 329
-    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 330
-    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 331#line 332
-    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 333
-    register_component ( reg,mkTemplate ( "String Concat", None, stringconcat_instantiate))#line 334
-    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 335
-    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 336
-    # for fakepipe                                     #line 337
-    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 338#line 339#line 340
+# all of the the built_in leaves are listed here       #line 315
+# future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project#line 316#line 317
+def initialize_stock_components (reg):                 #line 318
+    register_component ( reg,mkTemplate ( "1then2", None, deracer_instantiate))#line 319
+    register_component ( reg,mkTemplate ( "1→2", None, deracer_instantiate))#line 320
+    register_component ( reg,mkTemplate ( "trash", None, trash_instantiate))#line 321
+    register_component ( reg,mkTemplate ( "🗑️", None, trash_instantiate))#line 322
+    register_component ( reg,mkTemplate ( "🚫", None, stop_instantiate))#line 323
+    register_component ( reg,mkTemplate ( "blockOnError", None, blockOnError_instantiate))#line 324#line 325#line 326
+    register_component ( reg,mkTemplate ( "Read Text File", None, low_level_read_text_file_instantiate))#line 327
+    register_component ( reg,mkTemplate ( "Ensure String Datum", None, ensure_string_datum_instantiate))#line 328#line 329
+    register_component ( reg,mkTemplate ( "syncfilewrite", None, syncfilewrite_instantiate))#line 330
+    register_component ( reg,mkTemplate ( "String Concat", None, stringconcat_instantiate))#line 331
+    register_component ( reg,mkTemplate ( "switch1*", None, switch1star_instantiate))#line 332
+    register_component ( reg,mkTemplate ( "String Concat *", None, strcatstar_instantiate))#line 333
+    # for fakepipe                                     #line 334
+    register_component ( reg,mkTemplate ( "fakepipename", None, fakepipename_instantiate))#line 335#line 336#line 337
 def handle_external (eh,mev):                          #line 1
     s =  eh.arg                                        #line 2
     firstc =  s [ 1]                                   #line 3
