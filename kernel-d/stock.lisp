@@ -390,8 +390,8 @@
       (declare (ignorable inst))                            #|line 304|#
       (return-from stop_instantiate (funcall (quote make_leaf)   name_with_id  owner  inst  ""  #'stop_handler  nil  #|line 305|#)))) #|line 306|#
   )
-(defun stop_handler (&optional  eh)
-  (declare (ignorable  eh))                                 #|line 308|#
+(defun stop_handler (&optional  eh  mev)
+  (declare (ignorable  eh  mev))                            #|line 308|#
   (let (( inst (slot-value  eh 'instance_data)))
     (declare (ignorable  inst))                             #|line 309|#
     (let (( parent (slot-value  eh 'owner)))

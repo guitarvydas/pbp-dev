@@ -305,7 +305,7 @@ defn stop_instantiate (reg, owner, name, template_data, arg) {
     return make_leaf (name_with_id, owner, inst, “”, ↪︎stop_handler, ϕ)
 }
 
-defn stop_handler (eh) {
+defn stop_handler (eh, mev) {
     deftemp inst ⇐ eh.instance_data
     deftemp parent ⇐ eh.owner
     deftemp s ⇐ #strcons (“   !!! stopping”, parent.name)
