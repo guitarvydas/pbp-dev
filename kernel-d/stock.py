@@ -270,13 +270,13 @@ def stop_instantiate (reg,owner,name,template_data,arg):#line 302
     inst =  None                                       #line 304
     return make_leaf ( name_with_id, owner, inst, "", stop_handler, None)#line 305#line 306#line 307
 
-def stop_handler (eh,mev):                             #line 308
+def stop_handler (eh):                                 #line 308
     inst =  eh.instance_data                           #line 309
     parent =  eh.owner                                 #line 310
     s =  str( "   !!! stopping") +  parent.name        #line 311
     print ( s, file=sys.stderr)                        #line 312
                                                        #line 313
-    parent.stop ()                                     #line 314
+    parent.stop ( parent)                              #line 314
     forward ( eh, "", mev)                             #line 315#line 316#line 317
 
 # all of the the built_in leaves are listed here       #line 318

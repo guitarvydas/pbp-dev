@@ -1123,13 +1123,13 @@ function stop_instantiate (reg,owner,name,template_data,arg) {/* line 302 */
     return make_leaf ( name_with_id, owner, inst, "", stop_handler, null)/* line 305 */;/* line 306 *//* line 307 */
 }
 
-function stop_handler (eh,mev) {                       /* line 308 */
+function stop_handler (eh) {                           /* line 308 */
     let  inst =  eh.instance_data;                     /* line 309 */
     let  parent =  eh.owner;                           /* line 310 */
     let  s =  ( "   !!! stopping".toString ()+  parent.name.toString ()) /* line 311 */;
     console.error ( s);                                /* line 312 */
                                                        /* line 313 */
-    parent.stop ()                                     /* line 314 */
+    parent.stop ( parent)                              /* line 314 */
     forward ( eh, "", mev)                             /* line 315 *//* line 316 *//* line 317 */
 }
 

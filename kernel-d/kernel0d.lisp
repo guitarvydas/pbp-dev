@@ -1326,8 +1326,8 @@ x))))
       (declare (ignorable inst))                            #|line 304|#
       (return-from stop_instantiate (funcall (quote make_leaf)   name_with_id  owner  inst  ""  #'stop_handler  nil  #|line 305|#)))) #|line 306|#
   )
-(defun stop_handler (&optional  eh  mev)
-  (declare (ignorable  eh  mev))                            #|line 308|#
+(defun stop_handler (&optional  eh)
+  (declare (ignorable  eh))                                 #|line 308|#
   (let (( inst (slot-value  eh 'instance_data)))
     (declare (ignorable  inst))                             #|line 309|#
     (let (( parent (slot-value  eh 'owner)))
@@ -1337,7 +1337,7 @@ x))))
         (format *error-output* "~a~%"  s)                   #|line 312|#
         (format *error-output* "
         ")                                                  #|line 313|#
-        (funcall (slot-value  parent 'stop) )               #|line 314|#
+        (funcall (slot-value  parent 'stop)   parent        #|line 314|#)
         (funcall (quote forward)   eh  ""  mev              #|line 315|#)))) #|line 316|#
   ) #|  all of the the built_in leaves are listed here |#   #|line 318|# #|  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project |# #|line 319|# #|line 320|#
 (defun initialize_stock_components (&optional  reg)

@@ -939,7 +939,7 @@ def stop_handler (eh):                                 #line 308
     s =  str( "   !!! stopping") +  parent.name        #line 311
     print ( s, file=sys.stderr)                        #line 312
                                                        #line 313
-    parent.stop ( parent)                              #line 314
+    stop ( parent)                                     #line 314
     forward ( eh, "", mev)                             #line 315#line 316#line 317
 
 # all of the the built_in leaves are listed here       #line 318
