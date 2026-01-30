@@ -3,7 +3,7 @@
   (declare (ignorable  reg  owner  name  arg))              #|line 3|#
   (let ((name_with_id (funcall (quote gensymbol)   name     #|line 4|#)))
     (declare (ignorable name_with_id))
-    (return-from external_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_external  #|line 5|#))) #|line 6|#
+    (return-from external_instantiate (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_external  nil  #|line 5|#))) #|line 6|#
   )
 (defun generate_external_components (&optional  reg  container_list)
   (declare (ignorable  reg  container_list))                #|line 8|#

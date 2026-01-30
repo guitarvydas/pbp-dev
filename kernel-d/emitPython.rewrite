@@ -131,9 +131,9 @@ ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma
 try:⤷
     with open('junk.command.txt', 'w') as file:⤷
             file.write(os.getcwd())
-            file.write('\n')
+            file.write(' ')
             file.write(cmd)
-            file.write('\n')⤶
+            file.write(' ')⤶
     «ret» = subprocess.run (shlex.split («cmd»), input=«args», text=True, capture_output=True)
     «rc» = «ret».returncode
     «out» = «ret».stdout.strip ()

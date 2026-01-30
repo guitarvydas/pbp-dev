@@ -1,7 +1,7 @@
 /* line 1 */
 function trash_instantiate (reg,owner,name,template_data,arg) {/* line 2 */
     let name_with_id = gensymbol ( "trash")            /* line 3 */;
-    return make_leaf ( name_with_id, owner, null, "", trash_handler)/* line 4 */;/* line 5 *//* line 6 */
+    return make_leaf ( name_with_id, owner, null, "", trash_handler, null)/* line 4 */;/* line 5 *//* line 6 */
 }
 
 function trash_handler (eh,mev) {                      /* line 7 */
@@ -28,68 +28,74 @@ class Deracer_Instance_Data {
 function reclaim_Buffers_from_heap (inst) {            /* line 22 *//* line 23 *//* line 24 *//* line 25 */
 }
 
-function deracer_instantiate (reg,owner,name,template_data,arg) {/* line 26 */
-    let name_with_id = gensymbol ( "deracer")          /* line 27 */;
-    let  inst =  new Deracer_Instance_Data ();         /* line 28 */;
-    inst.state =  "idle";                              /* line 29 */
-    inst.buffer =  new TwoMevents ();                  /* line 30 */;
-    let eh = make_leaf ( name_with_id, owner, inst, "", deracer_handler)/* line 31 */;
-    return  eh;                                        /* line 32 *//* line 33 *//* line 34 */
+function deracer_reset_handler (eh) {                  /* line 26 */
+    let  inst =  eh.instance_data;                     /* line 27 */
+    inst.state =  "idle";                              /* line 28 */
+    inst.buffer =  new TwoMevents ();                  /* line 29 */;/* line 30 *//* line 31 */
 }
 
-function send_firstmev_then_secondmev (eh,inst) {      /* line 35 */
-    forward ( eh, "1", inst.buffer.firstmev)           /* line 36 */
-    forward ( eh, "2", inst.buffer.secondmev)          /* line 37 */
-    reclaim_Buffers_from_heap ( inst)                  /* line 38 *//* line 39 *//* line 40 */
+function deracer_instantiate (reg,owner,name,template_data,arg) {/* line 32 */
+    let name_with_id = gensymbol ( "deracer")          /* line 33 */;
+    let  inst =  new Deracer_Instance_Data ();         /* line 34 */;
+    inst.state =  "idle";                              /* line 35 */
+    inst.buffer =  new TwoMevents ();                  /* line 36 */;
+    let eh = make_leaf ( name_with_id, owner, inst, "", deracer_handler, deracer_reset_handler)/* line 37 */;
+    return  eh;                                        /* line 38 *//* line 39 *//* line 40 */
 }
 
-function deracer_handler (eh,mev) {                    /* line 41 */
-    let  inst =  eh.instance_data;                     /* line 42 */
-    if ( inst.state ==  "idle") {                      /* line 43 */
-      if ( "1" ==  mev.port) {                         /* line 44 */
-        inst.buffer.firstmev =  mev;                   /* line 45 */
-        inst.state =  "waitingForSecondmev";           /* line 46 */
+function send_firstmev_then_secondmev (eh,inst) {      /* line 41 */
+    forward ( eh, "1", inst.buffer.firstmev)           /* line 42 */
+    forward ( eh, "2", inst.buffer.secondmev)          /* line 43 */
+    reclaim_Buffers_from_heap ( inst)                  /* line 44 *//* line 45 *//* line 46 */
+}
+
+function deracer_handler (eh,mev) {                    /* line 47 */
+    let  inst =  eh.instance_data;                     /* line 48 */
+    if ( inst.state ==  "idle") {                      /* line 49 */
+      if ( "1" ==  mev.port) {                         /* line 50 */
+        inst.buffer.firstmev =  mev;                   /* line 51 */
+        inst.state =  "waitingForSecondmev";           /* line 52 */
       }
-      else if ( "2" ==  mev.port) {                    /* line 47 */
-        inst.buffer.secondmev =  mev;                  /* line 48 */
-        inst.state =  "waitingForFirstmev";            /* line 49 */
+      else if ( "2" ==  mev.port) {                    /* line 53 */
+        inst.buffer.secondmev =  mev;                  /* line 54 */
+        inst.state =  "waitingForFirstmev";            /* line 55 */
       }
-      else {                                           /* line 50 */
-        runtime_error ( ( "bad mev.port (case A) for deracer ".toString ()+  mev.port.toString ()) )/* line 51 *//* line 52 */
+      else {                                           /* line 56 */
+        runtime_error ( ( "bad mev.port (case A) for deracer ".toString ()+  mev.port.toString ()) )/* line 57 *//* line 58 */
       }
     }
-    else if ( inst.state ==  "waitingForFirstmev") {   /* line 53 */
-      if ( "1" ==  mev.port) {                         /* line 54 */
-        inst.buffer.firstmev =  mev;                   /* line 55 */
-        send_firstmev_then_secondmev ( eh, inst)       /* line 56 */
-        inst.state =  "idle";                          /* line 57 */
+    else if ( inst.state ==  "waitingForFirstmev") {   /* line 59 */
+      if ( "1" ==  mev.port) {                         /* line 60 */
+        inst.buffer.firstmev =  mev;                   /* line 61 */
+        send_firstmev_then_secondmev ( eh, inst)       /* line 62 */
+        inst.state =  "idle";                          /* line 63 */
       }
-      else {                                           /* line 58 */
-        runtime_error ( ( "deracer: waiting for 1 but got [".toString ()+  ( mev.port.toString ()+  "] (case B)".toString ()) .toString ()) )/* line 59 *//* line 60 */
-      }
-    }
-    else if ( inst.state ==  "waitingForSecondmev") {  /* line 61 */
-      if ( "2" ==  mev.port) {                         /* line 62 */
-        inst.buffer.secondmev =  mev;                  /* line 63 */
-        send_firstmev_then_secondmev ( eh, inst)       /* line 64 */
-        inst.state =  "idle";                          /* line 65 */
-      }
-      else {                                           /* line 66 */
-        runtime_error ( ( "deracer: waiting for 2 but got [".toString ()+  ( mev.port.toString ()+  "] (case C)".toString ()) .toString ()) )/* line 67 *//* line 68 */
+      else {                                           /* line 64 */
+        runtime_error ( ( "deracer: waiting for 1 but got [".toString ()+  ( mev.port.toString ()+  "] (case B)".toString ()) .toString ()) )/* line 65 *//* line 66 */
       }
     }
-    else {                                             /* line 69 */
-      runtime_error ( "bad state for deracer {eh.state}")/* line 70 *//* line 71 */
-    }                                                  /* line 72 *//* line 73 */
+    else if ( inst.state ==  "waitingForSecondmev") {  /* line 67 */
+      if ( "2" ==  mev.port) {                         /* line 68 */
+        inst.buffer.secondmev =  mev;                  /* line 69 */
+        send_firstmev_then_secondmev ( eh, inst)       /* line 70 */
+        inst.state =  "idle";                          /* line 71 */
+      }
+      else {                                           /* line 72 */
+        runtime_error ( ( "deracer: waiting for 2 but got [".toString ()+  ( mev.port.toString ()+  "] (case C)".toString ()) .toString ()) )/* line 73 *//* line 74 */
+      }
+    }
+    else {                                             /* line 75 */
+      runtime_error ( "bad state for deracer {eh.state}")/* line 76 *//* line 77 */
+    }                                                  /* line 78 *//* line 79 */
 }
 
-function low_level_read_text_file_instantiate (reg,owner,name,template_data,arg) {/* line 74 */
-    let name_with_id = gensymbol ( "Low Level Read Text File")/* line 75 */;
-    return make_leaf ( name_with_id, owner, null, "", low_level_read_text_file_handler)/* line 76 */;/* line 77 *//* line 78 */
+function low_level_read_text_file_instantiate (reg,owner,name,template_data,arg) {/* line 80 */
+    let name_with_id = gensymbol ( "Low Level Read Text File")/* line 81 */;
+    return make_leaf ( name_with_id, owner, null, "", low_level_read_text_file_handler, null)/* line 82 */;/* line 83 *//* line 84 */
 }
 
-function low_level_read_text_file_handler (eh,mev) {   /* line 79 */
-    let fname =  mev.datum.v;                          /* line 80 */
+function low_level_read_text_file_handler (eh,mev) {   /* line 85 */
+    let fname =  mev.datum.v;                          /* line 86 */
 
     if (fname == "0") {
     data = fs.readFileSync (0, { encoding: 'utf8'});
@@ -101,239 +107,276 @@ function low_level_read_text_file_handler (eh,mev) {   /* line 79 */
     } else {
       send_string (eh, "✗", `read error on file '${fname}'`, mev);
     }
-                                                       /* line 81 *//* line 82 *//* line 83 */
+                                                       /* line 87 *//* line 88 *//* line 89 */
 }
 
-function ensure_string_datum_instantiate (reg,owner,name,template_data,arg) {/* line 84 */
-    let name_with_id = gensymbol ( "Ensure String Datum")/* line 85 */;
-    return make_leaf ( name_with_id, owner, null, "", ensure_string_datum_handler)/* line 86 */;/* line 87 *//* line 88 */
+function ensure_string_datum_instantiate (reg,owner,name,template_data,arg) {/* line 90 */
+    let name_with_id = gensymbol ( "Ensure String Datum")/* line 91 */;
+    return make_leaf ( name_with_id, owner, null, "", ensure_string_datum_handler, null)/* line 92 */;/* line 93 *//* line 94 */
 }
 
-function ensure_string_datum_handler (eh,mev) {        /* line 89 */
-    if ( "string" ==  mev.datum.kind ()) {             /* line 90 */
-      forward ( eh, "", mev)                           /* line 91 */
+function ensure_string_datum_handler (eh,mev) {        /* line 95 */
+    if ( "string" ==  mev.datum.kind ()) {             /* line 96 */
+      forward ( eh, "", mev)                           /* line 97 */
     }
-    else {                                             /* line 92 */
-      let emev =  ( "*** ensure: type error (expected a string datum) but got ".toString ()+  mev.datum.toString ()) /* line 93 */;
-      send ( eh, "✗", emev, mev)                       /* line 94 *//* line 95 */
-    }                                                  /* line 96 *//* line 97 */
+    else {                                             /* line 98 */
+      let emev =  ( "*** ensure: type error (expected a string datum) but got ".toString ()+  mev.datum.toString ()) /* line 99 */;
+      send ( eh, "✗", emev, mev)                       /* line 100 *//* line 101 */
+    }                                                  /* line 102 *//* line 103 */
 }
 
 class Syncfilewrite_Data {
-  constructor () {                                     /* line 98 */
+  constructor () {                                     /* line 104 */
 
-    this.filename =  "";                               /* line 99 *//* line 100 */
+    this.filename =  "";                               /* line 105 *//* line 106 */
   }
 }
-                                                       /* line 101 */
-/*  temp copy for bootstrap, sends "done“ (error during bootstrap if not wired) *//* line 102 */
-function syncfilewrite_instantiate (reg,owner,name,template_data,arg) {/* line 103 */
-    let name_with_id = gensymbol ( "syncfilewrite")    /* line 104 */;
-    let inst =  new Syncfilewrite_Data ();             /* line 105 */;
-    return make_leaf ( name_with_id, owner, inst, "", syncfilewrite_handler)/* line 106 */;/* line 107 *//* line 108 */
+                                                       /* line 107 */
+function syncfilewrite_reset_handler (eh) {            /* line 108 */
+    eh.instance_data =  new Syncfilewrite_Data ();     /* line 109 */;/* line 110 *//* line 111 */
 }
 
-function syncfilewrite_handler (eh,mev) {              /* line 109 */
-    let  inst =  eh.instance_data;                     /* line 110 */
-    if ( "filename" ==  mev.port) {                    /* line 111 */
-      inst.filename =  mev.datum.v;                    /* line 112 */
+/*  temp copy for bootstrap, sends "done“ (error during bootstrap if not wired) *//* line 112 */
+function syncfilewrite_instantiate (reg,owner,name,template_data,arg) {/* line 113 */
+    let name_with_id = gensymbol ( "syncfilewrite")    /* line 114 */;
+    let inst =  new Syncfilewrite_Data ();             /* line 115 */;
+    return make_leaf ( name_with_id, owner, inst, "", syncfilewrite_handler, syncfilewrite_reset_handler)/* line 116 */;/* line 117 *//* line 118 */
+}
+
+function syncfilewrite_handler (eh,mev) {              /* line 119 */
+    let  inst =  eh.instance_data;                     /* line 120 */
+    if ( "filename" ==  mev.port) {                    /* line 121 */
+      inst.filename =  mev.datum.v;                    /* line 122 */
     }
-    else if ( "input" ==  mev.port) {                  /* line 113 */
-      let contents =  mev.datum.v;                     /* line 114 */
-      let  f = open ( inst.filename, "w")              /* line 115 */;
-      if ( f!= null) {                                 /* line 116 */
-        f.write ( mev.datum.v)                         /* line 117 */
-        f.close ()                                     /* line 118 */
-        send ( eh, "done",new_datum_bang (), mev)      /* line 119 */
+    else if ( "input" ==  mev.port) {                  /* line 123 */
+      let contents =  mev.datum.v;                     /* line 124 */
+      let  f = open ( inst.filename, "w")              /* line 125 */;
+      if ( f!= null) {                                 /* line 126 */
+        f.write ( mev.datum.v)                         /* line 127 */
+        f.close ()                                     /* line 128 */
+        send ( eh, "done",new_datum_bang (), mev)      /* line 129 */
       }
-      else {                                           /* line 120 */
-        send ( eh, "✗", ( "open error on file ".toString ()+  inst.filename.toString ()) , mev)/* line 121 *//* line 122 */
-      }                                                /* line 123 */
-    }                                                  /* line 124 *//* line 125 */
+      else {                                           /* line 130 */
+        send ( eh, "✗", ( "open error on file ".toString ()+  inst.filename.toString ()) , mev)/* line 131 *//* line 132 */
+      }                                                /* line 133 */
+    }                                                  /* line 134 *//* line 135 */
 }
 
 class StringConcat_Instance_Data {
-  constructor () {                                     /* line 126 */
+  constructor () {                                     /* line 136 */
 
-    this.buffer1 =  null;                              /* line 127 */
-    this.buffer2 =  null;                              /* line 128 *//* line 129 */
+    this.buffer1 =  null;                              /* line 137 */
+    this.buffer2 =  null;                              /* line 138 *//* line 139 */
   }
 }
-                                                       /* line 130 */
-function stringconcat_instantiate (reg,owner,name,template_data,arg) {/* line 131 */
-    let name_with_id = gensymbol ( "stringconcat")     /* line 132 */;
-    let instp =  new StringConcat_Instance_Data ();    /* line 133 */;
-    return make_leaf ( name_with_id, owner, instp, "", stringconcat_handler)/* line 134 */;/* line 135 *//* line 136 */
+                                                       /* line 140 */
+function strinconcat_reset_handler (eh) {              /* line 141 */
+    let  inst =  eh.instance_data;                     /* line 142 */
+    inst.buffer1 =  null;                              /* line 143 */
+    inst.buffer2 =  null;                              /* line 144 *//* line 145 *//* line 146 */
 }
 
-function stringconcat_handler (eh,mev) {               /* line 137 */
-    let  inst =  eh.instance_data;                     /* line 138 */
-    if ( "1" ==  mev.port) {                           /* line 139 */
-      inst.buffer1 = clone_string ( mev.datum.v)       /* line 140 */;
-      maybe_stringconcat ( eh, inst, mev)              /* line 141 */
-    }
-    else if ( "2" ==  mev.port) {                      /* line 142 */
-      inst.buffer2 = clone_string ( mev.datum.v)       /* line 143 */;
-      maybe_stringconcat ( eh, inst, mev)              /* line 144 */
-    }
-    else if ( "reset" ==  mev.port) {                  /* line 145 */
-      inst.buffer1 =  null;                            /* line 146 */
-      inst.buffer2 =  null;                            /* line 147 */
-    }
-    else {                                             /* line 148 */
-      runtime_error ( ( "bad mev.port for stringconcat: ".toString ()+  mev.port.toString ()) )/* line 149 *//* line 150 */
-    }                                                  /* line 151 *//* line 152 */
+function stringconcat_instantiate (reg,owner,name,template_data,arg) {/* line 147 */
+    let name_with_id = gensymbol ( "stringconcat")     /* line 148 */;
+    let instp =  new StringConcat_Instance_Data ();    /* line 149 */;
+    return make_leaf ( name_with_id, owner, instp, "", stringconcat_handler, stringconcat_reset_handler)/* line 150 */;/* line 151 *//* line 152 */
 }
 
-function maybe_stringconcat (eh,inst,mev) {            /* line 153 */
-    if ((( inst.buffer1!= null) && ( inst.buffer2!= null))) {/* line 154 */
-      let  concatenated_string =  "";                  /* line 155 */
-      if ( 0 == ( inst.buffer1.length)) {              /* line 156 */
-        concatenated_string =  inst.buffer2;           /* line 157 */
-      }
-      else if ( 0 == ( inst.buffer2.length)) {         /* line 158 */
-        concatenated_string =  inst.buffer1;           /* line 159 */
-      }
-      else {                                           /* line 160 */
-        concatenated_string =  inst.buffer1+ inst.buffer2;/* line 161 *//* line 162 */
-      }
-      send ( eh, "", concatenated_string, mev)         /* line 163 */
-      inst.buffer1 =  null;                            /* line 164 */
-      inst.buffer2 =  null;                            /* line 165 *//* line 166 */
+function stringconcat_handler (eh,mev) {               /* line 153 */
+    let  inst =  eh.instance_data;                     /* line 154 */
+    if ( "1" ==  mev.port) {                           /* line 155 */
+      inst.buffer1 = clone_string ( mev.datum.v)       /* line 156 */;
+      maybe_stringconcat ( eh, inst, mev)              /* line 157 */
+    }
+    else if ( "2" ==  mev.port) {                      /* line 158 */
+      inst.buffer2 = clone_string ( mev.datum.v)       /* line 159 */;
+      maybe_stringconcat ( eh, inst, mev)              /* line 160 */
+    }
+    else if ( "reset" ==  mev.port) {                  /* line 161 */
+      inst.buffer1 =  null;                            /* line 162 */
+      inst.buffer2 =  null;                            /* line 163 */
+    }
+    else {                                             /* line 164 */
+      runtime_error ( ( "bad mev.port for stringconcat: ".toString ()+  mev.port.toString ()) )/* line 165 *//* line 166 */
     }                                                  /* line 167 *//* line 168 */
 }
 
-/*  */                                                 /* line 169 *//* line 170 */
-function string_constant_instantiate (reg,owner,name,template_data,arg) {/* line 171 *//* line 172 */
-    let name_with_id = gensymbol ( "strconst")         /* line 173 */;
-    let  s =  template_data;                           /* line 174 */
-    if ( projectRoot!= "") {                           /* line 175 */
-      s =  s.replaceAll ( "_00_",  projectRoot)        /* line 176 */;/* line 177 */
+function maybe_stringconcat (eh,inst,mev) {            /* line 169 */
+    if ((( inst.buffer1!= null) && ( inst.buffer2!= null))) {/* line 170 */
+      let  concatenated_string =  "";                  /* line 171 */
+      if ( 0 == ( inst.buffer1.length)) {              /* line 172 */
+        concatenated_string =  inst.buffer2;           /* line 173 */
+      }
+      else if ( 0 == ( inst.buffer2.length)) {         /* line 174 */
+        concatenated_string =  inst.buffer1;           /* line 175 */
+      }
+      else {                                           /* line 176 */
+        concatenated_string =  inst.buffer1+ inst.buffer2;/* line 177 *//* line 178 */
+      }
+      send ( eh, "", concatenated_string, mev)         /* line 179 */
+      inst.buffer1 =  null;                            /* line 180 */
+      inst.buffer2 =  null;                            /* line 181 *//* line 182 */
+    }                                                  /* line 183 *//* line 184 */
+}
+
+/*  */                                                 /* line 185 *//* line 186 */
+function string_constant_instantiate (reg,owner,name,template_data,arg) {/* line 187 *//* line 188 */
+    let name_with_id = gensymbol ( "strconst")         /* line 189 */;
+    let  s =  template_data;                           /* line 190 */
+    if ( projectRoot!= "") {                           /* line 191 */
+      s =  s.replaceAll ( "_00_",  projectRoot)        /* line 192 */;/* line 193 */
     }
-    return make_leaf ( name_with_id, owner, s, "", string_constant_handler)/* line 178 */;/* line 179 *//* line 180 */
+    return make_leaf ( name_with_id, owner, s, "", string_constant_handler, null)/* line 194 */;/* line 195 *//* line 196 */
 }
 
-function string_constant_handler (eh,mev) {            /* line 181 */
-    let s =  eh.instance_data;                         /* line 182 */
-    send ( eh, "", s, mev)                             /* line 183 *//* line 184 *//* line 185 */
+function string_constant_handler (eh,mev) {            /* line 197 */
+    let s =  eh.instance_data;                         /* line 198 */
+    send ( eh, "", s, mev)                             /* line 199 *//* line 200 *//* line 201 */
 }
 
-function fakepipename_instantiate (reg,owner,name,template_data,arg) {/* line 186 */
-    let instance_name = gensymbol ( "fakepipe")        /* line 187 */;
-    return make_leaf ( instance_name, owner, null, "", fakepipename_handler)/* line 188 */;/* line 189 *//* line 190 */
+function fakepipename_instantiate (reg,owner,name,template_data,arg) {/* line 202 */
+    let instance_name = gensymbol ( "fakepipe")        /* line 203 */;
+    return make_leaf ( instance_name, owner, null, "", fakepipename_handler, null)/* line 204 */;/* line 205 *//* line 206 */
 }
 
-let  rand =  0;                                        /* line 191 *//* line 192 */
-function fakepipename_handler (eh,mev) {               /* line 193 *//* line 194 */
+let  rand =  0;                                        /* line 207 *//* line 208 */
+function fakepipename_handler (eh,mev) {               /* line 209 *//* line 210 */
     rand =  rand+ 1;
-    /*  not very random, but good enough _ ;rand' must be unique within a single run *//* line 195 */
-    send ( eh, "", ( "/tmp/fakepipe".toString ()+  rand.toString ()) , mev)/* line 196 *//* line 197 *//* line 198 */
+    /*  not very random, but good enough _ ;rand' must be unique within a single run *//* line 211 */
+    send ( eh, "", ( "/tmp/fakepipe".toString ()+  rand.toString ()) , mev)/* line 212 *//* line 213 *//* line 214 */
 }
-                                                       /* line 199 */
+                                                       /* line 215 */
 class Switch1star_Instance_Data {
-  constructor () {                                     /* line 200 */
+  constructor () {                                     /* line 216 */
 
-    this.state =  "1";                                 /* line 201 *//* line 202 */
+    this.state =  "1";                                 /* line 217 *//* line 218 */
   }
 }
-                                                       /* line 203 */
-function switch1star_instantiate (reg,owner,name,template_data,arg) {/* line 204 */
-    let name_with_id = gensymbol ( "switch1*")         /* line 205 */;
-    let instp =  new Switch1star_Instance_Data ();     /* line 206 */;
-    return make_leaf ( name_with_id, owner, instp, "", switch1star_handler)/* line 207 */;/* line 208 *//* line 209 */
+                                                       /* line 219 */
+function switch1star_reset_handler (eh) {              /* line 220 */
+    let  inst =  eh.instance_data;                     /* line 221 */
+    inst =  new Switch1star_Instance_Data ();          /* line 222 */;/* line 223 *//* line 224 */
 }
 
-function switch1star_handler (eh,mev) {                /* line 210 */
-    let  inst =  eh.instance_data;                     /* line 211 */
-    let whichOutput =  inst.state;                     /* line 212 */
-    if ( "" ==  mev.port) {                            /* line 213 */
-      if ( "1" ==  whichOutput) {                      /* line 214 */
-        forward ( eh, "1", mev)                        /* line 215 */
-        inst.state =  "*";                             /* line 216 */
+function switch1star_instantiate (reg,owner,name,template_data,arg) {/* line 225 */
+    let name_with_id = gensymbol ( "switch1*")         /* line 226 */;
+    let instp =  new Switch1star_Instance_Data ();     /* line 227 */;
+    return make_leaf ( name_with_id, owner, instp, "", switch1star_handler, switch1star_reset_handler)/* line 228 */;/* line 229 *//* line 230 */
+}
+
+function switch1star_handler (eh,mev) {                /* line 231 */
+    let  inst =  eh.instance_data;                     /* line 232 */
+    let whichOutput =  inst.state;                     /* line 233 */
+    if ( "" ==  mev.port) {                            /* line 234 */
+      if ( "1" ==  whichOutput) {                      /* line 235 */
+        forward ( eh, "1", mev)                        /* line 236 */
+        inst.state =  "*";                             /* line 237 */
       }
-      else if ( "*" ==  whichOutput) {                 /* line 217 */
-        forward ( eh, "*", mev)                        /* line 218 */
+      else if ( "*" ==  whichOutput) {                 /* line 238 */
+        forward ( eh, "*", mev)                        /* line 239 */
       }
-      else {                                           /* line 219 */
-        send ( eh, "✗", "internal error bad state in switch1*", mev)/* line 220 *//* line 221 */
+      else {                                           /* line 240 */
+        send ( eh, "✗", "internal error bad state in switch1*", mev)/* line 241 *//* line 242 */
       }
     }
-    else if ( "reset" ==  mev.port) {                  /* line 222 */
-      inst.state =  "1";                               /* line 223 */
-    }
-    else {                                             /* line 224 */
-      send ( eh, "✗", "internal error bad mevent for switch1*", mev)/* line 225 *//* line 226 */
-    }                                                  /* line 227 *//* line 228 */
-}
-
-class StringAccumulator {
-  constructor () {                                     /* line 229 */
-
-    this.s =  "";                                      /* line 230 *//* line 231 */
-  }
-}
-                                                       /* line 232 */
-function strcatstar_instantiate (reg,owner,name,template_data,arg) {/* line 233 */
-    let name_with_id = gensymbol ( "String Concat *")  /* line 234 */;
-    let instp =  new StringAccumulator ();             /* line 235 */;
-    return make_leaf ( name_with_id, owner, instp, "", strcatstar_handler)/* line 236 */;/* line 237 *//* line 238 */
-}
-
-function strcatstar_handler (eh,mev) {                 /* line 239 */
-    let  accum =  eh.instance_data;                    /* line 240 */
-    if ( "" ==  mev.port) {                            /* line 241 */
-      accum.s =  ( accum.s.toString ()+  mev.datum.v.toString ()) /* line 242 */;
-    }
-    else if ( "fini" ==  mev.port) {                   /* line 243 */
-      send ( eh, "", accum.s, mev)                     /* line 244 */
+    else if ( "reset" ==  mev.port) {                  /* line 243 */
+      inst.state =  "1";                               /* line 244 */
     }
     else {                                             /* line 245 */
-      send ( eh, "✗", "internal error bad mevent for String Concat *", mev)/* line 246 *//* line 247 */
+      send ( eh, "✗", "internal error bad mevent for switch1*", mev)/* line 246 *//* line 247 */
     }                                                  /* line 248 *//* line 249 */
 }
 
-class BlockOnErrorState {
+class StringAccumulator {
   constructor () {                                     /* line 250 */
 
-    this.hasError =  "no";                             /* line 251 *//* line 252 */
+    this.s =  "";                                      /* line 251 *//* line 252 */
   }
 }
                                                        /* line 253 */
-function blockOnError_instantiate (reg,owner,name,template_data,arg) {/* line 254 */
-    let name_with_id = gensymbol ( "blockOnError")     /* line 255 */;
-    let instp =  new BlockOnErrorState ();             /* line 256 */;
-    return make_leaf ( name_with_id, owner, instp, blockOnError_handler)/* line 257 */;/* line 258 *//* line 259 */
+function strcatstar_reset_handler (eh) {               /* line 254 */
+    eh.instance_data =  new StringAccumulator ();      /* line 255 */;/* line 256 *//* line 257 */
 }
 
-function blockOnError_handler (eh,mev) {               /* line 260 */
-    let  inst =  eh.instance_data;                     /* line 261 */
-    if ( "" ==  mev.port) {                            /* line 262 */
-      if ( inst.hasError ==  "no") {                   /* line 263 */
-        send ( eh, "", mev.datum.v, mev)               /* line 264 *//* line 265 */
+function strcatstar_instantiate (reg,owner,name,template_data,arg) {/* line 258 */
+    let name_with_id = gensymbol ( "String Concat *")  /* line 259 */;
+    let instp =  new StringAccumulator ();             /* line 260 */;
+    return make_leaf ( name_with_id, owner, instp, "", strcatstar_handler, strcatstar_reset_handler)/* line 261 */;/* line 262 *//* line 263 */
+}
+
+function strcatstar_handler (eh,mev) {                 /* line 264 */
+    let  accum =  eh.instance_data;                    /* line 265 */
+    if ( "" ==  mev.port) {                            /* line 266 */
+      accum.s =  ( accum.s.toString ()+  mev.datum.v.toString ()) /* line 267 */;
+    }
+    else if ( "fini" ==  mev.port) {                   /* line 268 */
+      send ( eh, "", accum.s, mev)                     /* line 269 */
+    }
+    else {                                             /* line 270 */
+      send ( eh, "✗", "internal error bad mevent for String Concat *", mev)/* line 271 *//* line 272 */
+    }                                                  /* line 273 *//* line 274 */
+}
+
+class BlockOnErrorState {
+  constructor () {                                     /* line 275 */
+
+    this.hasError =  "no";                             /* line 276 *//* line 277 */
+  }
+}
+                                                       /* line 278 */
+function blockOnError_reset_handler (eh) {             /* line 279 */
+    eh.instance_data =  new BlockOnErrorState ();      /* line 280 */;/* line 281 *//* line 282 */
+}
+
+function blockOnError_instantiate (reg,owner,name,template_data,arg) {/* line 283 */
+    let name_with_id = gensymbol ( "blockOnError")     /* line 284 */;
+    let instp =  new BlockOnErrorState ();             /* line 285 */;
+    return make_leaf ( name_with_id, owner, instp, blockOnError_handler, blockOnError_reset_handler)/* line 286 */;/* line 287 *//* line 288 */
+}
+
+function blockOnError_handler (eh,mev) {               /* line 289 */
+    let  inst =  eh.instance_data;                     /* line 290 */
+    if ( "" ==  mev.port) {                            /* line 291 */
+      if ( inst.hasError ==  "no") {                   /* line 292 */
+        send ( eh, "", mev.datum.v, mev)               /* line 293 *//* line 294 */
       }
     }
-    else if ( "✗" ==  mev.port) {                      /* line 266 */
-      inst.hasError =  "yes";                          /* line 267 */
+    else if ( "✗" ==  mev.port) {                      /* line 295 */
+      inst.hasError =  "yes";                          /* line 296 */
     }
-    else if ( "reset" ==  mev.port) {                  /* line 268 */
-      inst.hasError =  "no";                           /* line 269 *//* line 270 */
-    }                                                  /* line 271 *//* line 272 */
+    else if ( "reset" ==  mev.port) {                  /* line 297 */
+      inst.hasError =  "no";                           /* line 298 *//* line 299 */
+    }                                                  /* line 300 *//* line 301 */
 }
 
-/*  all of the the built_in leaves are listed here */  /* line 273 */
-/*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 274 *//* line 275 */
-function initialize_stock_components (reg) {           /* line 276 */
-    register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 277 */
-    register_component ( reg,mkTemplate ( "1→2", null, deracer_instantiate))/* line 278 */
-    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 279 */
-    register_component ( reg,mkTemplate ( "🗑️", null, trash_instantiate))/* line 280 */
-    register_component ( reg,mkTemplate ( "blockOnError", null, blockOnError_instantiate))/* line 281 *//* line 282 *//* line 283 */
-    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 284 */
-    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 285 *//* line 286 */
-    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 287 */
-    register_component ( reg,mkTemplate ( "String Concat", null, stringconcat_instantiate))/* line 288 */
-    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 289 */
-    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 290 */
-    /*  for fakepipe */                                /* line 291 */
-    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 292 *//* line 293 *//* line 294 */
+function stop_instantiate (reg,owner,name,template_data,arg) {/* line 302 */
+    let name_with_id = gensymbol ( "blockOnError")     /* line 303 */;
+    let instp =  new BlockOnErrorState ();             /* line 304 */;
+    return make_leaf ( name_with_id, owner, instp, blockOnError_handler, null)/* line 305 */;/* line 306 *//* line 307 */
+}
+
+function stop_handler (eh,mev) {                       /* line 308 */
+    let  inst =  eh.instance_data;                     /* line 309 */
+    let  parent =  inst.owner;                         /* line 310 */
+    parent.stop ()                                     /* line 311 */
+    forward ( eh, "", mev)                             /* line 312 *//* line 313 *//* line 314 */
+}
+
+/*  all of the the built_in leaves are listed here */  /* line 315 */
+/*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 316 *//* line 317 */
+function initialize_stock_components (reg) {           /* line 318 */
+    register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 319 */
+    register_component ( reg,mkTemplate ( "1→2", null, deracer_instantiate))/* line 320 */
+    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 321 */
+    register_component ( reg,mkTemplate ( "🗑️", null, trash_instantiate))/* line 322 */
+    register_component ( reg,mkTemplate ( "🚫", null, stop_instantiate))/* line 323 */
+    register_component ( reg,mkTemplate ( "blockOnError", null, blockOnError_instantiate))/* line 324 *//* line 325 *//* line 326 */
+    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 327 */
+    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 328 *//* line 329 */
+    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 330 */
+    register_component ( reg,mkTemplate ( "String Concat", null, stringconcat_instantiate))/* line 331 */
+    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 332 */
+    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 333 */
+    /*  for fakepipe */                                /* line 334 */
+    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 335 *//* line 336 *//* line 337 */
 }

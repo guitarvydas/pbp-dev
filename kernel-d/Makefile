@@ -1,3 +1,3 @@
 all:
 	./make.bash
-	(cd ../ ; ./updall.bash)
+	#(cd ../ ; ./updall.bash)
