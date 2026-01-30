@@ -916,7 +916,7 @@ def blockOnError_reset_handler (eh):                   #line 279
 def blockOnError_instantiate (reg,owner,name,template_data,arg):#line 283
     name_with_id = gensymbol ( "blockOnError")         #line 284
     instp =  BlockOnErrorState ()                      #line 285
-    return make_leaf ( name_with_id, owner, instp, "", blockOnError_handler, blockOnError_reset_handler)#line 286#line 287#line 288
+    return make_leaf ( name_with_id, owner, instp, blockOnError_handler, blockOnError_reset_handler)#line 286#line 287#line 288
 
 def blockOnError_handler (eh,mev):                     #line 289
     inst =  eh.instance_data                           #line 290
@@ -931,7 +931,7 @@ def blockOnError_handler (eh,mev):                     #line 289
 def stop_instantiate (reg,owner,name,template_data,arg):#line 302
     name_with_id = gensymbol ( "blockOnError")         #line 303
     instp =  BlockOnErrorState ()                      #line 304
-    return make_leaf ( name_with_id, owner, instp, "", blockOnError_handler, None)#line 305#line 306#line 307
+    return make_leaf ( name_with_id, owner, instp, blockOnError_handler, None)#line 305#line 306#line 307
 
 def stop_handler (eh,mev):                             #line 308
     inst =  eh.instance_data                           #line 309

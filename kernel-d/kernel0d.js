@@ -1099,7 +1099,7 @@ function blockOnError_reset_handler (eh) {             /* line 279 */
 function blockOnError_instantiate (reg,owner,name,template_data,arg) {/* line 283 */
     let name_with_id = gensymbol ( "blockOnError")     /* line 284 */;
     let instp =  new BlockOnErrorState ();             /* line 285 */;
-    return make_leaf ( name_with_id, owner, instp, blockOnError_handler, blockOnError_reset_handler)/* line 286 */;/* line 287 *//* line 288 */
+    return make_leaf ( name_with_id, owner, instp, "", blockOnError_handler, blockOnError_reset_handler)/* line 286 */;/* line 287 *//* line 288 */
 }
 
 function blockOnError_handler (eh,mev) {               /* line 289 */
@@ -1120,7 +1120,7 @@ function blockOnError_handler (eh,mev) {               /* line 289 */
 function stop_instantiate (reg,owner,name,template_data,arg) {/* line 302 */
     let name_with_id = gensymbol ( "blockOnError")     /* line 303 */;
     let instp =  new BlockOnErrorState ();             /* line 304 */;
-    return make_leaf ( name_with_id, owner, instp, blockOnError_handler, null)/* line 305 */;/* line 306 *//* line 307 */
+    return make_leaf ( name_with_id, owner, instp, "", blockOnError_handler, null)/* line 305 */;/* line 306 *//* line 307 */
 }
 
 function stop_handler (eh,mev) {                       /* line 308 */
