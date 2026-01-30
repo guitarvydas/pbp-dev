@@ -1,14 +1,7 @@
 #!/bin/bash
 set -euo pipefail
-echo 'aaa...' t2t in "$(pwd)"
 
-
-echo "*** T2T ***"
-echo "# $#"
-echo "pwd=$(pwd)"
-echo "$@"
-echo PBP_SUPPORT = "${PBP_WSUPPORT}"
-echo
+echo "$@" >${PBP_WD}/temp.t2t.args
 
 if [ "$#" -eq 1 ]; then
   grammar="$1.ohm"

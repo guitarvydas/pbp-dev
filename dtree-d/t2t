@@ -1,2 +1,2 @@
 #!/bin/bash
-"${PBP_LIBD}/t2t" "$1"
+"${PBP_LIBD}/t2t" "$@"

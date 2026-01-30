@@ -926,6 +926,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
             file.write('\n')
             file.write(cmd)
             file.write('\n')
+            file.write(json.dumps (shlex.split (command)))
+            file.write('\n')
         ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
         rc = ret.returncode
         stdout = ret.stdout.strip ()

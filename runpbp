@@ -33,10 +33,10 @@ export PBP_WSUPPORT="${PBP_APPD}/support.mjs"
 export PYTHONPATH="${PBP_LIBD}/kernel-d:${PYTHONPATH}"
 
 
-for i in PBP_WD PBP_WSUPPORT PBP_LIBD PBP_APPD app_main PBP_arg PBP_runpbp PBP_indent PBP_t2t PBP_das2json PBP_split_outputs PBP_check_for_errors
-do
-    echo $i "=" ${!i}
-done
+# for i in PBP_WD PBP_WSUPPORT PBP_LIBD PBP_APPD app_main PBP_arg PBP_runpbp PBP_indent PBP_t2t PBP_das2json PBP_split_outputs PBP_check_for_errors
+# do
+#     echo $i "=" ${!i}
+# done
 
 # Change to the app directory
 cd "${PBP_APPD}"
