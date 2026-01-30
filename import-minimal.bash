@@ -37,7 +37,7 @@ mkdir kernel-d
 mkdir dtree-d
 mkdir doc-d
 
-cp ${Dev}/t2t.bash .
+cp ${Dev}/t2t .
 cp ${Dev}/runpbp .
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .

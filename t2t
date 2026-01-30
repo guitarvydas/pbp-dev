@@ -1,5 +1,13 @@
 #!/bin/bash
 set -euo pipefail
+echo 'aaa...' t2t in "$(pwd)"
+
+
+echo "*** T2T ***"
+echo t2t "$#"
+echo "$@"
+echo "$0" "[$1]" "[$2]" "[$3]"
+echo
 
 if [ "$#" -eq 1 ]; then
   grammar="$1.ohm"

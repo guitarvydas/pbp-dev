@@ -264,7 +264,8 @@ def is_self (child,container):                         #line 279
     return  child ==  container                        #line 281#line 282#line 283
 
 def step_child_once (child,mev):                       #line 284
-    print (f'stepping {child.name}', file=sys.stderr)
+    import os
+    print (f'stepping getcwd="{os.getcwd()}" part="{child.name}"', file=sys.stderr)
     before_state =  child.state                        #line 285
     child.handler ( child, mev)                        #line 286
     after_state =  child.state                         #line 287
@@ -920,7 +921,7 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
         command = re.sub ( "_00_",  projectRoot,  command)#line 35#line 36
 
     try:
-        with open('junk.txt', 'w') as file:
+        with open('junk.command.txt', 'w') as file:
             file.write(cmd)
         ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
         rc = ret.returncode

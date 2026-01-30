@@ -22,3 +22,4 @@ cp -f ${dtree_Dev}/README.process_json.md ${DTREE}
 cp -f ${dtree_Dev}/support.mjs ${DTREE}
 cp -f ${dtree_Dev}/translate.js ${DTREE}
 cp -f ${dtree_Dev}/tree_walk.pl ${DTREE}
+cp -f ${dtree_Dev}/t2t ${DTREE}
