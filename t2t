@@ -7,6 +7,7 @@ echo "*** T2T ***"
 echo "# $#"
 echo "pwd=$(pwd)"
 echo "$@"
+echo PBP_SUPPORT = "${PBP_WSUPPORT}"
 echo
 
 if [ "$#" -eq 1 ]; then
@@ -25,5 +26,6 @@ src=-
 t2tlibd="${PBP_LIBD}/t2t-d/lib-d"
 node "${t2tlibd}/rwr.mjs" "${rewrite}" >"${PBP_WD}/temp.rewrite.mjs"
 sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >temp.grammar
+echo cat "${t2tlibd}/front.part.js" temp.grammar "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${PBP_WSUPPORT}" "${PBP_WD}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${PBP_WD}/temp.nanodsl.mjs"
 cat "${t2tlibd}/front.part.js" temp.grammar "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${PBP_WSUPPORT}" "${PBP_WD}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${PBP_WD}/temp.nanodsl.mjs"
 node "${PBP_WD}/temp.nanodsl.mjs" "${src}"
