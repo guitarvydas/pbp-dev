@@ -1,0 +1,337 @@
+
+defn trash_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“trash”)
+    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎trash_handler,  ϕ)
+}
+
+defn trash_handler (eh, mev) {
+    ⌈ to appease dumped_on_floor checker⌉
+    pass
+}
+defobj TwoMevents () {
+        • firstmev ⇐ ϕ
+        • secondmev ⇐ ϕ
+}
+
+⌈ Deracer_States :: enum { idle, waitingForFirstmev, waitingForSecondmev }⌉
+defobj Deracer_Instance_Data () {
+        • state ⇐ ϕ
+        • buffer ⇐ ϕ
+}
+
+defn reclaim_Buffers_from_heap (inst) {
+    pass
+}
+
+defn deracer_reset_handler (eh) {
+    deftemp inst ⇐ eh.instance_data
+    inst.state ⇐ “idle”
+    inst.buffer ⇐ #fresh (TwoMevents)
+}
+
+defn deracer_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“deracer”)
+    deftemp inst ⇐ #fresh (Deracer_Instance_Data)
+    inst.state ⇐ “idle”
+    inst.buffer ⇐ #fresh (TwoMevents)
+    eh ≡ make_leaf (name_with_id, owner, inst, “”, ↪︎deracer_handler, ↪︎deracer_reset_handler)
+    return eh
+}
+
+defn send_firstmev_then_secondmev (eh, inst) {
+    forward (eh, “1”, inst.buffer.firstmev)
+    forward (eh, “2”, inst.buffer.secondmev)
+    reclaim_Buffers_from_heap (inst)
+}
+
+defn deracer_handler (eh, mev) {
+    deftemp inst ⇐ eh.instance_data
+    if inst.state = “idle” {
+        if “1” = mev.port {
+            inst.buffer.firstmev ⇐ mev
+            inst.state ⇐ “waitingForSecondmev”
+        } elif “2” = mev.port {
+            inst.buffer.secondmev ⇐ mev
+            inst.state ⇐ “waitingForFirstmev”
+        } else {
+            runtime_error (#strcons (“bad mev.port (case A) for deracer ”, mev.port))
+	}
+    } elif inst.state = “waitingForFirstmev” {
+        if “1” = mev.port {
+            inst.buffer.firstmev ⇐ mev
+            send_firstmev_then_secondmev (eh, inst)
+            inst.state ⇐ “idle”
+        } else {
+            runtime_error (#strcons (“deracer: waiting for 1 but got [”, #strcons (mev.port, “] (case B)”)))
+	}
+    } elif inst.state = “waitingForSecondmev” {
+        if “2” = mev.port {
+            inst.buffer.secondmev ⇐ mev
+            send_firstmev_then_secondmev (eh, inst)
+            inst.state ⇐ “idle”
+        } else {
+            runtime_error (#strcons (“deracer: waiting for 2 but got [”, #strcons (mev.port, “] (case C)”)))
+	}
+    } else {
+        runtime_error (“bad state for deracer {eh.state}”)
+    }
+}
+
+defn low_level_read_text_file_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol(“Low Level Read Text File”)
+    return make_leaf (name_with_id, owner, ϕ,  “”, ↪︎low_level_read_text_file_handler, ϕ)
+}
+
+defn low_level_read_text_file_handler (eh, mev) {
+    fname ≡ mev.datum.v
+    # low_level_read_text_file_handler (eh, mev, fname, “”, “✗”)
+}
+
+defn ensure_string_datum_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol(“Ensure String Datum”)
+    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎ensure_string_datum_handler, ϕ)
+}
+
+defn ensure_string_datum_handler (eh, mev) {
+    if “string” = mev.datum.kind () {
+        forward (eh, “”, mev)
+    } else {
+        emev ≡ #strcons (“*** ensure: type error (expected a string datum) but got ”, mev.datum)
+        send (eh, “✗”, emev, mev)
+    }
+}
+
+defobj Syncfilewrite_Data () {
+        • filename ⇐ “”
+}
+
+defn syncfilewrite_reset_handler (eh) {
+    eh.instance_data ⇐ #fresh (Syncfilewrite_Data)
+}
+
+⌈ temp copy for bootstrap, sends “done“ (error during bootstrap if not wired)⌉
+defn syncfilewrite_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“syncfilewrite”)
+    inst ≡ #fresh (Syncfilewrite_Data)
+    return make_leaf (name_with_id, owner, inst, “”, ↪︎syncfilewrite_handler, ↪︎syncfilewrite_reset_handler)
+}
+
+defn syncfilewrite_handler (eh, mev) {
+    deftemp inst ⇐ eh.instance_data
+    if “filename” = mev.port {
+        inst.filename ⇐ mev.datum.v
+    } elif “input” = mev.port {
+        contents ≡ mev.datum.v
+        deftemp f ⇐ open (inst.filename, “w”)
+        if f != ϕ {
+            f.write (mev.datum.v)
+            f.close ()
+            send (eh, “done”, new_datum_bang (), mev)
+        } else {
+            send (eh, “✗”, #strcons (“open error on file ”, inst.filename), mev)
+	}
+    }
+}
+
+defobj StringConcat_Instance_Data () {
+        • buffer1 ⇐ ϕ
+        • buffer2 ⇐ ϕ
+}
+
+defn strinconcat_reset_handler (eh) {
+    deftemp inst ⇐ eh.instance_data
+    inst.buffer1 ⇐ ϕ
+    inst.buffer2 ⇐ ϕ
+}
+
+defn stringconcat_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“stringconcat”)
+    instp ≡ #fresh (StringConcat_Instance_Data)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎stringconcat_handler, ↪︎stringconcat_reset_handler)
+}
+
+defn stringconcat_handler (eh, mev) {
+    deftemp inst ⇐ eh.instance_data
+    if “1” = mev.port{
+        inst.buffer1  ⇐ clone_string (mev.datum.v)
+        maybe_stringconcat (eh, inst, mev)
+    } elif “2” = mev.port {
+        inst.buffer2 ⇐ clone_string (mev.datum.v)
+        maybe_stringconcat (eh, inst, mev)
+    } elif “reset” = mev.port {
+	inst.buffer1 ⇐ ϕ
+	inst.buffer2 ⇐ ϕ
+    } else {
+        runtime_error (#strcons (“bad mev.port for stringconcat: ”, mev.port))
+    }
+}
+
+defn maybe_stringconcat (eh, inst, mev) {
+    if inst.buffer1 != ϕ and inst.buffer2 != ϕ {
+	deftemp concatenated_string ⇐ “”
+	if 0 = #len (inst.buffer1) {
+	    concatenated_string ⇐ inst.buffer2
+	} elif 0 = #len (inst.buffer2) {
+	    concatenated_string ⇐ inst.buffer1
+	} else {
+	    concatenated_string ⇐ inst.buffer1 + inst.buffer2
+	}    
+	send (eh, “”, concatenated_string, mev)
+	inst.buffer1 ⇐ ϕ
+	inst.buffer2 ⇐ ϕ
+    }
+}
+
+⌈⌉
+
+defn string_constant_instantiate (reg, owner, name, template_data, arg) {
+    global projectRoot
+    name_with_id ≡ gensymbol (“strconst”)
+    deftemp s ⇐ template_data
+    if projectRoot != “” {
+        s ⇐ #substitute (“_00_”, projectRoot, s)
+    }
+    return make_leaf (name_with_id, owner, s, “”, ↪︎string_constant_handler, ϕ)
+}
+
+defn string_constant_handler (eh, mev) {
+    s ≡ eh.instance_data
+    send (eh, “”, s, mev)
+}
+
+defn fakepipename_instantiate (reg, owner, name, template_data, arg) {
+    instance_name ≡ gensymbol (“fakepipe”)
+    return make_leaf (instance_name, owner, ϕ, “”, ↪︎fakepipename_handler, ϕ)
+}
+
+defvar rand ⇐ 0
+
+defn fakepipename_handler (eh, mev) {
+    global rand
+    rand ⇐ rand + 1 ⌈ not very random, but good enough _ 'rand' must be unique within a single run⌉
+    send (eh, “”, #strcons (“/tmp/fakepipe”, rand), mev)
+}
+
+
+defobj Switch1star_Instance_Data () {
+        • state ⇐ “1”
+}
+
+defn switch1star_reset_handler (eh) {
+    deftemp inst ⇐ eh.instance_data
+    inst ⇐ #fresh (Switch1star_Instance_Data)
+}
+
+defn switch1star_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“switch1*”)
+    instp ≡ #fresh (Switch1star_Instance_Data)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎switch1star_handler, ↪︎switch1star_reset_handler)
+}
+
+defn switch1star_handler (eh, mev) {
+    deftemp inst ⇐ eh.instance_data
+    whichOutput ≡ inst.state
+    if “” = mev.port {
+	if “1” = whichOutput {
+	    forward (eh, “1”, mev)
+	    inst.state ⇐ “*”
+	} elif “*” = whichOutput {
+	    forward (eh, “*”, mev)
+	} else {
+	    send (eh, “✗”, “internal error bad state in switch1*”, mev)
+	}
+    } elif “reset” = mev.port {
+	    inst.state ⇐ “1”
+    } else {
+        send (eh, “✗”, “internal error bad mevent for switch1*”, mev)
+    }
+}
+
+defobj StringAccumulator () {
+        • s ⇐ “”
+}
+
+defn strcatstar_reset_handler (eh) {
+    eh.instance_data ⇐ #fresh (StringAccumulator)
+}
+
+defn strcatstar_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“String Concat *”)
+    instp ≡ #fresh (StringAccumulator)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎strcatstar_handler, ↪︎strcatstar_reset_handler)
+}
+
+defn strcatstar_handler (eh, mev) {
+    deftemp accum ⇐ eh.instance_data
+    if “” = mev.port {
+        accum.s ⇐ #strcons (accum.s, mev.datum.v)
+    } elif “fini” = mev.port {
+        send (eh, “”, accum.s, mev)
+    } else {
+        send (eh, “✗”, “internal error bad mevent for String Concat *”, mev)
+    }
+}
+
+defobj BlockOnErrorState () {
+        • hasError ⇐ “no”
+}
+
+defn blockOnError_reset_handler (eh) {
+    eh.instance_data ⇐ #fresh (BlockOnErrorState)
+}
+
+defn blockOnError_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“blockOnError”)
+    instp ≡ #fresh (BlockOnErrorState)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎blockOnError_handler, ↪︎blockOnError_reset_handler)
+}
+
+defn blockOnError_handler (eh, mev) {
+    deftemp inst ⇐ eh.instance_data
+    if “” = mev.port {
+        if inst.hasError = “no” {
+           send (eh, “”, mev.datum.v, mev)
+	}
+    } elif  “✗” = mev.port {
+        inst.hasError ⇐ “yes”
+    } elif  “reset” = mev.port {
+        inst.hasError ⇐ “no”
+    }
+ }
+
+defn stop_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“blockOnError”)
+    instp ≡ #fresh (BlockOnErrorState)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎blockOnError_handler, ϕ)
+}
+
+defn stop_handler (eh, mev) {
+    deftemp inst ⇐ eh.instance_data
+    deftemp parent ⇐ inst.owner
+    parent.stop ()
+    forward (eh, “”, mev)
+}
+
+⌈ all of the the built_in leaves are listed here⌉
+⌈ future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project⌉
+
+defn initialize_stock_components (reg) {
+    register_component (reg, mkTemplate ( “1then2”, ϕ, ↪︎deracer_instantiate))
+    register_component (reg, mkTemplate ( “1→2”, ϕ, ↪︎deracer_instantiate))
+    register_component (reg, mkTemplate ( “trash”, ϕ, ↪︎trash_instantiate))
+    register_component (reg, mkTemplate ( “🗑️”, ϕ, ↪︎trash_instantiate))
+    register_component (reg, mkTemplate ( “🚫”, ϕ, ↪︎stop_instantiate))
+    register_component (reg, mkTemplate ( “blockOnError”, ϕ, ↪︎blockOnError_instantiate))
+
+
+    register_component (reg, mkTemplate ( “Read Text File”, ϕ, ↪︎low_level_read_text_file_instantiate))
+    register_component (reg, mkTemplate ( “Ensure String Datum”, ϕ, ↪︎ensure_string_datum_instantiate))
+
+    register_component (reg, mkTemplate ( “syncfilewrite”, ϕ, ↪︎syncfilewrite_instantiate))
+    register_component (reg, mkTemplate ( “String Concat”, ϕ, ↪︎stringconcat_instantiate))
+    register_component (reg, mkTemplate ( “switch1*”, ϕ, ↪︎switch1star_instantiate))
+    register_component (reg, mkTemplate ( “String Concat *”, ϕ, ↪︎strcatstar_instantiate))
+       ⌈ for fakepipe⌉
+    register_component (reg, mkTemplate ( “fakepipename”, ϕ, ↪︎fakepipename_instantiate))
+}
+
