@@ -9,6 +9,8 @@ cp -f ${dtree_Dev}/drawio2dt.pl ${DTREE}
 cp -f ${dtree_Dev}/drawio2pl.rwr ${DTREE}
 cp -f ${dtree_Dev}/dt.ohm ${DTREE}
 cp -f ${dtree_Dev}/dtfrish.rwr ${DTREE}
+cp -f ${dtree_Dev}/dtjs.rwr ${DTREE}
+cp -f ${dtree_Dev}/dtpy.rwr ${DTREE}
 cp -f ${dtree_Dev}/dtpretty.rwr ${DTREE}
 cp -f ${dtree_Dev}/dtree-transmogrifier.drawio ${DTREE}
 cp -f ${dtree_Dev}/dtree.ohm ${DTREE}
