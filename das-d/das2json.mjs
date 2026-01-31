@@ -443,9 +443,7 @@ async function parseCommandLineArgs() {
 async function main() {
     const diagramName = await parseCommandLineArgs();
     try {
-	console.error (`das2json begin ${diagramName}`);
         const fname = await drawio2json(diagramName);
-	console.error (`das2json done ${fname}`);
     } catch (err) {
         console.error('Error:', err);
         process.exit(1);
