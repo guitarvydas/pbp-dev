@@ -2,7 +2,7 @@
 
 defn external_instantiate (reg, owner, name, arg) {
     name_with_id ≡ gensymbol (name)
-    return make_leaf (name_with_id, owner, ϕ, arg, ↪︎handle_external)
+    return make_leaf (name_with_id, owner, ϕ, arg, ↪︎handle_external, ϕ)
 }
 
 defn generate_external_components (reg, container_list) {

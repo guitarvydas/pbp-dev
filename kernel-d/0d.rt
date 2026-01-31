@@ -197,10 +197,23 @@ defn container_handler (container, mevent) {
         step_children (container, mevent)}
 }
 
+⌈ Stop all children. Reset to a known state. Hit the big red button. ⌉
+defn container_reset_children (container) {
+    for child in container.children {
+        child.stop (child)
+    }
+    #resetQueue (container.visit_ordering)
+    #resetQueue (container.routings)
+    #resetQueue (container.inq)
+    #resetQueue (container.outq)
+    container.state  ⇐ "idle"
+}
+
 ⌈ Frees the given container and associated data.⌉
 defn destroy_container (eh) {
     pass
 }
+
 
 ⌈ Routing connection for a container component. The `direction` field has⌉
 ⌈ no affect on the default mevent routing system _ it is there for debugging⌉
@@ -501,7 +514,8 @@ defn mangle_name (s) {
 ⌈⌉
 ⌈ `instance_data` is a pointer to instance data that the `leaf_handler`⌉
 ⌈ function may want whenever it is invoked again.⌉
-⌈⌉
+
+⌈ TODO: what is .routings for? (is it a historical artefact that can be removed?) ⌉
 
 ⌈ Eh_States :: enum { idle, active }⌉
 defobj Eh () {
@@ -514,7 +528,9 @@ defobj Eh () {
         • connections ⇐ []
         • routings ⇐ #freshQueue ()
         • handler ⇐ ϕ
+        • reset_instance_data ⇐ ϕ
         • finject ⇐ ϕ
+        • stop ⇐ ϕ
         • instance_data ⇐ ϕ
         ⌈ arg needed for probe support ⌉
         • arg ⇐ “”
@@ -531,6 +547,7 @@ defn make_container (name, owner) {
     eh.owner ⇐ owner
     eh.handler ⇐ ↪︎container_handler
     eh.finject ⇐ ↪︎injector
+    eh.stop ⇐ ↪︎container_reset_children
     eh.state ⇐ “idle”
     eh.kind ⇐ “container”
     return eh
@@ -539,7 +556,7 @@ defn make_container (name, owner) {
 ⌈ Creates a new leaf component out of a handler function, and a data parameter⌉
 ⌈ that will be passed back to your handler when called.⌉
 
-defn make_leaf (name, owner, instance_data, arg, handler) {
+defn make_leaf (name, owner, instance_data, arg, handler, reset_handler) {
     deftemp eh ⇐ #fresh (Eh)
     deftemp nm ⇐ “”
     if ϕ != owner {
@@ -548,12 +565,24 @@ defn make_leaf (name, owner, instance_data, arg, handler) {
     eh.name ⇐ #strcons (nm, #strcons (“▹”, name))
     eh.owner ⇐ owner
     eh.handler ⇐ handler
+    eh.reset_handler ⇐ reset_handler
     eh.finject ⇐ ↪︎injector
+    eh.stop ⇐ ↪︎leaf_reset
     eh.instance_data ⇐ instance_data
     eh.arg ⇐ arg
     eh.state ⇐ “idle”
     eh.kind ⇐ “leaf”
     return eh
+}
+
+⌈ Reset Leaf part to a known, idle state. Hit the big red button. ⌉
+defn leaf_reset (part) {
+    #resetQueue (part.inq)
+    #resetQueue (part.outq)
+    if (part.reset_handler !=  ϕ) {
+        part.reset_handler (part)
+    }
+    part.state  ⇐ "idle"
 }
 
 ⌈ Sends a mevent on the given `port` with `data`, placing it on the output⌉

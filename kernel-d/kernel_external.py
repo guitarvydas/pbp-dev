@@ -25,8 +25,11 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
         command = re.sub ( "_00_",  projectRoot,  command)#line 35#line 36
 
     try:
-        with open('junk.txt', 'w') as file:
+        with open('junk.command.txt', 'w') as file:
+            file.write(os.getcwd())
+            file.write(' ')
             file.write(cmd)
+            file.write(' ')
         ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
         rc = ret.returncode
         stdout = ret.stdout.strip ()

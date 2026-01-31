@@ -1,7 +1,7 @@
 
 defn trash_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“trash”)
-    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎trash_handler)
+    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎trash_handler,  ϕ)
 }
 
 defn trash_handler (eh, mev) {
@@ -23,12 +23,18 @@ defn reclaim_Buffers_from_heap (inst) {
     pass
 }
 
+defn deracer_reset_handler (eh) {
+    deftemp inst ⇐ eh.instance_data
+    inst.state ⇐ “idle”
+    inst.buffer ⇐ #fresh (TwoMevents)
+}
+
 defn deracer_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“deracer”)
     deftemp inst ⇐ #fresh (Deracer_Instance_Data)
     inst.state ⇐ “idle”
     inst.buffer ⇐ #fresh (TwoMevents)
-    eh ≡ make_leaf (name_with_id, owner, inst, “”, ↪︎deracer_handler)
+    eh ≡ make_leaf (name_with_id, owner, inst, “”, ↪︎deracer_handler, ↪︎deracer_reset_handler)
     return eh
 }
 
@@ -73,7 +79,7 @@ defn deracer_handler (eh, mev) {
 
 defn low_level_read_text_file_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol(“Low Level Read Text File”)
-    return make_leaf (name_with_id, owner, ϕ,  “”, ↪︎low_level_read_text_file_handler)
+    return make_leaf (name_with_id, owner, ϕ,  “”, ↪︎low_level_read_text_file_handler, ϕ)
 }
 
 defn low_level_read_text_file_handler (eh, mev) {
@@ -83,7 +89,7 @@ defn low_level_read_text_file_handler (eh, mev) {
 
 defn ensure_string_datum_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol(“Ensure String Datum”)
-    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎ensure_string_datum_handler)
+    return make_leaf (name_with_id, owner, ϕ, “”, ↪︎ensure_string_datum_handler, ϕ)
 }
 
 defn ensure_string_datum_handler (eh, mev) {
@@ -99,11 +105,15 @@ defobj Syncfilewrite_Data () {
         • filename ⇐ “”
 }
 
+defn syncfilewrite_reset_handler (eh) {
+    eh.instance_data ⇐ #fresh (Syncfilewrite_Data)
+}
+
 ⌈ temp copy for bootstrap, sends “done“ (error during bootstrap if not wired)⌉
 defn syncfilewrite_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“syncfilewrite”)
     inst ≡ #fresh (Syncfilewrite_Data)
-    return make_leaf (name_with_id, owner, inst, “”, ↪︎syncfilewrite_handler)
+    return make_leaf (name_with_id, owner, inst, “”, ↪︎syncfilewrite_handler, ↪︎syncfilewrite_reset_handler)
 }
 
 defn syncfilewrite_handler (eh, mev) {
@@ -128,10 +138,16 @@ defobj StringConcat_Instance_Data () {
         • buffer2 ⇐ ϕ
 }
 
+defn strinconcat_reset_handler (eh) {
+    deftemp inst ⇐ eh.instance_data
+    inst.buffer1 ⇐ ϕ
+    inst.buffer2 ⇐ ϕ
+}
+
 defn stringconcat_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“stringconcat”)
     instp ≡ #fresh (StringConcat_Instance_Data)
-    return make_leaf (name_with_id, owner, instp, “”, ↪︎stringconcat_handler)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎stringconcat_handler, ↪︎stringconcat_reset_handler)
 }
 
 defn stringconcat_handler (eh, mev) {
@@ -175,7 +191,7 @@ defn string_constant_instantiate (reg, owner, name, template_data, arg) {
     if projectRoot != “” {
         s ⇐ #substitute (“_00_”, projectRoot, s)
     }
-    return make_leaf (name_with_id, owner, s, “”, ↪︎string_constant_handler)
+    return make_leaf (name_with_id, owner, s, “”, ↪︎string_constant_handler, ϕ)
 }
 
 defn string_constant_handler (eh, mev) {
@@ -185,7 +201,7 @@ defn string_constant_handler (eh, mev) {
 
 defn fakepipename_instantiate (reg, owner, name, template_data, arg) {
     instance_name ≡ gensymbol (“fakepipe”)
-    return make_leaf (instance_name, owner, ϕ, “”, ↪︎fakepipename_handler)
+    return make_leaf (instance_name, owner, ϕ, “”, ↪︎fakepipename_handler, ϕ)
 }
 
 defvar rand ⇐ 0
@@ -201,10 +217,15 @@ defobj Switch1star_Instance_Data () {
         • state ⇐ “1”
 }
 
+defn switch1star_reset_handler (eh) {
+    deftemp inst ⇐ eh.instance_data
+    inst ⇐ #fresh (Switch1star_Instance_Data)
+}
+
 defn switch1star_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“switch1*”)
     instp ≡ #fresh (Switch1star_Instance_Data)
-    return make_leaf (name_with_id, owner, instp, “”, ↪︎switch1star_handler)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎switch1star_handler, ↪︎switch1star_reset_handler)
 }
 
 defn switch1star_handler (eh, mev) {
@@ -230,10 +251,14 @@ defobj StringAccumulator () {
         • s ⇐ “”
 }
 
+defn strcatstar_reset_handler (eh) {
+    eh.instance_data ⇐ #fresh (StringAccumulator)
+}
+
 defn strcatstar_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“String Concat *”)
     instp ≡ #fresh (StringAccumulator)
-    return make_leaf (name_with_id, owner, instp, “”, ↪︎strcatstar_handler)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎strcatstar_handler, ↪︎strcatstar_reset_handler)
 }
 
 defn strcatstar_handler (eh, mev) {
@@ -251,10 +276,14 @@ defobj BlockOnErrorState () {
         • hasError ⇐ “no”
 }
 
+defn blockOnError_reset_handler (eh) {
+    eh.instance_data ⇐ #fresh (BlockOnErrorState)
+}
+
 defn blockOnError_instantiate (reg, owner, name, template_data, arg) {
     name_with_id ≡ gensymbol (“blockOnError”)
     instp ≡ #fresh (BlockOnErrorState)
-    return make_leaf (name_with_id, owner, instp, ↪︎blockOnError_handler)
+    return make_leaf (name_with_id, owner, instp, “”, ↪︎blockOnError_handler, ↪︎blockOnError_reset_handler)
 }
 
 defn blockOnError_handler (eh, mev) {
@@ -270,6 +299,22 @@ defn blockOnError_handler (eh, mev) {
     }
  }
 
+defn stop_instantiate (reg, owner, name, template_data, arg) {
+    name_with_id ≡ gensymbol (“Stop”)
+    inst ≡ ϕ
+    return make_leaf (name_with_id, owner, inst, “”, ↪︎stop_handler, ϕ)
+}
+
+defn stop_handler (eh, mev) {
+    deftemp inst ⇐ eh.instance_data
+    deftemp parent ⇐ eh.owner
+    deftemp s ⇐ #strcons (“   !!! stopping: '”, #strcons (parent.name, “'”))
+    #print_stderr (s)
+    #print_nl_stderr ()
+    parent.stop (parent)
+    send (eh, “”, mev.datum.v, mev)
+}
+
 ⌈ all of the the built_in leaves are listed here⌉
 ⌈ future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project⌉
 
@@ -278,6 +323,7 @@ defn initialize_stock_components (reg) {
     register_component (reg, mkTemplate ( “1→2”, ϕ, ↪︎deracer_instantiate))
     register_component (reg, mkTemplate ( “trash”, ϕ, ↪︎trash_instantiate))
     register_component (reg, mkTemplate ( “🗑️”, ϕ, ↪︎trash_instantiate))
+    register_component (reg, mkTemplate ( “🚫”, ϕ, ↪︎stop_instantiate))
     register_component (reg, mkTemplate ( “blockOnError”, ϕ, ↪︎blockOnError_instantiate))
 
 
