@@ -74,7 +74,7 @@ ExternalPhrase_internalizeLnetFromString [_octothorpe _ lp rp] = ‛
         return None⤶
 ’
 ExternalPhrase_freshQueue [_octothorpe _ lp rp] = ‛ deque ([])’
-ExternalPhrase_resetQueue [_octothorpe _ lp e rp] = ‛\n«e» = deque ([])’
+ExternalPhrase_resetQueue [_octothorpe _ lp e rp] = ‛\n«e».clear ()’
 ExternalPhrase_freshStack [_octothorpe _ lp rp] = ‛ []’
 ExternalPhrase_fresh [_octothorpe _83 _84 ident _85] =‛ «ident» ()’
 ExternalPhrase_stringshrink [_octothorpe _83 _84 e _85 ] =‛ str(«e»)[:30].replace ('\\r','⦙').replace ('\\n', '⧚') ’

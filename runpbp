@@ -52,24 +52,23 @@ rm -f out.*
 
 # Run python and pipe to split outputs
 echo runpbp "$PYTHONPATH"
-python main.py "${PBP_LIBD}" "${PBP_arg}" main "${app_main}.json" | "${PBP_split_outputs}"
+python main.py "${PBP_LIBD}" "${PBP_arg}" main "${app_main}.json" >temp.out
+cat temp.out | "${PBP_split_outputs}"
 
 # Check if the run produced "out.✗"
 if [[ -f "out.✗" ]]; then
     echo
     mv "out.✗" "ERRORS"
     cat "ERRORS"
-    echo
-    echo
-    echo "!!! ERRORS !!!"
+    # echo
+    # echo
+    # echo "!!! ERRORS !!!"
     echo
     exit 1
 else
     # Get basename of PBP_arg for output filenames
     arg_basename="$(basename "${PBP_arg}")"
 
-    ls -l out*
-    
     # Move output files to original working directory with renamed filenames
     mv "out.frish" "${PBP_WD}/${arg_basename}.frish"
     mv "out.dt" "${PBP_WD}/${arg_basename}.dt"

@@ -308,11 +308,11 @@ defn stop_instantiate (reg, owner, name, template_data, arg) {
 defn stop_handler (eh, mev) {
     deftemp inst ⇐ eh.instance_data
     deftemp parent ⇐ eh.owner
-    deftemp s ⇐ #strcons (“   !!! stopping”, parent.name)
+    deftemp s ⇐ #strcons (“   !!! stopping: '”, #strcons (parent.name, “'”))
     #print_stderr (s)
     #print_nl_stderr ()
     parent.stop (parent)
-    forward (eh, “”, mev)
+    send (eh, “”, mev.datum.v, mev)
 }
 
 ⌈ all of the the built_in leaves are listed here⌉

@@ -358,11 +358,11 @@ function stop_instantiate (reg,owner,name,template_data,arg) {/* line 302 */
 function stop_handler (eh,mev) {                       /* line 308 */
     let  inst =  eh.instance_data;                     /* line 309 */
     let  parent =  eh.owner;                           /* line 310 */
-    let  s =  ( "   !!! stopping".toString ()+  parent.name.toString ()) /* line 311 */;
+    let  s =  ( "   !!! stopping: '".toString ()+  ( parent.name.toString ()+  "'".toString ()) .toString ()) /* line 311 */;
     console.error ( s);                                /* line 312 */
                                                        /* line 313 */
     parent.stop ( parent)                              /* line 314 */
-    forward ( eh, "", mev)                             /* line 315 *//* line 316 *//* line 317 */
+    send ( eh, "", mev.datum.v, mev)                   /* line 315 *//* line 316 *//* line 317 */
 }
 
 /*  all of the the built_in leaves are listed here */  /* line 318 */
