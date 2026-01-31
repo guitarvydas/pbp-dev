@@ -22,6 +22,7 @@ TAS=./tas-d
 T2T=./t2t-d
 DTREE=./dtree-d
 DOC=./doc-d
+PREFAB=./prefab-d
 
 rm -rf tas-d
 rm -rf das-d
@@ -29,6 +30,7 @@ rm -rf t2t-d
 rm -rf kernel-d
 rm -rf dtree-d
 rm -rf doc-d
+rm -rf prefab-d
 mkdir tas-d
 mkdir das-d
 mkdir t2t-d
@@ -36,6 +38,7 @@ mkdir t2t-d/lib-d
 mkdir kernel-d
 mkdir dtree-d
 mkdir doc-d
+mkdir prefab-d
 
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
@@ -43,12 +46,7 @@ cp ${Dev}/kernel-d/package.json .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
-cp ${Dev}/runpbp .
-cp ${Dev}/indent .
-cp ${Dev}/t2t .
-cp ${Dev}/das2json .
-cp ${Dev}/splitoutputs .
-cp ${Dev}/check-for-errors .
+cp ${Dev}/prefab/* .
 
 cp ${Dev}/doc-d/semantics.pdf ${DOC}
 
