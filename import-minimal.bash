@@ -38,7 +38,6 @@ mkdir t2t-d/lib-d
 mkdir kernel-d
 mkdir dtree-d
 mkdir doc-d
-mkdir prefab-d
 
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
@@ -46,7 +45,12 @@ cp ${Dev}/kernel-d/package.json .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
-cp ${Dev}/prefab/* .
+cp ${Dev}/runpbp .
+cp ${Dev}/indent .
+cp ${Dev}/t2t .
+cp ${Dev}/das2json .
+cp ${Dev}/splitoutputs .
+cp ${Dev}/check-for-errors .
 
 cp ${Dev}/doc-d/semantics.pdf ${DOC}
 
