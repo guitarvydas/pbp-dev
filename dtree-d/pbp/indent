@@ -1,4 +1,3 @@
 #!/bin/bash
 set -euo pipefail
-source pbp_vars.bash
 node ${PBP_indent}

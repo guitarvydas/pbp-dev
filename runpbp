@@ -20,12 +20,7 @@ else
     export PBP_arg="$3"
 fi
 
-export PBP_runpbp="${PBP_LIBD}/runpbp"
-export PBP_indent="${PBP_LIBD}/indent"
-export PBP_t2t="${PBP_LIBD}/envt2t"
-export PBP_das2json="${PBP_LIBD}/das2json"
-export PBP_split_outputs="${PBP_LIBD}/splitoutputs"
-export PBP_check_for_errors="${PBP_LIBD}/check-for-errors"
+source pbp_vars.bash ${PBP_LIBD}
 
 export PBP_WSUPPORT="${PBP_APPD}/support.mjs"
 
