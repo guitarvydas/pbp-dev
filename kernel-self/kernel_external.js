@@ -18,24 +18,25 @@ function probe_handler (eh,tag,mev) {                  /* line 14 */
     console.error ( "Info" + ": " +  ( "  @".toString ()+  (`${ ticktime}`.toString ()+  ( "  ".toString ()+  ( "probe ".toString ()+  ( eh.name.toString ()+  ( ": ".toString ()+ `${ s}`.toString ()) .toString ()) .toString ()) .toString ()) .toString ()) .toString ()) )/* line 23 *//* line 24 *//* line 25 */
 }
 
-function shell_out_handler (eh,cmd,mev) {              /* line 26 *//* line 27 */
-    let s =  mev.datum.v;                              /* line 28 */
-    let  ret =  null;                                  /* line 29 */
-    let  rc =  null;                                   /* line 30 */
-    let  stdout =  null;                               /* line 31 */
-    let  stderr =  null;                               /* line 32 */
-    let  command =  cmd;                               /* line 33 */
-    if ( projectRoot!= "") {                           /* line 34 */
-      command =  command.replaceAll ( "_00_",  projectRoot)/* line 35 */;/* line 36 */
+function shell_out_handler (eh,cmd,mev) {              /* line 26 */
+    let s =  mev.datum.v;                              /* line 27 */
+    let  ret =  null;                                  /* line 28 */
+    let  rc =  null;                                   /* line 29 */
+    let  stdout =  null;                               /* line 30 */
+    let  stderr =  null;                               /* line 31 */
+    let  command =  cmd;                               /* line 32 */
+    let  pbpRoot = process.env.PBP                     /* line 33 */;
+    if ( pbpRoot!= "") {                               /* line 34 */
+      command =  command.replaceAll ( "_/",  pbpRoot)  /* line 37 */;/* line 38 */
     }
 
     stdout = execSync(`${ command} ${ s}`, { encoding: 'utf-8' });
     ret = true;
-                                                       /* line 37 */
-    if ( rc ==  0) {                                   /* line 38 */
-      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 39 */
+                                                       /* line 39 */
+    if ( rc ==  0) {                                   /* line 40 */
+      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 41 */
     }
-    else {                                             /* line 40 */
-      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 41 *//* line 42 */
-    }                                                  /* line 43 *//* line 44 */
+    else {                                             /* line 42 */
+      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 43 *//* line 44 */
+    }                                                  /* line 45 *//* line 46 */
 }

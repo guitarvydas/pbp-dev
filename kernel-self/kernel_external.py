@@ -14,15 +14,15 @@ def probe_handler (eh,tag,mev):                        #line 14
     live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 23#line 24#line 25
 
 def shell_out_handler (eh,cmd,mev):                    #line 26
-    global projectRoot                                 #line 27
-    s =  mev.datum.v                                   #line 28
-    ret =  None                                        #line 29
-    rc =  None                                         #line 30
-    stdout =  None                                     #line 31
-    stderr =  None                                     #line 32
-    command =  cmd                                     #line 33
-    if  projectRoot!= "":                              #line 34
-        command = re.sub ( "_00_",  projectRoot,  command)#line 35#line 36
+    s =  mev.datum.v                                   #line 27
+    ret =  None                                        #line 28
+    rc =  None                                         #line 29
+    stdout =  None                                     #line 30
+    stderr =  None                                     #line 31
+    command =  cmd                                     #line 32
+    pbpRoot = os.getenv('PBP', '<none>')               #line 33
+    if  pbpRoot!= "":                                  #line 34
+        command = re.sub ( "_/",  pbpRoot,  command)   #line 37#line 38
 
     try:
         with open('junk.command.txt', 'w') as file:
@@ -39,8 +39,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
         rc = 1
         stdout = ''
         stderr = str(e)
-                                                       #line 37
-    if  rc ==  0:                                      #line 38
-        send ( eh, "", str( stdout) +  stderr , mev)   #line 39
-    else:                                              #line 40
-        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 41#line 42#line 43#line 44
+                                                       #line 39
+    if  rc ==  0:                                      #line 40
+        send ( eh, "", str( stdout) +  stderr , mev)   #line 41
+    else:                                              #line 42
+        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 43#line 44#line 45#line 46

@@ -424,11 +424,18 @@ defn mkTemplate (name, template_data, instantiator) {
 }
 
 
-defn lnet2internal_from_file (pathname, container_xml) {
+⌈ convert a little-network to internal form (an object data structure created by json parser) ... ⌉
+⌈ the actual data structure depends on the json parser library used by the target language ⌉
+⌈ the form of the data structure doesn't matter here, as long as we use lookup operators "@" in this .rt code ⌉
+
+⌈ ... by reading the little-net from an external file ⌉
+defn lnet2internal_from_file (container_xml) {
+    pathname ≡ #get_here_root ()
     filename ≡ #basename (container_xml)
     #read_and_convert_lnet_file (pathname, filename)
 }
 
+⌈ ... by reading the little-net from an embedded string (an aspect of creating t2t tool code) ⌉
 defn lnet2internal_from_string (lnet) {
     #internalize_lnet_from_string ()
 }
@@ -618,25 +625,14 @@ defn put_output (eh, mev) {
     #enqueue (eh.outq, mev)
 }
 
-defvar projectRoot ⇐ “”
-
-defn set_environment (project_root) {
-    global projectRoot
-    projectRoot ⇐ project_root
-}
-
 defn obj_clone (obj) {
     return obj
 }
 
-⌈ usage: app ${_00_} diagram_filename1 diagram_filename2 ...⌉
-⌈ where ${_00_} is the root directory for the project⌉
-
-defn initialize_component_palette_from_files (project_root, diagram_source_files) {
+defn initialize_component_palette_from_files (diagram_source_files) {
     deftemp reg ⇐ make_component_registry ()
     for diagram_source in diagram_source_files {
-        all_containers_within_single_file ≡ lnet2internal_from_file (project_root, diagram_source)
-        reg ⇐ generate_external_components (reg, all_containers_within_single_file)
+        all_containers_within_single_file ≡ lnet2internal_from_file (diagram_source)
         for container in all_containers_within_single_file {
             register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
         }
@@ -645,8 +641,7 @@ defn initialize_component_palette_from_files (project_root, diagram_source_files
     return reg
 }
 
-defn initialize_component_palette_from_string (project_root, lnet) {
-    ⌈ this version ignores project_root ⌉
+defn initialize_component_palette_from_string (lnet) {
     deftemp reg ⇐ make_component_registry ()
     all_containers ≡ lnet2internal_from_string (lnet)
     reg ⇐ generate_external_components (reg, all_containers)
@@ -680,16 +675,16 @@ defn runtime_error (s) {
 }
 
 
-defn initialize_from_files (project_root, diagram_names) {
+defn initialize_from_files (diagram_names) {
     arg ≡ ϕ
-    palette ≡ initialize_component_palette_from_files (project_root, diagram_names)
-    return [palette, [project_root, diagram_names, arg]]
+    palette ≡ initialize_component_palette_from_files (diagram_names)
+    return [palette, [diagram_names, arg]]
 }
 
-defn initialize_from_string (project_root) {
+defn initialize_from_string () {
     arg ≡ ϕ
-    palette ≡ initialize_component_palette_from_string (project_root)
-    return [palette, [project_root, ϕ, arg]]
+    palette ≡ initialize_component_palette_from_string ()
+    return [palette, [ϕ, arg]]
 }
 
 defn start (arg, part_name, palette, env) {
@@ -699,9 +694,7 @@ defn start (arg, part_name, palette, env) {
 }
      
 defn start_bare (part_name, palette, env) {
-    project_root ≡ env [0]
-    diagram_names ≡ env [1]
-    set_environment (project_root)
+    diagram_names ≡ env [0]
     ⌈ get entrypoint container⌉
     deftemp part ⇐ get_component_instance(palette, part_name, ϕ)
     if ϕ = part {

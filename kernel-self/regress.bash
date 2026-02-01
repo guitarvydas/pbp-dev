@@ -2,6 +2,7 @@
 set -euo pipefail
 if [[ "$(pwd)" == *"kernel-self" ]];
 then
+    cp ../kernel/new-kernel0d.py ./kernel0d.py
     cp ../kernel/*.rt .
     npm install
     node das2json.mjs kernel.drawio

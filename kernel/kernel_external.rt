@@ -24,15 +24,17 @@ defn probe_handler (eh, tag, mev) {
 }
 
 defn shell_out_handler (eh, cmd, mev) {
-    global projectRoot
     s ≡ mev.datum.v
     deftemp ret ⇐ ϕ
     deftemp rc ⇐ ϕ
     deftemp stdout ⇐ ϕ
     deftemp stderr ⇐ ϕ
     deftemp command ⇐ cmd
-    if projectRoot != “” {
-        command ⇐ #substitute (“_00_”, projectRoot, command)
+    deftemp pbpRoot ⇐ #get_pbp_root ()
+    if pbpRoot != “” {
+        command ⇐ #substitute (“_/”,
+	                       pbpRoot,
+			       command)
     }
     #run_command (command, s, ret, rc, stdout, stderr)
     if rc = 0 {
