@@ -205,6 +205,11 @@ ExternalPhrase_dir [_octothorpe _ lp x rp] = ‛(getwd «x»)’
 ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛(dispatch_lookup «arg» «eh»)’
 ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛(«f» «eh», «msg»)’
 
+ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBP")’
+ExternalPhrase_getToolRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBPTOOL")’
+ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBPHERE")’
+
+
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 
 Deftemp [_deftemp lval _mutate e rec?] = ‛\n(let ((«lval» «e»))⤷\n(declare (ignorable «lval»))«rec»⤶)’
