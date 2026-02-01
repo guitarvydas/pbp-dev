@@ -33,7 +33,7 @@ defn shell_out_handler (eh, cmd, mev) {
     deftemp pbpRoot ⇐ #get_pbp_root ()
     if pbpRoot != “” {
         command ⇐ #substitute (“_/”,
-	                       pbpRoot,
+	                       #strcons (pbpRoot, “/”),
 			       command)
     }
     #run_command (command, s, ret, rc, stdout, stderr)
