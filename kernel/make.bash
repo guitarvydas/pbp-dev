@@ -9,7 +9,7 @@ node das2json.mjs kernel.drawio
 NOW=$(date)
 FRESHDIR="before-${NOW}"
 mkdir ./"${FRESHDIR}"
-mv ./kernel0d.py ./"${FRESHDIR}"
+cp ./kernel0d.py ./"${FRESHDIR}"
 echo "created ${FRESHDIR}"
 cat 0d.py external.py stock.py kernel_external.py >new-kernel0d.py
 cat 0d.js external.js stock.js kernel_external.js >kernel0d.js

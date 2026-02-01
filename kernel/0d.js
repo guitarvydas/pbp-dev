@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import path from 'path';
 import execSync from 'child_process';
+import 'dotenv/config';
                                                        /* line 1 *//* line 2 */
 let  counter =  0;                                     /* line 3 */
 let  ticktime =  0;                                    /* line 4 *//* line 5 */

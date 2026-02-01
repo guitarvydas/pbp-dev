@@ -90,6 +90,7 @@ ExternalPhrase_preamble [_octothorpe _preamble lb rp] =
 import * as fs from 'fs';
 import path from 'path';
 import execSync from 'child_process';
+import 'dotenv/config';
 ’
 
 ExternalPhrase_print_stdout [_octothorpe _ lp e rp] = ‛console.log («e»);’
@@ -120,6 +121,11 @@ ExternalPhrase_dir [_octothorpe _ lp x rp] = ‛ «x» ’
 
 ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛dispatch_lookup («arg», «eh»)’
 ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛«f» («eh», «msg»)’
+
+ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛process.env.PBP’
+ExternalPhrase_getToolRoot [_octothorpe _ lp rp] = ‛process.env.PBPTOOL’
+ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛process.env.PBPHERE’
+
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 
