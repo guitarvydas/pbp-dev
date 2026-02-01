@@ -1,0 +1,16 @@
+peephole {
+  main = stuff+
+  stuff =
+    | funcallIdent -- funcallident
+    | any -- default
+
+  funcallIdent = "(" space* "funcall" space space* "'" ident args* ")"
+  args =
+    | funcallIdent -- funcallident
+    | "(" args* ")" -- rec
+    | ~"(" ~")" any -- default
+
+  ident = "❲"? first rest* "❳"?
+  first = letter | "_"
+  rest = letter | digit | "_"
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RT Transpiler</title>
+    <style>
+        .row {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .tagbox {
+            margin-bottom: 5px;
+            padding: 5px;
+            font-family: monospace;
+        }
+        
+        .kvbox {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .textarea {
+            width: 100%;
+            font-family: monospace;
+            overflow: scroll;
+            white-space: pre; 
+        }
+
+        .ignored-tag {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Javascript">
+                <textarea class="textarea" rows="15" columns="70" readonly></textarea>
+            </div>
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Python">
+                <textarea id="cl" class="textarea" rows="15" readonly></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="CommonLisp">
+                <textarea class="textarea" rows="5" readonly></textarea>
+            </div>
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="WASM">
+                <textarea class="textarea" rows="5" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="✗">
+                <textarea id="errors" class="textarea" rows="10" readonly></textarea>
+            </div>
+            <div class="kvbox">
+                <input type="text" class="tagbox" value="Info">
+                <div id="info" class="textarea" style="height: 160px; overflow-y: auto; background: white;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const buffers = new Map();
+        const ws = new WebSocket('ws://localhost:8865');
+
+        function updateTextArea(textarea, content) {
+            if (textarea.id === 'info') {
+                textarea.innerHTML = content;
+            } else {
+                textarea.value = content;
+            }
+            textarea.scrollTop = textarea.scrollHeight;
+        }
+
+        function resetAll() {
+            document.querySelectorAll('.tagbox').forEach(tagbox => {
+                const textarea = tagbox.nextElementSibling;
+                buffers.set(tagbox.value, '');
+                updateTextArea(textarea, '');
+            });
+        }
+
+        document.querySelectorAll('.tagbox').forEach(tagbox => {
+            buffers.set(tagbox.value, '');
+        });
+
+        ws.onopen = () => {
+            const status = '-- opened --\n';
+            buffers.set('CommonLisp', status);
+            buffers.set('✗', status);
+            updateTextArea(document.getElementById('cl'), status);
+            updateTextArea(document.getElementById('errors'), status);
+        };
+
+        ws.onerror = (error) => {
+            const status = '-- websocket error --\n';
+            buffers.set('CommonLisp', buffers.get('CommonLisp') + status);
+            buffers.set('✗', buffers.get('✗') + status);
+            updateTextArea(document.getElementById('cl'), buffers.get('CommonLisp'));
+            updateTextArea(document.getElementById('errors'), buffers.get('✗'));
+        };
+
+        ws.onclose = () => {
+            const status = '-- disconnected --\n';
+            buffers.set('CommonLisp', buffers.get('CommonLisp') + status);
+            buffers.set('✗', buffers.get('✗') + status);
+            updateTextArea(document.getElementById('cl'), buffers.get('CommonLisp'));
+            updateTextArea(document.getElementById('errors'), buffers.get('✗'));
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                const dataArray = Array.isArray(data) ? data : [data];
+                
+                if (dataArray.length === 1 && "" in dataArray[0] && dataArray[0][""] === "reset") {
+                    resetAll();
+                    return;
+                }
+
+                const validTags = new Set([...document.querySelectorAll('.tagbox')].map(box => box.value));
+                
+                dataArray.forEach(item => {
+                    Object.keys(item).forEach(tag => {
+                        if (!validTags.has(tag)) {
+                            const infoMessage = `<span class="ignored-tag">tag ignored: ${tag}</span>\n`;
+                            buffers.set('Info', (buffers.get('Info') || '') + infoMessage);
+                            updateTextArea(document.getElementById('info'), buffers.get('Info'));
+                        }
+                    });
+                    });
+
+                    dataArray.forEach (item => {
+		    console.log (Object.keys(item));
+		    console.log (item);
+		    });
+
+                document.querySelectorAll('.tagbox').forEach(tagbox => {
+                    const tagValue = tagbox.value;
+                    const textarea = tagbox.nextElementSibling;
+                    
+                    const values = dataArray
+                        .map(item => item[tagValue])
+                        .filter(value => value !== undefined);
+                    
+                    if (values.length > 0) {
+                        const newContent = values.join('\n\n') + '\n';
+                        buffers.set(tagValue, buffers.get(tagValue) + newContent);
+                        updateTextArea(textarea, buffers.get(tagValue));
+                    }
+                });
+            } catch (error) {
+                const errorMessage = `Error processing message: ${error.message}\n`;
+                buffers.set('✗', buffers.get('✗') + errorMessage);
+                updateTextArea(document.getElementById('errors'), buffers.get('✗'));
+            }
+        };
+    </script>
+</body>
+</html>

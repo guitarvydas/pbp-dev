@@ -1,0 +1,44 @@
+defn handle_external (eh, mev) {
+    s ≡ eh.arg
+    deftemp firstc ⇐ s [1]
+    if firstc = "$" {
+      shell_out_handler (eh, #stringcdr (#stringcdr (#stringcdr (s))), mev)
+    } elif firstc = "?" {
+      probe_handler (eh, #stringcdr (s), mev)
+    } else {
+      ⌈ just a string, send it out ⌉
+      send (eh, “”, #stringcdr (s) , mev)
+    }
+}
+
+defn probe_handler (eh, tag, mev) {
+    s ≡ mev.datum.v
+    #live_update (“Info”,
+        #strcons (“  @”, 
+                  #strcons (#asstr (ticktime),
+		            #strcons (“  ”,
+			              #strcons (“probe ”,
+                                                #strcons (eh.name,
+					                  #strcons (“: ”,
+						                    #asstr (s))))))))
+}
+
+defn shell_out_handler (eh, cmd, mev) {
+    global projectRoot
+    s ≡ mev.datum.v
+    deftemp ret ⇐ ϕ
+    deftemp rc ⇐ ϕ
+    deftemp stdout ⇐ ϕ
+    deftemp stderr ⇐ ϕ
+    deftemp command ⇐ cmd
+    if projectRoot != “” {
+        command ⇐ #substitute (“_00_”, projectRoot, command)
+    }
+    #run_command (command, s, ret, rc, stdout, stderr)
+    if rc = 0 {
+        send (eh, “”, #strcons (stdout, stderr) , mev)
+    } else {
+        send (eh, “✗”, #strcons (stdout, stderr), mev)
+    }
+}
+

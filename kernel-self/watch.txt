@@ -1,0 +1,17 @@
+emitjs.rewrite
+emitPython.rewrite
+emitcl.rewrite
+emit.ohm
+rebuild.bash
+rebuild-py.bash
+test.rt
+count.rt
+decode.rt
+reverser.rt
+delay.rt
+monitor.rt
+0d.rt
+stock.rt
+external.rt
+py0d.py
+kernel.drawio
