@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
-echo $PTYHONPATH
-node "${PBP_LIBD}/das-d/das2json.mjs" "$1"
+echo ${PYTHONPATH}
+node "${PBP}/das/das2json.mjs" "$1"
