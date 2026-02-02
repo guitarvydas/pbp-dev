@@ -978,7 +978,7 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
     command =  cmd                                     #line 32
     pbpRoot = os.getenv('PBP', '<none>')               #line 33
     if  pbpRoot!= "":                                  #line 34
-        command = re.sub ( "_/",  pbpRoot,  command)   #line 37#line 38
+        command = re.sub ( "_/",  str( pbpRoot) +  "/" ,  command)#line 37#line 38
 
     try:
         with open('junk.command.txt', 'w') as file:

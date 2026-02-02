@@ -40,7 +40,7 @@
                 (declare (ignorable  pbpRoot))
                 (cond
                   ((not (equal   pbpRoot  ""))              #|line 34|#
-                    (setf  command (substitute  "_/"  pbpRoot  command) #|line 37|#) #|line 38|#
+                    (setf  command (substitute  "_/"  (concatenate 'string  pbpRoot  "/")  command) #|line 37|#) #|line 38|#
                     ))
                 (multiple-value-setq (stdout stderr rc) (uiop::run-program (concatenate 'string  command " "  s) :output :string :error :string)) #|line 39|#
                 (cond

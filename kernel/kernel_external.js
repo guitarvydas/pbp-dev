@@ -27,7 +27,7 @@ function shell_out_handler (eh,cmd,mev) {              /* line 26 */
     let  command =  cmd;                               /* line 32 */
     let  pbpRoot = process.env.PBP                     /* line 33 */;
     if ( pbpRoot!= "") {                               /* line 34 */
-      command =  command.replaceAll ( "_/",  pbpRoot)  /* line 37 */;/* line 38 */
+      command =  command.replaceAll ( "_/",  ( pbpRoot.toString ()+  "/".toString ()) )/* line 37 */;/* line 38 */
     }
 
     stdout = execSync(`${ command} ${ s}`, { encoding: 'utf-8' });

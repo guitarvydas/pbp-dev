@@ -12,6 +12,6 @@ for src_file in "$src_dir"/*; do
 
   if [[ ! -f "$dst_file" || -n "$(diff -q "$src_file" "$dst_file" 2>/dev/null)" ]]
   then
-    cp -v "$src_file" "$dst_file"
+    echo cp -v "$src_file" "$dst_file"
   fi
 done
