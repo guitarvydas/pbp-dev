@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 echo "$@" >${PBPHERE}/temp.t2t.args
 
@@ -19,11 +19,11 @@ src=-
 # t2tlibd is the lib directory for t2t
 t2tlibd="${PBP}/t2td/lib"
 # wsupport is support.js in the current working directory
-wsupport="${PBPHERE}/support.js
+wsupport="${PBPHERE}/support.mjs"
 
 node "${t2tlibd}/rwr.mjs" "${rewrite}" >"${PBPHERE}/temp.rewrite.mjs"
 
-sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >$"{PBPHERE}/temp.grammar"
+sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >"${PBPHERE}/temp.grammar"
 
 echo cat "${t2tlibd}/front.part.js" "${PBPHERE}/temp.grammar" "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${wsupport}" "${PBPHERE}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${PBPHERE}/temp.nanodsl.mjs"
 
