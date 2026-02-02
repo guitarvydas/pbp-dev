@@ -673,82 +673,81 @@ function initialize_component_palette_from_files (diagram_source_files) {/* line
 function initialize_component_palette_from_string (lnet) {/* line 644 */
     let  reg = make_component_registry ();             /* line 645 */
     let all_containers = lnet2internal_from_string ( lnet)/* line 646 */;
-    reg = generate_external_components ( reg, all_containers)/* line 647 */;
-    for (let container of  all_containers) {           /* line 648 */
-      register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 649 *//* line 650 */
+    for (let container of  all_containers) {           /* line 647 */
+      register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))/* line 648 *//* line 649 */
     }
-    initialize_stock_components ( reg)                 /* line 651 */
-    return  reg;                                       /* line 652 *//* line 653 *//* line 654 */
+    initialize_stock_components ( reg)                 /* line 650 */
+    return  reg;                                       /* line 651 *//* line 652 *//* line 653 */
 }
-                                                       /* line 655 */
-function clone_string (s) {                            /* line 656 */
-    return  s                                          /* line 657 *//* line 658 */;/* line 659 */
-}
-
-let  load_errors =  false;                             /* line 660 */
-let  runtime_errors =  false;                          /* line 661 *//* line 662 */
-function load_error (s) {                              /* line 663 *//* line 664 */
-    console.error ( s);                                /* line 665 */
-                                                       /* line 666 */
-    load_errors =  true;                               /* line 667 *//* line 668 *//* line 669 */
+                                                       /* line 654 */
+function clone_string (s) {                            /* line 655 */
+    return  s                                          /* line 656 *//* line 657 */;/* line 658 */
 }
 
-function runtime_error (s) {                           /* line 670 *//* line 671 */
-    console.error ( s);                                /* line 672 */
-    process.exit (1)                                   /* line 673 */
-    runtime_errors =  true;                            /* line 674 *//* line 675 *//* line 676 */
-}
-                                                       /* line 677 */
-function initialize_from_files (diagram_names) {       /* line 678 */
-    let arg =  null;                                   /* line 679 */
-    let palette = initialize_component_palette_from_files ( diagram_names)/* line 680 */;
-    return [ palette,[ diagram_names, arg]];           /* line 681 *//* line 682 *//* line 683 */
+let  load_errors =  false;                             /* line 659 */
+let  runtime_errors =  false;                          /* line 660 *//* line 661 */
+function load_error (s) {                              /* line 662 *//* line 663 */
+    console.error ( s);                                /* line 664 */
+                                                       /* line 665 */
+    load_errors =  true;                               /* line 666 *//* line 667 *//* line 668 */
 }
 
-function initialize_from_string () {                   /* line 684 */
-    let arg =  null;                                   /* line 685 */
-    let palette = initialize_component_palette_from_string ();/* line 686 */
-    return [ palette,[ null, arg]];                    /* line 687 *//* line 688 *//* line 689 */
+function runtime_error (s) {                           /* line 669 *//* line 670 */
+    console.error ( s);                                /* line 671 */
+    process.exit (1)                                   /* line 672 */
+    runtime_errors =  true;                            /* line 673 *//* line 674 *//* line 675 */
+}
+                                                       /* line 676 */
+function initialize_from_files (diagram_names) {       /* line 677 */
+    let arg =  null;                                   /* line 678 */
+    let palette = initialize_component_palette_from_files ( diagram_names)/* line 679 */;
+    return [ palette,[ diagram_names, arg]];           /* line 680 *//* line 681 *//* line 682 */
 }
 
-function start (arg,part_name,palette,env) {           /* line 690 */
-    let part = start_bare ( part_name, palette, env)   /* line 691 */;
-    inject ( part, "", arg)                            /* line 692 */
-    finalize ( part)                                   /* line 693 *//* line 694 *//* line 695 */
+function initialize_from_string () {                   /* line 683 */
+    let arg =  null;                                   /* line 684 */
+    let palette = initialize_component_palette_from_string ();/* line 685 */
+    return [ palette,[ null, arg]];                    /* line 686 *//* line 687 *//* line 688 */
 }
 
-function start_bare (part_name,palette,env) {          /* line 696 */
-    let diagram_names =  env [ 0];                     /* line 697 */
-    /*  get entrypoint container */                    /* line 698 */
-    let  part = get_component_instance ( palette, part_name, null)/* line 699 */;
-    if ( null ==  part) {                              /* line 700 */
-      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 704 *//* line 705 */
+function start (arg,part_name,palette,env) {           /* line 689 */
+    let part = start_bare ( part_name, palette, env)   /* line 690 */;
+    inject ( part, "", arg)                            /* line 691 */
+    finalize ( part)                                   /* line 692 *//* line 693 *//* line 694 */
+}
+
+function start_bare (part_name,palette,env) {          /* line 695 */
+    let diagram_names =  env [ 0];                     /* line 696 */
+    /*  get entrypoint container */                    /* line 697 */
+    let  part = get_component_instance ( palette, part_name, null)/* line 698 */;
+    if ( null ==  part) {                              /* line 699 */
+      load_error ( ( "Couldn't find container with page name /".toString ()+  ( part_name.toString ()+  ( "/ in files ".toString ()+  (`${ diagram_names}`.toString ()+  " (check tab names, or disable compression?)".toString ()) .toString ()) .toString ()) .toString ()) )/* line 703 *//* line 704 */
     }
-    return  part;                                      /* line 706 *//* line 707 *//* line 708 */
+    return  part;                                      /* line 705 *//* line 706 *//* line 707 */
 }
 
-function inject (part,port,payload) {                  /* line 709 */
-    if ((!  load_errors)) {                            /* line 710 */
-      let  d =  new Datum ();                          /* line 711 */;
-      d.v =  payload;                                  /* line 712 */
-      d.clone =  function () {return obj_clone ( d)    /* line 713 */;};
-      d.reclaim =  null;                               /* line 714 */
-      let  mev = make_mevent ( port, d)                /* line 715 */;
-      inject_mevent ( part, mev)                       /* line 716 */
+function inject (part,port,payload) {                  /* line 708 */
+    if ((!  load_errors)) {                            /* line 709 */
+      let  d =  new Datum ();                          /* line 710 */;
+      d.v =  payload;                                  /* line 711 */
+      d.clone =  function () {return obj_clone ( d)    /* line 712 */;};
+      d.reclaim =  null;                               /* line 713 */
+      let  mev = make_mevent ( port, d)                /* line 714 */;
+      inject_mevent ( part, mev)                       /* line 715 */
     }
-    else {                                             /* line 717 */
-      process.exit (1)                                 /* line 718 *//* line 719 */
-    }                                                  /* line 720 *//* line 721 */
+    else {                                             /* line 716 */
+      process.exit (1)                                 /* line 717 *//* line 718 */
+    }                                                  /* line 719 *//* line 720 */
 }
 
-function finalize (part) {                             /* line 722 */
-    console.log (JSON.stringify ( part.outq.map(item => ({ [item.port]: item.datum.v })), null, 2));/* line 723 *//* line 724 *//* line 725 */
+function finalize (part) {                             /* line 721 */
+    console.log (JSON.stringify ( part.outq.map(item => ({ [item.port]: item.datum.v })), null, 2));/* line 722 *//* line 723 *//* line 724 */
 }
 
-function new_datum_bang () {                           /* line 726 */
-    let  d =  new Datum ();                            /* line 727 */;
-    d.v =  "!";                                        /* line 728 */
-    d.clone =  function () {return obj_clone ( d)      /* line 729 */;};
-    d.reclaim =  null;                                 /* line 730 */
-    return  d                                          /* line 731 *//* line 732 */;
+function new_datum_bang () {                           /* line 725 */
+    let  d =  new Datum ();                            /* line 726 */;
+    d.v =  "!";                                        /* line 727 */
+    d.clone =  function () {return obj_clone ( d)      /* line 728 */;};
+    d.reclaim =  null;                                 /* line 729 */
+    return  d                                          /* line 730 *//* line 731 */;
 }

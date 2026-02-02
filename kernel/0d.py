@@ -582,69 +582,68 @@ def initialize_component_palette_from_files (diagram_source_files):#line 632
 def initialize_component_palette_from_string (lnet):   #line 644
     reg = make_component_registry ()                   #line 645
     all_containers = lnet2internal_from_string ( lnet) #line 646
-    reg = generate_external_components ( reg, all_containers)#line 647
-    for container in  all_containers:                  #line 648
-        register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 649#line 650
-    initialize_stock_components ( reg)                 #line 651
-    return  reg                                        #line 652#line 653#line 654
-                                                       #line 655
-def clone_string (s):                                  #line 656
-    return  s                                          #line 657#line 658#line 659
+    for container in  all_containers:                  #line 647
+        register_component ( reg,mkTemplate ( container [ "name"], container, container_instantiator))#line 648#line 649
+    initialize_stock_components ( reg)                 #line 650
+    return  reg                                        #line 651#line 652#line 653
+                                                       #line 654
+def clone_string (s):                                  #line 655
+    return  s                                          #line 656#line 657#line 658
 
-load_errors =  False                                   #line 660
-runtime_errors =  False                                #line 661#line 662
-def load_error (s):                                    #line 663
-    global load_errors                                 #line 664
-    print ( s, file=sys.stderr)                        #line 665
-                                                       #line 666
-    load_errors =  True                                #line 667#line 668#line 669
+load_errors =  False                                   #line 659
+runtime_errors =  False                                #line 660#line 661
+def load_error (s):                                    #line 662
+    global load_errors                                 #line 663
+    print ( s, file=sys.stderr)                        #line 664
+                                                       #line 665
+    load_errors =  True                                #line 666#line 667#line 668
 
-def runtime_error (s):                                 #line 670
-    global runtime_errors                              #line 671
-    print ( s, file=sys.stderr)                        #line 672
-    exit (1)                                           #line 673
-    runtime_errors =  True                             #line 674#line 675#line 676
-                                                       #line 677
-def initialize_from_files (diagram_names):             #line 678
-    arg =  None                                        #line 679
-    palette = initialize_component_palette_from_files ( diagram_names)#line 680
-    return [ palette,[ diagram_names, arg]]            #line 681#line 682#line 683
+def runtime_error (s):                                 #line 669
+    global runtime_errors                              #line 670
+    print ( s, file=sys.stderr)                        #line 671
+    exit (1)                                           #line 672
+    runtime_errors =  True                             #line 673#line 674#line 675
+                                                       #line 676
+def initialize_from_files (diagram_names):             #line 677
+    arg =  None                                        #line 678
+    palette = initialize_component_palette_from_files ( diagram_names)#line 679
+    return [ palette,[ diagram_names, arg]]            #line 680#line 681#line 682
 
-def initialize_from_string ():                         #line 684
-    arg =  None                                        #line 685
-    palette = initialize_component_palette_from_string ()#line 686
-    return [ palette,[ None, arg]]                     #line 687#line 688#line 689
+def initialize_from_string ():                         #line 683
+    arg =  None                                        #line 684
+    palette = initialize_component_palette_from_string ()#line 685
+    return [ palette,[ None, arg]]                     #line 686#line 687#line 688
 
-def start (arg,part_name,palette,env):                 #line 690
-    part = start_bare ( part_name, palette, env)       #line 691
-    inject ( part, "", arg)                            #line 692
-    finalize ( part)                                   #line 693#line 694#line 695
+def start (arg,part_name,palette,env):                 #line 689
+    part = start_bare ( part_name, palette, env)       #line 690
+    inject ( part, "", arg)                            #line 691
+    finalize ( part)                                   #line 692#line 693#line 694
 
-def start_bare (part_name,palette,env):                #line 696
-    diagram_names =  env [ 0]                          #line 697
-    # get entrypoint container                         #line 698
-    part = get_component_instance ( palette, part_name, None)#line 699
-    if  None ==  part:                                 #line 700
-        load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 704#line 705
-    return  part                                       #line 706#line 707#line 708
+def start_bare (part_name,palette,env):                #line 695
+    diagram_names =  env [ 0]                          #line 696
+    # get entrypoint container                         #line 697
+    part = get_component_instance ( palette, part_name, None)#line 698
+    if  None ==  part:                                 #line 699
+        load_error ( str( "Couldn't find container with page name /") +  str( part_name) +  str( "/ in files ") +  str(str ( diagram_names)) +  " (check tab names, or disable compression?)"    )#line 703#line 704
+    return  part                                       #line 705#line 706#line 707
 
-def inject (part,port,payload):                        #line 709
-    if not  load_errors:                               #line 710
-        d =  Datum ()                                  #line 711
-        d.v =  payload                                 #line 712
-        d.clone =  lambda : obj_clone ( d)             #line 713
-        d.reclaim =  None                              #line 714
-        mev = make_mevent ( port, d)                   #line 715
-        inject_mevent ( part, mev)                     #line 716
-    else:                                              #line 717
-        exit (1)                                       #line 718#line 719#line 720#line 721
+def inject (part,port,payload):                        #line 708
+    if not  load_errors:                               #line 709
+        d =  Datum ()                                  #line 710
+        d.v =  payload                                 #line 711
+        d.clone =  lambda : obj_clone ( d)             #line 712
+        d.reclaim =  None                              #line 713
+        mev = make_mevent ( port, d)                   #line 714
+        inject_mevent ( part, mev)                     #line 715
+    else:                                              #line 716
+        exit (1)                                       #line 717#line 718#line 719#line 720
 
-def finalize (part):                                   #line 722
-    print (deque_to_json ( part.outq))                 #line 723#line 724#line 725
+def finalize (part):                                   #line 721
+    print (deque_to_json ( part.outq))                 #line 722#line 723#line 724
 
-def new_datum_bang ():                                 #line 726
-    d =  Datum ()                                      #line 727
-    d.v =  "!"                                         #line 728
-    d.clone =  lambda : obj_clone ( d)                 #line 729
-    d.reclaim =  None                                  #line 730
-    return  d                                          #line 731#line 732
+def new_datum_bang ():                                 #line 725
+    d =  Datum ()                                      #line 726
+    d.v =  "!"                                         #line 727
+    d.clone =  lambda : obj_clone ( d)                 #line 728
+    d.reclaim =  None                                  #line 729
+    return  d                                          #line 730#line 731

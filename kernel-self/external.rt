@@ -5,8 +5,3 @@ defn external_instantiate (reg, owner, name, arg) {
     return make_leaf (name_with_id, owner, ϕ, arg, ↪︎handle_external, ϕ)
 }
 
-defn generate_external_components (reg, container_list) {
-    ⌈ nothing to do here, anymore - get_component_instance doesn't need a template for ":..." Parts ⌉
-    return reg
-}
-

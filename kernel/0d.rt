@@ -644,7 +644,6 @@ defn initialize_component_palette_from_files (diagram_source_files) {
 defn initialize_component_palette_from_string (lnet) {
     deftemp reg ⇐ make_component_registry ()
     all_containers ≡ lnet2internal_from_string (lnet)
-    reg ⇐ generate_external_components (reg, all_containers)
     for container in all_containers {
             register_component (reg, mkTemplate (container@“name” , ⌈container=⌉ container, ⌈instantiator=⌉ ↪︎container_instantiator))
         }
