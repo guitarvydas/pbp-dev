@@ -4,6 +4,8 @@ if [[ "$(pwd)" == *"kernel-self" ]];
 then
     cp ../kernel/new-kernel0d.py ./kernel0d.py
     cp ../kernel/*.rt .
+    cp ../kernel/emit.ohm .
+    cp ../kernel/emit*.rewrite .
     npm install
     node das2json.mjs kernel.drawio
     ./tas.bash 'external'

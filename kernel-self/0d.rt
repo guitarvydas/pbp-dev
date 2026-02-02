@@ -295,6 +295,10 @@ defn is_self (child, container) {
 }
 
 defn step_child_once (child, mev) {
+    if (#show_stepping ()) {
+        #print_stderr (#strcons (“-- stepping '”, #strcons (child.name, “'”)))
+        #print_nl_stderr ()
+    }
     before_state ≡ child.state
     child.handler(child, mev)
     after_state ≡ child.state
