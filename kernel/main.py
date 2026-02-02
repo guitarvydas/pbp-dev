@@ -3,7 +3,7 @@ sys.path.insert(0, './')
 import kernel0d as zd
 
 try:
-    [palette, env] = zd.initialize_from_files (".", ["kernel.drawio.json"])
+    [palette, env] = zd.initialize_from_files (["kernel.drawio.json"])
     zd.start (arg=sys.argv[3], part_name="main", palette=palette, env=env)
 except Exception as e:
     _, _, tb = sys.exc_info()
