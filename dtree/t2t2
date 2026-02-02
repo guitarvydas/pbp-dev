@@ -1,2 +1,0 @@
-#!/bin/bash
-$1/t2t.bash . $1 $2.ohm $3.rwr support.mjs -

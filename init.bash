@@ -8,5 +8,6 @@ if [ -z "./pbp/" ]; then
 fi
 cp ./pbp/das/PBP.xml .
 cp ./pbp/kernel/package.json .
+cp ./pbp/prefab/* .
 npm install yargs prompt-sync ohm-js @xmldom/xmldom
 

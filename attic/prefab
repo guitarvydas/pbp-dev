@@ -1,0 +1,6 @@
+cp ${Dev]/runpbp .
+cp ${Dev]/indent .
+cp ${Dev]/t2t .
+cp ${Dev]/das2json .
+cp ${Dev]/splitoutputs .
+cp ${Dev]/check-for-errors .

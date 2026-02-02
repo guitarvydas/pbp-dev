@@ -325,18 +325,22 @@ function lintConnections(name, cells) {
 
 	if (cell.source === undefined) {
             try {
-                console.error (`wire source unconnected in ${name} target="${cells[cells[cell.target].parent].value}"`);
+                const targetPort = cells[cell.target];
+                const targetContainer = cells[targetPort.parent];
+                console.error(`wire source unconnected in ${name} target port="${targetPort.value}" in container="${targetContainer.value}"`);
 	    } catch (err) {
-                console.error (`wire source unconnected`);
+                console.error(`wire source unconnected in ${name}`);
             }		    
             ok = false;
 	    continue;
         }
 	if (cell.target === undefined) {
             try {
-                console.error (`wire target unconnected container=${name} source=${cells[cells[cell.source].parent].value}"`);
+                const sourcePort = cells[cell.source];
+                const sourceContainer = cells[sourcePort.parent];
+                console.error(`wire target unconnected in ${name} source port="${sourcePort.value}" in container="${sourceContainer.value}"`);
             } catch (err) {
-		console.error (`wire target unconnected in ${name}`);
+		console.error(`wire target unconnected in ${name}`);
 	    }
             ok = false;
 	    continue;
@@ -440,7 +444,6 @@ async function main() {
     const diagramName = await parseCommandLineArgs();
     try {
         const fname = await drawio2json(diagramName);
-        console.log('Created:', fname);
     } catch (err) {
         console.error('Error:', err);
         process.exit(1);
