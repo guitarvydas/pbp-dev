@@ -589,7 +589,7 @@ x))))
   )                                                         #|line 430|# #|  convert a little-network to internal form (an object data structure created by json parser) ...  |# #|line 431|# #|  the actual data structure depends on the json parser library used by the target language  |# #|line 432|# #|  the form of the data structure doesn't matter here, as long as we use lookup operators "@" in this .rt code  |# #|line 433|# #|line 434|# #|  ... by reading the little-net from an external file  |# #|line 435|#
 (defun lnet2internal_from_file (&optional  container_xml)
   (declare (ignorable  container_xml))                      #|line 436|#
-  (let ((pathname (uiop:getenv "PBPHERE")                   #|line 437|#))
+  (let ((pathname (uiop:getenv "PBPWD")                     #|line 437|#))
     (declare (ignorable pathname))
     (let ((filename  container_xml                          #|line 438|#))
       (declare (ignorable filename))

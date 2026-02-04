@@ -162,8 +162,7 @@ ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛dispatch
 ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛«f» («eh», «msg»)’
 
 ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛os.getenv('PBP', '<none>')’
-ExternalPhrase_getToolRoot [_octothorpe _ lp rp] = ‛os.getenv('PBPTOOL', '<none>')’
-ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛os.getenv('PBPHERE', '<none>')’
+ExternalPhrase_getWD [_octothorpe _ lp rp] = ‛os.getenv('PBPWD', '<none>')’
 
 ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ True ’
 ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ True ’

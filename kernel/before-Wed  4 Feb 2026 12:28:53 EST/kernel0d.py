@@ -381,7 +381,7 @@ def mkTemplate (name,template_data,instantiator):      #line 422
 # the form of the data structure doesn't matter here, as long as we use lookup operators "@" in this .rt code #line 433#line 434
 # ... by reading the little-net from an external file  #line 435
 def lnet2internal_from_file (container_xml):           #line 436
-    pathname = os.getenv('PBPWD', '<none>')            #line 437
+    pathname = os.getenv('PBPHERE', '<none>')          #line 437
     filename =  os.path.basename ( container_xml)      #line 438
 
     try:

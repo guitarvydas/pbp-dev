@@ -7,7 +7,18 @@
 # Usage:
 
 ## command line
+```
 make
+cd ../kernel-self
+./regression
+```
+When regression test looks OK, commit it to the kernel directory
+```
+./echonew
+./cpnew
+cd ../kernel
+make
+```
 
 # Notes
 
@@ -18,3 +29,4 @@ make
 I removed the special case code for handling shell-outs in the kernel and replaced it with a part. See [kernel_external.rt](https://github.com/guitarvydas/pbp-dev/blob/dev/kernel/kernel_external.rt) for implementation details
 
 
+# Regression Test

@@ -206,8 +206,7 @@ ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛(dispatc
 ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛(«f» «eh», «msg»)’
 
 ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBP")’
-ExternalPhrase_getToolRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBPTOOL")’
-ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBPHERE")’
+ExternalPhrase_getWD [_octothorpe _ lp rp] = ‛(uiop:getenv "PBPWD")’
 
 
 ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ nil ’

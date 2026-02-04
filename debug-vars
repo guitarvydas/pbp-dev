@@ -1,7 +1,7 @@
 #!/bin/bash
 echo
-echo '***** ' $1 ' *****' >/tmp/PBPLOG
-for i in PBP PBPHERE PBPCALLER PYTHONPATH
+echo '***** ' $1 ' *****'
+for i in PBP PBPWD PBPCALLER PYTHONPATH
 do
     echo "$i = ${!i}"
 done

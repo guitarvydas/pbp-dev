@@ -440,7 +440,7 @@ function mkTemplate (name,template_data,instantiator) {/* line 422 */
 /*  the form of the data structure doesn't matter here, as long as we use lookup operators "@" in this .rt code  *//* line 433 *//* line 434 */
 /*  ... by reading the little-net from an external file  *//* line 435 */
 function lnet2internal_from_file (container_xml) {     /* line 436 */
-    let pathname = process.env.PBPHERE                 /* line 437 */;
+    let pathname = process.env.PBPWD                   /* line 437 */;
     let filename =   container_xml                     /* line 438 */;
 
     let jstr = undefined;
