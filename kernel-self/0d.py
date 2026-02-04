@@ -278,7 +278,7 @@ def is_self (child,container):                         #line 292
     return  child ==  container                        #line 294#line 295#line 296
 
 def step_child_once (child,mev):                       #line 297
-    if ( False ):                                      #line 298
+    if ( True ):                                       #line 298
         print ( str( "-- stepping '") +  str( child.name) +  "'"  , file=sys.stderr)#line 299
                                                        #line 300#line 301
     before_state =  child.state                        #line 302

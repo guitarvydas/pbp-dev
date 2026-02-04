@@ -37,7 +37,7 @@ defn shell_out_handler (eh, cmd, mev) {
 			       command)
     }
     if (#show_command ()) {
-        #print_stderr (#strcons (“- --- shell-out '”, s))
+        #print_stderr (#strcons (“- --- shell-out: ”, command))
         #print_nl_stderr ()
     }
     #run_command (command, s, ret, rc, stdout, stderr)

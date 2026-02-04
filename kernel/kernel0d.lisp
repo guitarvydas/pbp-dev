@@ -1395,7 +1395,7 @@ x))))
                     ))
                 (cond
                   ( nil                                     #|line 39|#
-                    (format *error-output* "~a~%"  (concatenate 'string  "- --- shell-out ;"  s)) #|line 40|#
+                    (format *error-output* "~a~%"  (concatenate 'string  "- --- shell-out: "  command)) #|line 40|#
                     (format *error-output* "
                     ")                                      #|line 41|# #|line 42|#
                     ))

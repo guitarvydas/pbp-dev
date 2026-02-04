@@ -30,7 +30,7 @@ function shell_out_handler (eh,cmd,mev) {              /* line 26 */
       command =  command.replaceAll ( "_/",  ( pbpRoot.toString ()+  "/".toString ()) )/* line 37 */;/* line 38 */
     }
     if (( false )) {                                   /* line 39 */
-      console.error ( ( "- --- shell-out ;".toString ()+  s.toString ()) );/* line 40 */
+      console.error ( ( "- --- shell-out: ".toString ()+  command.toString ()) );/* line 40 */
                                                        /* line 41 *//* line 42 */
     }
 

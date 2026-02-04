@@ -23,8 +23,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
     pbpRoot = os.getenv('PBP', '<none>')               #line 33
     if  pbpRoot!= "":                                  #line 34
         command = re.sub ( "_/",  str( pbpRoot) +  "/" ,  command)#line 37#line 38
-    if ( False ):                                      #line 39
-        print ( str( "- --- shell-out ;") +  s , file=sys.stderr)#line 40
+    if ( True ):                                       #line 39
+        print ( str( "- --- shell-out: ") +  command , file=sys.stderr)#line 40
                                                        #line 41#line 42
 
     try:

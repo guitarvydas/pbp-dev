@@ -278,7 +278,7 @@ def is_self (child,container):                         #line 292
     return  child ==  container                        #line 294#line 295#line 296
 
 def step_child_once (child,mev):                       #line 297
-    if ( True ):                                      #line 298
+    if ( True ):                                       #line 298
         print ( str( "-- stepping '") +  str( child.name) +  "'"  , file=sys.stderr)#line 299
                                                        #line 300#line 301
     before_state =  child.state                        #line 302
@@ -977,6 +977,9 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
     pbpRoot = os.getenv('PBP', '<none>')               #line 33
     if  pbpRoot!= "":                                  #line 34
         command = re.sub ( "_/",  str( pbpRoot) +  "/" ,  command)#line 37#line 38
+    if ( True ):                                       #line 39
+        print ( str( "- --- shell-out: ") +  command , file=sys.stderr)#line 40
+                                                       #line 41#line 42
 
     try:
         with open('junk.command.txt', 'w') as file:
@@ -993,8 +996,8 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
         rc = 1
         stdout = ''
         stderr = str(e)
-                                                       #line 39
-    if  rc ==  0:                                      #line 40
-        send ( eh, "", str( stdout) +  stderr , mev)   #line 41
-    else:                                              #line 42
-        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 43#line 44#line 45#line 46
+                                                       #line 43
+    if  rc ==  0:                                      #line 44
+        send ( eh, "", str( stdout) +  stderr , mev)   #line 45
+    else:                                              #line 46
+        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 47#line 48#line 49#line 50
