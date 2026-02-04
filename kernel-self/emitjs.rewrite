@@ -127,6 +127,9 @@ ExternalPhrase_getToolRoot [_octothorpe _ lp rp] = ‛process.env.PBPTOOL’
 ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛process.env.PBPHERE’
 
 
+ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ false ’
+ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ false ’
+
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 
 Deftemp [_deftemp lval _mutate e rec?] = ‛\nlet «lval» = «e»;«rec»’

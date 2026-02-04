@@ -1,4 +1,3 @@
 #!/bin/bash
 set -e
-echo ${PYTHONPATH}
 node "${PBP}/das/das2json.mjs" "$1"
