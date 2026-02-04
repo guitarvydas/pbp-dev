@@ -1,6 +1,6 @@
 #!/bin/bash
 # cd to pbp-kit (or local project), then run this script
-# ~/projects/pbp-dev/import-minimal.bash
+# ~/projects/pbpev/import-minimal.bash
 wd=.
 pbp=./pbp
 if [ -z "$PBP_ROOT" ]; then
@@ -9,39 +9,39 @@ if [ -z "$PBP_ROOT" ]; then
     exit 1
 fi
 Dev=${PBP_ROOT}
-TaS_Dev=${PBP_ROOT}/tas-d
-dtree_Dev=${PBP_ROOT}/dtree-d
+TaS_Dev=${PBP_ROOT}/tas
+dtree_Dev=${PBP_ROOT}/dtree
 rm -rf pbp
 mkdir pbp
 cd pbp
 
-# convention: each subdirectory is suffixed by "-d"
-KERNEL=./kernel-d
-DAS=./das-d
-TAS=./tas-d
-T2T=./t2t-d
-DTREE=./dtree-d
-DOC=./doc-d
-PREFAB=./prefab-d
+# convention: each subdirectory is suffixed by ""
+KERNEL=./kernel
+DAS=./das
+TAS=./tas
+T2T=./t2td
+DTREE=./dtree
+DOC=./doc
+PREFAB=./prefab
 
-rm -rf tas-d
-rm -rf das-d
-rm -rf t2t-d
-rm -rf kernel-d
-rm -rf dtree-d
-rm -rf doc-d
-rm -rf prefab-d
-mkdir tas-d
-mkdir das-d
-mkdir t2t-d
-mkdir t2t-d/lib-d
-mkdir kernel-d
-mkdir dtree-d
-mkdir doc-d
+rm -rf tas
+rm -rf das
+rm -rf t2td
+rm -rf kernel
+rm -rf dtree
+rm -rf doc
+rm -rf prefab
+mkdir tas
+mkdir das
+mkdir t2td
+mkdir t2td/lib
+mkdir kernel
+mkdir dtree
+mkdir doc
 
 cp ${Dev}/main.py .
 cp ${Dev}/init.bash .
-cp ${Dev}/kernel-d/package.json .
+cp ${Dev}/kernel/package.json .
 cp ${Dev}/pbp-lifecycle.drawio.png .
 cp ${Dev}/api.md .
 
@@ -52,22 +52,22 @@ cp ${Dev}/das2json .
 cp ${Dev}/splitoutputs .
 cp ${Dev}/check-for-errors .
 
-cp ${Dev}/doc-d/semantics.pdf ${DOC}
+cp ${Dev}/doc/semantics.pdf ${DOC}
 
-cp ${Dev}/kernel-d/package.json ${KERNEL}
-cp ${Dev}/kernel-d/kernel0d.py ${KERNEL}/kernel0d.py
-cp ${Dev}/kernel-d/stubbed-out-repl.py ${KERNEL}/repl.py
-cp ${Dev}/kernel-d/splitoutput.js ${KERNEL}
-cp ${Dev}/kernel-d/kernel0d.js ${KERNEL}/kernel0d.js
-cp ${Dev}/kernel-d/kernel0d.lisp ${KERNEL}/kernel0d.lisp
+cp ${Dev}/kernel/package.json ${KERNEL}
+cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
+cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
+cp ${Dev}/kernel/splitoutput.js ${KERNEL}
+cp ${Dev}/kernel/kernel0d.js ${KERNEL}/kernel0d.js
+cp ${Dev}/kernel/kernel0d.lisp ${KERNEL}/kernel0d.lisp
 
-cp ${Dev}/das-d/das2json.mjs ${DAS}/das2json.mjs
+cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
 
-cp ${Dev}/t2t-d/lib-d/args.part.js ${T2T}/lib-d
-cp ${Dev}/t2t-d/lib-d/front.part.js ${T2T}/lib-d
-cp ${Dev}/t2t-d/lib-d/middle.part.js ${T2T}/lib-d
-cp ${Dev}/t2t-d/lib-d/tail.part.js ${T2T}/lib-d
-cp ${Dev}/t2t-d/lib-d/rwr.mjs ${T2T}/lib-d
+cp ${Dev}/t2td/lib/args.part.js ${T2T}/lib
+cp ${Dev}/t2td/lib/front.part.js ${T2T}/lib
+cp ${Dev}/t2td/lib/middle.part.js ${T2T}/lib
+cp ${Dev}/t2td/lib/tail.part.js ${T2T}/lib
+cp ${Dev}/t2td/lib/rwr.mjs ${T2T}/lib
 
 ${Dev}/import-minimal-tas.bash ${TaS_Dev} ${TAS}
 ${Dev}/import-minimal-dtree.bash ${dtree_Dev} ${DTREE}
