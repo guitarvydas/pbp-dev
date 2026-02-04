@@ -1176,14 +1176,18 @@ function shell_out_handler (eh,cmd,mev) {              /* line 26 */
     if ( pbpRoot!= "") {                               /* line 34 */
       command =  command.replaceAll ( "_/",  ( pbpRoot.toString ()+  "/".toString ()) )/* line 37 */;/* line 38 */
     }
+    if (( false )) {                                   /* line 39 */
+      console.error ( ( "- --- shell-out ;".toString ()+  s.toString ()) );/* line 40 */
+                                                       /* line 41 *//* line 42 */
+    }
 
     stdout = execSync(`${ command} ${ s}`, { encoding: 'utf-8' });
     ret = true;
-                                                       /* line 39 */
-    if ( rc ==  0) {                                   /* line 40 */
-      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 41 */
+                                                       /* line 43 */
+    if ( rc ==  0) {                                   /* line 44 */
+      send ( eh, "", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 45 */
     }
-    else {                                             /* line 42 */
-      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 43 *//* line 44 */
-    }                                                  /* line 45 *//* line 46 */
+    else {                                             /* line 46 */
+      send ( eh, "✗", ( stdout.toString ()+  stderr.toString ()) , mev)/* line 47 *//* line 48 */
+    }                                                  /* line 49 *//* line 50 */
 }

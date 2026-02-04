@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+~/projects/pbp-dev/debug-vars T2T
 
 echo "$@" >${PBPHERE}/temp.t2t.args
 

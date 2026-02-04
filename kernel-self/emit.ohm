@@ -79,6 +79,7 @@ emit {
      | "#" xkw<"get_here_root"> "(" ")" -- getHereRoot
 
      | "#" xkw<"show_stepping"> "(" ")" -- showStepping
+     | "#" xkw<"show_command"> "(" ")" -- showCommand
 
      | "#" ident "(" StuffInsideParentheses* ")" -- unrecognized
 

@@ -211,6 +211,7 @@ ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBPHERE")’
 
 
 ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ nil ’
+ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ nil ’
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 

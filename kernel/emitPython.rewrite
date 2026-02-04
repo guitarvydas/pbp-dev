@@ -166,6 +166,7 @@ ExternalPhrase_getToolRoot [_octothorpe _ lp rp] = ‛os.getenv('PBPTOOL', '<non
 ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛os.getenv('PBPHERE', '<none>')’
 
 ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ False ’
+ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ False ’
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 

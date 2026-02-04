@@ -42,12 +42,18 @@
                   ((not (equal   pbpRoot  ""))              #|line 34|#
                     (setf  command (substitute  "_/"  (concatenate 'string  pbpRoot  "/")  command) #|line 37|#) #|line 38|#
                     ))
-                (multiple-value-setq (stdout stderr rc) (uiop::run-program (concatenate 'string  command " "  s) :output :string :error :string)) #|line 39|#
                 (cond
-                  (( equal    rc  0)                        #|line 40|#
-                    (funcall (quote send)   eh  ""  (concatenate 'string  stdout  stderr)  mev  #|line 41|#)
+                  ( nil                                     #|line 39|#
+                    (format *error-output* "~a~%"  (concatenate 'string  "- --- shell-out ;"  s)) #|line 40|#
+                    (format *error-output* "
+                    ")                                      #|line 41|# #|line 42|#
+                    ))
+                (multiple-value-setq (stdout stderr rc) (uiop::run-program (concatenate 'string  command " "  s) :output :string :error :string)) #|line 43|#
+                (cond
+                  (( equal    rc  0)                        #|line 44|#
+                    (funcall (quote send)   eh  ""  (concatenate 'string  stdout  stderr)  mev  #|line 45|#)
                     )
-                  (t                                        #|line 42|#
-                    (funcall (quote send)   eh  "✗"  (concatenate 'string  stdout  stderr)  mev  #|line 43|#) #|line 44|#
-                    )))))))))                               #|line 45|#
+                  (t                                        #|line 46|#
+                    (funcall (quote send)   eh  "✗"  (concatenate 'string  stdout  stderr)  mev  #|line 47|#) #|line 48|#
+                    )))))))))                               #|line 49|#
   )

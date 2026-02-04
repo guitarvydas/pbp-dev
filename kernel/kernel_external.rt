@@ -36,6 +36,10 @@ defn shell_out_handler (eh, cmd, mev) {
 	                       #strcons (pbpRoot, “/”),
 			       command)
     }
+    if (#show_command ()) {
+        #print_stderr (#strcons (“- --- shell-out '”, s))
+        #print_nl_stderr ()
+    }
     #run_command (command, s, ret, rc, stdout, stderr)
     if rc = 0 {
         send (eh, “”, #strcons (stdout, stderr) , mev)
