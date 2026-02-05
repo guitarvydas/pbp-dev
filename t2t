@@ -1,8 +1,5 @@
 #!/bin/bash
 set -e
-~/projects/pbp-dev/debug-vars T2T
-
-echo "$@" >${PBPWD}/temp.t2t.args
 
 if [ "$#" -eq 1 ]; then
   grammar="${PBPWD}/$1.ohm"
