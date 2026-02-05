@@ -278,7 +278,7 @@ def is_self (child,container):                         #line 292
     return  child ==  container                        #line 294#line 295#line 296
 
 def step_child_once (child,mev):                       #line 297
-    if ( True ):                                       #line 298
+    if ( False ):                                      #line 298
         print ( str( "-- stepping '") +  str( child.name) +  "'"  , file=sys.stderr)#line 299
                                                        #line 300#line 301
     before_state =  child.state                        #line 302
@@ -381,7 +381,7 @@ def mkTemplate (name,template_data,instantiator):      #line 422
 # the form of the data structure doesn't matter here, as long as we use lookup operators "@" in this .rt code #line 433#line 434
 # ... by reading the little-net from an external file  #line 435
 def lnet2internal_from_file (container_xml):           #line 436
-    pathname = os.getenv('PBPHERE', '<none>')          #line 437
+    pathname = os.getenv('PBPWD', '<none>')            #line 437
     filename =  os.path.basename ( container_xml)      #line 438
 
     try:

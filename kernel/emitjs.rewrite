@@ -123,8 +123,7 @@ ExternalPhrase_dispatch_lookup [_octothorpe _ lp arg _comma eh rp] = ‛dispatch
 ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛«f» («eh», «msg»)’
 
 ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛process.env.PBP’
-ExternalPhrase_getToolRoot [_octothorpe _ lp rp] = ‛process.env.PBPTOOL’
-ExternalPhrase_getHereRoot [_octothorpe _ lp rp] = ‛process.env.PBPHERE’
+ExternalPhrase_getWD [_octothorpe _ lp rp] = ‛process.env.PBPWD’
 
 
 ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ false ’

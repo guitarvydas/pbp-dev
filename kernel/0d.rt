@@ -434,7 +434,7 @@ defn mkTemplate (name, template_data, instantiator) {
 
 ⌈ ... by reading the little-net from an external file ⌉
 defn lnet2internal_from_file (container_xml) {
-    pathname ≡ #get_here_root ()
+    pathname ≡ #get_wd ()
     filename ≡ #basename (container_xml)
     #read_and_convert_lnet_file (pathname, filename)
 }

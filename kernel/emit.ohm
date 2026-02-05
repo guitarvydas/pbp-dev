@@ -75,8 +75,7 @@ emit {
      | "#" xkw<"dispatch"> "(" Exp Comma Exp Comma Exp")" -- dispatch
 
      | "#" xkw<"get_pbp_root"> "(" ")" -- getPbpRoot
-     | "#" xkw<"get_tool_root"> "(" ")" -- getToolRoot
-     | "#" xkw<"get_here_root"> "(" ")" -- getHereRoot
+     | "#" xkw<"get_wd"> "(" ")" -- getWD
 
      | "#" xkw<"show_stepping"> "(" ")" -- showStepping
      | "#" xkw<"show_command"> "(" ")" -- showCommand
