@@ -164,8 +164,8 @@ ExternalPhrase_dispatch [_octothorpe _ lp f _comma eh _comma1 msg rp] = ‛«f»
 ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛os.getenv('PBP', '<none>')’
 ExternalPhrase_getWD [_octothorpe _ lp rp] = ‛os.getenv('PBPWD', '<none>')’
 
-ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ True ’
-ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ True ’
+ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ False ’
+ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ False ’
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 

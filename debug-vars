@@ -1,9 +1,9 @@
 #!/bin/bash
-echo >&2
-echo '***** ' $1 ' *****' >&2
+echo >&2  >>/tmp/pbplog.md
+echo '***** ' $1 ' *****' >&2 >>/tmp/pbplog.md
 for i in PBP PBPWD PBPCALLER PYTHONPATH
 do
-    echo "$i = ${!i}" >&2
+    echo "$i = ${!i}" >&2 >>/tmp/pbplog.md
 done
-echo '*****' >&2
-echo >&2
+echo '*****' >&2 >>/tmp/pbplog.md
+echo >&2 >>/tmp/pbplog.md
