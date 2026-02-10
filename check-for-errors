@@ -1,13 +1,40 @@
-#!/bin/bash
-set -e
-#!/bin/bash
-if grep span $1 ; then \
-    echo 'draw.io sometimes inserts "span" into port names (if word wrap and/or formatted text enabled)'
-    echo 'this is an error, do not continue'
-    echo 'turn off "word wrap" and "formatted text" options for each port in draw.io ' for "$1"
-    exit 1
-else
-    # echo OK
-    exit 0
-fi
+#!/usr/bin/env python3
+"""check-for-errors - Validate draw.io files for common issues"""
 
+import sys
+from pathlib import Path
+
+
+def main():
+    if len(sys.argv) != 2:
+        print(f"Usage: {sys.argv[0]} <file>", file=sys.stderr)
+        sys.exit(1)
+    
+    file_path = Path(sys.argv[1])
+    
+    if not file_path.exists():
+        print(f"Error: File not found: {file_path}", file=sys.stderr)
+        sys.exit(1)
+    
+    try:
+        content = file_path.read_text(encoding='utf-8')
+        
+        if 'span' in content:
+            print('draw.io sometimes inserts "span" into port names (if word wrap and/or formatted text enabled)')
+            print('this is an error, do not continue')
+            print(f'turn off "word wrap" and "formatted text" options for each port in draw.io for "{file_path}"')
+            sys.exit(1)
+        else:
+            # Silently succeed (like the original commented-out "echo OK")
+            sys.exit(0)
+            
+    except UnicodeDecodeError:
+        print(f"Error: Unable to read {file_path} as text", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

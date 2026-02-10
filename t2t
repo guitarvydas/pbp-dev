@@ -1,30 +1,112 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env python3
+"""t2t - Text-to-text transpiler using OhmJS grammar and rewrite rules"""
 
-if [ "$#" -eq 1 ]; then
-  grammar="${PBPWD}/$1.ohm"
-  rewrite="${PBPWD}/$1.rwr"
-elif [ "$#" -eq 2 ]; then
-  grammar="${PBPWD}/$1.ohm"
-  rewrite="${PBPWD}/$2.rwr"
-else
-  echo "Usage: $0 base            # uses base.ohm and base.rwr" >&2
-  echo "   or: $0 grammar-base rewrite-base" >&2
-  exit 1
-fi
-src=-
+import os
+import sys
+import subprocess
+from pathlib import Path
 
-# t2tlibd is the lib directory for t2t
-t2tlibd="${PBP}/t2td/lib"
-# wsupport is support.js in the current working directory
-wsupport="${PBPWD}/support.mjs"
 
-node "${t2tlibd}/rwr.mjs" "${rewrite}" >"${PBPWD}/temp.rewrite.mjs"
+def run_command(cmd, input_data=None, capture=True):
+    """Run a command and return result"""
+    result = subprocess.run(
+        cmd,
+        input=input_data,
+        capture_output=capture,
+        text=True,
+        check=True
+    )
+    return result.stdout if capture else None
 
-sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >"${PBPWD}/temp.grammar"
 
-echo cat "${t2tlibd}/front.part.js" "${PBPWD}/temp.grammar" "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${wsupport}" "${PBPWD}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${PBPWD}/temp.nanodsl.mjs"
+def main():
+    # Parse arguments
+    if len(sys.argv) == 2:
+        grammar_base = sys.argv[1]
+        rewrite_base = sys.argv[1]
+    elif len(sys.argv) == 3:
+        grammar_base = sys.argv[1]
+        rewrite_base = sys.argv[2]
+    else:
+        print(f"Usage: {sys.argv[0]} base            # uses base.ohm and base.rwr", file=sys.stderr)
+        print(f"   or: {sys.argv[0]} grammar-base rewrite-base", file=sys.stderr)
+        sys.exit(1)
+    
+    # Get environment variables
+    pbpwd = Path(os.environ.get("PBPWD", "."))
+    pbp = os.environ.get("PBP")
+    
+    if not pbp:
+        print("Error: PBP environment variable not set", file=sys.stderr)
+        sys.exit(1)
+    
+    pbp_path = Path(pbp)
+    
+    # Set up file paths
+    grammar = pbpwd / f"{grammar_base}.ohm"
+    rewrite = pbpwd / f"{rewrite_base}.rwr"
+    src = "-"  # stdin
+    
+    # t2tlibd is the lib directory for t2t
+    t2tlibd = pbp_path / "t2td" / "lib"
+    
+    # wsupport is support.js in the current working directory
+    wsupport = pbpwd / "support.mjs"
+    
+    # Temporary files
+    temp_rewrite = pbpwd / "temp.rewrite.mjs"
+    temp_grammar = pbpwd / "temp.grammar"
+    temp_nanodsl = pbpwd / "temp.nanodsl.mjs"
+    
+    try:
+        # Step 1: Run rwr.mjs to generate rewrite file
+        rwr_script = t2tlibd / "rwr.mjs"
+        rewrite_output = run_command(["node", str(rwr_script), str(rewrite)])
+        temp_rewrite.write_text(rewrite_output)
+        
+        # Step 2: Process grammar file - escape backticks for JavaScript
+        # sed -e 's/`/` + "`" + String.raw`/g'
+        # This makes backticks in the grammar safe to embed in JavaScript template literals
+        grammar_content = grammar.read_text()
+        processed_grammar = grammar_content.replace('`', '` + "`" + String.raw`')
+        temp_grammar.write_text(processed_grammar)
+        
+        # Step 3: Concatenate all parts to create temp.nanodsl.mjs
+        parts = [
+            t2tlibd / "front.part.js",
+            temp_grammar,
+            t2tlibd / "middle.part.js",
+            t2tlibd / "args.part.js",
+            wsupport,
+            temp_rewrite,
+            t2tlibd / "tail.part.js"
+        ]
+        
+        # Read and concatenate all parts
+        combined_content = []
+        for part in parts:
+            if part.exists():
+                combined_content.append(part.read_text())
+            else:
+                print(f"Warning: File not found: {part}", file=sys.stderr)
+        
+        temp_nanodsl.write_text(''.join(combined_content))
+        
+        # Step 4: Run the generated nanodsl script
+        run_command(["node", str(temp_nanodsl), src], capture=False)
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error: Command failed with exit code {e.returncode}", file=sys.stderr)
+        if e.stderr:
+            print(e.stderr, file=sys.stderr)
+        sys.exit(e.returncode)
+    except FileNotFoundError as e:
+        print(f"Error: File not found: {e}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
-cat "${t2tlibd}/front.part.js" "${PBPWD}/temp.grammar" "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${wsupport}" "${PBPWD}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${PBPWD}/temp.nanodsl.mjs"
 
-node "${PBPWD}/temp.nanodsl.mjs" "${src}"
+if __name__ == "__main__":
+    main()

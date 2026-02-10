@@ -1,3 +1,36 @@
-#!/bin/bash
-set -e
-node "${PBP}/kernel/splitoutput.js"
+#!/usr/bin/env python3
+"""splitoutputs - Split output using Node.js kernel script"""
+
+import os
+import sys
+import subprocess
+from pathlib import Path
+
+
+def main():
+    pbp = os.environ.get("PBP")
+    if not pbp:
+        print("Error: PBP environment variable not set", file=sys.stderr)
+        sys.exit(1)
+    
+    splitoutput_script = Path(pbp) / "kernel" / "splitoutput.js"
+    
+    if not splitoutput_script.exists():
+        print(f"Error: Script not found: {splitoutput_script}", file=sys.stderr)
+        sys.exit(1)
+    
+    try:
+        # Pass stdin through to the Node.js script
+        subprocess.run(
+            ["node", str(splitoutput_script)],
+            check=True
+        )
+    except subprocess.CalledProcessError as e:
+        sys.exit(e.returncode)
+    except FileNotFoundError:
+        print("Error: 'node' command not found. Please install Node.js.", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

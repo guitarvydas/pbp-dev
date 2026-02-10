@@ -1,2 +1,27 @@
-#!/bin/bash
-date >/tmp/pbplog.md
+#!/usr/bin/env python3
+"""resetlog - Reset the PBP log file with current timestamp"""
+
+import sys
+import tempfile
+from datetime import datetime
+from pathlib import Path
+
+
+def main():
+    # Always use platform-appropriate temp directory
+    log_file = Path(tempfile.gettempdir()) / "pbplog.md"
+    
+    try:
+        timestamp = datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y")
+        log_file.write_text(timestamp + "\n")
+        
+    except PermissionError:
+        print(f"Error: Permission denied writing to {log_file}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
