@@ -4,6 +4,7 @@
 import os
 import sys
 import subprocess
+import random
 from pathlib import Path
 
 
@@ -53,10 +54,11 @@ def main():
     # wsupport is support.js in the current working directory
     wsupport = pbpwd / "support.mjs"
     
-    # Temporary files
-    temp_rewrite = pbpwd / "temp.rewrite.mjs"
-    temp_grammar = pbpwd / "temp.grammar"
-    temp_nanodsl = pbpwd / "temp.nanodsl.mjs"
+    # Temporary files with unique names (pid + random) to avoid collisions
+    unique = f"{os.getpid()}_{random.randint(10000, 99999)}"
+    temp_rewrite = pbpwd / f"temp.{unique}.rewrite.mjs"
+    temp_grammar = pbpwd / f"temp.{unique}.grammar"
+    temp_nanodsl = pbpwd / f"temp.{unique}.nanodsl.mjs"
     
     try:
         # Step 1: Run rwr.mjs to generate rewrite file
@@ -106,6 +108,13 @@ def main():
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
+    finally:
+        # Clean up temporary files
+        for f in [temp_rewrite, temp_grammar, temp_nanodsl]:
+            try:
+                f.unlink(missing_ok=True)
+            except OSError:
+                pass
 
 
 if __name__ == "__main__":
