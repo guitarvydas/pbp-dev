@@ -1,0 +1,69 @@
+#!/bin/bash
+
+### dtree ###
+
+set -e
+export SHELLOPTS
+
+# set up env vars depending on whether this script was called from elsewhere or is the top level
+if [ "$#" -eq 0 ]; then
+    # no arguments - top level build
+    # current working directory (of dtree)
+    export PBPWD=$(pwd)
+    export PBP=~/projects/pbp-dev
+    export PYTHONPATH="${PBP}/kernel:${PYTHONPATH}"
+    export PBPCALLER=$PBPWD
+
+    # each target language must have a decision tree diagram with legal code inside of it for the target
+    # this transmogrifier will create code for all three targets, but, the code might not be legal
+    # for example, .frish uses syntax that is illegal in python
+    # pick one of the three below, 
+    fname="example_frish"
+    #fname="example_js"
+    #fname="example_py"
+
+    # import any new versions of pbp and kernel
+    ./REFRESH-BOOTSTRAP
+    ${PBP}/resetlog
+elif [ "$#" -eq 3 ]; then
+    # exactly three arguments
+    # $1 is callee's working dir (i.e. dtree)
+    # $2 is name of decision tree .drawio file, 
+    # $3 is caller's working dir
+    # push a new value of PBPWD onto the stack, which will get unwound to its previous value when this script ends
+    export PBPWD=$1
+    fname="$2"
+    export PBPCALLER="$3"
+else
+    # error: usage
+    echo "Usage: $0 [diagram callerWDIR]" >&2
+    exit 1
+fi
+
+rm -f out.*
+rm -f *.json
+cd "${PBPWD}"
+
+
+
+# convert dtree tool diagram to JSON
+${PBP}/das2json dtree-transmogrifier.drawio
+
+# run the tool on the given filename
+python main.py "${PBPCALLER}/${fname}.drawio" main dtree-transmogrifier.drawio.json | ${PBP}/splitoutputs
+
+
+
+## move results to caller's working directory, if no errors
+if [ -f out.✗ ]
+then
+    echo
+    echo ">> ERROR <<"
+    cat out.✗
+else
+    mv out.frish "${PBPCALLER}/${fname}.frish"
+    mv out.dt "${PBPCALLER}/${fname}.dt"
+    mv out.py "${PBPCALLER}/${fname}.py"
+    mv out.js "${PBPCALLER}/${fname}.js"
+fi
+

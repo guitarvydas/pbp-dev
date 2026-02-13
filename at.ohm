@@ -1,0 +1,15 @@
+at {
+Main = arg suffix part* output
+builtin =
+  | "t2t" grammarname rwrname -- t2t
+  | "indent" -- indent
+  | "del blank lines" -- delBlankLines
+  | "indent rigid" -- rigidIndent
+output =
+  | "->" arg suffix
+grammarname = basename
+rwrname = basename
+basename = letter (alnum | "-" | "_")*
+arg = "«name»"
+suffix = "." letter alnum*
+}
