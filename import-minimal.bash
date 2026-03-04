@@ -51,6 +51,11 @@ cp ${Dev}/t2t .
 cp ${Dev}/das2json .
 cp ${Dev}/splitoutputs .
 cp ${Dev}/check-for-errors .
+cp ${Dev}/resetlog .
+cp ${Dev}/rigid_indent .
+cp ${Dev}/brace_indent .
+cp ${Dev}/brace_indent_del .
+cp ${Dev}/del_blank_lines .
 
 cp ${Dev}/doc/semantics.pdf ${DOC}
 

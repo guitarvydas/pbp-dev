@@ -108,13 +108,13 @@ def main():
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
-    finally:
-        # Clean up temporary files
-        for f in [temp_rewrite, temp_grammar, temp_nanodsl]:
-            try:
-                f.unlink(missing_ok=True)
-            except OSError:
-                pass
+    # finally:
+    #     # Clean up temporary files
+    #     for f in [temp_rewrite, temp_grammar, temp_nanodsl]:
+    #         try:
+    #             f.unlink(missing_ok=True)
+    #         except OSError:
+    #             pass
 
 
 if __name__ == "__main__":
