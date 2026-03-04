@@ -1,0 +1,67 @@
+#!/bin/bash
+
+### string interpolation example ###
+
+set -e
+export SHELLOPTS
+shopt -s nullglob
+
+# Durng development of pbp-dev, I export PBP_ROOT and want to make a fresh copy of it every time
+# skip this step if PBP_ROOT is not set
+# DO NOT define PBP_ROOT under normal circustances (this is a kludge useb during pbp-dev development only)
+if [ -d "${PBP_ROOT}" ]; then
+    echo "refreshing ./pbp"
+    "${PBP_ROOT}/import-minimal.bash"
+fi
+
+# set up env vars depending on whether this script was called from elsewhere or is the top level
+if [ "$#" -eq 0 ]; then
+    # no arguments - top level build
+    # current working directory
+    export PBPWD=$(pwd)
+    export PBP="$(pwd)/pbp"
+    export PYTHONPATH="${PBP}/kernel:${PYTHONPATH}"
+    export PBPCALLER=$PBPWD
+    fname="example"
+    ${PBP}/resetlog
+
+elif [ "$#" -eq 3 ]; then
+    # exactly three arguments
+    # $1 is callee's working dir
+    # $2 is basename of the caller's file to be processed
+    # $3 is caller's working dir
+    # push a new value of PBPWD onto the stack, which will get unwound to its previous value when this script ends
+    export PBPWD=$1
+    fname="$2"
+    export PBPCALLER="$3"
+else
+    # error: usage
+    echo "Usage: $0 [diagram callerWDIR]" >&2
+    exit 1
+fi
+
+export SELF="${RANDOM}$$"
+
+rm -f ${SELF}*
+rm -f *.mr
+rm -f *.json
+rm -f temp.*
+cd "${PBPWD}"
+
+export PATH="${PBP}:${PATH}"
+
+./@makec ${fname}
+
+
+
+## move results to caller's working directory, if no errors
+if [ -f out.✗ ]
+then
+    echo
+    echo ">> ERROR <<"
+    cat out.✗
+else
+    rm -f temp.*
+fi
+
+
