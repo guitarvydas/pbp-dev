@@ -1,6 +1,0 @@
-«name».sm,
-    t2t sm sm-metapy,
-   metapy indent,
-    del blank lines,
-    indent rigidly
-  -> «name».py
