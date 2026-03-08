@@ -1,0 +1,41 @@
+- why would anyone want to use more than 1 language?
+	- need a short, 1-line justification in the early part of the document, deeper discussion later
+	- we're currently biased against using more than 1 language due to clumsy workflow and tools that we inherited from the last century
+	- the only way forward is to create many tools and many languages that are special purpose instead of general purpose
+		- making general purpose languages can only result in a milque toast union of desired features, which doesn't achieve any purpose well
+		- in the 20th century we could _afford_ (hardware) to do this kind of thing, whereas in the 21st century, development hardware has become so inexpensive that we afford this luxury
+		- creating special purpose notations will help us _think_ about problem domains more clearly (akin to "spherical cows" used in Physics)
+	- example: Prolog syntax is much more concise for expressing relational solutions, and much clumsier in other languages wherein one usually has to resort to loops or recursion or builtin "map"-like functions that perform magic under-the-hood (usually the magic cannot be generalized enough, so you either bend your problem solution domain to fit what the magic is capable of, or, just skip the issue entirely and re-invent the wheel of building a relational engine from scratch)
+	- the only way to program a CPU is to write machine code for it, all of our programming languages are just tools for helping us do this - we should be allowed to use any combination of such tools
+- why $(pwd) as 3rd arg?
+	- question: can `@make` "infer" `$(pwd)` arg in 3-arg case? can we simply drop the 3rd arg and make it a 2-arg case?
+- Keeping local copies of sub-projects
+	- ./pbp is a set of pre-built tools that I provide, you clone it using pbp-kit
+	- add whole sub-projects, but do not alter the contents of the pbp-kit tool sub-directories
+- what you get for free
+	- $PYTHON path includes pbp kernel - why?
+		- the PBP kernel is used for building Parts Based Programming code
+- tips
+	- runpbp - delete, use some other tool name
+- available tools
+	- [pt] remove runpbp
+	- "DAS" format is a diagram (in drawio format, currently)
+	- DAS stands for Diagrams As Syntax
+	- debug_vars - should probably not be included in this list, it's for debugging the bootstrap
+	- splitoutputs - output from a diagram (DAS) project is one blob of JSON, containing many possible tagged output payloads in queue order, splitoutputs reads the JSON and pours each tagged output into `out.<tag>` where _all_ output to a single tag is appended to the `out.<tag>` file
+		- the JSON output represents an ordered _queue_ of payloads
+		- the program can create an output queue with multiple payloads with the same tag, they appear in the (relative) order that they were made
+		- for example a project might output several pieces of text to the `md` output port, this results in one `out.md` file with all pieces appended to the file in order
+		- this is probably too much information to be written early in the document, it should appear further down, with some kind of reference to effect of "splitoutputs is used in DAS projects - see ??? for more information"
+- A Real Example
+	- [pt] include url to github repo for frishc and dtree projects
+	- [pt] make local copy of dtree into frishc project ./pbp
+- Environment variables as dynamic scoping
+	- `... variable set ...` set and exported
+- Source code
+	- [pt] provide urls
+- Further reading
+	- url to "spherical cows" article https://programmingsimplicity.substack.com/p/the-spherical-cows-of-programming?r=1egdky
+- Miscellaneous
+	- do we need more discussion of creating projects by keeping local copies of all code instead of relying on grabbing them from github and suffering version hell?
+	- you _can_ leave sub-projects in other directories and share them across various main projects, the parameterization lets you do that
