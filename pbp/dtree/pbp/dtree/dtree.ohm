@@ -1,0 +1,46 @@
+dtree {
+  Top = "<mxfile" stuff* ">" Diagram+ "</mxfile>"
+  Diagram = "<diagram" Attribute+ ">" GraphModel "</diagram>"
+    
+  GraphModel = "<mxGraphModel" stuff+ ">" "<root>" Cell+ "</root>" "</mxGraphModel>"
+  Cell =
+    | "<mxCell" Attribute+ ">" Geometry? "</mxCell>" -- long
+    | "<mxCell" Attribute+ "/>" -- short
+
+  Geometry = 
+    | "<mxGeometry" Attribute+ ">" (~"</mxGeometry>" any)+ "</mxGeometry>" -- long
+    | "<mxGeometry" Attribute+ "/>" -- short
+
+  Attribute =
+    | "name" "=" string -- name
+    | "id" "=" id -- id
+    | "parent" "=" id -- parent
+    | "source" "=" id -- source
+    | "target" "=" id -- target
+    | "edge" "=" str<"1"> -- edge
+    | "value" "=" str<"no"> -- no
+    | "value" "=" str<"yes"> -- yes
+    | "value" "=" string -- value
+    | "vertex" "=" str<"1"> -- vertex
+    | "connectable" "=" str<"0"> -- connectable
+    | "style" "=" "\"" styleattr+ "\"" -- style
+    | name "=" string -- other
+
+  styleattr =
+    | "edgeLabel" ";" -- edgelabel
+    | "shape" "=" "process" ";" -- process
+    | "rhombus" ";" -- rhombus
+    | "shape" "=" string ";" -- shape
+    | name "=" (name | number | points) ";" -- long
+    | name ";" -- short
+
+  number = digit+ frac?
+  frac = "." digit+
+  points = "[" (number ","?)* "]"
+  name = letter alnum*
+  stuff = ~">" ~"/>" ~">" any
+  string = "\"" schar+ "\""
+  id = "\"" schar+ "\""
+  schar = ~"\"" any
+  str<s> = "\"" s "\""
+}

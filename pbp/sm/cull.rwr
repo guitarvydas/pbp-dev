@@ -1,0 +1,17 @@
+%rewrite cull {
+  Main [group lb diagrams+ rb] = ‛group {«diagrams»}’
+  Diagram [_ lb attrs+ cells+ rb] = ‛\ndiagram {«attrs» «cells»}’
+  Cell [_ lb attrs+ rb] = ‛\ncell {«attrs»}’
+  attr_edgeStyle [name eq dq edgeLabel tail] = ‛\nkind="edge"’
+  attr_edgeLabel [name eq dq edgeLabel tail] = ‛\nkind="edgeLabel"’
+  attr_ellipse [name eq dq ellipse tail] = ‛\nkind="ellipse"’
+  attr_id [name eq str] = ‛\n«name»=«str»’
+  attr_parent [name eq str] = ‛\n«name»=«str»’
+  attr_value [name eq str] = ‛\n«name»=«str»’
+  attr_source [name eq str] = ‛\n«name»=«str»’
+  attr_target [name eq str] = ‛\n«name»=«str»’
+  attr_ignore [name eq str] = ‛’
+  name [letter alnum*] = ‛«letter»«alnum»’
+  str [_begin tail] = ‛"«tail»’
+  strtail [cs* _end] = ‛«cs»"’
+}

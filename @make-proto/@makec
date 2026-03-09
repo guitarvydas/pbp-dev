@@ -2,3 +2,4 @@
 # set -o pipefail
 # test=strexpander
 # cat ${test}.grid | ${PBP}/t2t strexpander | ${PBP}/t2t pythonize
+echo "@makec empty"

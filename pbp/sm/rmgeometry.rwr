@@ -1,0 +1,18 @@
+% rewrite rmgeometry {
+  Main [_begin Diagram+ _end] = ‛group {\n«Diagram»\n}’
+  Header [_begin attr+ gt] = ‛’
+  Diagram [_begin attrs+ gt GraphModels+ _end] = ‛\ndiagram {«attrs»«GraphModels»\n}’
+  GraphModel [_begin attribute+ gt Root _end] = ‛«Root»’
+  Root [_begin Cells+ _end] = ‛«Cells»’
+
+  Cell_long [_begin attributes+ gt Geometry _end] = ‛\ncell {«attributes»\n}’
+  Cell_short[_begin attributes+ slashgt] = ‛’
+
+  Geometry_long [_begin attribute+ gt cs+ endGeometry] = ‛’
+  Geometry_short [_begin attribute+ slashgt]= ‛’
+  endGeometry [_] = ‛’
+
+  attribute [name eq str] = ‛\n«name»=«str»’
+  name [letter alnum*] = ‛«letter»«alnum»’
+  str [_begin cs* _end] = ‛"«cs»"’
+}

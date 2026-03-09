@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""
+trmog -- thin runner/mover for PBP diagram pipelines
+
+Usage:
+    ${PBP}/trmog --outname NAME --drawing FILE.drawio --main main.py --arg ARG
+
+Pipeline:
+    1. ${PBP}/das2json   "${drawing}"
+    2. python "${main}"  "${arg}" main "${drawing}.json"  |  ${PBP}/splitoutputs
+
+On success  → each out.<ext> is moved to <outname>.<ext>; temp.* are removed.
+On error    → out.✗ exists; its contents are printed and nothing is moved.
+
+[TODO: it looks like out.* and temp.* are not actuall being removed]
+"""
+
+import argparse
+import glob
+import os
+import shutil
+import subprocess
+import sys
+
+CROSS = "\u2717"   # ✗  — the error-sentinel extension used by splitoutputs
+
+
+def die(msg: str, code: int = 1) -> None:
+    print(f"trmog error: {msg}", file=sys.stderr)
+    sys.exit(code)
+
+
+def require_env(name: str) -> str:
+    val = os.environ.get(name)
+    if not val:
+        die(f"environment variable ${name} is not set")
+    return val
+
+
+def resolve_pbp_tool(name: str, pbp: str) -> str:
+    """Return full path to a tool under $PBP, checking it is executable."""
+    path = os.path.join(pbp, name)
+    if not os.path.isfile(path):
+        die(f"tool not found: {path}")
+    if not os.access(path, os.X_OK):
+        die(f"tool is not executable: {path}")
+    return path
+
+
+def glob_in(directory: str, pattern: str) -> list[str]:
+    """Return absolute paths matching pattern inside directory."""
+    return glob.glob(os.path.join(directory, pattern))
+
+
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        prog="trmog",
+        description="Run the PBP das2json → python → splitoutputs pipeline.",
+    )
+    p.add_argument("--outname",  required=True, help="base name for output files")
+    p.add_argument("--drawing",  required=True, help="input .drawio file")
+    p.add_argument("--main",     required=True, help="Python driver (e.g. main.py)")
+    p.add_argument("--arg",      required=True, help="first positional arg to main")
+    return p.parse_args()
+
+
+def main() -> None:
+    # ── lock the caller's working directory immediately ───────────────────────
+    cwd = os.path.abspath(os.getcwd())
+
+    args = parse_args()
+    pbp = require_env("PBP")
+
+    drawing      = args.drawing if os.path.isabs(args.drawing) else os.path.join(cwd, args.drawing)
+    drawing_json = drawing + ".json"
+    main_script  = args.main    if os.path.isabs(args.main)    else os.path.join(cwd, args.main)
+
+    das2json     = resolve_pbp_tool("das2json",     pbp)
+    splitoutputs = resolve_pbp_tool("splitoutputs", pbp)
+
+    # ── sanity checks ────────────────────────────────────────────────────────
+    if not os.path.isfile(drawing):
+        die(f"drawing file not found: {drawing}")
+    if not os.path.isfile(main_script):
+        die(f"main script not found: {main_script}")
+
+    # ── pre-clean: remove any stale out.* from previous runs ─────────────────
+    stale = glob_in(cwd, "out.*")
+    # if stale:
+    #     print(f"trmog: removing {len(stale)} stale out.* file(s)", flush=True)
+    for path in stale:
+        os.remove(path)
+
+    # ── step 1: das2json ─────────────────────────────────────────────────────
+    # print(f"trmog: running das2json on {drawing!r}", flush=True)
+    try:
+        subprocess.run([das2json, drawing], check=True, cwd=cwd)
+    except subprocess.CalledProcessError as exc:
+        die(f"das2json failed (exit {exc.returncode})")
+
+    if not os.path.isfile(drawing_json):
+        die(f"das2json did not produce {drawing_json!r}")
+
+    # ── step 2: python main | splitoutputs ───────────────────────────────────
+    python_cmd = [sys.executable, main_script, args.arg, "main", drawing_json]
+    # print(f"trmog: running pipeline: {' '.join(python_cmd)} | splitoutputs", flush=True)
+    try:
+        with subprocess.Popen(
+            python_cmd,
+            stdout=subprocess.PIPE,
+            stderr=sys.stderr,
+            cwd=cwd,
+        ) as p1, subprocess.Popen(
+            [splitoutputs],
+            stdin=p1.stdout,
+            stdout=sys.stdout,
+            stderr=sys.stderr,
+            cwd=cwd,
+        ) as p2:
+            # allow p1 to receive SIGPIPE if p2 exits early
+            assert p1.stdout is not None
+            p1.stdout.close()
+            p2.wait()
+            p1.wait()
+
+            if p1.returncode not in (0, None):
+                die(f"python main exited with code {p1.returncode}")
+            if p2.returncode not in (0, None):
+                die(f"splitoutputs exited with code {p2.returncode}")
+
+    except OSError as exc:
+        die(f"failed to launch pipeline: {exc}")
+
+    # ── step 3: check for errors ─────────────────────────────────────────────
+    error_file = os.path.join(cwd, f"out.{CROSS}")
+    if os.path.isfile(error_file):
+        print("\n>> ERROR <<", flush=True)
+        with open(error_file, encoding="utf-8", errors="replace") as fh:
+            print(fh.read(), end="", flush=True)
+        sys.exit(1)
+
+    # ── step 4: move outputs to outname.<ext> ────────────────────────────────
+    out_files = glob_in(cwd, "out.*")
+    if not out_files:
+        print("trmog: warning: no out.* files produced", file=sys.stderr)
+    for src in out_files:
+        basename = os.path.basename(src)          # "out.py", "out.0.grid", …
+        ext      = basename[len("out."):]          # "py", "0.grid", …
+        dst      = os.path.join(cwd, f"{args.outname}.{ext}")
+        # print(f"trmog: {basename}  →  {os.path.basename(dst)}")
+        shutil.move(src, dst)
+
+    # ── step 5: clean up temp files ──────────────────────────────────────────
+    for tmp in glob_in(cwd, "temp.*"):
+        os.remove(tmp)
+
+    # print("trmog: done", flush=True)
+
+
+if __name__ == "__main__":
+    main()

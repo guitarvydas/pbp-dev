@@ -4,14 +4,6 @@ set -e
 export SHELLOPTS
 shopt -s nullglob
 
-# During development of pbp-dev, I export PBP_ROOT and want to make a fresh copy of it every time
-# skip this step if PBP_ROOT is not set
-# DO NOT define PBP_ROOT under normal circustances (this is a kludge used during pbp-dev development only)
-if [ -d "${PBP_ROOT}" ]; then
-    echo "refreshing ./pbp"
-    "${PBP_ROOT}/import-minimal.bash"
-fi
-
 # set up env vars depending on whether this script was called from elsewhere or is the top level
 if [ "$#" -eq 0 ]; then
     # no arguments - top level build
@@ -50,16 +42,6 @@ export PATH="${PBP}:${PATH}"
 
 ./@makec ${fname}
 
-
-
-## move results to caller's working directory, if no errors
-if [ -f out.✗ ]
-then
-    echo
-    echo ">> ERROR <<"
-    cat out.✗
-else
-    rm -f temp.*
-fi
+rm -f temp.*
 
 

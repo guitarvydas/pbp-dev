@@ -1,0 +1,13 @@
+rmspan {
+  characters = char+
+  char =
+    | str -- str
+    | any -- other
+  str = "\"" schar* "\""
+  schar =
+    | "&lt;span" (~endbeginspan any)+ endbeginspan spancontent espan -- span
+    | (~"\"" any) -- other
+  spancontent = (~espan any)+
+  espan = "&lt;/span&gt;"
+  endbeginspan= "&quot;&gt;"
+}

@@ -1,0 +1,16 @@
+% rewrite jsdecode {
+  text [chars+] = ‛«chars»’ 
+  char_string [lq cs* rq] = ‛"«cs»"’
+  char_comment [lb cs* rb] = ‛/* «cs» */’
+  char_errormessage [lb cs* rb] = ‛ >>> «cs» <<< ’
+  char_line [lb cs* rb] = ‛/* line «cs» */’
+  char_ulb [c] = ‛’
+  char_encodedulb [c] = ‛_L’
+  char_urb [c] = ‛’
+  char_encodedurb [c] = ‛R_’
+  char_space [c] = ‛_’
+  char_tab [c] = ‛	’
+  char_newline [c] = ‛
+’
+  char_other [c] = ‛«c»’
+}

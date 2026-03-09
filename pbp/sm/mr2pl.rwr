@@ -1,0 +1,26 @@
+%parameter diagramid
+
+% rewrite mr2pl {
+  Group [_ lb Array+ rb] = ‛«Array»’
+  
+  Diagram [_ lb dgmid Object+ rb] =
+    ⎡ diagramid=‛«dgmid»’
+        ‛:- discontiguous trCode/4.
+:- discontiguous transition/5.
+:- discontiguous state/4.
+diagram(«dgmid»).«Object»’
+    ⎦
+
+  dgmid [name eq str] = ‛ did=«str»,’
+  attr_long [name eq lstr] = ‛ «name»«eq»«lstr»,’
+  attr_other [name eq str] = ‛ «name»«eq»«str»,’
+  Object_transition [_ lb attr+ rb] = ‛\ntransition(⟪diagramid⟫«attr»).’ 
+  Object_transitionCode [_ lb attr+ rb] = ‛\ntrCode(⟪diagramid⟫«attr»).’ 
+  Object_state [_ lb attr+ rb] = ‛\nstate(⟪diagramid⟫«attr»).’ 
+  name [uletter ualnum*] = ‛«uletter»«ualnum»’
+  uletter [c] = ‛«c»’
+  ualnum [c] = ‛«c»’
+  str [lq cs* rq] = ‛«lq»«cs»«rq»’
+  lstr_long [lq lcs+ dash rcs+ rq] = ‛i«rcs»’
+  lstr_other [s] = ‛«s»’
+}

@@ -1,0 +1,34 @@
+code {
+  main = macro+
+  macro =
+    | space -- space
+    | applySyntactic<MatchState> -- state
+    | applySyntactic<MatchTransition> -- transition
+    | any -- other
+  MatchState = "state" "(" stateAttr+ ")" "."
+  MatchTransition = "transition" "(" transitionAttr+ ")" "."
+
+  stateAttr =
+    | "value" "=" scode -- code
+    | attr -- other
+  transitionAttr =
+    | "code" "=" tcode -- code
+    | attr -- other
+  attr = name "=" (str | name)
+
+  scode = "\"" codeenter? statename codeexit? "\""
+  statename = rawtext
+  rawtext = (~"{" ~"\"" any)+
+  codeenter = codeblock
+  codeexit = codeblock
+  codeblock = "{" (~"}" any)+ "}"
+
+  tcode = "\"" guard codeblock? "\""
+  guard = rawtext
+
+  name = uletter ualnum*
+  uletter = letter | "_"
+  ualnum = alnum | "_"
+  str = "\"" (~"\"" any)* "\""
+  space += ","
+}

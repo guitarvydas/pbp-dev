@@ -1,0 +1,14 @@
+${PBP}/das2json grid.drawio
+python main.py ${test}.grid main grid.drawio.json | ${PBP}/splitoutputs
+
+#!/bin/bash
+name=$1
+drawing="$2"
+rm -f out.*
+${PBP}/das2json "${drawing}"
+python main.py ${test}.grid main "${drawing}.json" | ${PBP}/splitoutputs
+
+${PBP}/trmog --outname "${test}" --drawing grid.drawio --main main.py
+  ${PBP}/das2json "${drawing}"
+python main.py ${test}.grid main "${drawing}.json" | ${PBP}/splitoutputs
+  runs 

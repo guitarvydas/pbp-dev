@@ -1,0 +1,6 @@
+% rewrite unhtml {
+  characters [cs+] = ‛«cs»’
+  char_str [s] = ‛«s»’
+  char_other [c] = ‛«c»’
+  str [l cs* r] = ‛«l»⎨decodeHTML ‛«cs»’⎬«r»’
+}

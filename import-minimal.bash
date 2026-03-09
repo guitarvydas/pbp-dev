@@ -1,79 +1,116 @@
 #!/bin/bash
+set -euo pipefail
+
 # cd to pbp-kit (or local project), then run this script
 # ~/projects/pbpev/import-minimal.bash
-wd=.
-pbp=./pbp
-if [ -z "$PBP_ROOT" ]; then
+
+# ── guard: PBP_ROOT must be set ──────────────────────────────────────────────
+if [ -z "${PBP_ROOT:-}" ]; then
     echo "Error: PBP_ROOT environment variable is not set" >&2
-    echo "Error:   put 'export PBP_ROOT=<your path>' in your .bashrc or .zshrc file after replacing <your path> with a path customized for your setup" >&2
+    echo "Error:   put 'export PBP_ROOT=<your path>' in your .bashrc or .zshrc" >&2
+    echo "Error:   replacing <your path> with a path customized for your setup" >&2
     exit 1
 fi
-Dev=${PBP_ROOT}
-TaS_Dev=${PBP_ROOT}/tas
-dtree_Dev=${PBP_ROOT}/dtree
-rm -rf pbp
-mkdir pbp
-cd pbp
 
-# convention: each subdirectory is suffixed by ""
-KERNEL=./kernel
-DAS=./das
-TAS=./tas
-T2T=./t2td
-DTREE=./dtree
-DOC=./doc
-PREFAB=./prefab
+Dev="${PBP_ROOT}"
+TaS_Dev="${PBP_ROOT}/tas"
+dtree_Dev="${PBP_ROOT}/dtree"
 
-rm -rf tas
-rm -rf das
-rm -rf t2td
-rm -rf kernel
-rm -rf dtree
-rm -rf doc
-rm -rf prefab
-mkdir tas
-mkdir das
-mkdir t2td
-mkdir t2td/lib
-mkdir kernel
-mkdir dtree
-mkdir doc
+# ── guard: source root must exist ────────────────────────────────────────────
+if [ ! -d "${Dev}" ]; then
+    echo "Error: PBP_ROOT directory does not exist: ${Dev}" >&2
+    exit 1
+fi
 
-cp ${Dev}/main.py .
-cp ${Dev}/init.bash .
-cp ${Dev}/kernel/package.json .
-cp ${Dev}/pbp-lifecycle.drawio.png .
-cp ${Dev}/api.md .
+# ── helper: copy with existence check ────────────────────────────────────────
+safe_cp() {
+    local src="$1"
+    local dst="$2"
+    if [ ! -e "${src}" ]; then
+        echo "Warning: source not found, skipping: ${src}" >&2
+        return 0
+    fi
+    cp -- "${src}" "${dst}"
+}
 
-cp ${Dev}/runpbp .
-cp ${Dev}/indent .
-cp ${Dev}/t2t .
-cp ${Dev}/das2json .
-cp ${Dev}/splitoutputs .
-cp ${Dev}/check-for-errors .
-cp ${Dev}/resetlog .
-cp ${Dev}/rigid_indent .
-cp ${Dev}/brace_indent .
-cp ${Dev}/brace_indent_del .
-cp ${Dev}/del_blank_lines .
+# ── helper: run external script with existence check ─────────────────────────
+safe_run() {
+    local script="$1"
+    shift
+    if [ ! -x "${script}" ]; then
+        echo "Error: script not found or not executable: ${script}" >&2
+        exit 1
+    fi
+    "${script}" "$@"
+}
 
-cp ${Dev}/doc/semantics.pdf ${DOC}
+# ── destination layout ───────────────────────────────────────────────────────
+wd="$(pwd)"
+pbp="${wd}/pbp"
 
-cp ${Dev}/kernel/package.json ${KERNEL}
-cp ${Dev}/kernel/kernel0d.py ${KERNEL}/kernel0d.py
-cp ${Dev}/kernel/stubbed-out-repl.py ${KERNEL}/repl.py
-cp ${Dev}/kernel/splitoutput.js ${KERNEL}
-cp ${Dev}/kernel/kernel0d.js ${KERNEL}/kernel0d.js
-cp ${Dev}/kernel/kernel0d.lisp ${KERNEL}/kernel0d.lisp
+KERNEL="${pbp}/kernel"
+DAS="${pbp}/das"
+TAS="${pbp}/tas"
+T2T="${pbp}/t2td"
+DTREE="${pbp}/dtree"
+DOC="${pbp}/doc"
 
-cp ${Dev}/das/das2json.mjs ${DAS}/das2json.mjs
+# ── (re)build destination tree ───────────────────────────────────────────────
+rm -rf -- "${pbp}"
+mkdir -p -- \
+    "${TAS}" \
+    "${DAS}" \
+    "${T2T}/lib" \
+    "${KERNEL}" \
+    "${DOC}"
 
-cp ${Dev}/t2td/lib/args.part.js ${T2T}/lib
-cp ${Dev}/t2td/lib/front.part.js ${T2T}/lib
-cp ${Dev}/t2td/lib/middle.part.js ${T2T}/lib
-cp ${Dev}/t2td/lib/tail.part.js ${T2T}/lib
-cp ${Dev}/t2td/lib/rwr.mjs ${T2T}/lib
+# ── top-level files ──────────────────────────────────────────────────────────
+for f in \
+    main.py \
+    init.bash \
+    kernel/package.json \
+    api.md \
+    indent \
+    t2t \
+    das2json \
+    splitoutputs \
+    check-for-errors \
+    resetlog \
+    rigid_indent \
+    brace_indent \
+    brace_indent_del \
+    del_blank_lines \
+    trmog
+do
+    safe_cp "${Dev}/${f}" "${pbp}/"
+done
 
-${Dev}/import-minimal-tas.bash ${TaS_Dev} ${TAS}
-${Dev}/import-minimal-dtree.bash ${dtree_Dev} ${DTREE}
+# ── doc ──────────────────────────────────────────────────────────────────────
+safe_cp "${Dev}/doc/semantics.pdf"              "${DOC}/"
+
+# ── kernel ───────────────────────────────────────────────────────────────────
+safe_cp "${Dev}/kernel/package.json"            "${KERNEL}/"
+safe_cp "${Dev}/kernel/kernel0d.py"             "${KERNEL}/kernel0d.py"
+safe_cp "${Dev}/kernel/stubbed-out-repl.py"     "${KERNEL}/repl.py"
+safe_cp "${Dev}/kernel/splitoutput.js"          "${KERNEL}/"
+safe_cp "${Dev}/kernel/kernel0d.js"             "${KERNEL}/kernel0d.js"
+safe_cp "${Dev}/kernel/kernel0d.lisp"           "${KERNEL}/kernel0d.lisp"
+
+# ── das ──────────────────────────────────────────────────────────────────────
+safe_cp "${Dev}/das/das2json.mjs"               "${DAS}/das2json.mjs"
+
+# ── t2td/lib ─────────────────────────────────────────────────────────────────
+for f in args front middle tail; do
+    safe_cp "${Dev}/t2td/lib/${f}.part.js"      "${T2T}/lib/"
+done
+safe_cp "${Dev}/t2td/lib/rwr.mjs"               "${T2T}/lib/"
+
+# ── delegate to sub-importers ────────────────────────────────────────────────
+safe_run "${Dev}/import-minimal-tas.bash" "${TaS_Dev}" "${TAS}"
+mkdir -p "${pbp}/dtree"
+safe_run "${HOME}/projects/dtree/min.bash" "${pbp}/dtree"
+mkdir -p "${pbp}/sm"
+safe_run "${HOME}/projects/sm/min.bash" "${pbp}/sm"
+
+#echo "import-minimal: done (${pbp})"
 

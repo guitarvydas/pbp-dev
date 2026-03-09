@@ -1,0 +1,10 @@
+% rewrite internalize {
+  text [c+] = ‛«c»’
+  char_nl [s] = ‛⎩⎨getlineinc⎬⎭\n’
+  char_space [c] = ‛ ’
+  char_any [c] = ‛«c»’
+
+  nl [c] = ‛’
+}
+
+

@@ -1,0 +1,9 @@
+internalize {
+  text = char+
+  char =
+    | nl -- nl
+    | " " | "\t" -- space
+    | any -- any
+
+  nl = "\n"
+}

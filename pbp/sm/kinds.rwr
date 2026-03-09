@@ -1,0 +1,18 @@
+% rewrite kinds {
+  Top [name lb Array+ rb] = ‛«name» {«Array»}’
+  Array [name lb attr* Object+ rb] = ‛\n«name» {\n«attr»«Object»\n}’
+  attr [name eq str] = ‛ «name»«eq»«str»’
+  transitionAttr_kind [a b c d e] = ‛’
+  transitionAttr_other [a] = ‛«a»’
+  transitionCodeAttr_kind [a b c d e] = ‛’
+  transitionCodeAttr_other [a] = ‛«a»’
+  stateAttr_kind [a b c d e] = ‛’
+  stateAttr_other [a] = ‛«a»’
+  Object_transition [name lb attr+ rb] = ‛\ntransition {«attr»}’ 
+  Object_transitionCode [name lb attr+ rb] = ‛\ntransitionCode {«attr»}’ 
+  Object_state [name lb attr+ rb] = ‛\nstate {«attr»}’ 
+  name [uletter ualnum*] = ‛«uletter»«ualnum»’
+  uletter [c] = ‛«c»’
+  ualnum [c] = ‛«c»’
+  str [lq cs* rq] = ‛«lq»«cs»«rq»’
+}

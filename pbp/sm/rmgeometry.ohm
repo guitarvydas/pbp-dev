@@ -1,0 +1,20 @@
+rmgeometry {
+  Main = Header Diagram+ "</mxfile>"
+  Header = "<mxfile" attribute+ ">"
+  Diagram = "<diagram" attribute+ ">" GraphModel+ "</diagram>"
+  GraphModel = "<mxGraphModel" attribute+ ">" Root "</mxGraphModel>"
+  Root = "<root>" Cell+ "</root>"
+
+  Cell =
+    | "<mxCell" attribute+ ">" Geometry "</mxCell>" -- long
+    | "<mxCell" attribute+ "/>"  -- short
+
+  Geometry =
+    | "<mxGeometry" attribute+ ">" (~endGeometry any)+ endGeometry -- long
+    | "<mxGeometry" attribute+ "/>" -- short
+  endGeometry = "</mxGeometry>"
+
+  attribute = name "=" str
+  name = letter alnum*
+  str = "\"" (~"\"" any)* "\""
+}

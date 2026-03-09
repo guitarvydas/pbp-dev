@@ -1,0 +1,37 @@
+%parameter statename
+
+% rewrite sm_metapy {
+  Main [State+] =
+    ‛class SM_✣:⤷
+      «State»
+      def __init__ (self):⤷
+	  self.enter_⎨get_first_state_name⎬⤶
+      def step (self):⤷
+          ⎨create_stepper⎬⤶⤶
+      sm = SM_✣ ()’
+  
+  State [_state name lb Enter Step Exit rb] =
+    ⎡ statename=‛«name»’
+      ⎡ ⎨memo_state_name ‛«name»’⎬
+        ‛«Enter»«Step»«Exit»’
+      ⎦
+    ⎦
+
+  Enter [a] = ‛\ndef enter_⎨legalize ‛⟪statename⟫’⎬ (self):⤷\nself.state = ⎨legalize ‛⟪statename⟫’⎬\n«a»⤶’
+  Step [a] = ‛\ndef step_⎨legalize ‛⟪statename⟫’⎬ (self):⤷«a»⤶’
+  Exit [a] = ‛\ndef exit_⎨legalize ‛⟪statename⟫’⎬ (self):⤷«a»⤶’
+  enteraction_empty [_] = ‛’
+  enteraction_other [a] = ‛«a»’
+  action_empty [_] = ‛\npass’
+  action_other [lb stuff* rb] = ‛«stuff»’
+  stuff_rec [lb stuff* rb] = ‛«lb»«stuff»«rb»’
+  stuff_nextStatement [n] = ‛«n»’
+  stuff_other [c] = ‛«c»’
+  Next [_next name _when e transitionCode?] = ‛\nif «e»:⤷\nexit_⎨legalize ‛⟪statename⟫’⎬ ()«transitionCode»\nenter_⎨legalize ‛«name»’⎬ ()⤶’
+  name_squoted [lq cs+ rq] = ‛«cs»’
+  name_dquoted [lq cs+ rq] = ‛«cs»’
+  expr [lb cs+ rb] = ‛«lb»«cs»«rb»’
+  transitionCode [lb code* rb] = ‛\n«code»’
+  transitionCodeInnard_rec [lb cs* rb] = ‛«lb»«cs»«rb»’
+  transitionCodeInnard_other [c] = ‛«c»’
+}

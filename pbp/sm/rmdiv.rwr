@@ -1,0 +1,12 @@
+% rewrite rmdiv {
+  characters [cs+] = ‛«cs»’
+  char_str [s] = ‛«s»’
+  char_other [c] = ‛«c»’
+  str [lb cs* rb] = ‛«lb»«cs»«rb»’
+  schar_other [c] = ‛«c»’
+  schar_div [_b _stuff _endb content _end] = ‛«content»’
+  schar_shortdiv [b cs+ e] = ‛«cs»’
+  divcontent [cs+] = ‛«cs»’
+  ediv [s] = ‛’
+  endbegindiv [s] = ‛’
+}

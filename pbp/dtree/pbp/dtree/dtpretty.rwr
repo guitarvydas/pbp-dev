@@ -1,0 +1,19 @@
+% rewrite dtpretty {
+  Main [YesNo] = ‛«YesNo»’
+  YesNo [lb text y n rb] = ‛\n[«text» ⤷«y»⤶\n⤷«n»⤶\n]’
+
+  YesBranch [_or _yes _ x] = ‛\n| yes: ⤷«x»⤶’
+  NoBranch [_or _no _ x] = ‛\n | no: ⤷«x»⤶’
+
+  text [cs+] = ‛«cs»’
+
+  char_newline [_] = ‛’
+  char_questionmark [_] = ‛?’
+  char_begindiv [_] = ‛’
+  char_enddiv [_] = ‛’
+  char_beginspan [lb cs* rb] = ‛’
+  char_endspan [_] = ‛’
+  char_at [_] = ‛@’
+  char_space [_] = ‛’
+  char_other [c] =‛«c»’
+}

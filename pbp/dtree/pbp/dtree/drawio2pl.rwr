@@ -1,0 +1,56 @@
+% parameter diagramtag
+% parameter celltag
+% parameter parenttag
+
+% rewrite dtree {
+  Top [lb stuff* _ Diagrams+ rb] = ‛«Diagrams»⎨maptopl⎬’
+
+  Diagram [lb attr+ _ graphmodel rb] =
+    ⎡ diagramtag=‛⎨newtag ‛d’⎬’
+      ⎡ parenttag =‛⟪diagramtag⟫’
+        ‛\ndiagram(⟪diagramtag⟫).«attr»\n«graphmodel»\n’
+      ⎦
+    ⎦
+
+  GraphModel [lb stuff+ _gt _root cells+ _eroot rb] = ‛\n«cells»’
+  Cell_long [lb attr+ _gt geometry? rb] =
+    ⎡ celltag=‛⎨newtag ‛c’⎬’
+      ⎡ parenttag =‛⟪celltag⟫’
+        ‛\ncell(⟪diagramtag⟫,⟪celltag⟫).«attr»’
+      ⎦
+    ⎦
+  Cell_short [lb attr+ _slgt] =
+    ⎡ celltag=‛⎨newtag ‛c’⎬’
+      ⎡ parenttag =‛⟪celltag⟫’
+        ‛\ncell(⟪diagramtag⟫,⟪celltag⟫).«attr»’
+      ⎦
+    ⎦
+
+  Geometry_long [lb attr+ _gt any+ rb] = ‛’
+  Geometry_short [lb attr+ rb] = ‛’
+
+  Attribute_name [name _eq s] = ‛\nname(⟪parentid⟫,«s»).’
+  Attribute_id [name _eq s] = ‛\ndrawio_id(⟪parentid⟫,«s»).’
+  Attribute_parent [name _eq mid] = ‛\nparent(⟪parentid⟫,«mid»).’
+  Attribute_source [name _eq mid] = ‛\nsource(⟪parentid⟫,«mid»).’
+  Attribute_target [name _eq mid] = ‛\ntarget(⟪parentid⟫,«mid»).’
+  Attribute_style [_style _eq lq attr+ rq] = ‛«attr»’
+  Attribute_other [name _eq s] = ‛\n"«name»"=«s»,’
+
+  styleattr_edgelabel [name _eq s _semi] = ‛\nlabel(⟪parentid⟫,«s»).’
+  styleattr_value [name _eq s _semi] = ‛\nvalue(⟪parentid⟫,«s»).’
+  styleattr_shape [name _eq s _semi] = ‛\nshape(⟪parentid⟫,«s»).’
+  styleattr_edge [name _eq s _semi] = ‛\nedge(⟪parentid⟫).’
+  styleattr_rhombus [name _semi] = ‛\nrhombus(⟪parentid⟫).’
+  styleattr_long [name _eq v _semi] = ‛’
+  styleattr_short [name _semi] = ‛’
+
+  number [d+ frac?] = ‛«d»«frac»’
+  frac [_dot d+] = ‛.«d»’
+  points [lb n* _comma* rb] = ‛’
+  name [c cs*] = ‛«c»«cs»’
+  stuff [x] = ‛’
+  string [lq cs+ rq] = ‛"«cs»"’
+  mappedid [lq cs+ rq] = ‛⎨mapid ‛«cs»’⎬’
+  schar [c] = ‛«c»’
+}

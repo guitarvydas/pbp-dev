@@ -1,0 +1,19 @@
+cull {
+  Main = "group" "{" Diagram+ "}"
+  Diagram = "diagram" "{" attr+ Cell+ "}"
+  Cell = "cell" "{" attr+ "}"
+  attr =
+    | "style" "=" "\"" "edgeStyle" strtail -- edgeStyle
+    | "style" "=" "\"" "edgeLabel" strtail -- edgeLabel
+    | "style" "=" "\"" "ellipse" strtail -- ellipse
+    | "id" "=" str -- id
+    | "parent" "=" str -- parent
+    | "value" "=" str -- value
+    | "source" "=" str -- source
+    | "target" "=" str -- target
+    | name "=" str -- ignore
+  name = letter alnum*
+  str = "\"" strtail
+  strtail = schar* "\""
+  schar = ~"\"" any
+}

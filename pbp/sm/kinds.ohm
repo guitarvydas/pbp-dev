@@ -1,0 +1,22 @@
+kinds {
+  Top = name "{" Array+ "}"
+  Array = name "{" attr* Object+ "}"
+  attr = ~"kind" name "=" str
+  transitionAttr =
+    | "kind" "=" "\"" "edge" "\""      -- kind
+    | attr                             -- other
+  transitionCodeAttr =
+    | "kind" "=" "\"" "edgeLabel" "\"" -- kind
+    | attr                             -- other
+  stateAttr = 
+    | "kind" "=" "\"" "ellipse" "\""   -- kind
+    | attr                             -- other
+  Object =
+    | name "{" transitionAttr+ "}"     -- transition
+    | name "{" transitionCodeAttr+ "}" -- transitionCode
+    | name "{" stateAttr+ "}"          -- state
+  name = uletter ualnum*
+  uletter = letter | "_"
+  ualnum = alnum | "_"
+  str = "\"" (~"\"" any)* "\""
+}

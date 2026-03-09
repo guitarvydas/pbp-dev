@@ -1,0 +1,30 @@
+% rewrite code {
+  main [cs+] = ‛«cs»’
+  macro_space [ws] = ‛«ws»’
+  macro_state [s] = ‛«s»\n’
+  macro_transition [t] = ‛«t»\n’
+  macro_other [c] = ‛«c»’
+  MatchState [_state lp attrs+ rp dot] = ‛state(«attrs»).’
+  MatchTransition [_transition lp attrs+ rp dot] = ‛transition(«attrs»).’
+
+  stateAttr_code [v eq c] = ‛«c»’
+  stateAttr_other [a] = ‛«a»’
+  
+  transitionAttr_code [_c eq c] = ‛«c»’
+  transitionAttr_other [a] = ‛«a»’
+
+  attr [name eq str] = ‛«name»«eq»«str»,’
+
+  scode [lq enter? name exit? rq] = ‛name="«name»", enter="«enter»", exit="«exit»"’
+  statename [t] =‛«t»’
+  rawtext [cs+]= ‛«cs»’
+  codeenter [b] = ‛«b»’
+  codeexit [b] = ‛«b»’
+  codeblock [lb cs+ rb] = ‛«lb»«cs»«rb»’
+  tcode [lq guard code rq] = ‛guard="«guard»", transitioncode="«code»"’
+  guard [t] = ‛«t»’
+  name [uletter ualnum*] = ‛«uletter»«ualnum»’
+  uletter [c] = ‛«c»’
+  ualnum [c] = ‛«c»’
+  str [lq cs+ rq] = ‛«lq»«cs»«rq»’
+}

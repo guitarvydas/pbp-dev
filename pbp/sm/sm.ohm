@@ -1,0 +1,26 @@
+sm {
+  Main = State+
+  State = "state" name "{" Enter Step Exit "}"
+  Enter = enteraction
+  Step = action
+  Exit = action
+  enteraction =
+    | "{}" -- empty
+    | action -- other
+  action =
+    | "{}" -- empty
+    | "{" stuff* "}" -- other
+  stuff =
+    | "{" stuff* "}" -- rec
+    | applySyntactic<Next> -- nextStatement
+    | ~"{" ~"}" any -- other
+  Next = "%next" name "%when" expr transitionCode?
+  name = 
+    | "'" (~"'" any)+ "'"    -- squoted
+    | "\"" (~"\"" any)+ "\""  -- dquoted
+  expr = "(" (~")" any)+ ")"
+  transitionCode = "{" transitionCodeInnard* "}"
+  transitionCodeInnard =
+    | "{" transitionCodeInnard* "}" -- rec
+    | ~"{" ~"}" any -- other
+}

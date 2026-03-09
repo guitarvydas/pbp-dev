@@ -1,0 +1,11 @@
+% rewrite rmspan {
+  characters [cs+] = ‛«cs»’
+  char_str [s] = ‛«s»’
+  char_other [c] = ‛«c»’
+  str [lb cs* rb] = ‛«lb»«cs»«rb»’
+  schar_other [c] = ‛«c»’
+  schar_span [_begin _stuff _endbegin content _end] = ‛«content»’
+  spancontent [cs+] = ‛«cs»’
+  espan [s] = ‛’ 
+  endbeginspan [s] =‛’
+}

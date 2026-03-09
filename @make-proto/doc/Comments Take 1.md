@@ -39,3 +39,4 @@
 - Miscellaneous
 	- do we need more discussion of creating projects by keeping local copies of all code instead of relying on grabbing them from github and suffering version hell?
 	- you _can_ leave sub-projects in other directories and share them across various main projects, the parameterization lets you do that
+	- an unmentioned part of the strategy is to keep development of the pbp tools separated the minimum required sub-directory of stuff that's needed to build a pbp project

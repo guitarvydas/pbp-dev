@@ -1,0 +1,16 @@
+mpy2dent {
+  Main = StateMachine+ DispatchTable
+  StateMachine = Enter Step Exit
+  Enter = "def" #enterPrefix #name "(" ")" "{" #code "}"
+  Step = "def" #stepPrefix #name "(" ")" "{" #code "}"
+  Exit = "def" #exitPrefix #name "(" ")" "{" #code "}"
+  enterPrefix = spaces "enter_"
+  stepPrefix = spaces "step_"
+  exitPrefix = spaces "exit_"
+  name = (letter | "_") (alnum | "_")*
+  code =
+    | "{" code "}" -- rec
+    | (~"{" ~"}" any)+ -- other
+  DispatchTable = "❴" "{" (str ":" name)+ "}" "❵" "[" "self" "." "state" "]" "(" ")"
+  str = "\"" (~"\"" any)+ "\""
+}

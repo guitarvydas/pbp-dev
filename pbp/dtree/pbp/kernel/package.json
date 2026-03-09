@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@xmldom/xmldom": "^0.9.8",
+    "ohm-js": "^17.1.0",
+    "prompt-sync": "^4.2.0",
+    "yargs": "^18.0.0"
+  }
+}
