@@ -13,7 +13,7 @@ if [ "$#" -eq 0 ]; then
     export PYTHONPATH="${PBP}/kernel:${PYTHONPATH}"
     export PBPCALLER=$PBPWD
     fname="example"
-    ${PBP}/resetlog
+    "${PBP}"/resetlog
 
 elif [ "$#" -eq 3 ]; then
     # exactly three arguments

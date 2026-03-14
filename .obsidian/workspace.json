@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "@make-proto/doc/Comments Take 1.md",
+                "file": "documenting.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Comments Take 1"
+              "title": "documenting"
             }
           },
           {
@@ -184,13 +184,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "@make-proto/doc/Comments Take 1.md",
+                "file": "documenting.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Comments Take 1"
+              "title": "Outline of documenting"
             }
           }
         ],
@@ -213,6 +213,8 @@
   },
   "active": "2aafda6bd4dc58d5",
   "lastOpenFiles": [
+    "@make-proto/doc/Take 1.md",
+    "@make-proto/doc/Comments Take 1.md",
     "attic/transmogrify.bash",
     "attic/transmogrify",
     "transmogrify",
@@ -224,7 +226,6 @@
     "temp.md",
     "#transmogrify#",
     "pbp/sm/pbp/del_blank_lines",
-    "pbp/sm/pbp/kernel/splitoutput.js",
     "pbp/sm/pbp/pbp-lifecycle.drawio.png",
     "pbp/sm/pbp/dtree/README.process_json.md",
     "pbp/sm/pbp/dtree/README.md",
@@ -236,7 +237,6 @@
     "pbp/dtree/pbp/pbp-lifecycle.drawio.png",
     "pbp/dtree/pbp/api.md",
     "pbp/api.md",
-    "@make-proto/doc/Comments Take 1.md",
     "t2t-d/doc-d/rwr/rwr-overview.drawio.png",
     "t2t-d/doc-d/rwr/rwr-overview-t2t c.drawio.png",
     "t2t-d/doc-d/rwr/rwr-overview-t2t c-t2t c.jpg",
