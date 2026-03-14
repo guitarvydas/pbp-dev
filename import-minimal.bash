@@ -80,7 +80,10 @@ for f in \
     brace_indent \
     brace_indent_del \
     del_blank_lines \
-    trmog
+    output_begin \
+    output_end \
+    output_to_port \
+    fanout
 do
     safe_cp "${Dev}/${f}" "${pbp}/"
 done

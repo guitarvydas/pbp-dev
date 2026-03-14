@@ -1,0 +1,8 @@
+#!/bin/bash
+# append to the current `out.json` file, as a line of JSON `{$port_name, $payload},`
+# where $payload is stdin, and $port_name is $1
+set -e
+temp=outtemp-${RANDOM}
+cat - >$temp
+echo '{"' "$1" '", "' "$(cat $temp)" '"},' >> out.json
+rm -f $temp

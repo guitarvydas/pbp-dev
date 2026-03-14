@@ -213,19 +213,20 @@
   },
   "active": "2aafda6bd4dc58d5",
   "lastOpenFiles": [
+    "fanout",
+    "tee_output_to_port~",
+    "tee_output_to_port",
+    "output_end",
+    "output_begin~",
+    "output_begin",
+    "output_to_port~",
+    "output_to_port",
+    "#output_to_port#",
     "@make-proto/doc/Take 1.md",
     "@make-proto/doc/Comments Take 1.md",
     "attic/transmogrify.bash",
     "attic/transmogrify",
-    "transmogrify",
-    "trmog~",
-    "#temp.md#",
-    "trmog",
-    "@make-proto/#@make#",
-    "temp.md~",
     "temp.md",
-    "#transmogrify#",
-    "pbp/sm/pbp/del_blank_lines",
     "pbp/sm/pbp/pbp-lifecycle.drawio.png",
     "pbp/sm/pbp/dtree/README.process_json.md",
     "pbp/sm/pbp/dtree/README.md",
@@ -257,7 +258,6 @@
     "tas-bloated-d/node_modules/string-width/node_modules/strip-ansi/readme.md",
     "tas-bloated-d/node_modules/string-width/node_modules/ansi-regex/readme.md",
     "tas-bloated-d/node_modules/cliui/node_modules/strip-ansi/readme.md",
-    "tas-bloated-d/node_modules/cliui/node_modules/ansi-regex/readme.md",
-    "tas-bloated-d/node_modules/@xmldom/xmldom/readme.md"
+    "tas-bloated-d/node_modules/cliui/node_modules/ansi-regex/readme.md"
   ]
 }
