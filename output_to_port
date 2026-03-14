@@ -1,8 +1,3 @@
-#!/bin/bash
-# append to the current `out.json` file, as a line of JSON `{$port_name, $payload},`
-# where $payload is stdin, and $port_name is $1
-set -e
-temp=outtemp-${RANDOM}
-cat - >$temp
-echo '{"' "$1" '", "' "$(cat $temp)" '"},' >> out.json
-rm -f $temp
+#!/usr/bin/env bash
+payload=$(cat)
+python3 -c "import json,sys; print('{ ' + json.dumps(sys.argv[1]) + ' : ' + json.dumps(sys.argv[2]) + ' },')" "$1" "$payload"
