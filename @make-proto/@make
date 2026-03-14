@@ -36,6 +36,7 @@ rm -f ${SELF}*
 rm -f *.mr
 rm -f *.json
 rm -f temp.*
+rm -f out.*
 cd "${PBPWD}"
 
 export PATH="${PBP}:${PATH}"
