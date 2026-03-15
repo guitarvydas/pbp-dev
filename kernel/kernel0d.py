@@ -984,11 +984,6 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
                                                        #line 41#line 42
 
     try:
-        with open('junk.command.txt', 'w') as file:
-            file.write(os.getcwd())
-            file.write(' ')
-            file.write(cmd)
-            file.write(' ')
         ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
         rc = ret.returncode
         stdout = ret.stdout.strip ()
