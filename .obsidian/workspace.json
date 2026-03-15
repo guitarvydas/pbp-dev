@@ -213,6 +213,7 @@
   },
   "active": "2aafda6bd4dc58d5",
   "lastOpenFiles": [
+    "check-for-errors~",
     "@make-proto/#@make#",
     "fanout",
     "tee_output_to_port~",
@@ -225,7 +226,6 @@
     "#output_to_port#",
     "@make-proto/doc/Take 1.md",
     "@make-proto/doc/Comments Take 1.md",
-    "attic/transmogrify.bash",
     "temp.md",
     "pbp/sm/pbp/pbp-lifecycle.drawio.png",
     "pbp/sm/pbp/dtree/README.process_json.md",
