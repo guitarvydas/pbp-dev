@@ -1,8 +1,10 @@
 #!/bin/bash
 
-set -e
+set -eE
 export SHELLOPTS
 shopt -s nullglob
+
+trap '[ -f "out.✗" ] && cat "out.✗"' ERR
 
 # set up env vars depending on whether this script was called from elsewhere or is the top level
 if [ "$#" -eq 0 ]; then
@@ -42,6 +44,9 @@ export PATH="${PBP}:${PATH}"
 
 ./@makec ${fname}
 
+if [ -f "out.✗" ]; then
+    cat "out.✗"
+fi
 rm -f temp.*
 rm -f ${SELF}*
 
