@@ -32,7 +32,6 @@ fi
 
 export SELF="${RANDOM}$$"
 
-rm -f ${SELF}*
 rm -f *.mr
 rm -f *.json
 rm -f temp.*
@@ -44,5 +43,6 @@ export PATH="${PBP}:${PATH}"
 ./@makec ${fname}
 
 rm -f temp.*
+rm -f ${SELF}*
 
 
