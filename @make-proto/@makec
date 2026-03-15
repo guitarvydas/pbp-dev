@@ -1,5 +1,5 @@
 #!/bin/bash
 # set -o pipefail
-# test=strexpander
+# test=$( [ "$1" = "<top>" ] && echo "example_frish" || echo "$1" )
 # cat ${test}.grid | ${PBP}/t2t strexpander | ${PBP}/t2t pythonize
 echo "@makec empty"
