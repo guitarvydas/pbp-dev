@@ -1,7 +1,0 @@
-unhtml {
-  characters = char+
-  char =
-    | str -- str
-    | any -- other
-  str = "\"" (~"\"" any)* "\""
-}

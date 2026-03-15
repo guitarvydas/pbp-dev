@@ -1,8 +1,0 @@
-cleanup {
-  main = char+
-  char =
-    | ",\n}" -- commanlbrace
-    | ",}" -- commabrace
-    | "},]" -- bracecommabracket
-    | any -- c
-}
