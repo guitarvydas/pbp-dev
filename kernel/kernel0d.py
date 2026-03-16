@@ -644,7 +644,6 @@ def inject (part,port,payload):                        #line 712
         exit (1)                                       #line 721#line 722#line 723#line 724
 
 def finalize (part):                                   #line 725
-    print (f'finalizing {part.name}', file=sys.stderr)
     print (deque_to_json ( part.outq))                 #line 726#line 727#line 728
 
 def new_datum_bang ():                                 #line 729
