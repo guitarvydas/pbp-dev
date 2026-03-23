@@ -1,0 +1,63 @@
+⌈ (This used to be called `external` due to historical reasons). This has evolved into 2 kinds of Leaf parts: AOT and JIT (statically generated before runtime, vs. dynamically generated at runtime). If a part name begins with ':', it is treated specially as a JIT part, else the part is assumed to have been pre-loaded into the register in the regular way. ⌉
+
+defn jit_instantiate (reg, owner, name, arg) {
+    name_with_id ≡ gensymbol (name)
+    deftemp inst ⇐ make_leaf (name_with_id, owner, ϕ, arg, ↪︎handle_external, ϕ)
+    deftemp firstc ⇐ name [1]
+    if (firstc = "?") {
+        ⌈ probes get to go to the front of the line ⌉
+        inst.special ⇐ ⊤
+    }
+    return inst
+}
+
+defn handle_jit (eh, mev) {
+    s ≡ eh.arg
+    deftemp firstc ⇐ s [1]
+    if firstc = "$" {
+      shell_out_handler (eh, #stringcdr (#stringcdr (#stringcdr (s))), mev)
+    } elif firstc = "?" {
+      probe_handler (eh, #stringcdr (s), mev)
+    } else {
+      ⌈ just a string, send it out ⌉
+      send (eh, “”, #stringcdr (s) , mev)
+    }
+}
+
+defn probe_handler (eh, tag, mev) {
+    s ≡ mev.datum.v
+    #live_update (“Info”,
+        #strcons (“  @”, 
+                  #strcons (#asstr (ticktime),
+		            #strcons (“  ”,
+			              #strcons (“probe ”,
+                                                #strcons (eh.name,
+					                  #strcons (“: ”,
+						                    #asstr (s))))))))
+}
+
+defn shell_out_handler (eh, cmd, mev) {
+    s ≡ mev.datum.v
+    deftemp ret ⇐ ϕ
+    deftemp rc ⇐ ϕ
+    deftemp stdout ⇐ ϕ
+    deftemp stderr ⇐ ϕ
+    deftemp command ⇐ cmd
+    deftemp pbpRoot ⇐ #get_pbp_root ()
+    if pbpRoot != “” {
+        command ⇐ #substitute (“_/”,
+	                       #strcons (pbpRoot, “/”),
+			       command)
+    }
+    if (#show_command ()) {
+        #print_stderr (#strcons (“- --- shell-out: ”, command))
+        #print_nl_stderr ()
+    }
+    #run_command (command, s, ret, rc, stdout, stderr)
+    if rc = 0 {
+        send (eh, “”, #strcons (stdout, stderr) , mev)
+    } else {
+        send (eh, “✗”, #strcons (stdout, stderr), mev)
+    }
+}
+

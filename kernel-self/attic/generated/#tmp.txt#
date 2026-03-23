@@ -1,0 +1,7 @@
+in javascript, how to convert an array of Mevent to JSON? The definition of Mevent follows:
+class Mevent {
+  constructor () {
+    this.port =  null;
+    this.datum =  null;
+  }
+}

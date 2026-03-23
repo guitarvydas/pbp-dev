@@ -286,7 +286,12 @@ defn force_tick (parent, eh) {
 
 defn push_mevent (parent, receiver, inq, m) {
     #enqueue (inq, m)
-    #enqueue (parent.visit_ordering, receiver)
+    if (receiver.special) {
+      #prequeue (parent.visit_ordering, receiver)
+    } else {
+      #enqueue (parent.visit_ordering, receiver)
+  }
+    
 }
 
 defn is_self (child, container) {
@@ -546,6 +551,7 @@ defobj Eh () {
         ⌈ arg needed for probe support ⌉
         • arg ⇐ “”
         • state ⇐ “idle”
+        • special ⇐ ⊥
         ⌈ bootstrap debugging⌉
         • kind ⇐ ϕ ⌈ enum { container, leaf, }⌉
 }

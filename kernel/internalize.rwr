@@ -1,0 +1,28 @@
+% rewrite internalize {
+  text [c+] = ‛¶«c»’
+  char_nl [s] = ‛⎩⎨getlineinc⎬⎭\n’
+  char_string [lq cs* rq] = ‛“⎨encodews ‛«cs»’⎬”’
+  char_dqstring [ldq cs* rdq] = ‛“⎨encodews ‛«cs»’⎬”’
+  char_comment [lb cs* rb] = ‛⌈⎨encodews ‛«cs»’⎬⌉’
+  char_word [lb cs+ rb] = ‛❲⎨encodews ‛«cs»’⎬❳’
+  char_ident [s] = ‛❲⎨encodews ‛«s»’⎬❳’
+  char_any [c] = ‛«c»’
+
+  stringchar_rec [lb cs+ rb] = ‛«lb»«cs»«rb»’
+  stringchar_beginquote [bslash q] =‛%5C“’
+  stringchar_endquote [bslash q] =‛%5C”’
+  stringchar_dqquote [bslash q] =‛%5C”’
+  stringchar_other [c] = ‛«c»’
+
+  commentchar_rec [lb cs+ rb] = ‛«lb»«cs»«rb»’
+  commentchar_other [c] = ‛«c»’
+
+  wordchar_rec [lb cs+ rb] = ‛«lb»«cs»«rb»’
+  wordchar_other [c] = ‛«c»’
+
+  id [firstc morecs*] = ‛«firstc»«morecs»’
+  dq [c] = ‛%22’
+  nl [c] = ‛’
+}
+
+

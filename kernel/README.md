@@ -9,7 +9,6 @@
 ## command line
 make
 ## regression test
-cd ../kernel-self
 ./regress.bash
 if OK, then ./cpnew.bash and rm -rf *
 
@@ -21,4 +20,5 @@ if OK, then ./cpnew.bash and rm -rf *
 
 I removed the special case code for handling shell-outs in the kernel and replaced it with a part. See [kernel_external.rt](https://github.com/guitarvydas/pbp-dev/blob/dev/kernel/kernel_external.rt) for implementation details
 
+Instantiation of ":" parts is special-cased in 0d.rt which calls external_instantiate in external.rt.
 
