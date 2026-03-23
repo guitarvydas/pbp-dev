@@ -1,2 +1,0 @@
-#!/bin/bash
-jq -f script.jq rt2all.drawio.json

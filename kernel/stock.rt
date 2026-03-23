@@ -138,7 +138,7 @@ defobj StringConcat_Instance_Data () {
         • buffer2 ⇐ ϕ
 }
 
-defn strinconcat_reset_handler (eh) {
+defn stringconcat_reset_handler (eh) {
     deftemp inst ⇐ eh.instance_data
     inst.buffer1 ⇐ ϕ
     inst.buffer2 ⇐ ϕ

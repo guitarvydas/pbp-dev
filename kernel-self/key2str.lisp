@@ -1,5 +1,0 @@
-(defun key2str (alist)
-  (mapcar #'(lambda (pair) 
-              (let ((key-str (symbol-name (car pair))))
-                (cons key-str (cdr pair))))
-          alist))

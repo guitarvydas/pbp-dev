@@ -1,8 +1,0 @@
-#!/bin/bash
-set -e
-T2T=./t2t
-GRAMMAR=$1
-REWRITE=$2
-SUPPORT=./support.js
-STDIN=-
-${T2T}/nanodsl ${T2T}/lib ${GRAMMAR} ${REWRITE} ${SUPPORT} ${STDIN}

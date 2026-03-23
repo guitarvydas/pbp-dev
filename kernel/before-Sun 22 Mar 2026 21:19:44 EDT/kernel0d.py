@@ -298,11 +298,13 @@ def step_children (container,causingMevent):           #line 310
                 destroy_mevent ( mev)                  #line 321
             else:                                      #line 322
                 if  child.state!= "idle":              #line 323
+                    print (f'/{child.name}/ d', file = sys.stderr)
                     mev = force_tick ( container, child)#line 324
                     step_child_once ( child, mev)      #line 325
                     destroy_mevent ( mev)              #line 326#line 327#line 328#line 329#line 330
 
     container.visit_ordering.clear ()                  #line 331#line 332
+
     # phase 2 - loop through children and route their outputs to appropriate receiver queues based on .connections #line 333
     for child in  container.children:                  #line 334
         if  child.state ==  "active":                  #line 335
@@ -788,7 +790,7 @@ class StringConcat_Instance_Data:
         self.buffer1 =  None                           #line 137
         self.buffer2 =  None                           #line 138#line 139
                                                        #line 140
-def stringconcat_reset_handler (eh):                   #line 141
+def strinconcat_reset_handler (eh):                    #line 141
     inst =  eh.instance_data                           #line 142
     inst.buffer1 =  None                               #line 143
     inst.buffer2 =  None                               #line 144#line 145#line 146
@@ -982,11 +984,6 @@ def shell_out_handler (eh,cmd,mev):                    #line 26
                                                        #line 41#line 42
 
     try:
-        with open('junk.command.txt', 'w') as file:
-            file.write(os.getcwd())
-            file.write(' ')
-            file.write(cmd)
-            file.write(' ')
         ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
         rc = ret.returncode
         stdout = ret.stdout.strip ()

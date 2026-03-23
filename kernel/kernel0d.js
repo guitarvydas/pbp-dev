@@ -932,7 +932,7 @@ class StringConcat_Instance_Data {
   }
 }
                                                        /* line 140 */
-function strinconcat_reset_handler (eh) {              /* line 141 */
+function stringconcat_reset_handler (eh) {             /* line 141 */
     let  inst =  eh.instance_data;                     /* line 142 */
     inst.buffer1 =  null;                              /* line 143 */
     inst.buffer2 =  null;                              /* line 144 *//* line 145 *//* line 146 */

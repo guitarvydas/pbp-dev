@@ -132,7 +132,7 @@ class StringConcat_Instance_Data:
         self.buffer1 =  None                           #line 137
         self.buffer2 =  None                           #line 138#line 139
                                                        #line 140
-def strinconcat_reset_handler (eh):                    #line 141
+def stringconcat_reset_handler (eh):                   #line 141
     inst =  eh.instance_data                           #line 142
     inst.buffer1 =  None                               #line 143
     inst.buffer2 =  None                               #line 144#line 145#line 146

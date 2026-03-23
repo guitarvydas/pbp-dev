@@ -181,7 +181,7 @@
     (buffer2 :accessor buffer2 :initarg :buffer2 :initform  nil)  #|line 138|#)) #|line 139|#
 
                                                             #|line 140|#
-(defun strinconcat_reset_handler (&optional  eh)
+(defun stringconcat_reset_handler (&optional  eh)
   (declare (ignorable  eh))                                 #|line 141|#
   (let (( inst (slot-value  eh 'instance_data)))
     (declare (ignorable  inst))                             #|line 142|#

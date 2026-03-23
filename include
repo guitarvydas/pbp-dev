@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""
+include: recursive file inclusion using ⊕⟨filename⟩ as splice syntax
+
+Usage in source:
+    ⊕⟨xinterpret.frish⟩
+    ⊕⟨../shared/macros.frish⟩
+"""
+
+import sys
+import re
+from pathlib import Path
+
+SPLICE = '⊕'
+OPEN   = '⟨'
+CLOSE  = '⟩'
+
+INCLUDE_RE = re.compile(
+    r'^(?P<indent>[^\S\n]*)'
+    + re.escape(SPLICE)
+    + re.escape(OPEN)
+    + r'(?P<filename>[^' + re.escape(CLOSE) + r']+)'
+    + re.escape(CLOSE)
+    + r'[^\S\n]*$',
+    re.MULTILINE
+)
+
+def process(path: Path, stack: list[Path]) -> str:
+    """Recursively process a file, expanding ⊕⟨…⟩ includes."""
+    path = path.resolve()
+
+    if path in stack:
+        chain = ' -> '.join(str(p) for p in stack + [path])
+        raise RecursionError(f"Circular include detected: {chain}")
+
+    try:
+        text = path.read_text(encoding='utf-8')
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            f"Include not found: {path}"
+            + (f"  (included from {stack[-1]})" if stack else "")
+        )
+
+    parts = []
+    last = 0
+
+    for m in INCLUDE_RE.finditer(text):
+        parts.append(text[last:m.start()])
+        indent   = m.group('indent')
+        inc_path = path.parent / m.group('filename').strip()
+        included = process(inc_path, stack + [path])
+        if indent:
+            included = '\n'.join(
+                indent + line if line.strip() else line
+                for line in included.splitlines()
+            )
+        parts.append(included)
+        last = m.end()
+
+    parts.append(text[last:])
+    return ''.join(parts)
+
+
+def main():
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <input-file> [output-file]", file=sys.stderr)
+        sys.exit(1)
+
+    input_path = Path(sys.argv[1])
+    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else None
+
+    try:
+        result = process(input_path, [])
+    except (FileNotFoundError, RecursionError) as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    if output_path:
+        output_path.write_text(result, encoding='utf-8')
+    else:
+        print(result, end='')
+
+
+if __name__ == '__main__':
+    main()

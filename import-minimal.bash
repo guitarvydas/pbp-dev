@@ -74,7 +74,8 @@ for f in \
     t2t \
     das2json \
     splitoutputs \
-    check-for-errors \
+    check-for-html \
+    errgrep \
     resetlog \
     rigid_indent \
     brace_indent \
@@ -83,7 +84,8 @@ for f in \
     output_begin \
     output_end \
     output_to_port \
-    fanout
+    fanout \
+    include
 do
     safe_cp "${Dev}/${f}" "${pbp}/"
 done
