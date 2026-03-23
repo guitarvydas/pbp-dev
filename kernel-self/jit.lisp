@@ -3,7 +3,7 @@
   (declare (ignorable  reg  owner  name  arg))              #|line 3|#
   (let ((name_with_id (funcall (quote gensymbol)   name     #|line 4|#)))
     (declare (ignorable name_with_id))
-    (let (( inst (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_external  nil  #|line 5|#)))
+    (let (( inst (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_jit  nil  #|line 5|#)))
       (declare (ignorable  inst))
       (let (( firstc (nth  1  name)))
         (declare (ignorable  firstc))                       #|line 6|#

@@ -286,7 +286,7 @@ defn force_tick (parent, eh) {
 
 defn push_mevent (parent, receiver, inq, m) {
     #enqueue (inq, m)
-    if (#isspecial (receiver)) {
+    if (receiver.special) {
       #prequeue (parent.visit_ordering, receiver)
     } else {
       #enqueue (parent.visit_ordering, receiver)
@@ -479,7 +479,7 @@ defn get_component_instance (reg, full_name, owner) {
     template_name ≡ mangle_name (full_name)
     if “:” = #stringcar (full_name) {
         instance_name ≡ generate_instance_name (owner, template_name)
-        instance ≡ external_instantiate (reg, owner, instance_name, full_name)
+        instance ≡ jit_instantiate (reg, owner, instance_name, full_name)
         return instance
     } else {
         if template_name in reg.templates {

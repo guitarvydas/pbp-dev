@@ -110,6 +110,7 @@ ExternalPhrase_len [_octothorpe _ lp e rp] = ‛(«e».length)’
 
 ExternalPhrase_asint [_octothorpe _ lp e rp] = ‛Number («e»)’
 ExternalPhrase_enqueue [_octothorpe _ lp obj _comma e rp] = ‛«obj».push («e»)’
+ExternalPhrase_prequeue [_octothorpe _ lp obj _comma e rp] = ‛«obj».unshift («e»)’
 ExternalPhrase_dequeue [_octothorpe _ lp obj rp] = ‛«obj».shift ()’
 ExternalPhrase_empty [_octothorpe _ lp q rp] = ‛(0===«q».length)’
 ExternalPhrase_queue2list [_octothorpe _ lp q rp] = ‛ «q»’

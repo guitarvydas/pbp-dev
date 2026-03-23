@@ -64,6 +64,7 @@ emit {
      | "#" xkw<"len"> "(" Exp ")" -- len
      | "#" xkw<"asint"> "(" Exp ")" -- asint
      | "#" xkw<"enqueue"> "(" Exp Comma Exp ")" -- enqueue
+     | "#" xkw<"prequeue"> "(" Exp Comma Exp ")" -- prequeue
      | "#" xkw<"dequeue"> "(" Exp ")" -- dequeue
      | "#" xkw<"empty"> "(" Exp ")" -- empty
      | "#" xkw<"queue2list"> "(" Exp ")" -- queue2list

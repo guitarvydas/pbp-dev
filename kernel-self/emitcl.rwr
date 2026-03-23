@@ -170,6 +170,9 @@ ExternalPhrase_preamble [_octothorpe _preamble lb rp] =
 (defmethod enqueue ((self Queue) v)
   (setf (contents self) (append (contents self) (list v))))
 
+(defmethod prequeue ((self Queue) v)
+  (push v (contents self)))
+
 (defmethod dequeue ((self Queue))
   (pop (contents self)))
     
@@ -192,6 +195,7 @@ ExternalPhrase_asstr [_octothorpe _ lp e rp] = ‛(format nil "~a" «e»)’
 ExternalPhrase_len [_octothorpe _ lp e rp] = ‛(length «e»)’
 ExternalPhrase_asint [_octothorpe _ lp e rp] = ‛(parse-integer «e»)’
 ExternalPhrase_enqueue [_octothorpe _ lp obj _comma e rp] = ‛(enqueue «obj» «e»)’
+ExternalPhrase_prequeue [_octothorpe _ lp obj _comma e rp] = ‛(prequeue «obj» «e»)’
 ExternalPhrase_dequeue [_octothorpe _ lp obj rp] = ‛(dequeue «obj»)’
 ExternalPhrase_empty [_octothorpe _ lp q rp] = ‛(empty? «q»)’
 ExternalPhrase_queue2list [_octothorpe _ lp q rp] = ‛(queue2list «q»)’

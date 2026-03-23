@@ -655,7 +655,7 @@ x))))
       (( equal    ":"  (string (char  full_name 0)))        #|line 480|#
         (let ((instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 481|#)))
           (declare (ignorable instance_name))
-          (let ((instance (funcall (quote external_instantiate)   reg  owner  instance_name  full_name  #|line 482|#)))
+          (let ((instance (funcall (quote jit_instantiate)   reg  owner  instance_name  full_name  #|line 482|#)))
             (declare (ignorable instance))
             (return-from get_component_instance  instance)  #|line 483|#))
         )
@@ -934,7 +934,7 @@ x))))
   (declare (ignorable  reg  owner  name  arg))              #|line 3|#
   (let ((name_with_id (funcall (quote gensymbol)   name     #|line 4|#)))
     (declare (ignorable name_with_id))
-    (let (( inst (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_external  nil  #|line 5|#)))
+    (let (( inst (funcall (quote make_leaf)   name_with_id  owner  nil  arg  #'handle_jit  nil  #|line 5|#)))
       (declare (ignorable  inst))
       (let (( firstc (nth  1  name)))
         (declare (ignorable  firstc))                       #|line 6|#

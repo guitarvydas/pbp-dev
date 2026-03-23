@@ -441,7 +441,7 @@ def get_component_instance (reg,full_name,owner):      #line 474
     template_name = mangle_name ( full_name)           #line 479
     if  ":" ==   full_name[0] :                        #line 480
         instance_name = generate_instance_name ( owner, template_name)#line 481
-        instance = external_instantiate ( reg, owner, instance_name, full_name)#line 482
+        instance = jit_instantiate ( reg, owner, instance_name, full_name)#line 482
         return  instance                               #line 483
     else:                                              #line 484
         if  template_name in  reg.templates:           #line 485

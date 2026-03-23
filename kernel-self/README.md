@@ -9,7 +9,6 @@
 ## command line
 make
 ## regression test
-cd ../kernel-self
 ./regress.bash
 if OK, then ./cpnew.bash and rm -rf *
 

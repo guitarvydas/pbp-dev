@@ -655,7 +655,7 @@ x))))
       (( equal    ":"  (string (char  full_name 0)))        #|line 480|#
         (let ((instance_name (funcall (quote generate_instance_name)   owner  template_name  #|line 481|#)))
           (declare (ignorable instance_name))
-          (let ((instance (funcall (quote external_instantiate)   reg  owner  instance_name  full_name  #|line 482|#)))
+          (let ((instance (funcall (quote jit_instantiate)   reg  owner  instance_name  full_name  #|line 482|#)))
             (declare (ignorable instance))
             (return-from get_component_instance  instance)  #|line 483|#))
         )
