@@ -1,0 +1,55 @@
+JSON {
+
+// referring to the grammar at json.org/json-en.html
+
+main = (object | array)+
+
+object =
+  | "{" nameValuePair ("," nameValuePair)+ "}" -- multiple
+  | "{" nameValuePair "}" -- single
+  | "{" ws "}" -- empty
+
+nameValuePair = ws string ws ":" ws value
+
+array =
+  | "[" ws value ("," value)+ "]" -- multiple
+  | "[" ws value "]" -- single
+  | "[" ws "]" -- empty
+
+value = ws value1 ws
+
+value1 =
+  | string -- string
+  | number -- number
+  | object -- object
+  | array -- array
+  | "true" -- true
+  | "false" -- false
+  | "null" -- null
+
+string = "\"" string_innard* "\""
+string_innard =
+  | "\\" "\"" -- quotationMark
+  | "\\" "/" -- solidus
+  | "\\" "\\" -- reverseSolidus
+  | "\\" "b" -- backSpace
+  | "\\" "f" -- formFeed
+  | "\\" "n" -- lineFeed
+  | "\\" "r" -- carriageReturn
+  | "\\" "t" -- horizontalTab
+  | "\\" "u" hex hex hex hex -- fourHexDigits
+  | ~"\"" any -- other
+
+hex = "0" .. "9" | "a" .. "f" | "A" .. "F"
+
+number =
+  | "-"? "0" fraction? exponent? -- fractional
+  | "-"? ("1" .. "9") digit* fraction? exponent? -- number
+
+fraction = "." digit+
+
+exponent = ("e" | "E") ("-" | "+")? digit+
+
+ws = (" " | "\n" | "\t" | "\r")*
+
+}

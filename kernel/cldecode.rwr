@@ -1,0 +1,15 @@
+% rewrite cldecode {
+  text [chars+] = ‛«chars»’ 
+  char_string [lq cs* rq] = ‛"«cs»"’
+  char_comment [lb cs* rb] = ‛ #| «cs» |#’
+  char_errormessage [lb cs* rb] = ‛ >>> «cs» <<< ’
+  char_line [lb cs* rb] = ‛ #|line «cs»|#’
+  char_ulb [c] = ‛’
+  char_encodedulb [c] = ‛-L’
+  char_urb [c] = ‛’
+  char_encodedurb [c] = ‛R-’
+  char_space [c] = ‛-’
+  char_tab [c] = ‛-TAB-’
+  char_newline [c] = ‛\n’
+  char_other [c] = ‛«c»’
+}
