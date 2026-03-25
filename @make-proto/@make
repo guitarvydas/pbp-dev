@@ -4,7 +4,7 @@ set -eE
 export SHELLOPTS
 shopt -s nullglob
 
-trap '[ -f "out.✗" ] && (echo "TRAP" ; cat "out.✗")' ERR
+trap '[ -f "out.✗" ] && cat "out.✗"' ERR
 
 # set up env vars depending on whether this script was called from elsewhere or is the top level
 if [ "$#" -eq 0 ]; then

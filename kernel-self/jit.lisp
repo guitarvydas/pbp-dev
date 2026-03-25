@@ -8,7 +8,7 @@
       (let (( firstc (nth  1  name)))
         (declare (ignorable  firstc))                       #|line 6|#
         (cond
-          (( equal    firstc  "?")                          #|line 7|#
+          ((not (equal   firstc  "$"))                      #|line 7|#
             #|  probes get to go to the front of the line  |# #|line 8|#
             (setf (slot-value  inst 'special)  t)           #|line 9|# #|line 10|#
             ))

@@ -659,7 +659,7 @@ def jit_instantiate (reg,owner,name,arg):              #line 3
     name_with_id = gensymbol ( name)                   #line 4
     inst = make_leaf ( name_with_id, owner, None, arg, handle_jit, None)#line 5
     firstc =  name [ 1]                                #line 6
-    if ( firstc!= "$"):                                #line 7
+    if ( firstc ==  "?"):                              #line 7
         # probes get to go to the front of the line    #line 8
         inst.special =  True                           #line 9#line 10
     return  inst                                       #line 11#line 12#line 13

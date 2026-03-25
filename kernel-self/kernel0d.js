@@ -766,7 +766,7 @@ function jit_instantiate (reg,owner,name,arg) {        /* line 3 */
     let name_with_id = gensymbol ( name)               /* line 4 */;
     let  inst = make_leaf ( name_with_id, owner, null, arg, handle_jit, null)/* line 5 */;
     let  firstc =  name [ 1];                          /* line 6 */
-    if (( firstc ==  "?")) {                           /* line 7 */
+    if (( firstc!= "$")) {                             /* line 7 */
       /*  probes get to go to the front of the line  *//* line 8 */
       inst.special =  true;                            /* line 9 *//* line 10 */
     }
