@@ -2,18 +2,25 @@
 """resetlog - Reset the PBP log file with current timestamp"""
 
 import sys
+import os
 import tempfile
 from datetime import datetime
 from pathlib import Path
 
 
 def main():
-    # Always use platform-appropriate temp directory
-    log_file = Path(tempfile.gettempdir()) / "pbplog.md"
+    # Use PBPCALLER env var for base dir
+    base_dir = os.environ.get("PBPCALLER")
+    if not base_dir:
+        print("Error: PBPCALLER env var not set", file=sys.stderr)
+        sys.exit(1)
+    
+    log_file = Path(base_dir) / "pbplog.md"
     
     try:
         timestamp = datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y")
         log_file.write_text(timestamp + "\n")
+        print (f'pbp logfile created at {log_file}')
         
     except PermissionError:
         print(f"Error: Permission denied writing to {log_file}", file=sys.stderr)
