@@ -15,7 +15,7 @@ def main():
         print("Error: PBPCALLER env var not set", file=sys.stderr)
         sys.exit(1)
     
-    log_file = Path(base_dir) / "pbplog.md"
+    log_file = Path(base_dir) / "pbplog.txt"
     
     try:
         timestamp = datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y")

@@ -1,8 +1,9 @@
 'use strict'
 
 import * as ohm from 'ohm-js';
+import * as process from 'process';
 
-let verbose = false;
+const verbose = !!process.env.T2TVERBOSE;
 
 function top (stack) { let v = stack.pop (); stack.push (v); return v; }
 
@@ -14,7 +15,7 @@ let depth_prefix = ' ';
 
 function enter_rule (name) {
     if (verbose) {
-	console.error (depth_prefix, ["enter", name]);
+	pbplog (`${depth_prefix}enter ${name}`);
 	depth_prefix += ' ';
     }
     return_value_stack.push ("");
@@ -28,7 +29,7 @@ function set_return (v) {
 function exit_rule (name) {
     if (verbose) {
 	depth_prefix = depth_prefix.substr (1);
-	console.error (depth_prefix, ["exit", name]);
+	pbplog (`${depth_prefix}exit ${name}`);
     }
     rule_name_stack.pop ();
     return return_value_stack.pop ()
