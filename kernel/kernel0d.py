@@ -281,7 +281,7 @@ def is_self (child,container):                         #line 297
     return  child ==  container                        #line 299#line 300#line 301
 
 def step_child_once (child,mev):                       #line 302
-    if ( False ):                                      #line 303
+    if ( True ):                                      #line 303
         print ( str( "-- stepping '") +  str( child.name) +  "'"  , file=sys.stderr)#line 304
                                                        #line 305#line 306
     before_state =  child.state                        #line 307
@@ -679,19 +679,51 @@ def probe_handler (eh,tag,mev):                        #line 27
     s =  mev.datum.v                                   #line 28
     live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 36#line 37#line 38
 
-def shell_out_handler (eh,cmd,mev):                    #line 39
-    s =  mev.datum.v                                   #line 40
-    ret =  None                                        #line 41
-    rc =  None                                         #line 42
-    stdout =  None                                     #line 43
-    stderr =  None                                     #line 44
-    command =  cmd                                     #line 45
-    pbpRoot = os.getenv('PBP', '<none>')               #line 46
-    if  pbpRoot!= "":                                  #line 47
-        command = re.sub ( "_/",  str( pbpRoot) +  "/" ,  command)#line 50#line 51
-    if ( False ):                                      #line 52
-        print ( str( "- --- shell-out: ") +  command , file=sys.stderr)#line 53
-                                                       #line 54#line 55
+# def shell_out_handler (eh,cmd,mev):                    #line 39
+#     s =  mev.datum.v                                   #line 40
+#     ret =  None                                        #line 41
+#     rc =  None                                         #line 42
+#     stdout =  None                                     #line 43
+#     stderr =  None                                     #line 44
+#     command =  cmd                                     #line 45
+#     pbpRoot = os.getenv('PBP', '<none>')               #line 46
+#     if  pbpRoot!= "":                                  #line 47
+#         command = re.sub ( "_/",  str( pbpRoot) +  "/" ,  command)#line 50#line 51
+#     if ( False ):                                      #line 52
+#         print ( str( "- --- shell-out: ") +  command , file=sys.stderr)#line 53
+#                                                        #line 54#line 55
+
+#     try:
+#         with open('junk.command.txt', 'w') as file:
+#             file.write(os.getcwd())
+#             file.write(' ')
+#             file.write(cmd)
+#             file.write(' ')
+#         ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
+#         rc = ret.returncode
+#         stdout = ret.stdout.strip ()
+#         stderr = ret.stderr.strip ()
+#     except Exception as e:
+#         ret = None
+#         rc = 1
+#         stdout = ''
+#         stderr = str(e)
+#                                                        #line 56
+#     if  rc ==  0:                                      #line 57
+#         send ( eh, "", str( stdout) +  stderr , mev)   #line 58
+#     else:                                              #line 59
+#         send ( eh, "✗", str( stdout) +  stderr , mev)  #line 60#line 61#line 62#line 63
+
+def shell_out_handler(eh, cmd, mev):
+    s = mev.datum.v
+    ret = None
+    rc = None
+    stdout = None
+    stderr = None
+    command = cmd
+    pbpRoot = os.getenv('PBP', '<none>')
+    if pbpRoot != "":
+        command = re.sub("_/", str(pbpRoot) + "/", command)
 
     try:
         with open('junk.command.txt', 'w') as file:
@@ -699,20 +731,36 @@ def shell_out_handler (eh,cmd,mev):                    #line 39
             file.write(' ')
             file.write(cmd)
             file.write(' ')
-        ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
+
+        # Write s to a temp file; replace '-' arg with the temp path
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as tmp:
+            tmp.write(s)
+            tmp_path = tmp.name
+
+        try:
+            actual_command = command.replace(' -', f' {tmp_path}', 1)
+            ret = subprocess.run(
+                shlex.split(actual_command),
+                text=True,
+                capture_output=True
+            )
+        finally:
+            os.unlink(tmp_path)
+
         rc = ret.returncode
-        stdout = ret.stdout.strip ()
-        stderr = ret.stderr.strip ()
+        stdout = ret.stdout.strip()
+        stderr = ret.stderr.strip()
     except Exception as e:
         ret = None
         rc = 1
         stdout = ''
         stderr = str(e)
-                                                       #line 56
-    if  rc ==  0:                                      #line 57
-        send ( eh, "", str( stdout) +  stderr , mev)   #line 58
-    else:                                              #line 59
-        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 60#line 61#line 62#line 63
+
+    if rc == 0:
+        send(eh, "", str(stdout) + stderr, mev)
+    else:
+        send(eh, "✗", str(stdout) + stderr, mev)
+
 #line 1
 def trash_instantiate (reg,owner,name,template_data,arg):#line 2
     name_with_id = gensymbol ( "trash")                #line 3
