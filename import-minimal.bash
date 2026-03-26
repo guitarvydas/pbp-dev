@@ -77,6 +77,7 @@ for f in \
     check-for-html \
     errgrep \
     resetlog \
+    pbplog \
     rigid_indent \
     brace_indent \
     brace_indent_del \
