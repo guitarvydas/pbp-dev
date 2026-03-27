@@ -714,6 +714,8 @@ def probe_handler (eh,tag,mev):                        #line 27
 #     else:                                              #line 59
 #         send ( eh, "✗", str( stdout) +  stderr , mev)  #line 60#line 61#line 62#line 63
 
+import tempfile, os, subprocess, shlex, re
+
 def shell_out_handler(eh, cmd, mev):
     s = mev.datum.v
     ret = None
