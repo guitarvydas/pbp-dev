@@ -308,7 +308,7 @@ function is_self (child,container) {                   /* line 297 */
 }
 
 function step_child_once (child,mev) {                 /* line 302 */
-    if (( false )) {                                   /* line 303 */
+    if (( (typeof process.env.PBPSTEPPING !== "undefined") )) {/* line 303 */
       console.error ( ( "-- stepping '".toString ()+  ( child.name.toString ()+  "'".toString ()) .toString ()) );/* line 304 */
                                                        /* line 305 *//* line 306 */
     }
@@ -804,7 +804,7 @@ function shell_out_handler (eh,cmd,mev) {              /* line 39 */
     if ( pbpRoot!= "") {                               /* line 47 */
       command =  command.replaceAll ( "_/",  ( pbpRoot.toString ()+  "/".toString ()) )/* line 50 */;/* line 51 */
     }
-    if (( false )) {                                   /* line 52 */
+    if (( (typeof process.env.PBPSHELLOUT !== "undefined") )) {/* line 52 */
       console.error ( ( "- --- shell-out: ".toString ()+  command.toString ()) );/* line 53 */
                                                        /* line 54 *//* line 55 */
     }

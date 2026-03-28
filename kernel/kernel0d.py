@@ -2,6 +2,7 @@
 import sys
 import re
 import subprocess
+import tempfile
 import shlex
 import os
 import json
@@ -281,7 +282,7 @@ def is_self (child,container):                         #line 297
     return  child ==  container                        #line 299#line 300#line 301
 
 def step_child_once (child,mev):                       #line 302
-    if "PBPSTEPPING" in os.environ:
+    if ( ("PBPSTEPPING" in os.environ) ):              #line 303
         print ( str( "-- stepping '") +  str( child.name) +  "'"  , file=sys.stderr)#line 304
                                                        #line 305#line 306
     before_state =  child.state                        #line 307
@@ -679,28 +680,31 @@ def probe_handler (eh,tag,mev):                        #line 27
     s =  mev.datum.v                                   #line 28
     live_update ( "Info",  str( "  @") +  str(str ( ticktime)) +  str( "  ") +  str( "probe ") +  str( eh.name) +  str( ": ") + str ( s)      )#line 36#line 37#line 38
 
-import tempfile, os, subprocess, shlex, re
+def shell_out_handler (eh,cmd,mev):                    #line 39
+    s =  mev.datum.v                                   #line 40
+    ret =  None                                        #line 41
+    rc =  None                                         #line 42
+    stdout =  None                                     #line 43
+    stderr =  None                                     #line 44
+    command =  cmd                                     #line 45
+    pbpRoot = os.getenv('PBP', '<none>')               #line 46
+    if  pbpRoot!= "":                                  #line 47
+        command = re.sub ( "_/",  str( pbpRoot) +  "/" ,  command)#line 50#line 51
+    if ( ("PBPSHELLUT" in os.environ) ):               #line 52
+        print ( str( "- --- shell-out: ") +  command , file=sys.stderr)#line 53
+                                                       #line 54#line 55
 
-def shell_out_handler(eh, cmd, mev):
-    s = mev.datum.v
-    rc = None
-    stdout = None
-    stderr = None
-    command = cmd
-    pbpRoot = os.getenv('PBP', '')
-    if pbpRoot:
-        command = re.sub("_/", pbpRoot + "/", command)
     try:
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as tmp:
-            tmp.write(s)
+            tmp.write( s)
             tmp_path = tmp.name
         try:
             with open(tmp_path, 'r') as stdin_file:
                 ret = subprocess.run(
-                    shlex.split(command),
-                    stdin=stdin_file,
-                    text=True,
-                    capture_output=True
+                shlex.split( command),
+                stdin=stdin_file,
+                text=True,
+                capture_output=True
                 )
         finally:
             os.unlink(tmp_path)
@@ -711,11 +715,11 @@ def shell_out_handler(eh, cmd, mev):
         rc = 1
         stdout = ''
         stderr = str(e)
-    if rc == 0:
-        send(eh, "", str(stdout) + stderr, mev)
-    else:
-        send(eh, "✗", str(stdout) + stderr, mev)
-
+                                                       #line 56
+    if  rc ==  0:                                      #line 57
+        send ( eh, "", str( stdout) +  stderr , mev)   #line 58
+    else:                                              #line 59
+        send ( eh, "✗", str( stdout) +  stderr , mev)  #line 60#line 61#line 62#line 63
 #line 1
 def trash_instantiate (reg,owner,name,template_data,arg):#line 2
     name_with_id = gensymbol ( "trash")                #line 3

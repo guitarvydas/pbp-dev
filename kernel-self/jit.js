@@ -41,7 +41,7 @@ function shell_out_handler (eh,cmd,mev) {              /* line 39 */
     if ( pbpRoot!= "") {                               /* line 47 */
       command =  command.replaceAll ( "_/",  ( pbpRoot.toString ()+  "/".toString ()) )/* line 50 */;/* line 51 */
     }
-    if (( false )) {                                   /* line 52 */
+    if (( (typeof process.env.PBPSHELLOUT !== "undefined") )) {/* line 52 */
       console.error ( ( "- --- shell-out: ".toString ()+  command.toString ()) );/* line 53 */
                                                        /* line 54 *//* line 55 */
     }

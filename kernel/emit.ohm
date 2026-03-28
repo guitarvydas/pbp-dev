@@ -79,6 +79,7 @@ emit {
      | "#" xkw<"get_wd"> "(" ")" -- getWD
 
      | "#" xkw<"show_stepping"> "(" ")" -- showStepping
+     | "#" xkw<"show_command"> "(" ")" -- showCommand
 
      | "#" ident "(" StuffInsideParentheses* ")" -- unrecognized
 

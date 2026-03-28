@@ -90,6 +90,7 @@ ExternalPhrase_preamble [_octothorpe _preamble lb rp] = ‛
 import sys
 import re
 import subprocess
+import tempfile
 import shlex
 import os
 import json
@@ -128,21 +129,27 @@ ExternalPhrase_print_nl_stderr [_octothorpe _ lp rp] = ‛’
 ExternalPhrase_display_queue_as_json [_octothorpe _ lp e rp] = ‛print (deque_to_json («e»), file=sys.stderr)’
 ExternalPhrase_substitute [_octothorpe _ lp find _comma1 replace _comma2 s rp] = ‛re.sub («find», «replace», «s»)’
 ExternalPhrase_run_command [_octothorpe _ lp cmd _comma1 args _comma2 ret _comma3 rc _comma4 out _comma5 errout rp] = ‛
-try:⤷
-    with open('junk.command.txt', 'w') as file:⤷
-            file.write(os.getcwd())
-            file.write(' ')
-            file.write(cmd)
-            file.write(' ')⤶
-    «ret» = subprocess.run (shlex.split («cmd»), input=«args», text=True, capture_output=True)
-    «rc» = «ret».returncode
-    «out» = «ret».stdout.strip ()
-    «errout» = «ret».stderr.strip ()⤶
-except Exception as e:⤷
-    «ret» = None
-    «rc» = 1
-    «out» = ''
-    «errout» = str(e)⤶
+    try:⤷
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as tmp:⤷
+            tmp.write(«args»)
+            tmp_path = tmp.name⤶
+        try:⤷
+            with open(tmp_path, 'r') as stdin_file:⤷
+                «ret» = subprocess.run(
+                    shlex.split(«cmd»),
+                    stdin=stdin_file,
+                    text=True,
+                    capture_output=True
+                )⤶⤶
+        finally:⤷
+            os.unlink(tmp_path)⤶
+        «rc» = ret.returncode
+        «out» = ret.stdout.strip()
+        «errout» = ret.stderr.strip()⤶
+    except Exception as e:⤷
+        «rc» = 1
+        «out» = ''
+        «errout» = str(e)⤶
 ’
 ExternalPhrase_abort [_octothorpe _ lp rp] = ‛exit (1)’
 ExternalPhrase_asstr [_octothorpe _ lp e rp] = ‛str («e»)’
@@ -166,6 +173,7 @@ ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛os.getenv('PBP', '<none>')�
 ExternalPhrase_getWD [_octothorpe _ lp rp] = ‛os.getenv('PBPWD', '<none>')’
 
 ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ ("PBPSTEPPING" in os.environ) ’
+ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ ("PBPSHELLUT" in os.environ) ’
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 
