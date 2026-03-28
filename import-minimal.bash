@@ -113,10 +113,6 @@ safe_cp "${Dev}/t2td/lib/rwr.mjs"               "${T2T}/lib/"
 
 # ── delegate to sub-importers ────────────────────────────────────────────────
 safe_run "${Dev}/import-minimal-tas.bash" "${TaS_Dev}" "${TAS}"
-mkdir -p "${pbp}/dtree"
-safe_run "${HOME}/projects/dtree/min.bash" "${pbp}/dtree"
-mkdir -p "${pbp}/sm"
-safe_run "${HOME}/projects/sm/min.bash" "${pbp}/sm"
 
 #echo "import-minimal: done (${pbp})"
 
