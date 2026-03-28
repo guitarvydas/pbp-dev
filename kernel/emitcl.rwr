@@ -213,8 +213,8 @@ ExternalPhrase_getPbpRoot [_octothorpe _ lp rp] = ‛(uiop:getenv "PBP")’
 ExternalPhrase_getWD [_octothorpe _ lp rp] = ‛(uiop:getenv "PBPWD")’
 
 
-ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ nil ’
-ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ nil ’
+ExternalPhrase_showStepping [_octothorpe _ lp rp] = ‛ (not (null (uiop:getenv "PBPSTEPPING"))) ’
+ExternalPhrase_showCommand [_octothorpe _ lp rp] = ‛ (not (null (uiop:getenv "PBPSHELLOUT"))) ’
 
 ExternalPhrase_unrecognized [_octothorpe ident lp stuff* rp] = ‛«_octothorpe» «ident» ⎝ error - unrecognized external (with given arguments) ⎠ «lp»«stuff»«rp» ’
 

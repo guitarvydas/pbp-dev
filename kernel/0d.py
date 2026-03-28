@@ -2,6 +2,7 @@
 import sys
 import re
 import subprocess
+import tempfile
 import shlex
 import os
 import json
@@ -281,7 +282,7 @@ def is_self (child,container):                         #line 297
     return  child ==  container                        #line 299#line 300#line 301
 
 def step_child_once (child,mev):                       #line 302
-    if ( False ):                                      #line 303
+    if ( ("PBPSTEPPING" in os.environ) ):              #line 303
         print ( str( "-- stepping '") +  str( child.name) +  "'"  , file=sys.stderr)#line 304
                                                        #line 305#line 306
     before_state =  child.state                        #line 307

@@ -22,6 +22,11 @@ See the `Makefiles` and `README.md`s in each individual sub-directory here to al
 To update `pbp-kit` with changes made here, use the `updall.bash` script.
 
 Many of these tools use code generators to create tool code. Code generation is a two-step process. The first step is to generate code for the tool(s), which is similar to using compilers. In most cases, however, one only wants to use compilers to compile code. The second step is to use the tools in a new project. Only the second step is necessary for new pbp-kit projects. Changes to the tools herein require the first step and necessitate an update to the pbp-kit repository.
+
+## Environment Variables
+PBPSTEPPING - if defined, kernel will print the name of each part that is being stepped
+T2TVERBOSE - if defined, t2t rewriter will print the name of every rewrite rule on entry and exit
+
 ## Kernel
 A blob of code that implements asynchronous message-passing using two types of parts:
 

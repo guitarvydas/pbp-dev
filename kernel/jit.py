@@ -33,22 +33,28 @@ def shell_out_handler (eh,cmd,mev):                    #line 39
     pbpRoot = os.getenv('PBP', '<none>')               #line 46
     if  pbpRoot!= "":                                  #line 47
         command = re.sub ( "_/",  str( pbpRoot) +  "/" ,  command)#line 50#line 51
-    if ( False ):                                      #line 52
+    if ( ("PBPSHELLUT" in os.environ) ):               #line 52
         print ( str( "- --- shell-out: ") +  command , file=sys.stderr)#line 53
                                                        #line 54#line 55
 
     try:
-        with open('junk.command.txt', 'w') as file:
-            file.write(os.getcwd())
-            file.write(' ')
-            file.write(cmd)
-            file.write(' ')
-        ret = subprocess.run (shlex.split ( command), input= s, text=True, capture_output=True)
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as tmp:
+            tmp.write( s)
+            tmp_path = tmp.name
+        try:
+            with open(tmp_path, 'r') as stdin_file:
+                ret = subprocess.run(
+                shlex.split( command),
+                stdin=stdin_file,
+                text=True,
+                capture_output=True
+                )
+        finally:
+            os.unlink(tmp_path)
         rc = ret.returncode
-        stdout = ret.stdout.strip ()
-        stderr = ret.stderr.strip ()
+        stdout = ret.stdout.strip()
+        stderr = ret.stderr.strip()
     except Exception as e:
-        ret = None
         rc = 1
         stdout = ''
         stderr = str(e)

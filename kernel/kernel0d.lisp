@@ -434,7 +434,7 @@ x))))
 (defun step_child_once (&optional  child  mev)
   (declare (ignorable  child  mev))                         #|line 302|#
   (cond
-    ( nil                                                   #|line 303|#
+    ( (not (null (uiop:getenv "PBPSTEPPING")))              #|line 303|#
       (format *error-output* "~a~%"  (concatenate 'string  "-- stepping '"  (concatenate 'string (slot-value  child 'name)  "'"))) #|line 304|#
       (format *error-output* "
       ")                                                    #|line 305|# #|line 306|#
@@ -990,7 +990,7 @@ x))))
                     (setf  command (substitute  "_/"  (concatenate 'string  pbpRoot  "/")  command) #|line 50|#) #|line 51|#
                     ))
                 (cond
-                  ( nil                                     #|line 52|#
+                  ( (not (null (uiop:getenv "PBPSHELLOUT")))  #|line 52|#
                     (format *error-output* "~a~%"  (concatenate 'string  "- --- shell-out: "  command)) #|line 53|#
                     (format *error-output* "
                     ")                                      #|line 54|# #|line 55|#
