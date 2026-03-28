@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-pbplog "t2t $@"
 
 if [ "$#" -eq 1 ]; then
   grammar="${PBPWD}/$1.ohm"
@@ -15,15 +14,13 @@ else
 fi
 src=-
 
-pbplog "1"
-
 # t2tlibd is the lib directory for t2t
 t2tlibd="${PBP}/t2td/lib"
 # wsupport is support.js in the current working directory
 wsupport="${PBPWD}/support.mjs"
 
 
-node "${t2tlibd}/rwr.mjs" "${rewrite}" >"${PBPWD}/temp.rewrite.mjs" </dev/null
+node "${t2tlibd}/rwr.mjs" "${rewrite}" >"${PBPWD}/temp.rewrite.mjs"
 
 sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >"${PBPWD}/temp.grammar"
 
@@ -31,14 +28,4 @@ nanodsl="${PBPWD}/temp.nanodsl.${RANDOM}.mjs"
 
 cat "${t2tlibd}/front.part.js" "${PBPWD}/temp.grammar" "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${wsupport}" "${PBPWD}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${nanodsl}"
 
-echo "with tempfile fix"
-if [ "${src}" = "-" ]; then
-    _tmpfile=$(mktemp)
-    cat > "${_tmpfile}"
-    node "${nanodsl}" "${_tmpfile}"
-    _rc=$?
-    rm -f "${_tmpfile}"
-    exit ${_rc}
-else
-    node "${nanodsl}" "${src}"
-fi
+node "${nanodsl}" "${src}"
