@@ -70,6 +70,9 @@ Instructions and video in another repo: [hello world from first principles](http
 
 ![API](./api.md)
 
+# Mevent Flow Basics
+[mevent flow basics](https://www.youtube.com/watch?v=yPg4wVRQfYE&list=PLHh2_dCKBPjbBN2R8xwBiS4nHlo5iQjqS&index=2)
+
 # Philosophy Corner
 Computers are not merely “better paper,” yet we continue to program them using notations intended for use on paper, a practice that dates back to the 1960s.
 
