@@ -12,6 +12,8 @@ where
 - _kernel_ is the implementation of an asynchronous-message-passing kernel between Parts (Leaf and Container)
 - *dtree* transmogrifies a simple kind of diagram (a "decision tree" with only 2 kinds of nodes and only 2 kinds of branches) to meta code (which has a syntax very reminiscent to that of Python). 
 
+![Kernel back end](kernel/kernel-Back-End.drawio.png)
+
 # Usage
 If you just intend to *use* the tools (recommended for first exposure), see the [pbp-kit](https://github.com/guitarvydas/pbp-kit) repository instead.
 

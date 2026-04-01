@@ -1,4 +1,5 @@
 #!/bin/bash
+${PBP}/pbplog "in pbp/t2t T2TVERBOSE=${T2TVERBOSE}"
 set -e
 
 if [ "$#" -eq 1 ]; then
