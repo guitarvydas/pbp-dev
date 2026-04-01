@@ -214,6 +214,7 @@
   "active": "2aafda6bd4dc58d5",
   "lastOpenFiles": [
     "#README.md#",
+    "TAS_README_WIP.md",
     "@make-proto/#NOTES.md#",
     "@make-proto/NOTES.md~",
     "@make-proto/NOTES.md",
@@ -224,7 +225,6 @@
     "kernel-self/out.py",
     "kernel-self/out.lisp",
     "kernel/out.js",
-    "kernel/out.py",
     "temp.md",
     "@make-proto/doc/seed/Outline.md",
     "@make-proto/doc/seed/Towards Multi-Language Programming.md",
@@ -249,7 +249,6 @@
     "kernel-self/node_modules/cliui/node_modules/strip-ansi/readme.md",
     "kernel-self/node_modules/cliui/node_modules/ansi-regex/readme.md",
     "kernel-self/node_modules/@xmldom/xmldom/readme.md",
-    "kernel-self/node_modules/@xmldom/xmldom/SECURITY.md",
     "pbp/sm/pbp/pbp-lifecycle.drawio.png",
     "pbp/dtree/pbp/pbp-lifecycle.drawio.png",
     "t2t-d/doc-d/rwr/rwr-overview.drawio.png",

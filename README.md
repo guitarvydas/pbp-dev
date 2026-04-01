@@ -1,16 +1,16 @@
-This is the working repository for PBP (Parts Based Programming) tools.
+This is the 
+
+ working repository for PBP (Parts Based Programming) tools.
 
 The main tools are the subdirectories
 - kernel
 - das
 - t2t
-- dtree
 
 where 
 - _das_ means *diagrams as syntax*
 - _t2t_ means _text to text_ transmogrification ("transpiling", "compiling", "macros")
 - _kernel_ is the implementation of an asynchronous-message-passing kernel between Parts (Leaf and Container)
-- *dtree* transmogrifies a simple kind of diagram (a "decision tree" with only 2 kinds of nodes and only 2 kinds of branches) to meta code (which has a syntax very reminiscent to that of Python). 
 
 ![Kernel back end](kernel/kernel-Back-End.drawio.png)
 
@@ -65,43 +65,12 @@ The `pbp/t2t.bash` script[^scr] performs the necessary work to run a transmogrif
 
 ---
 
-## TaS (WIP)
-The _tas_ (text as syntax, i.e. the traditional form of programming languages) subdirectory contains some experimental code for building a Programming Language Workbench (PLWB) using a choreographer process plus some other windows and processes. WIP.
-
-The experiment is that of building REPLs for DPLs (_Diagrammatic Programming Languages_) using processes and windows instead of hard-wiring the REPLs into the programming languages themselves. The advantage is that we just use off-the-shelf tools, like the drawio editor or emacs or whatever, without needing to add features to them.
-
-The "enabling technology" is that our machines are orders of magnitude faster than they were in the early days when we settled on the idea of using and implementing programming languages. On today's stock development computers, we can afford to spin up processes and windows in a way that was unimaginable a few decades ago.
-
-## dtree
-
 # Using the Tools for Programming Projects
-the `${PBP_ROOT}/import_minimal.bash` script copies the bare minimum of files from the project development repository at ${PBP_ROOT}
-
-1. `clone https://github.com/guitarvydas/pbp-dev ./pbp`
-2. `export set PBP_ROOT=<... your path ...>`
-3. `${PBP_ROOT}/import_minimal.bash` 
-
-... or ... 
-
-just copy, recursively, the pbp toolset from another project into your new project 
-
-Then run 
-```
-./pbp/init.bash
-```
-which will copy a few files up from `./pbp/*` into the current project (files: `PBP.xml`, `package.json`) and make them available to drawio and node.
-## Create a DPL Program and Transmogrify It To Python
-1. use [drawio]([https://www.drawio.com)) to draw a program 
-	- see the ??? video or the `./examples/*` subdirectory, if you haven't done this before
-	- the drawio editor should pick up `PBP.xml` from your project directory, which gives you a small palette of Parts that can be used for drawing PBP programs (drawio starts up with the PBP palette closed, you'll have to open it)
-	- I find it to be more convenient to download a local copy of drawio rather than using the web version
-2. create a [Makefile](./doc/how-create-Makefile.md)
-3. create [main.py](./doc/how-to-create-main-dot-py.md)
-
+Instructions and video in another repo: [hello world from first principles](https://github.com/guitarvydas/pbp_helloworld)
 
 ![API](./api.md)
 
-## Philosophy Corner
+# Philosophy Corner
 Computers are not merely “better paper,” yet we continue to program them using notations intended for use on paper, a practice that dates back to the 1960s.
 
 A significant advancement in programming language (PL) design occurred in the early 1970s with the invention of UNIX pipes[^p], but this innovation was largely ignored and conflated with the concept of “operating systems” rather than “programming languages.”
@@ -143,7 +112,7 @@ As far as I can determine, there are only a few key considerations. We can imple
   - In pure message-passing[^mp], there is implicitly the concept of moving data from one place to another. A simple pair `{sender, receiver}` can describe such a connection. To implement nesting, extend this to a triple `{direction, sender, receiver}`, where direction can be `[down|across|up|through]`. Down and up can be implemented by having Container Parts punt messages to/from inner Parts.
 
 # Semantics 
-![Semantics](Semantics.md)
+![Semantics](./doc/Semantics.md)
 # Layering and Abstracting
 ## Fan-Out
 Fan-out is necessary for DX ([article](https://programmingsimplicity.substack.com/p/layered-abstraction?r=1egdky))
