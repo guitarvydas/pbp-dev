@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ -f "out.👍👎" ]; then
+    if [ $(cat "out.👍👎") = "fail" ]; then
+       if [ -f "out.txt" ]; then
+           cat 'out.txt'
+       fi  
+       exit 1
+    fi
+fi
