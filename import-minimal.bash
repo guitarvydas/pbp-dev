@@ -85,6 +85,7 @@ for f in \
     output_begin \
     output_end \
     output_to_port \
+    checkfailure \
     fanout \
     include
 do

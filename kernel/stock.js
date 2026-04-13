@@ -317,69 +317,36 @@ function strcatstar_handler (eh,mev) {                 /* line 264 */
     }                                                  /* line 273 *//* line 274 */
 }
 
-class BlockOnErrorState {
-  constructor () {                                     /* line 275 */
-
-    this.hasError =  "no";                             /* line 276 *//* line 277 */
-  }
-}
-                                                       /* line 278 */
-function blockOnError_reset_handler (eh) {             /* line 279 */
-    eh.instance_data =  new BlockOnErrorState ();      /* line 280 */;/* line 281 *//* line 282 */
+function stop_instantiate (reg,owner,name,template_data,arg) {/* line 275 */
+    let name_with_id = gensymbol ( "Stop")             /* line 276 */;
+    let inst =  null;                                  /* line 277 */
+    return make_leaf ( name_with_id, owner, inst, "", stop_handler, null)/* line 278 */;/* line 279 *//* line 280 */
 }
 
-function blockOnError_instantiate (reg,owner,name,template_data,arg) {/* line 283 */
-    let name_with_id = gensymbol ( "blockOnError")     /* line 284 */;
-    let instp =  new BlockOnErrorState ();             /* line 285 */;
-    return make_leaf ( name_with_id, owner, instp, "", blockOnError_handler, blockOnError_reset_handler)/* line 286 */;/* line 287 *//* line 288 */
+function stop_handler (eh,mev) {                       /* line 281 */
+    let  inst =  eh.instance_data;                     /* line 282 */
+    let  parent =  eh.owner;                           /* line 283 */
+    let  s =  ( "   !!! stopping: '".toString ()+  ( parent.name.toString ()+  "'".toString ()) .toString ()) /* line 284 */;
+    console.error ( s);                                /* line 285 */
+                                                       /* line 286 */
+    parent.stop ( parent)                              /* line 287 */
+    send ( eh, "", mev.datum.v, mev)                   /* line 288 *//* line 289 *//* line 290 */
 }
 
-function blockOnError_handler (eh,mev) {               /* line 289 */
-    let  inst =  eh.instance_data;                     /* line 290 */
-    if ( "" ==  mev.port) {                            /* line 291 */
-      if ( inst.hasError ==  "no") {                   /* line 292 */
-        send ( eh, "", mev.datum.v, mev)               /* line 293 *//* line 294 */
-      }
-    }
-    else if ( "✗" ==  mev.port) {                      /* line 295 */
-      inst.hasError =  "yes";                          /* line 296 */
-    }
-    else if ( "reset" ==  mev.port) {                  /* line 297 */
-      inst.hasError =  "no";                           /* line 298 *//* line 299 */
-    }                                                  /* line 300 *//* line 301 */
-}
-
-function stop_instantiate (reg,owner,name,template_data,arg) {/* line 302 */
-    let name_with_id = gensymbol ( "Stop")             /* line 303 */;
-    let inst =  null;                                  /* line 304 */
-    return make_leaf ( name_with_id, owner, inst, "", stop_handler, null)/* line 305 */;/* line 306 *//* line 307 */
-}
-
-function stop_handler (eh,mev) {                       /* line 308 */
-    let  inst =  eh.instance_data;                     /* line 309 */
-    let  parent =  eh.owner;                           /* line 310 */
-    let  s =  ( "   !!! stopping: '".toString ()+  ( parent.name.toString ()+  "'".toString ()) .toString ()) /* line 311 */;
-    console.error ( s);                                /* line 312 */
-                                                       /* line 313 */
-    parent.stop ( parent)                              /* line 314 */
-    send ( eh, "", mev.datum.v, mev)                   /* line 315 *//* line 316 *//* line 317 */
-}
-
-/*  all of the the built_in leaves are listed here */  /* line 318 */
-/*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 319 *//* line 320 */
-function initialize_stock_components (reg) {           /* line 321 */
-    register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 322 */
-    register_component ( reg,mkTemplate ( "1→2", null, deracer_instantiate))/* line 323 */
-    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 324 */
-    register_component ( reg,mkTemplate ( "🗑️", null, trash_instantiate))/* line 325 */
-    register_component ( reg,mkTemplate ( "🚫", null, stop_instantiate))/* line 326 */
-    register_component ( reg,mkTemplate ( "blockOnError", null, blockOnError_instantiate))/* line 327 *//* line 328 *//* line 329 */
-    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 330 */
-    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 331 *//* line 332 */
-    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 333 */
-    register_component ( reg,mkTemplate ( "String Concat", null, stringconcat_instantiate))/* line 334 */
-    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 335 */
-    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 336 */
-    /*  for fakepipe */                                /* line 337 */
-    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 338 *//* line 339 *//* line 340 */
+/*  all of the the built_in leaves are listed here */  /* line 291 */
+/*  future: refactor this such that programmers can pick and choose which (lumps of) builtins are used in a specific project *//* line 292 *//* line 293 */
+function initialize_stock_components (reg) {           /* line 294 */
+    register_component ( reg,mkTemplate ( "1then2", null, deracer_instantiate))/* line 295 */
+    register_component ( reg,mkTemplate ( "1→2", null, deracer_instantiate))/* line 296 */
+    register_component ( reg,mkTemplate ( "trash", null, trash_instantiate))/* line 297 */
+    register_component ( reg,mkTemplate ( "🗑️", null, trash_instantiate))/* line 298 */
+    register_component ( reg,mkTemplate ( "🚫", null, stop_instantiate))/* line 299 *//* line 300 *//* line 301 */
+    register_component ( reg,mkTemplate ( "Read Text File", null, low_level_read_text_file_instantiate))/* line 302 */
+    register_component ( reg,mkTemplate ( "Ensure String Datum", null, ensure_string_datum_instantiate))/* line 303 *//* line 304 */
+    register_component ( reg,mkTemplate ( "syncfilewrite", null, syncfilewrite_instantiate))/* line 305 */
+    register_component ( reg,mkTemplate ( "String Concat", null, stringconcat_instantiate))/* line 306 */
+    register_component ( reg,mkTemplate ( "switch1*", null, switch1star_instantiate))/* line 307 */
+    register_component ( reg,mkTemplate ( "String Concat *", null, strcatstar_instantiate))/* line 308 */
+    /*  for fakepipe */                                /* line 309 */
+    register_component ( reg,mkTemplate ( "fakepipename", null, fakepipename_instantiate))/* line 310 *//* line 311 *//* line 312 */
 }

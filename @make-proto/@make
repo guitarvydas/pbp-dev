@@ -4,7 +4,6 @@ set -eE
 export SHELLOPTS
 shopt -s nullglob
 
-trap '[ -f "out.✗" ] && (echo ; cat "out.✗")' ERR
 
 # set up env vars depending on whether this script was called from elsewhere or is the top level
 if [ "$#" -eq 0 ]; then
@@ -31,6 +30,12 @@ else
     echo "Usage: $0 [diagram callerWDIR]" >&2
     exit 1
 fi
+
+set -eE pipefail
+trap '
+  [[ -f "${PBPWD}/out.✗" ]]    && cat "${PBPWD}/out.✗"
+  [[ -f "${PBPCALLER}/out.✗" ]] && cat "${PBPCALLER}/out.✗"
+' ERR
 
 export SELF="${RANDOM}$$"
 
