@@ -213,6 +213,7 @@
   },
   "active": "2aafda6bd4dc58d5",
   "lastOpenFiles": [
+    "#pbplog#",
     "checkfailure",
     "checkfail",
     "kernel/before-Mon 13 Apr 2026 09:35:56 EDT/kernel0d.py",
@@ -223,7 +224,6 @@
     "kernel-self/out.lisp",
     "kernel-self/before-Mon 13 Apr 2026 09:34:29 EDT/kernel0d.py",
     "kernel-self/before-Mon 13 Apr 2026 09:34:29 EDT",
-    "kernel/new-kernel0d.py",
     "@make-proto/prompt.md",
     "TAS_README_WIP.md",
     "@make-proto/NOTES.md",

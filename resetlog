@@ -9,10 +9,10 @@ from pathlib import Path
 
 
 def main():
-    # Use PBPCALLER env var for base dir
-    base_dir = os.environ.get("PBPCALLER")
+    # Use CALLERPATH env var for base dir
+    base_dir = os.environ.get("CALLERPATH")
     if not base_dir:
-        print("Error: PBPCALLER env var not set", file=sys.stderr)
+        print("Error: CALLERPATH env var not set", file=sys.stderr)
         sys.exit(1)
     
     log_file = Path(base_dir) / "pbplog.txt"
