@@ -4,52 +4,58 @@ set -eE
 export SHELLOPTS
 shopt -s nullglob
 
-
-# set up env vars depending on whether this script was called from elsewhere or is the top level
 if [ "$#" -eq 0 ]; then
-    # no arguments - top level build
-    # current working directory
-    export PBPWD=$(pwd)
-    export PBP="$(pwd)/pbp"
-    export PYTHONPATH="${PBP}/kernel:${PYTHONPATH}"
-    export PBPCALLER=$PBPWD
-    fname="<top>"
-    "${PBP}"/resetlog
-
+    level=top
 elif [ "$#" -eq 3 ]; then
-    # exactly three arguments
-    # $1 is callee's working dir
-    # $2 is basename of the caller's file to be processed
-    # $3 is caller's working dir
-    # push a new value of PBPWD onto the stack, which will get unwound to its previous value when this script ends
-    export PBPWD=$1
-    fname="$2"
-    export PBPCALLER="$3"
+    level=sub
 else
     # error: usage
-    echo "Usage: $0 [diagram callerWDIR]" >&2
+    echo "Usage: $0 [tool-working-dir caller-working-dir diagram-name]" >&2
     exit 1
 fi
 
-set -eE pipefail
-trap '
-  [[ -f "${PBPWD}/out.✗" ]]    && cat "${PBPWD}/out.✗"
-  [[ -f "${PBPCALLER}/out.✗" ]] && cat "${PBPCALLER}/out.✗"
-' ERR
+# set up env vars depending on whether this script was called from elsewhere or is the top level
+if [ "$level" = "top" ]; then
+    # no arguments - top level build
+    # current working directory
+    export TOOLWD="$(pwd)"
+    source ./@defc
 
-export SELF="${RANDOM}$$"
+#./@sub "$(realpath ~/projects/sm-pbp)" "$(realpath ~/projects/pbp-pong)" ballhit
+else
+    # exactly three arguments
+    # $1 is callee's (TOOL) working dir                                TOOLWD
+    # $2 is caller's working dir                                       CALLERPATH
+    # $3 is basename (no suffix) of the caller's file to be processed  TARGET
+    #  override values set in @defc
+    export TOOLWD="$1"
+    source ./@defc
+    export CALLERPATH="$2"
+    export TARGET="$3"
+fi
+
+
+
+# common
+
+set -eE pipefail
+
+"${PBP}"/resetlog
 
 rm -f *.mr
 rm -f *.json
 rm -f temp.*
 rm -f out.*
-cd "${PBPWD}"
+cd "${TOOLWD}"
 
-export PATH="${PBP}:${PATH}"
-
-./@makec ${fname}
+echo "calling @makec"
+./@makec ${TARGET}
+# @makec is expected to call checkfailure at the appropriate point(s) in the custom script
+if [ "$level" = "top" ]; then
+    ./@testc
+fi
 
 rm -f temp.*
-rm -f ${SELF}*
+
 
 

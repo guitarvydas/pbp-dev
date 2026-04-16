@@ -213,6 +213,8 @@
   },
   "active": "2aafda6bd4dc58d5",
   "lastOpenFiles": [
+    "@make-proto/#@make#",
+    "@make-proto/@defc-prototype",
     "#pbplog#",
     "checkfailure",
     "checkfail",
@@ -222,8 +224,6 @@
     "kernel-self/out.js",
     "kernel-self/out.py",
     "kernel-self/out.lisp",
-    "kernel-self/before-Mon 13 Apr 2026 09:34:29 EDT/kernel0d.py",
-    "kernel-self/before-Mon 13 Apr 2026 09:34:29 EDT",
     "@make-proto/prompt.md",
     "TAS_README_WIP.md",
     "@make-proto/NOTES.md",
