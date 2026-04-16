@@ -15,18 +15,16 @@ else
 fi
 src=-
 
-# t2tlibd is the lib directory for t2t
-t2tlibd="${PBP}/t2td/lib"
 # wsupport is support.js in the current working directory
 wsupport="${WD}/support.mjs"
 
 
-node "${t2tlibd}/rwr.mjs" "${rewrite}" >"${WD}/temp.rewrite.mjs"
+node "${T2TLIBD}/rwr.mjs" "${rewrite}" >"${WD}/temp.rewrite.mjs"
 
 sed -e 's/`/` + "`" + String.raw`/g' <"${grammar}" >"${WD}/temp.grammar"
 
 nanodsl="${WD}/temp.nanodsl.${RANDOM}.mjs"
 
-cat "${t2tlibd}/front.part.js" "${WD}/temp.grammar" "${t2tlibd}/middle.part.js" "${t2tlibd}/args.part.js" "${wsupport}" "${WD}/temp.rewrite.mjs" "${t2tlibd}/tail.part.js" >"${nanodsl}"
+cat "${T2TLIBD}/front.part.js" "${WD}/temp.grammar" "${T2TLIBD}/middle.part.js" "${T2TLIBD}/args.part.js" "${wsupport}" "${WD}/temp.rewrite.mjs" "${T2TLIBD}/tail.part.js" >"${nanodsl}"
 
 node "${nanodsl}" "${src}"
