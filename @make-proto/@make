@@ -24,7 +24,7 @@ if [ "$level" = "top" ]; then
 #./@sub "$(realpath ~/projects/sm-pbp)" "$(realpath ~/projects/pbp-pong)" ballhit
 else
     # exactly three arguments
-    # $1 is callee's (TOOL) working dir                                TOOLWD
+    # $1 is callee's working dir                                       TOOLWD
     # $2 is caller's working dir                                       CALLERPATH
     # $3 is basename (no suffix) of the caller's file to be processed  TARGET
     #  override values set in @defc
@@ -48,7 +48,6 @@ rm -f temp.*
 rm -f out.*
 cd "${TOOLWD}"
 
-echo "calling @makec"
 ./@makec ${TARGET}
 # @makec is expected to call checkfailure at the appropriate point(s) in the custom script
 if [ "$level" = "top" ]; then
