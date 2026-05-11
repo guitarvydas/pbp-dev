@@ -307,15 +307,15 @@ function lintConnections(name, cells) {
         if (cell.type !== CellType.Rect || cell.flags.has(FlagValue.Container)) continue;
         
         // Check if this port's mxgraphParent is "1" (the page root in draw.io)
-        if (cell.mxgraphParent === "1") {
+	if (!cells[cell.parent]?.flags.has(FlagValue.Container)) {
             // Check if this cell is used in any connections
             const isUsedInConnection = cells.some(c => 
                 c.type === CellType.Arrow && (c.source === cell.id || c.target === cell.id)
             );
             
             if (isUsedInConnection) {
-                console.error(`WARNING in ${name}: Port "${cell.value}" is not inside a container but is used in connections. This connection will be ignored.`);
-                ok = false;
+		console.error(`WARNING in ${name}: Port "${cell.value}" is not inside a container but is used in connections. This connection will be ignored.`);
+		ok = false;
             }
         }
     }
