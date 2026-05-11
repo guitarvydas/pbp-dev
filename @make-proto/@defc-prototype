@@ -1,0 +1,13 @@
+#!/bin/bash
+# @make must export TOOLWD, before calling this script ("@defc")XS
+export WD="${TOOLWD}" # synonym for TOOLWD, sometimes it makes more sense to think in terms of WD, sometimes in terms of TOOLWD
+export PBP="${WD}/pbp"
+export PATH="${PBP}:$PATH"
+export PYTHONPATH="${PBP}/kernel:${PYTHONPATH}"
+# T2TLIBD is the lib directory for t2t - PBP tools should not contain hard-coded directory paths
+export T2TLIBD="${PBP}/t2td/lib"
+
+# These are the top-level defaults.
+# For use at a sub-level (@makec is called with 3 args), @makec must override CALLERPATH and TARGET
+CALLERPATH="${TOOLWD}"
+TARGET=looper
